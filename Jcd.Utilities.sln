@@ -3,14 +3,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.27004.2006
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{24E34995-7A1C-45FC-855F-389B725AB9FF}"
+	ProjectSection(SolutionItems) = preProject
+		src\README.md = src\README.md
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jcd.Utilities", "src\Jcd.Utilities\Jcd.Utilities.csproj", "{B8DC0B56-0CA8-40A7-8337-6FA09A0C58C9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{568BCB2F-7083-4D5E-A68A-5480B9E0E4EF}"
+	ProjectSection(SolutionItems) = preProject
+		test\README.md = test\README.md
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jcd.Utilities.Test", "test\Jcd.Utilities.Test\Jcd.Utilities.Test.csproj", "{4956D776-7A28-4C32-8D91-881CD56F94CB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{BEF3967B-0A9C-4DD7-A48E-00D7BCE3B1C2}"
+	ProjectSection(SolutionItems) = preProject
+		samples\README.md = samples\README.md
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jcd.Utilities.Samples.ConsoleApp", "samples\Jcd.Utilities.Samples.Console\Jcd.Utilities.Samples.ConsoleApp.csproj", "{452D6D0D-607D-49CD-9034-7DBFFD19A742}"
 EndProject
@@ -21,6 +30,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		ISSUE_TEMPLATE.md = ISSUE_TEMPLATE.md
 		LICENSE = LICENSE
 		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{E3AB00D3-7921-487F-BDD2-709F00517C5A}"
+	ProjectSection(SolutionItems) = preProject
+		build\build.sh = build\build.sh
+		build\README.md = build\README.md
 	EndProjectSection
 EndProject
 Global

@@ -18,6 +18,9 @@
         public readonly static NumericEncoder Hexdecimal = new NumericEncoder("0123456789ABCDEF", "0x");
         public readonly static NumericEncoder Heptadecimal = new NumericEncoder("0123456789ABCDEFG");
 
+        public readonly static NumericEncoder Vegesimal = new NumericEncoder("0123456789ABCDEFGHIJ");
+        
+
         public readonly static NumericEncoder Base32Hex = new NumericEncoder("0123456789ABCDEFGHIJKLMNOPQRSTUV");
         public readonly static NumericEncoder Base32_RFC4648 = new NumericEncoder("ABCDEFGHIJKLMNOPQRSTUVXYZ234567", caseSensitive: true);
         public readonly static NumericEncoder Base32_Zrtp = new NumericEncoder("ybndrfg8ejkmcpqxot1uwisza345h769", caseSensitive: true);

@@ -10,7 +10,9 @@
         public readonly static NumericEncoder Binary = new NumericEncoder("01", "0b");
         public readonly static NumericEncoder Ternary = new NumericEncoder("012", "0t");
         public readonly static NumericEncoder Quaternary = new NumericEncoder("0123", "0q");
+        public readonly static NumericEncoder Pentary = new NumericEncoder("01234", "0p");
         public readonly static NumericEncoder Senary = new NumericEncoder("012345", "0s");
+        public readonly static NumericEncoder Septenary = new NumericEncoder("0123456", "0sp");
         public readonly static NumericEncoder Octal = new NumericEncoder("01234567", "0o");        
         public readonly static NumericEncoder Duodecimal = new NumericEncoder("0123456789↊↋");
         public readonly static NumericEncoder Hexdecimal = new NumericEncoder("0123456789ABCDEF", "0x");

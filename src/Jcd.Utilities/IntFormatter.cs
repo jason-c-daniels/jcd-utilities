@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Jcd.Utilities
 {
-    public class NumericEncoder
+    public class IntFormatter
     {
         private readonly Dictionary<char, int> charToValue = new Dictionary<char, int>();
         public readonly string CharacterSet;
@@ -13,7 +13,7 @@ namespace Jcd.Utilities
         public readonly string Suffix;
         public readonly bool CaseSensitive;
         public readonly int Base;
-        public NumericEncoder(string encodeCharacterSet, string[] decodeCharacterSet, string prefix = "", string suffix = "")
+        public IntFormatter(string encodeCharacterSet, string[] decodeCharacterSet, string prefix = "", string suffix = "")
         {
             if (decodeCharacterSet.Length != encodeCharacterSet.Length) throw new ArgumentException("decodeCharacterSet and encodeCharacterSet must be the same length.");
             this.CaseSensitive = true;
@@ -29,7 +29,7 @@ namespace Jcd.Utilities
                 }
             }
         }
-        public NumericEncoder(string characterSet, string prefix = "", string suffix = "", bool caseSensitive = false)
+        public IntFormatter(string characterSet, string prefix = "", string suffix = "", bool caseSensitive = false)
         {
             this.CaseSensitive = caseSensitive;
             this.Prefix = prefix;

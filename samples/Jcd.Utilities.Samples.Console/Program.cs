@@ -7,8 +7,8 @@ namespace Jcd.Utilities.Samples.ConsoleApp
         static void Main(string[] args) {
             Console.WriteLine("Hello World!");
             int i = 3333;
-            var encoder = NumericEncoders.Quaternary;
-            Console.WriteLine($"{encoder.ToString(i)} == {Convert.ToString(encoder.ToInt32(encoder.ToString(i)), encoder.Base)}");
+            var encoder = NumericEncoders.Hexdecimal;
+            Console.WriteLine($"{encoder.ToString(i)} == 0x{Convert.ToString(encoder.ToInt32(encoder.ToString(i)), encoder.Base)}");
         }
     }
 }

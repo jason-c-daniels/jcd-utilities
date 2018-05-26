@@ -13,6 +13,22 @@ namespace Jcd.Utilities
         public readonly string Suffix;
         public readonly bool CaseSensitive;
         public readonly int Base;
+        public NumericEncoder(string encodeCharacterSet, string[] decodeCharacterSet, string prefix = "", string suffix = "")
+        {
+            if (decodeCharacterSet.Length != encodeCharacterSet.Length) throw new ArgumentException("decodeCharacterSet and encodeCharacterSet must be the same length.");
+            this.CaseSensitive = true;
+            this.Prefix = prefix;
+            this.Suffix = suffix;
+            this.CharacterSet = encodeCharacterSet;
+            Base = CharacterSet.Length;
+            for (int i = 0; i < decodeCharacterSet.Length; i++)
+            {
+                foreach (char c in decodeCharacterSet[i])
+                {
+                    charToValue.Add(c, i);
+                }
+            }
+        }
         public NumericEncoder(string characterSet, string prefix = "", string suffix = "", bool caseSensitive = false)
         {
             this.CaseSensitive = caseSensitive;

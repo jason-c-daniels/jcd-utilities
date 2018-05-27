@@ -10,7 +10,7 @@ namespace Jcd.Utilities.Samples.ConsoleApp
             int i = 3333;
             var encoder = IntegerEncoders.Hexdecimal;
             Console.WriteLine($"{encoder.Format(i)} == {Convert.ToString(encoder.ParseInt32(encoder.Format(i)), encoder.Base)}");
-            foreach(var j in new IntSequenceGenerator(10,-20,-1))
+            foreach(var j in new Int32SequenceGenerator(10,-20,-1))
             {
                 Console.Write($"{j},");
             }
@@ -31,11 +31,13 @@ namespace Jcd.Utilities.Samples.ConsoleApp
             Console.WriteLine();
             Console.WriteLine();
 
-            var gen = new FibonacciGenerator(150000, 10);
             Console.WriteLine("Go!");
-            foreach (var l in gen)
+            foreach (var l in new FibonacciGenerator(50, 10))
             {
-                Console.Write("x");
+                //Console.Write("x");
+                var e = IntegerEncoders.Base32Hex.Format(l);
+                var d = IntegerEncoders.Base32Hex.ParseBigInteger(e);
+                Console.WriteLine($"{l} -> {e} -> {d}");
             }
             Console.WriteLine();
         }

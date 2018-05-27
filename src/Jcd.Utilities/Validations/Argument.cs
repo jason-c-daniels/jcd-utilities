@@ -6,131 +6,138 @@ namespace Jcd.Utilities.Validations
 {
     public static class Argument
     {
-        const string UnspecifiedParamName = "[unspecified]";
+        #region exception helpers
+        public const string UnspecifiedParamName = "[unspecified]";
+
+        public static void RaiseExpectationViolation<T>(T expected, T actual, string name=null, string message = null)
+        {
+            RaiseArgumentException(message ?? $"Expected {name} to be {expected}, but it was {actual}.", name);
+        }
+
+        public static void RaiseArgumentException(string message, string name=null)
+        {
+            if (Check.IsNull(name) || Check.IsWhitespace(name) || Check.IsEmpty(name)) name = UnspecifiedParamName;
+            throw new ArgumentException(message ?? $"{name} contains an invalid value.",name);
+        }
+
+        public static void RaiseArgumentNullException(string name = null, string message = null)
+        {
+            if (Check.IsNull(name) || Check.IsWhitespace(name) || Check.IsEmpty(name)) name = UnspecifiedParamName;
+            throw new ArgumentNullException(name, message ?? $"{name} was null, expected non-null");
+        }
+
+        public static void RaiseArgumentOutOfRangeException<T>(T value, T min, T max, string name = null, string message = null)
+        {
+            if (Check.IsNull(name) || Check.IsWhitespace(name) || Check.IsEmpty(name)) name = UnspecifiedParamName;
+            throw new ArgumentOutOfRangeException(name, value, message ?? $"Argument {name} ({value}) had an invalid value. Expected value within range of {min} to {max}.");
+        }
+
+        #endregion
 
         #region Boolean and Null checks
         public static void IsTrue(bool value, string name = null, string message = null)
         {
-            if (name == null) name = UnspecifiedParamName;
-            if (!value) throw new ArgumentException(message ?? $"Expected {name} to be true, but it was false.", name);
+            Check.IsTrue(value, onFailure: () => RaiseExpectationViolation(true, false, name));
         }
 
         public static void IsFalse(bool value, string name = null, string message = null)
         {
-            if (name == null) name = UnspecifiedParamName;
-            if (value) throw new ArgumentException(message ?? $"Expected {name} to be false, but it was true.", name);
+            Check.IsFalse(value, onFailure: () => RaiseExpectationViolation(false, true, name));
         }
 
         public static void IsNotNull<T>(T value, string name = null, string message = null)
             where T : class
         {
-            if (name == null) name = UnspecifiedParamName;
-            if (Check.IsNull(value)) throw new ArgumentNullException(name, message ?? $"Argument {name} was null. Expected non-null.");
+            Check.IsNotNull(value, onFailure: () => RaiseArgumentNullException(name));
         }
 
         public static void IsNull<T>(T value, string name = null, string message = null)
             where T : class
         {
-            if (name == null) name = UnspecifiedParamName;
-            if (Check.IsNotNull(value)) throw new ArgumentException(message ?? $"Argument {name} was non-null. Expected null.", name);
+            Check.IsNull(value, onFailure: () => RaiseExpectationViolation("null", "non-null", name));
         }
         #endregion
 
         #region collection operations
         public static void IsEmpty<T>(IEnumerable<T> list, string name = null, string message = null)
         {
-            if (name == null) name = UnspecifiedParamName;
-            if (Check.HasData(list)) throw new ArgumentException(message ?? $"Expected '{name}' to be empty but contained data.", name);
+            IsNotNull(list, name);
+            Check.IsEmpty(list, onFailure: () => RaiseArgumentException(message ?? $"Expected {name} to be an empty collection, but it contained values.", name));
         }
 
         public static void HasItems<T>(IEnumerable<T> list, string name = null, string message = null)
         {
-            if (name == null) name = UnspecifiedParamName;
-            if (Check.IsEmpty(list)) throw new ArgumentException(message ?? $"Expected '{name}' to have data but was empty.", name);
+            IsNotNull(list, name);
+            Check.HasItems(list, onFailure: () => RaiseArgumentException(message ?? $"Expected {name} to contain at least one item, but it was empty.", name));
         }
 
         public static void Contains<T>(IEnumerable<T> list, T target, string name = null, string message = null)
         {
-            if (name == null) name = UnspecifiedParamName;
-            IsNotNull(list, nameof(list));
-            if (Check.DoesNotContain(list,target)) throw new ArgumentException(message ?? $"Expected value {target} not found in collection: {name}", name);
+            IsNotNull(list, name);
+            Check.Contains(list, target, onFailure: () => RaiseArgumentException(message ?? $"{target} was not found in {name}.", name));
         }
 
         public static void DoesNotContain<T>(IEnumerable<T> list, T target, string name = null, string message = null)
         {
-            if (name == null) name = UnspecifiedParamName;
-            if (Check.Contains(list, target)) throw new ArgumentException(message ?? $"Invalid value {target} found in collection: {name}.", name);
+            IsNotNull(list, name);
+            Check.DoesNotContain(list, target, onFailure: () => RaiseArgumentException(message ?? $"{target} was expected to not be in {name}, but was found.", name));
         }
         #endregion
 
         #region string operations
         public static void IsEmpty(string value, string name = null, string message = null)
         {
-            if (name == null) name = UnspecifiedParamName;
             IsNotNull(value, name);
-            if (Check.HasData(value)) throw new ArgumentException(message ?? $"Expected {name} to be an empty string.", name);
+            Check.IsEmpty(value, onFailure: () => RaiseArgumentException(message ?? $"Expected {name} to be an empty string, but it contains text.", name));
         }
         public static void HasData(string value, string name = null, string message = null)
         {
-            if (name == null) name = UnspecifiedParamName;
             IsNotNull(value, name);
-            if (Check.IsEmpty(value)) throw new ArgumentException(message ?? $"Expected {name} to have data.", name);
+            Check.HasData(value, onFailure: () => RaiseArgumentException(message ?? $"Expected {name} to be a non-empty string, but it contains text.", name));
         }
         public static void IsWhitespace(string value, string name = null, string message = null)
         {
-            if (name == null) name = UnspecifiedParamName;
             IsNotNull(value, name);
-            if (Check.IsNull(message)) message = $"Expected {name} to be non-zero length whitespace.";
-            Passes((v) => v.Length > 0, value, name, message);
-            if (Check.IsNotWhitespace(value)) throw new ArgumentException(message, name);
+            Check.IsWhitespace(value, onFailure: () => RaiseExpectationViolation("all whitespace","non-whitespace", name));
         }
         public static void IsWhitespaceOrEmpty(string value, string name = null, string message = null)
         {
-            if (name == null) name = UnspecifiedParamName;
             IsNotNull(value, name);
-            PassesAny(new Func<string,bool>[]{ Check.IsWhitespace, Check.IsEmpty}, value,name,message ?? $"Expected {name} to be whitespace or empty.");
+            Check.PassesAny(new Check.Signature<string>[] { Check.IsWhitespace, Check.IsEmpty }, value, onFailure: ()=> RaiseArgumentException(message ?? $"Expected {name} to be whitespace or empty.", name));
         }
         public static void IsNullOrWhitespace(string value, string name = null, string message = null)
         {
-            if (name == null) name = UnspecifiedParamName;
-            PassesAny(new Func<string, bool>[] { Check.IsNull , Check.IsWhitespace }, value, name, message ?? $"Expected {name} to be null or whitespace");
+            Check.PassesAny(new Check.Signature<string>[] { Check.IsNull, Check.IsWhitespace }, value, onFailure: () => RaiseArgumentException(message ?? $"Expected {name} to be null or whitespace", name));
         }
         public static void IsNullWhitespaceOrEmpty(string value, string name = null, string message = null)
         {
-            if (name == null) name = UnspecifiedParamName;
-            PassesAny(new Func<string, bool>[] { Check.IsNull, Check.IsEmpty, Check.IsWhitespace }, value, name, message ?? $"Expected {name} to be null, empty, or whitespace.");
+            Check.PassesAny(new Check.Signature<string>[] { Check.IsNull, Check.IsWhitespace, Check.IsEmpty }, value, onFailure: () => RaiseArgumentException(message ?? $"Expected {name} to be null, whitespace, or empty", name));
         }
 
         public static void IsNullOrEmpty(string value, string name = null, string message = null)
         {
-            if (name == null) name = UnspecifiedParamName;
-            PassesAny(new Func<string, bool>[] { Check.IsNull, Check.IsEmpty}, value, name, message ?? $"Expected {name} to be null or empty.");
+            Check.PassesAny(new Check.Signature<string>[] { Check.IsNull, Check.IsEmpty }, value, onFailure: () => RaiseArgumentException(message ?? $"Expected {name} to be null or empty", name));
         }
 
         public static void IsNotWhitespace(string value, string name = null, string message = null)
         {
-            if (name == null) name = UnspecifiedParamName;
-            if (Check.IsWhitespace(value)) throw new ArgumentException(message ?? $"Invalid argument: {name} is all whitespace.", name);
+            Check.IsNotWhitespace(value, onFailure: () => RaiseArgumentException(message ?? $"Invalid argument: {name} is all whitespace.", name));
         }
         public static void IsNotWhitespaceOrEmpty(string value, string name = null, string message = null)
         {
-            if (name == null) name = UnspecifiedParamName;
-            FailsAll(new Func<string, bool>[] { Check.IsEmpty, Check.IsWhitespace }, value, name, message ?? $"Expected {name} to be non-empty and non-whitespace.");
+            Check.FailsAll(new Check.Signature<string>[] { Check.IsWhitespace, Check.IsEmpty }, value, onFailure: () => RaiseArgumentException(message ?? $"Expected {name} to be non-empty and non-whitespace.", name));
         }
         public static void IsNotNullOrWhitespace(string value, string name = null, string message = null)
         {
-            if (name == null) name = UnspecifiedParamName;
-            FailsAll(new Func<string, bool>[] { Check.IsNull, Check.IsEmpty, Check.IsWhitespace }, value, name, message ?? $"Expected {name} to be null, empty, or whitespace.");
+            Check.FailsAll(new Check.Signature<string>[] { Check.IsNull, Check.IsWhitespace }, value, onFailure: () => RaiseArgumentException(message ?? $"Expected {name} to be null, empty, or whitespace.", name));
         }
         public static void IsNotNullWhitespaceOrEmpty(string value, string name = null, string message = null)
         {
-            if (name == null) name = UnspecifiedParamName;
-            FailsAll(new Func<string, bool>[] { Check.IsNull, Check.IsEmpty, Check.IsWhitespace }, value, name, message ?? $"Expected {name} to be non-null, non-empty, and non-whitespace.");
+            Check.FailsAll(new Check.Signature<string>[] { Check.IsNull, Check.IsEmpty, Check.IsWhitespace }, value, onFailure: () => RaiseArgumentException(message ?? $"Expected {name} to be non-null, non-empty, and non-whitespace.", name));
         }
         public static void IsNotNullOrEmpty(string value, string name = null, string message = null)
         {
-            if (name == null) name = UnspecifiedParamName;
-            FailsAll(new Func<string, bool>[] { Check.IsNull, Check.IsEmpty}, value, name, message ?? $"Expected {name} to be non-null and non-empty.");
+            Check.FailsAll(new Check.Signature<string>[] { Check.IsNull, Check.IsEmpty }, value, onFailure: () => RaiseArgumentException(message ?? $"Expected {name} to be non-null and non-empty.", name));
         }
         #endregion
 
@@ -138,102 +145,82 @@ namespace Jcd.Utilities.Validations
 
         public static void AreSameObject(object value, object comparison, string name = null, string message = null)
         {
-            if (name == null) name = UnspecifiedParamName;
-            if (!Check.AreSameObject(value, comparison)) throw new ArgumentException(message ?? $"Object for {name} was not the expected instance.");
+            Check.AreSameObject(value, comparison, onFailure: () => RaiseArgumentException(message ?? $"Object for {name} was not the expected instance.", name));
         }
 
         public static void IsGreaterThan<T>(T value, T comparison, string name = null, string message = null)
             where T : IComparable<T>
         {
-            if (name == null) name = UnspecifiedParamName;
-            if (!Check.IsGreaterThan(value, comparison)) throw new ArgumentException(message ?? $"Value for {name} ({value}) was expected to be greater than {comparison}");
+            Check.IsGreaterThan(value, comparison,onFailure:()=>RaiseArgumentException(message ?? $"Value for {name} ({value}) was expected to be greater than {comparison}",name));
         }
 
         public static void IsGreaterThanOrEqual<T>(T value, T comparison, string name = null, string message = null)
             where T : IComparable<T>
         {
-            if (name == null) name = UnspecifiedParamName;
-            if (value.CompareTo(comparison) <0) throw new ArgumentException(message ?? $"Value for {name} ({value}) was expected to be greater than or equal to {comparison}");
+            Check.Passes(() => value.CompareTo(comparison) >= 0, onFailure: ()=>RaiseArgumentException(message ?? $"Value for {name} ({value}) was expected to be greater than or equal to {comparison}",name));
         }
 
         public static void IsLessThan<T>(T value, T comparison, string name = null, string message = null)
             where T : IComparable<T>
         {
-            if (name == null) name = UnspecifiedParamName;
-            if (!Check.IsLessThan(value, comparison)) throw new ArgumentException(message ?? $"Value for {name} ({value}) was expected to be less than {comparison}");
+            Check.IsLessThan(value, comparison, onFailure: () => RaiseArgumentException(message ?? $"Value for {name} ({value}) was expected to be less than {comparison}", name));
         }
 
         public static void IsLessThanOrEqual<T>(T value, T comparison, string name = null, string message = null)
             where T : IComparable<T>
         {
-            if (name == null) name = UnspecifiedParamName;
-            if (value.CompareTo(comparison) > 0) throw new ArgumentException(message ?? $"Value for {name} ({value}) was expected to be less than {comparison}");
+            Check.Passes(() => value.CompareTo(comparison) >= 0, onFailure: () => RaiseArgumentException(message ?? $"Value for {name} ({value}) was expected to be less than {comparison}", name));
         }
 
         public static void AreEqual<T>(T value, T comparison, string name = null, string message = null)
             where T : IComparable<T>
         {
-            if (name == null) name = UnspecifiedParamName;
-            if (!Check.AreEqual(value, comparison)) throw new ArgumentException(message ?? $"Value for {name} ({value}) is not equal to {comparison}");
+            Check.AreEqual(value, comparison, onFailure: () => RaiseArgumentException(message ?? $"Value for {name} ({value}) is not equal to {comparison}", name));
         }
 
         public static void InRange<T>(T value, T min, T max, string name = null, string message = null)
             where T : IComparable<T>
         {
-            if (name == null) name = UnspecifiedParamName;
-            if (Check.NotInRange(value, min, max)) throw new ArgumentOutOfRangeException(name, value, message ?? $"Argument {name} ({value}) had an invalid value. Expected value within range of {min} to {max}.");
+            Check.InRange(value, min, max,onFailure:()=> RaiseArgumentOutOfRangeException(value,min,max,name,message));
         }
 
         public static void NotInRange<T>(T value, T min, T max, string name = null, string message = null)
             where T : IComparable<T>
         {
-            if (name == null) name = UnspecifiedParamName;
-            if (Check.InRange(value, min, max)) throw new ArgumentOutOfRangeException(name, value, message ?? $"Argument {name} ({value}) had an invalid value. Expected value outside of the range of {min} to {max}.");
+            Check.NotInRange(value, min, max, onFailure: () => RaiseArgumentOutOfRangeException(value, min, max, name, message ?? $"Argument {name} ({value}) had an invalid value. Expected value outside of the range of {min} to {max}."));
         }
 
         #endregion
 
         #region custom and multi-condition operations
-        public static void Passes<T>(Func<T, bool> condition, T value, string name = null, string message = null)
+        public static void Passes<T>(Check.Signature<T> condition, T value, string name = null, string message = null)
         {
-            if (name == null) name = UnspecifiedParamName;
-            IsNotNull(condition, nameof(condition));
-            if (Check.Fails(condition,value)) throw new ArgumentException(message ?? $"The custom condition for {name} failed. Expected success.", name);
+            Check.Passes(condition, value, onFailure:() => RaiseArgumentException(message,name));
         }
 
-        public static void Fails<T>(Func<T, bool> condition, T value, string name = null, string message = null)
+        public static void Fails<T>(Check.Signature<T> condition, T value, string name = null, string message = null)
         {
-            if (name == null) name = UnspecifiedParamName;
-            IsNotNull(condition, nameof(condition));
-            if (Check.Passes(condition, value)) throw new ArgumentException(message ?? $"The custom condition for {name} passed. Expected failure.", name);
+            Check.Passes(condition, value, onSuccess: () => RaiseArgumentException(message, name));
         }
 
-        public static void PassesAll<T>(IEnumerable<Func<T, bool>> conditions, T value, string name = null, string message = null)
+        public static void PassesAll<T>(IEnumerable<Check.Signature<T>> conditions, T value, string name = null, string message = null)
         {
-            if (name == null) name = UnspecifiedParamName;
-            IsNotNull(conditions, nameof(conditions));                    
-            if (Check.FailsAny(conditions,value)) throw new ArgumentException(message ?? $"One or more preconditions failed for {name}. Expected all to succeed.", name);
+            Check.PassesAll(conditions, value, onFailure: () => RaiseArgumentException(message, name));
         }
 
-        public static void PassesAny<T>(IEnumerable<Func<T, bool>> conditions, T value, string name = null, string message = null)
+        public static void PassesAny<T>(IEnumerable<Check.Signature<T>> conditions, T value, string name = null, string message = null)
         {
-            if (name == null) name = UnspecifiedParamName;
-            IsNotNull(conditions, nameof(conditions));
-            if (Check.FailsAll(conditions, value)) throw new ArgumentException(message ?? $"All preconditions failed for {name}. Expected at least one to succeed.", name);
+            Check.PassesAny(conditions, value, onFailure: () => RaiseArgumentException(message, name));
         }
 
-        public static void FailsAll<T>(IEnumerable<Func<T, bool>> conditions, T value, string name = null, string message = null)
+        public static void FailsAll<T>(IEnumerable<Check.Signature<T>> conditions, T value, string name = null, string message = null)
         {
-            if (name == null) name = UnspecifiedParamName;
-            IsNotNull(conditions, nameof(conditions));
-            if (Check.PassesAny(conditions, value)) throw new ArgumentException(message ?? $"One or more preconditions passed for {name}. Expected all to fail.", name);
+            Check.FailsAll(conditions, value, onFailure: () => RaiseArgumentException(message, name));
         }
 
-        public static void FailsAny<T>(IEnumerable<Func<T, bool>> conditions, T value, string name = null, string message = null)
+        public static void FailsAny<T>(IEnumerable<Check.Signature<T>> conditions, T value, string name = null, string message = null)
         {
-            if (name == null) name = UnspecifiedParamName;
-            IsNotNull(conditions, nameof(conditions));
-            if (Check.PassesAll(conditions, value)) throw new ArgumentException(message ?? $"All preconditions passed for {name}. Expected all to fail.", name);
+            Check.FailsAny(conditions, value, onFailure: () => RaiseArgumentException(message, name));
         }
         #endregion
     }

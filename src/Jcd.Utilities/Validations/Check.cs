@@ -7,140 +7,154 @@ namespace Jcd.Utilities.Validations
 {
     public static class Check
     {
+        public delegate bool Signature<T>(T value, Action onSuccess=null, Action onFailure=null);
+        public delegate bool Signature();
         #region Boolean and Null checks
-        public static bool IsTrue(bool value)
+        public static bool IsTrue(bool value, Action onSuccess = null, Action onFailure = null)
         {
-            return value;
+            return Passes(() => value, onSuccess, onFailure);
         }
 
-        public static bool IsFalse(bool value)
+        public static bool IsFalse(bool value, Action onSuccess = null, Action onFailure = null)
         {
-            return !value;
+            return Passes(() => !value, onSuccess, onFailure);
         }
 
-        public static bool IsNull<T>(T value)
+        public static bool IsNull<T>(T value, Action onSuccess = null, Action onFailure = null)
             where T : class
         {
-            return value == null;
+            return Passes(() => value == null, onSuccess, onFailure);
         }
 
-        public static bool IsNotNull<T>(T value)
+        public static bool IsNotNull<T>(T value, Action onSuccess = null, Action onFailure = null)
             where T : class
         {
-            return value != null;
+            return Passes(() => value != null, onSuccess, onFailure);
         }
         #endregion
 
         #region collection operations
-        public static bool IsEmpty<T>(IEnumerable<T> list)
+        public static bool IsEmpty<T>(IEnumerable<T> list, Action onSuccess = null, Action onFailure = null)
         {
-            return !HasData(list);
+            return Passes(() => !HasItems(list), onSuccess, onFailure);
         }
 
-        public static bool HasData<T>(IEnumerable<T> list)
+        public static bool HasItems<T>(IEnumerable<T> list, Action onSuccess = null, Action onFailure = null)
         {
-            return list.Any();
+            return Passes(() => list.Any(), onSuccess, onFailure);
         }
 
-        public static bool Contains<T>(IEnumerable<T> list,T target)
+        public static bool Contains<T>(IEnumerable<T> list, T target, Action onSuccess = null, Action onFailure = null)
         {
-            return list.Contains(target);
+            return Passes(() => list.Contains(target), onSuccess, onFailure);
         }
 
-        public static bool DoesNotContain<T>(IEnumerable<T> list, T target)
+        public static bool DoesNotContain<T>(IEnumerable<T> list, T target, Action onSuccess = null, Action onFailure = null)
         {
-            return !Contains(list,target);
+            return Passes(() => !Contains(list, target), onSuccess, onFailure);
         }
         #endregion
 
         #region string operations
 
-        public static bool IsEmpty(string value)
+        public static bool IsEmpty(string value, Action onSuccess = null, Action onFailure = null)
         {
-            return value.Length == 0;
+            return Passes(() => value.Length == 0, onSuccess, onFailure);
         }
-        public static bool HasData(string value)
+        public static bool HasData(string value, Action onSuccess = null, Action onFailure = null)
         {
-            return value.Length > 0;
+            return Passes(() => value.Length > 0, onSuccess, onFailure);
         }
-        public static bool IsWhitespace(string value)
+        public static bool IsWhitespace(string value, Action onSuccess = null, Action onFailure = null)
         {
-            return value?.TrimStart() == "" && HasData(value);
+            return Passes(() => value?.TrimStart() == "" && HasData(value), onSuccess, onFailure);
         }
-        public static bool IsNotWhitespace(string value)
+        public static bool IsNotWhitespace(string value, Action onSuccess = null, Action onFailure = null)
         {
-            return !IsWhitespace(value);
+            return Passes(() => !IsWhitespace(value), onSuccess, onFailure);
         }
 
         #endregion
 
         #region range and relational operations
 
-        public static bool AreSameObject(object lhs, object rhs)
+        public static bool AreSameObject(object lhs, object rhs, Action onSuccess = null, Action onFailure = null)
         {
-            return ReferenceEquals(lhs,rhs);
+            return Passes(() => ReferenceEquals(lhs, rhs), onSuccess, onFailure);
         }
 
-        public static bool IsGreaterThan<T>(T lhs, T rhs)
+        public static bool IsGreaterThan<T>(T lhs, T rhs, Action onSuccess = null, Action onFailure = null)
             where T : IComparable<T>
         {
-            return lhs.CompareTo(rhs) > 0;
+            return Passes(() => lhs.CompareTo(rhs) > 0, onSuccess, onFailure);
         }
 
-        public static bool IsLessThan<T>(T lhs, T rhs)
+        public static bool IsLessThan<T>(T lhs, T rhs, Action onSuccess = null, Action onFailure = null)
             where T : IComparable<T>
         {
-            return lhs.CompareTo(rhs) < 0;
+            return Passes(() => lhs.CompareTo(rhs) < 0, onSuccess, onFailure);
         }
 
-        public static bool AreEqual<T>(T lhs, T rhs)
+        public static bool AreEqual<T>(T lhs, T rhs, Action onSuccess = null, Action onFailure = null)
             where T : IComparable<T>
         {
-            return lhs.CompareTo(rhs) == 0;
+            return Passes(() => lhs.CompareTo(rhs) == 0, onSuccess, onFailure);
         }
 
-        public static bool InRange<T>(T value, T min, T max)
+        public static bool InRange<T>(T value, T min, T max, Action onSuccess = null, Action onFailure = null)
             where T : IComparable<T>
         {
-            return min.CompareTo(value) <= 0 && max.CompareTo(value) >= 0;
+            return Passes(() => min.CompareTo(value) <= 0 && max.CompareTo(value) >= 0, onSuccess, onFailure);
         }
 
-        public static bool NotInRange<T>(T value, T min, T max)
+        public static bool NotInRange<T>(T value, T min, T max, Action onSuccess = null, Action onFailure = null)
             where T : IComparable<T>
         {
-            return value.CompareTo(min) <= 0 || value.CompareTo(max) >= 0;
+            return Passes(() => value.CompareTo(min) <= 0 || value.CompareTo(max) >= 0, onSuccess, onFailure);
         }
         #endregion
 
-        #region custom and multi-condition operations
-        public static bool Passes<T>(Func<T,bool> condition, T value)
+        #region custom and multi-condition T
+        public static bool Passes<T>(Signature<T> condition, T value, Action onSuccess = null, Action onFailure = null)
         {
-            Argument.IsNotNull(condition, nameof(condition));
-            return condition(value);
+            return Passes(()=>condition(value), onSuccess, onFailure);
         }
 
-        public static bool Fails<T>(Func<T, bool> condition, T value)
+        public static bool Fails<T>(Signature<T> condition, T value, Action onSuccess = null, Action onFailure = null)
         {
-            return !Passes(condition,value);
+            return Passes(() => !condition(value), onSuccess, onFailure);
         }
 
-        public static bool PassesAll<T>(IEnumerable<Func<T, bool>> conditions, T value)
+        public static bool Passes(Func<bool> condition, Action onSuccess = null, Action onFailure = null)
         {
-            Argument.IsNotNull(conditions, nameof(conditions));
+            if (condition==null) throw new ArgumentNullException(nameof(condition));
+            var result = condition();
+            if (result) onSuccess?.Invoke(); else onFailure?.Invoke();
+            return result;
+        }
+
+        public static bool Fails(Func<bool> condition, Action onSuccess = null, Action onFailure = null)
+        {
+            return Passes(() => !condition(), onSuccess, onFailure);
+        }
+
+        public static bool PassesAll<T>(IEnumerable<Signature<T>> conditions, T value, Action onSuccess = null, Action onFailure = null)
+        {
+            if (conditions == null) throw new ArgumentNullException(nameof(conditions));
             bool result = true;
             int i = 0;
             foreach (var c in conditions)
             {
-                result = result && (c==null ? result : c(value));
+                result = result && (c == null ? result : c(value));
                 i++;
                 if (!result) break;
             }
-            return result;
+            return Passes(() => result, onSuccess, onFailure);
         }
 
-        public static bool FailsAll<T>(IEnumerable<Func<T, bool>> conditions, T value)
+        public static bool FailsAll<T>(IEnumerable<Signature<T>> conditions, T value, Action onSuccess = null, Action onFailure = null)
         {
-            Argument.IsNotNull(conditions, nameof(conditions));
+            if (conditions == null) throw new ArgumentNullException(nameof(conditions));
             bool result = false;
             int i = 0;
             foreach (var c in conditions)
@@ -149,17 +163,17 @@ namespace Jcd.Utilities.Validations
                 i++;
                 if (result) break;
             }
-            return !result;
+            return Passes(() => !result, onSuccess, onFailure);
         }
 
-        public static bool PassesAny<T>(IEnumerable<Func<T, bool>> conditions, T value)
+        public static bool PassesAny<T>(IEnumerable<Signature<T>> conditions, T value, Action onSuccess = null, Action onFailure = null)
         {
-            return !FailsAll(conditions,value);
+            return !FailsAll(conditions, value, onFailure, onSuccess);
         }
 
-        public static bool FailsAny<T>(IEnumerable<Func<T, bool>> conditions, T value)
+        public static bool FailsAny<T>(IEnumerable<Signature<T>> conditions, T value, Action onSuccess = null, Action onFailure = null)
         {
-            return !PassesAll(conditions, value);
+            return !PassesAll(conditions, value, onFailure, onSuccess);
         }
 
         #endregion

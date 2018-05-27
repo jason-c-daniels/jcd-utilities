@@ -8,7 +8,6 @@ namespace Jcd.Utilities.Validations
     public static class Check
     {
         public delegate bool Signature<T>(T value, Action onSuccess=null, Action onFailure=null);
-        public delegate bool Signature();
         #region Boolean and Null checks
         public static bool IsTrue(bool value, Action onSuccess = null, Action onFailure = null)
         {
@@ -59,11 +58,11 @@ namespace Jcd.Utilities.Validations
 
         public static bool IsEmpty(string value, Action onSuccess = null, Action onFailure = null)
         {
-            return Passes(() => value.Length == 0, onSuccess, onFailure);
+            return Passes(() => value !=null && value.Length == 0, onSuccess, onFailure);
         }
         public static bool HasData(string value, Action onSuccess = null, Action onFailure = null)
         {
-            return Passes(() => value.Length > 0, onSuccess, onFailure);
+            return Passes(() => value!=null && value.Length > 0, onSuccess, onFailure);
         }
         public static bool IsWhitespace(string value, Action onSuccess = null, Action onFailure = null)
         {

@@ -77,7 +77,7 @@ namespace Jcd.Utilities.Test.Validation
         }
 
         [Fact]
-        public void AreSameObject_BothDifferentObjects_ExpectTrue()
+        public void AreSameObject_BothDifferentObjects_ExpectFalse()
         {
             var o = new object();
             var o2 = new object();

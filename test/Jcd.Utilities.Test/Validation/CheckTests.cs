@@ -6,7 +6,7 @@ namespace Jcd.Utilities.Test.Validation
 {
     public class CheckTests
     {
-        #region boolean checks
+        #region boolean tests
         [Fact]
         public void IsTrue_PassFalse_ExpectFalse()
         {
@@ -29,7 +29,7 @@ namespace Jcd.Utilities.Test.Validation
         }
         #endregion
 
-        #region null checks
+        #region null tests
         [Fact]
         public void IsNull_PassObject_ExpectFalse()
         {
@@ -54,6 +54,7 @@ namespace Jcd.Utilities.Test.Validation
 
         #region collection tests
         #endregion
+
         #region range, equivalence, and relational tests
         [Fact]
         public void AreSameObject_BothNull_ExpectTrue()
@@ -75,7 +76,6 @@ namespace Jcd.Utilities.Test.Validation
             Assert.True(Check.AreSameObject(o, o2));
             Assert.True(Check.AreSameObject(o2, o));
         }
-
         [Fact]
         public void AreSameObject_BothDifferentObjects_ExpectFalse()
         {
@@ -85,6 +85,9 @@ namespace Jcd.Utilities.Test.Validation
             Assert.False(Check.AreSameObject(o2, o));
         }
 
+        #endregion
+
+        #region custom and multi-condition operations tests
         #endregion
     }
 }

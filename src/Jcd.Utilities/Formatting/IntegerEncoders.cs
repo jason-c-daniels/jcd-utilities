@@ -39,6 +39,12 @@
         /// A base 9 formatter using 0-8
         /// </summary>
         public readonly static IntegerEncoder Nonary = new IntegerEncoder("012345678", caseSensitive: true);
+
+        /// <summary>
+        /// A base 10 formatter using 0-9
+        /// </summary>
+        public readonly static IntegerEncoder Decimal = new IntegerEncoder("0123456789", caseSensitive: true);
+
         /// <summary>
         /// A base 11 formatter using 0-9A, case insensitive
         /// </summary>

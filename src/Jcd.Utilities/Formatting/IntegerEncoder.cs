@@ -405,7 +405,7 @@ namespace Jcd.Utilities
         {
             var isNeg = (value[0] == '-');
             int s = isNeg ? 1 : 0;
-            var l = value.Length;
+            var l = value.Length - s;
             value = value.Substring(s, l);
             return value;
         }

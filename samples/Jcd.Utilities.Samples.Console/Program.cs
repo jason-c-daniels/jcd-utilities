@@ -1,5 +1,7 @@
 ﻿using Jcd.Utilities.Generators;
 using System;
+using System.Diagnostics;
+using System.Threading;
 
 namespace Jcd.Utilities.Samples.ConsoleApp
 {
@@ -31,15 +33,44 @@ namespace Jcd.Utilities.Samples.ConsoleApp
             Console.WriteLine();
             Console.WriteLine();
 
+            var enc = IntegerEncoders.Base128_0_Monotonic_ISO8859_15;
             Console.WriteLine("Go!");
-            foreach (var l in new FibonacciGenerator(50, 10))
+            foreach (var l in new FibonacciGenerator(1, 15000))
             {
                 //Console.Write("x");
-                var e = IntegerEncoders.Base32Hex.Format(l);
-                var d = IntegerEncoders.Base32Hex.ParseBigInteger(e);
-                Console.WriteLine($"{l} -> {e} -> {d}");
+                var e = enc.Format(l);
+                var d = enc.ParseBigInteger(e);
+                if (l!=d)
+                Console.WriteLine($"ERROR: {l} -> {e} -> {d}");
             }
             Console.WriteLine();
+
+            Console.WriteLine("Go! Go! Go!");
+            var snum = int.MaxValue.ToString();
+            var sw = new Stopwatch();
+            sw.Reset();
+            const int iter = 1000000;
+            for (int q = 0; q < iter; q++)
+            {
+                sw.Start();
+                var z = int.Parse(snum);
+                sw.Stop();
+                Thread.Sleep(0);
+            }
+            var ip = sw.ElapsedMilliseconds;
+
+            sw.Reset();
+            for (int q = 0; q < iter; q++)
+            {
+                sw.Start();
+                var z = IntegerEncoders.Decimal.ParseInt32(snum);
+                sw.Stop();
+                Thread.Sleep(0);
+            }
+            var iedp = sw.ElapsedMilliseconds;
+
+            Console.WriteLine($"{snum} : int.Parse: {ip}   Decimal.ParseInt32: {iedp}");
+            Console.ReadKey();
         }
     }
 }

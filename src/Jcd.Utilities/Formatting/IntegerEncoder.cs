@@ -1,6 +1,6 @@
 ﻿using Jcd.Utilities.Extensions;
 using Jcd.Utilities.Formatting;
-using Jcd.Utilities.Validation;
+using Jcd.Utilities.Validations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -177,7 +177,8 @@ namespace Jcd.Utilities
             var cv = value;
             while (cv > 0)
             {
-                var r = (int)cv % Base;
+                var br = (cv % (int)Base);
+                var r = (int)br;
                 sb.Add(CharacterSet[r]);
                 cv = (cv / Base);
             }

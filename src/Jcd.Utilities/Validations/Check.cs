@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Jcd.Utilities.Validation
+namespace Jcd.Utilities.Validations
 {
     public static class Check
     {

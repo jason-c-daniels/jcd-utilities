@@ -1,4 +1,4 @@
-﻿using Jcd.Utilities.Validation;
+﻿using Jcd.Utilities.Validations;
 using System;
 using System.Collections.Generic;
 using System.Globalization;

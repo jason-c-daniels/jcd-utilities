@@ -1,8 +1,8 @@
-using Jcd.Utilities.Validation;
+using Jcd.Utilities.Validations;
 using System;
 using Xunit;
 
-namespace Jcd.Utilities.Test.Validation
+namespace Jcd.Utilities.Test.Validations
 {
     public class CheckTests
     {

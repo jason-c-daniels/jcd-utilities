@@ -2,7 +2,7 @@
 using System.Linq;
 using Xunit;
 
-namespace Jcd.Utilities.Test.Validation
+namespace Jcd.Utilities.Test.Validations
 {
     public class ArgumentTests
     {

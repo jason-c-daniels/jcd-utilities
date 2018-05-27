@@ -20,7 +20,10 @@ namespace Jcd.Utilities
         public IntegerEncoder(string encodeCharacterSet, string[] decodeCharacterSet)
             : base(formattableTypes, Format)
         {
-            if (decodeCharacterSet.Length != encodeCharacterSet.Length) throw new ArgumentException("decodeCharacterSet and encodeCharacterSet must be the same length.");
+            Argument.IsNotNullWhitespaceOrEmpty(encodeCharacterSet, nameof(encodeCharacterSet));
+            Argument.IsNotNull(decodeCharacterSet, nameof(decodeCharacterSet));
+            Argument.HasItems(decodeCharacterSet, nameof(decodeCharacterSet));
+            Argument.AreEqual(decodeCharacterSet.Length, encodeCharacterSet.Length, message: "decodeCharacterSet and encodeCharacterSet must be the same length.");
             this.CaseSensitive = true;
             this.CharacterSet = encodeCharacterSet;
             Base = CharacterSet.Length;
@@ -35,6 +38,8 @@ namespace Jcd.Utilities
         public IntegerEncoder(string characterSet, bool caseSensitive = false)
             : base(formattableTypes, Format)
         {
+            Argument.IsNotNullWhitespaceOrEmpty(characterSet, nameof(characterSet));
+            Argument.IsGreaterThan(characterSet.Length, 0, "characterSet.Length");
             this.CaseSensitive = caseSensitive;
             this.CharacterSet = caseSensitive ? characterSet : characterSet.ToLowerInvariant();
             Base = CharacterSet.Length;
@@ -182,6 +187,7 @@ namespace Jcd.Utilities
 
         public Int64 ParseInt64(string value)
         {
+            Argument.IsNotNullOrEmpty(value, nameof(value));
             if (!CaseSensitive) value = value.ToLowerInvariant();
 
             //TODO: Check for over/underflow
@@ -198,6 +204,7 @@ namespace Jcd.Utilities
 
         public Int32 ParseInt32(string value)
         {
+            Argument.IsNotNullOrEmpty(value, nameof(value));
             if (!CaseSensitive) value = value.ToLowerInvariant();
             //TODO: Check for over/underflow
             var result = (Int32)0;
@@ -213,6 +220,7 @@ namespace Jcd.Utilities
 
         public Int16 ParseInt16(string value)
         {
+            Argument.IsNotNullOrEmpty(value, nameof(value));
             if (!CaseSensitive) value = value.ToLowerInvariant();
             //TODO: Check for over/underflow
             var result = (Int16)0;
@@ -228,6 +236,7 @@ namespace Jcd.Utilities
 
         public SByte ParseSByte(string value)
         {
+            Argument.IsNotNullOrEmpty(value, nameof(value));
             if (!CaseSensitive) value = value.ToLowerInvariant();
             //TODO: Check for over/underflow
             var result = (SByte)0;
@@ -243,6 +252,7 @@ namespace Jcd.Utilities
 
         public UInt64 ParseUInt64(string value)
         {
+            Argument.IsNotNullOrEmpty(value, nameof(value));
             if (!CaseSensitive) value = value.ToLowerInvariant();
             //TODO: Check for over/underflow
             var result = (UInt64)0;
@@ -258,6 +268,7 @@ namespace Jcd.Utilities
 
         public UInt32 ParseUInt32(string value)
         {
+            Argument.IsNotNullOrEmpty(value, nameof(value));
             if (!CaseSensitive) value = value.ToLowerInvariant();
             //TODO: Check for over/underflow
             var result = (UInt32)0;
@@ -273,6 +284,7 @@ namespace Jcd.Utilities
 
         public UInt16 ParseUInt16(string value)
         {
+            Argument.IsNotNullOrEmpty(value, nameof(value));
             if (!CaseSensitive) value = value.ToLowerInvariant();
             //TODO: Check for over/underflow
             var result = (UInt16)0;
@@ -288,6 +300,7 @@ namespace Jcd.Utilities
 
         public Byte ParseByte(string value)
         {
+            Argument.IsNotNullOrEmpty(value, nameof(value));
             if (!CaseSensitive) value = value.ToLowerInvariant();
             //TODO: Check for over/underflow
             var result = (Byte)0;
@@ -303,6 +316,7 @@ namespace Jcd.Utilities
 
         public BigInteger ParseBigInteger(string value)
         {
+            Argument.IsNotNullOrEmpty(value, nameof(value));
             if (!CaseSensitive) value = value.ToLowerInvariant();
             //TODO: Check for over/underflow
             var result = (BigInteger)0;

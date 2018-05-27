@@ -43,7 +43,7 @@ namespace Jcd.Utilities.Validation
             if (Check.HasData(list)) throw new ArgumentException(message ?? $"Expected '{name}' to be empty but contained data.", name);
         }
 
-        public static void HasData<T>(IEnumerable<T> list, string name = null, string message = null)
+        public static void HasItems<T>(IEnumerable<T> list, string name = null, string message = null)
         {
             if (name == null) name = UnspecifiedParamName;
             if (Check.IsEmpty(list)) throw new ArgumentException(message ?? $"Expected '{name}' to have data but was empty.", name);
@@ -126,6 +126,11 @@ namespace Jcd.Utilities.Validation
         {
             if (name == null) name = UnspecifiedParamName;
             FailsAll(new Func<string, bool>[] { Check.IsNull, Check.IsEmpty, Check.IsWhitespace }, value, name, message ?? $"Expected {name} to be non-null, non-empty, and non-whitespace.");
+        }
+        public static void IsNotNullOrEmpty(string value, string name = null, string message = null)
+        {
+            if (name == null) name = UnspecifiedParamName;
+            FailsAll(new Func<string, bool>[] { Check.IsNull, Check.IsEmpty}, value, name, message ?? $"Expected {name} to be non-null and non-empty.");
         }
         #endregion
 

@@ -33,7 +33,7 @@ namespace Jcd.Utilities.Formatting
             if (!ReferenceEquals(this,formatProvider))
                 return null;
 
-            if (Array.BinarySearch<Type>(handledTypes, arg.GetType()) >= 0){
+            if (Array.BinarySearch(handledTypes, arg.GetType(),this) >= 0){
                 return formatFunction(this, fmt, arg, formatProvider);
             }
             return HandleOtherFormats(fmt, arg);

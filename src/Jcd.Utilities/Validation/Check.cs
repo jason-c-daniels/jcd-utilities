@@ -149,7 +149,7 @@ namespace Jcd.Utilities.Validation
                 i++;
                 if (result) break;
             }
-            return result;
+            return !result;
         }
 
         public static bool PassesAny<T>(IEnumerable<Func<T, bool>> conditions, T value)

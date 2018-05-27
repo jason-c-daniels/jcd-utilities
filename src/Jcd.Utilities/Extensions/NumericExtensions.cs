@@ -7,9 +7,9 @@ namespace Jcd.Utilities.Extensions
 {
     public static class NumericExtensions
     {
-        public static bool IsNumericType(this object o)
+        public static bool IsNumericType(this object self)
         {
-            switch (Type.GetTypeCode(o.GetType()))
+            switch (Type.GetTypeCode(self.GetType()))
             {
                 case TypeCode.Byte:
                 case TypeCode.SByte:
@@ -24,13 +24,13 @@ namespace Jcd.Utilities.Extensions
                 case TypeCode.Single:
                     return true;
                 default:
-                    return o.GetType() == typeof(BigInteger);
+                    return self.GetType() == typeof(BigInteger);
             }
         }
 
-        public static bool IsFloatType(this object o)
+        public static bool IsFloatType(this object self)
         {
-            switch (Type.GetTypeCode(o.GetType()))
+            switch (Type.GetTypeCode(self.GetType()))
             {
                 case TypeCode.Double:
                 case TypeCode.Single:
@@ -40,14 +40,14 @@ namespace Jcd.Utilities.Extensions
             }
         }
 
-        public static bool IsDecimalType(this object o)
+        public static bool IsDecimalType(this object self)
         {
-            return Type.GetTypeCode(o.GetType()) == TypeCode.Decimal;
+            return Type.GetTypeCode(self.GetType()) == TypeCode.Decimal;
         }
 
-        public static bool IsIntegerType(this object o)
+        public static bool IsIntegerType(this object self)
         {
-            switch (Type.GetTypeCode(o.GetType()))
+            switch (Type.GetTypeCode(self.GetType()))
             {
                 case TypeCode.Byte:
                 case TypeCode.SByte:
@@ -60,14 +60,14 @@ namespace Jcd.Utilities.Extensions
                     return true;
                 default:
                     {
-                        return o.GetType()==typeof(BigInteger);
+                        return self.GetType()==typeof(BigInteger);
                     }
             }
         }
 
-        public static bool IsSignedType(this object o)
+        public static bool IsSignedType(this object self)
         {
-            switch (Type.GetTypeCode(o.GetType()))
+            switch (Type.GetTypeCode(self.GetType()))
             {
                 case TypeCode.SByte:
                 case TypeCode.Int16:
@@ -78,13 +78,13 @@ namespace Jcd.Utilities.Extensions
                 case TypeCode.Double:
                     return true;
                 default:
-                    return o.GetType() == typeof(BigInteger);
+                    return self.GetType() == typeof(BigInteger);
             }
         }
 
-        public static bool IsUnsignedType(this object o)
+        public static bool IsUnsignedType(this object self)
         {
-            switch (Type.GetTypeCode(o.GetType()))
+            switch (Type.GetTypeCode(self.GetType()))
             {
                 case TypeCode.Byte:
                 case TypeCode.UInt16:

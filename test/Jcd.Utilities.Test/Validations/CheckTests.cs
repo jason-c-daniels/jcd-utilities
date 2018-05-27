@@ -796,6 +796,12 @@ namespace Jcd.Utilities.Test.Validations
 
 
         [Fact]
+        void PassesAny_AllDelegatesReturnTrue_ExpectTrue()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Fact]
         void FailsAll_DelegateListNull_ExpectArgumentNullException()
         {
             bool onFailureCalled = false;
@@ -812,13 +818,13 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        void FailsAll_AllDelegatesReturnTrue_ExpectTrue()
+        void FailsAll_AllDelegatesReturnFalse_ExpectTrue()
         {
             throw new NotImplementedException();
         }
 
         [Fact]
-        void FailsAll_OneDelegateReturnsFalse_ExpectFalse()
+        void FailsAll_OneDelegateReturnsTrue_ExpectFalse()
         {
             throw new NotImplementedException();
         }
@@ -841,17 +847,22 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        void FailsAny_OneDelegateReturnsTrue_ExpectTrue()
+        void FailsAny_OneDelegateReturnsFalse_ExpectTrue()
         {
             throw new NotImplementedException();
         }
 
         [Fact]
-        void FailsAny_AllDelegatesReturnFalse_ExpectFalse()
+        void FailsAny_AllDelegatesReturnTrue_ExpectFalse()
         {
             throw new NotImplementedException();
         }
 
+        [Fact]
+        void FailsAny_AllDelegatesReturnFalse_ExpectTrue()
+        {
+            throw new NotImplementedException();
+        }
 
         #endregion
 

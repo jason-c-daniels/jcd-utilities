@@ -35,7 +35,7 @@ namespace Jcd.Utilities.Samples.ConsoleApp
 
             var enc = IntegerEncoders.Base128_0_Monotonic_ISO8859_15;
             Console.WriteLine("Go!");
-            foreach (var l in new FibonacciGenerator(1, 15000))
+            foreach (var l in new NaiiveFibonacciSequence(1, 15000))
             {
                 //Console.Write("x");
                 var e = enc.Format(l);

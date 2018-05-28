@@ -9,6 +9,10 @@ main() {
 
     pushd "$DIR/.."
 
+	#capture the version information for the build.
+    export Version=`gitversion -showvariable SemVer`
+    export AssemblyVersion=`gitversion -showvariable AssemblySemVer`
+
     # set the default build configuration to Release, unless already set.
     if [ -z ${build_configuration+x} ]; then build_configuration="Release";  fi
 

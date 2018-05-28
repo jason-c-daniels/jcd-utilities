@@ -16,8 +16,4 @@
     <ProjectReference Include="..\..\src\Jcd.Utilities\Jcd.Utilities.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Extensions\" />
-  </ItemGroup>
-
 </Project>

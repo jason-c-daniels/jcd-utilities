@@ -7,10 +7,10 @@ namespace Jcd.Utilities.Generators
 {
     public class Generator<TState, TResult> : IEnumerable<TResult>
     {
-        public delegate TResult generatorType(TState state, out bool @continue);
+        public delegate TResult StateTransitionFunction(TState state, out bool @continue);
         protected TState state;
-        protected generatorType generator;
-        public Generator(TState initial, generatorType generator)
+        protected StateTransitionFunction generator;
+        public Generator(TState initial, StateTransitionFunction generator)
         {
             state = initial;
             this.generator = generator;

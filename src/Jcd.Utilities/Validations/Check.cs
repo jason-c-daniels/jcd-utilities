@@ -18,7 +18,7 @@ namespace Jcd.Utilities.Validations
     public static class Check
     {
         /// <summary>
-        /// The signature for delegates used in Passes<typeparamref name="T"/>, Fails<typeparamref name="T"/>, and aggregates of these methods (e.g. PassesAll). Most helpers implement this signature.
+        /// The signature for delegates used in Passes&lt;<typeparamref name="T"/>&gt;, Fails&lt;<typeparamref name="T"/>&gt;, and aggregates of these methods (e.g. PassesAll). Most helpers implement this signature.
         /// </summary>
         /// <typeparam name="T">The data type to perform a validation on.</typeparam>
         /// <param name="value">the value to validate</param>
@@ -141,7 +141,7 @@ namespace Jcd.Utilities.Validations
         /// <param name="target">The item to look for.</param>
         /// <param name="onSuccess">The action to take, if any, when the item is found.</param>
         /// <param name="onFailure">The action to take, if any, when the item is not found.</param>
-        /// <returns>True if the item is found, false otherwise.</returns>
+        /// <returns>True if the item is not found, false otherwise.</returns>
         public static bool DoesNotContain<T>(IEnumerable<T> list, T target, Action onSuccess = null, Action onFailure = null)
         {
             EnforceNonNull(list);
@@ -151,53 +151,134 @@ namespace Jcd.Utilities.Validations
 
         #region string operations
 
+        /// <summary>
+        /// Checks if a string is empty and not-null
+        /// </summary>
+        /// <param name="value">the value to check.</param>
+        /// <param name="onSuccess">The action to take if the string is empty</param>
+        /// <param name="onFailure">The action to take if the string is not empty</param>
+        /// <returns>True if the string is empty, false otherwise.</returns>
         public static bool IsEmpty(string value, Action onSuccess = null, Action onFailure = null)
         {
             return Passes(() => value !=null && value.Length == 0, onSuccess, onFailure);
         }
+
+        /// <summary>
+        /// Checks if a string has 1 or more characters in it.
+        /// </summary>
+        /// <param name="value">The string to check.</param>
+        /// <param name="onSuccess">The action to take if the string is not empty</param>
+        /// <param name="onFailure">The action to take if the string is empty</param>
+        /// <returns>True if the string is not empty, false otherwise.</returns>
         public static bool HasData(string value, Action onSuccess = null, Action onFailure = null)
         {
             return Passes(() => value != null && value.Length > 0, onSuccess, onFailure);
         }
+
+        /// <summary>
+        /// Checks if the string has only whitespace and is not empty nor null.
+        /// </summary>
+        /// <param name="value">The string to check.</param>
+        /// <param name="onSuccess">The action to take if the string is not empty.</param>
+        /// <param name="onFailure">The action to take if the string is null, empty, or has nonwhitespace characters.</param>
+        /// <returns>True if the string is non-zero length and only contains whitespace.</returns>
         public static bool IsWhitespace(string value, Action onSuccess = null, Action onFailure = null)
         {
-            return Passes(() => value?.TrimStart() == "" && HasData(value), onSuccess, onFailure);
+            return Passes(() => HasData(value) && value.TrimStart() == "", onSuccess, onFailure);
         }
+
+        /// <summary>
+        /// Checks if the string is not-null and is either empty or has non-whitespace characters.
+        /// </summary>
+        /// <param name="value">The string to check.</param>
+        /// <param name="onSuccess">The action to take if the string is not empty.</param>
+        /// <param name="onFailure">The action to take if the string is null, empty, or has nonwhitespace characters.</param>
+        /// <returns>True if the string is non-null, and non-whitespace, false otherwise.</returns>
         public static bool IsNotWhitespace(string value, Action onSuccess = null, Action onFailure = null)
         {
-            return Passes(() => !IsWhitespace(value), onSuccess, onFailure);
+            return Passes(() => !IsNull(value) && !IsWhitespace(value), onSuccess, onFailure);
         }
 
         #endregion
 
         #region range and relational operations
 
-        public static bool AreSameObject(object lhs, object rhs, Action onSuccess = null, Action onFailure = null)
+        /// <summary>
+        /// Checks if <paramref name="left"/> and <paramref name="right"/> are the same instance of an object.
+        /// </summary>
+        /// <param name="left">The lefthand side of the comparison</param>
+        /// <param name="right">The righthand side of the comparison</param>
+        /// <param name="onSuccess">The action to take if they're the same instance.</param>
+        /// <param name="onFailure">The action to take if they're not the same instance.</param>
+        /// <returns>true if left and right are the same instance.</returns>
+        /// <exception cref="ArgumentNullException">If <paramref name="left"/> or <paramref name="right"/> are null.</exception>
+        public static bool AreSameObject(object left, object right, Action onSuccess = null, Action onFailure = null)
         {
-            return Passes(() => ReferenceEquals(lhs, rhs), onSuccess, onFailure);
+            return Passes(() => ReferenceEquals(left, right), onSuccess, onFailure);
         }
 
-        public static bool IsGreaterThan<T>(T lhs, T rhs, Action onSuccess = null, Action onFailure = null)
+        /// <summary>
+        /// Checks if <paramref name="left"/> is greater than <paramref name="right"/>.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="left">The lefthand side of the comparison</param>
+        /// <param name="right">The righthand side of the comparison</param>
+        /// <param name="onSuccess">The action to take if <paramref name="left"/> is greater than <paramref name="right"/> </param>
+        /// <param name="onFailure">The action to take if <paramref name="left"/> is not greater than <paramref name="right"/> </param>
+        /// <returns>True if left is greater than right.</returns>
+        /// <exception cref="ArgumentNullException">If <paramref name="left"/> or <paramref name="right"/> are null.</exception>
+        public static bool IsGreaterThan<T>(T left, T right, Action onSuccess = null, Action onFailure = null)
             where T : IComparable<T>
         {
-            EnforceNonNull(lhs, rhs);
-            return Passes(() => lhs.CompareTo(rhs) > 0, onSuccess, onFailure);
+            EnforceNonNull(left, right);
+            return Passes(() => left.CompareTo(right) > 0, onSuccess, onFailure);
         }
 
-        public static bool IsLessThan<T>(T lhs, T rhs, Action onSuccess = null, Action onFailure = null)
+        /// <summary>
+        /// Checks if <paramref name="left"/> is less than <paramref name="right"/>.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="left">The lefthand side of the comparison</param>
+        /// <param name="right">The righthand side of the comparison</param>
+        /// <param name="onSuccess">The action to take if <paramref name="left"/> is less than <paramref name="right"/> </param>
+        /// <param name="onFailure">The action to take if <paramref name="left"/> is not less than <paramref name="right"/> </param>
+        /// <returns>True if left is less than right.</returns>
+        /// <exception cref="ArgumentNullException">If <paramref name="left"/> or <paramref name="right"/> are null.</exception>
+        public static bool IsLessThan<T>(T left, T right, Action onSuccess = null, Action onFailure = null)
             where T : IComparable<T>
         {
-            EnforceNonNull(lhs, rhs);
-            return Passes(() => lhs.CompareTo(rhs) < 0, onSuccess, onFailure);
+            EnforceNonNull(left, right);
+            return Passes(() => left.CompareTo(right) < 0, onSuccess, onFailure);
         }
 
-        public static bool AreEqual<T>(T lhs, T rhs, Action onSuccess = null, Action onFailure = null)
+        /// <summary>
+        /// Checks if <paramref name="left"/> is equivalent to <paramref name="right"/>.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="left">The lefthand side of the comparison</param>
+        /// <param name="right">The righthand side of the comparison</param>
+        /// <param name="onSuccess">The action to take if <paramref name="left"/> is equivalent to <paramref name="right"/> </param>
+        /// <param name="onFailure">The action to take if <paramref name="left"/> is not equivalent to  <paramref name="right"/> </param>
+        /// <returns>True if left is is equivalent to right.</returns>
+        /// <exception cref="ArgumentNullException">If <paramref name="left"/> or <paramref name="right"/> are null.</exception>
+        public static bool AreEqual<T>(T left, T right, Action onSuccess = null, Action onFailure = null)
             where T : IComparable<T>
         {
-            EnforceNonNull(lhs, rhs);
-            return Passes(() => lhs.CompareTo(rhs) == 0, onSuccess, onFailure);
+            EnforceNonNull(left, right);
+            return Passes(() => left.CompareTo(right) == 0, onSuccess, onFailure);
         }
 
+        /// <summary>
+        /// Checks if <paramref name="value"/> is within the range defined by [ <paramref name="min"/>, <paramref name="max"/> ]. Or in other words: <paramref name="value"/> ∈ [ <paramref name="min"/>, <paramref name="max"/>] 
+        /// </summary>
+        /// <typeparam name="T">The type of data being compared. It must implement IComparable&lt;<typeparamref name="T"/>&gt;</typeparam>
+        /// <param name="value">The value to compare</param>
+        /// <param name="min">The lower, inclusive, extent of the range.</param>
+        /// <param name="max">The upper, inclusive extent of the range.</param>
+        /// <param name="onSuccess">The action to take if <paramref name="value"/> ∈ [ <paramref name="min"/>, <paramref name="max"/> ] </param>
+        /// <param name="onFailure">The action to take if <paramref name="value"/> ∉ [ <paramref name="min"/>, <paramref name="max"/> ] </param>
+        /// <returns>True if <paramref name="value"/> ∈ [ <paramref name="min"/>, <paramref name="max"/> ] </returns>
+        /// <exception cref="ArgumentNullException">If <paramref name="value"/>, <paramref name="min"/>, or <paramref name="max"/> are null.</exception>
         public static bool InRange<T>(T value, T min, T max, Action onSuccess = null, Action onFailure = null)
             where T : IComparable<T>
         {
@@ -205,6 +286,17 @@ namespace Jcd.Utilities.Validations
             return Passes(() => min.CompareTo(value) <= 0 && max.CompareTo(value) >= 0, onSuccess, onFailure);
         }
 
+        /// <summary>
+        /// Checks if <paramref name="value"/> is NOT within the range defined by [ <paramref name="min"/>, <paramref name="max"/> ]. Or in other words: <paramref name="value"/> ∉ [ <paramref name="min"/>, <paramref name="max"/>] 
+        /// </summary>
+        /// <typeparam name="T">The type of data being compared. It must implement IComparable&lt;<typeparamref name="T"/>&gt;</typeparam>
+        /// <param name="value">The value to compare</param>
+        /// <param name="min">The lower, inclusive, extent of the range.</param>
+        /// <param name="max">The upper, inclusive extent of the range.</param>
+        /// <param name="onSuccess">The action to take if <paramref name="value"/> ∉ [ <paramref name="min"/>, <paramref name="max"/> ] </param>
+        /// <param name="onFailure">The action to take if <paramref name="value"/> ∈ [ <paramref name="min"/>, <paramref name="max"/> ] </param>
+        /// <returns>True if <paramref name="value"/> ∉ [ <paramref name="min"/>, <paramref name="max"/> ] </returns>
+        /// <exception cref="ArgumentNullException">If <paramref name="value"/>, <paramref name="min"/>, or <paramref name="max"/> are null.</exception>
         public static bool NotInRange<T>(T value, T min, T max, Action onSuccess = null, Action onFailure = null)
             where T : IComparable<T>
         {
@@ -214,18 +306,47 @@ namespace Jcd.Utilities.Validations
         #endregion
 
         #region custom and multi-condition T
+
+        /// <summary>
+        /// Evaluates a predicate ( <paramref name="condition"/> ) on a value (<paramref name="value"/> ) and returns the result of the evaluation.
+        /// </summary>
+        /// <typeparam name="T">The datatype being evaluated</typeparam>
+        /// <param name="condition">The condition being evaluated</param>
+        /// <param name="value">The value being evaluated</param>
+        /// <param name="onSuccess">The action to perform if <paramref name="condition"/> returns true when passed <paramref name="value"/> </param>
+        /// <param name="onFailure">The action to perform if <paramref name="condition"/> returns false when passed <paramref name="value"/> </param>
+        /// <returns>The result of executing <paramref name="condition"/>( <paramref name="value"/> )</returns>
+        /// <exception cref="ArgumentNullException">If <paramref name="condition"/> is null.</exception>
         public static bool Passes<T>(Signature<T> condition, T value, Action onSuccess = null, Action onFailure = null)
         {
             EnforceNonNull(condition);
             return Passes(()=>condition(value), onSuccess, onFailure);
         }
 
+        /// <summary>
+        /// Evaluates a predicate ( <paramref name="condition"/> ) on a value (<paramref name="value"/> ) and returns the logical complement of the result of the evaluation.
+        /// </summary>
+        /// <typeparam name="T">The datatype being evaluated</typeparam>
+        /// <param name="condition">The condition being evaluated</param>
+        /// <param name="value">The value being evaluated</param>
+        /// <param name="onSuccess">The action to perform if <paramref name="condition"/> returns false when passed <paramref name="value"/> </param>
+        /// <param name="onFailure">The action to perform if <paramref name="condition"/> returns true when passed <paramref name="value"/> </param>
+        /// <returns>The logical complement of the result of executing <paramref name="condition"/>( <paramref name="value"/> )</returns>
+        /// <exception cref="ArgumentNullException">If <paramref name="condition"/> is null.</exception>
         public static bool Fails<T>(Signature<T> condition, T value, Action onSuccess = null, Action onFailure = null)
         {
             EnforceNonNull(condition);
             return Passes(() => !condition(value), onSuccess, onFailure);
         }
 
+        /// <summary>
+        /// Evaluates a parameterless predicate ( <paramref name="condition"/> ) and returns the result of the evaluation.
+        /// </summary>
+        /// <param name="condition">The condition being evaluated</param>
+        /// <param name="onSuccess">The action to perform if <paramref name="condition"/> returns true </param>
+        /// <param name="onFailure">The action to perform if <paramref name="condition"/> returns false</param>
+        /// <returns>The result of executing <paramref name="condition"/>()</returns>
+        /// <exception cref="ArgumentNullException">If <paramref name="condition"/> is null.</exception>
         public static bool Passes(Func<bool> condition, Action onSuccess = null, Action onFailure = null)
         {
             EnforceNonNull(condition);
@@ -234,15 +355,34 @@ namespace Jcd.Utilities.Validations
             return result;
         }
 
+        /// <summary>
+        /// Evaluates a parameterless predicate ( <paramref name="condition"/> ) and returns the logical complement of the result of the evaluation.
+        /// </summary>
+        /// <param name="condition">The condition being evaluated</param>
+        /// <param name="onSuccess">The action to perform if <paramref name="condition"/> returns false </param>
+        /// <param name="onFailure">The action to perform if <paramref name="condition"/> returns true</param>
+        /// <returns>The logical complement of the result of executing <paramref name="condition"/>()</returns>
+        /// <exception cref="ArgumentNullException">If <paramref name="condition"/> is null.</exception>
         public static bool Fails(Func<bool> condition, Action onSuccess = null, Action onFailure = null)
         {
             EnforceNonNull(condition);
             return Passes(() => !condition(), onSuccess, onFailure);
         }
 
+        /// <summary>
+        /// Evaluates a set of predicates ( <paramref name="conditions"/> ) on a value to determine if all predicates return true.
+        /// </summary>
+        /// <typeparam name="T">The type of data being evaluated</typeparam>
+        /// <param name="conditions">The set of predicates to evaluate</param>
+        /// <param name="value">The value to evaluate the predicates on.</param>
+        /// <param name="onSuccess">The action to perform if all predicates return true.</param>
+        /// <param name="onFailure">The action to perform if any predicate return false.</param>
+        /// <returns>True if all predicates return true</returns>
+        /// <exception cref="ArgumentNullException">If <paramref name="conditions"/> is null or any individual entry is null.</exception>
         public static bool PassesAll<T>(IEnumerable<Signature<T>> conditions, T value, Action onSuccess = null, Action onFailure = null)
         {
             EnforceNonNull(conditions);
+            EnforceAllEntriesNonNull(conditions);
             bool result = true;
             int i = 0;
             foreach (var c in conditions)
@@ -254,9 +394,20 @@ namespace Jcd.Utilities.Validations
             return Passes(() => result, onSuccess, onFailure);
         }
 
+        /// <summary>
+        /// Evaluates a set of predicates ( <paramref name="conditions"/> ) on a value to determine if all predicates return false.
+        /// </summary>
+        /// <typeparam name="T">The type of data being evaluated</typeparam>
+        /// <param name="conditions">The set of predicates to evaluate</param>
+        /// <param name="value">The value to evaluate the predicates on.</param>
+        /// <param name="onSuccess">The action to perform if all predicates return false.</param>
+        /// <param name="onFailure">The action to perform if any predicate return true.</param>
+        /// <returns>True if all predicates return false</returns>
+        /// <exception cref="ArgumentNullException">If <paramref name="conditions"/> is null or any individual entry is null.</exception>
         public static bool FailsAll<T>(IEnumerable<Signature<T>> conditions, T value, Action onSuccess = null, Action onFailure = null)
         {
             EnforceNonNull<IEnumerable<Signature<T>>>(conditions);
+            EnforceAllEntriesNonNull(conditions);
             bool result = false;
             int i = 0;
             foreach (var c in conditions)
@@ -268,15 +419,37 @@ namespace Jcd.Utilities.Validations
             return Passes(() => !result, onSuccess, onFailure);
         }
 
+        /// <summary>
+        /// Evaluates a set of predicates ( <paramref name="conditions"/> ) on a value to determine if any predicates return true.
+        /// </summary>
+        /// <typeparam name="T">The type of data being evaluated</typeparam>
+        /// <param name="conditions">The set of predicates to evaluate</param>
+        /// <param name="value">The value to evaluate the predicates on.</param>
+        /// <param name="onSuccess">The action to perform if any predicate return true.</param>
+        /// <param name="onFailure">The action to perform if all predicates return false.</param>
+        /// <returns>True if any predicate return true</returns>
+        /// <exception cref="ArgumentNullException">If <paramref name="conditions"/> is null or any individual entry is null.</exception>
         public static bool PassesAny<T>(IEnumerable<Signature<T>> conditions, T value, Action onSuccess = null, Action onFailure = null)
         {
             EnforceNonNull(conditions);
+            EnforceAllEntriesNonNull(conditions);
             return !FailsAll(conditions, value, onFailure, onSuccess);
         }
 
+        /// <summary>
+        /// Evaluates a set of predicates ( <paramref name="conditions"/> ) on a value to determine if any predicates return false.
+        /// </summary>
+        /// <typeparam name="T">The type of data being evaluated</typeparam>
+        /// <param name="conditions">The set of predicates to evaluate</param>
+        /// <param name="value">The value to evaluate the predicates on.</param>
+        /// <param name="onSuccess">The action to perform if any predicate return false.</param>
+        /// <param name="onFailure">The action to perform if all predicates return true.</param>
+        /// <returns>True if any predicate return false</returns>
+        /// <exception cref="ArgumentNullException">If <paramref name="conditions"/> is null or any individual entry is null.</exception>
         public static bool FailsAny<T>(IEnumerable<Signature<T>> conditions, T value, Action onSuccess = null, Action onFailure = null)
         {
             EnforceNonNull(conditions);
+            EnforceAllEntriesNonNull(conditions);
             return !PassesAll(conditions, value, onFailure, onSuccess);
         }
 
@@ -289,6 +462,10 @@ namespace Jcd.Utilities.Validations
                 var v = val as object;
                 if (v is null) throw new ArgumentNullException();
             }
+        }
+        private static void EnforceAllEntriesNonNull<T>(IEnumerable<Signature<T>> conditions)
+        {
+            if (conditions.Any(c => c == null)) throw new ArgumentNullException(nameof(conditions), "All entries must be non-null");
         }
 
     }

@@ -2,7 +2,7 @@
 set -xe # fail on any error
 
 usage() {
-    echo "usage: $0 [--help|-h] [--build|-b] [--test|-t] [--docs|-d] [--samples|-s] [--clean|c]" >&2
+    echo "usage: $0 [--help|-h] [--all|-a] [--build|-b] [--test|-t] [--docs|-d] [--samples|-s] [--clean|c]" >&2
 }
 
 #parse options
@@ -12,11 +12,18 @@ RUN_TESTS=0
 BUILD_DOCS=0
 BUILD_CLEAN=0
 #BUILD_NUGET=0
-optspec=":chbsdt-:"
+optspec=":cahbsdt-:"
 while getopts "$optspec" optchar; do
     case "${optchar}" in
         -)
             case "${OPTARG}" in
+                all)
+                    BUILD_CLEAN=1
+                    BUILD_SOURCE=1
+                    BUILD_SAMPLES=1
+                    RUN_TESTS=1
+                    BUILD_DOCS=1
+                    ;;
                 clean)
                     BUILD_CLEAN=1
                     ;;
@@ -47,6 +54,13 @@ while getopts "$optspec" optchar; do
         h)
             usage
             exit 0
+            ;;
+        a)
+            BUILD_CLEAN=1
+            BUILD_SOURCE=1
+            BUILD_SAMPLES=1
+            RUN_TESTS=1
+            BUILD_DOCS=1
             ;;
         c)
             BUILD_CLEAN=1
@@ -94,10 +108,11 @@ main() {
     if [ -z ${build_configuration+x} ]; then build_configuration="Release";  fi
 
     if [ "$BUILD_CLEAN" == 1 ]; then 
-        # build the main library
+        # cleanup build artifacts
         dotnet clean
+        find . -type d -name obj -prune -exec rm -rf {} \;
+        find . -type d -name bin -prune -exec rm -rf {} \;
         find docs -not -name '*.md' -not -name docs -delete
-        exit 0
     fi
 
     if [ "$BUILD_SOURCE" == 1 ]; then 

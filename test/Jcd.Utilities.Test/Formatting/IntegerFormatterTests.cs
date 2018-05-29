@@ -20,6 +20,7 @@ namespace Jcd.Utilities.Test.Formatting
         [MemberData(nameof(NumericMemberDataProvider.BigIntegers), MemberType = typeof(NumericMemberDataProvider))]
         public void HexadecimalEncoder_BigIntegerRoundTrip_ExpectValuesMatch(object number)
         {
+            //TODO: actually convert them all to BigIntegers... or rename the test to reflect what it's actually testing.
             try
             {
                 var encoder = IntegerEncoders.Hexdecimal;
@@ -114,5 +115,7 @@ namespace Jcd.Utilities.Test.Formatting
                 Assert.Equal(num, decoded);
             }
         }
+
+        //TODO: Add a test "Theory" (what an awful term) that tests all encoders vs all sample data.
     }
 }

@@ -157,7 +157,7 @@ namespace Jcd.Utilities
                 sb.Add(CharacterSet[r]);
                 cv = (cv / (int)Base);
             }
-            if (value < 1) sb.Add('-');
+            if (value < 0) sb.Add('-');
             return FormatResult(sb);
         }
 
@@ -170,14 +170,25 @@ namespace Jcd.Utilities
         {
             var sb = new List<char>();
             var cv = value;
-            if (cv < 1) cv *= -1;
-            while (cv > 0)
+            if (cv < 1)
             {
-                var r = (int)(cv % Base);
-                sb.Add(CharacterSet[r]);
-                cv = (cv / (long)Base);
+                while (cv < 0)
+                {
+                    var r = (int)(cv % Base);
+                    sb.Add(CharacterSet[Math.Abs(r)]);
+                    cv = (cv / (long)Base);
+                }
             }
-            if (value < 1) sb.Add('-');
+            else
+            {
+                while (cv > 0)
+                {
+                    var r = (int)(cv % Base);
+                    sb.Add(CharacterSet[r]);
+                    cv = (cv / (long)Base);
+                }
+            }
+            if (value < 0) sb.Add('-');
             return FormatResult(sb);
         }
 
@@ -197,7 +208,7 @@ namespace Jcd.Utilities
                 sb.Add(CharacterSet[r]);
                 cv = (short)(cv / Base);
             }
-            if (value < 1) sb.Add('-');
+            if (value < 0) sb.Add('-');
             return FormatResult(sb);
         }
 
@@ -217,7 +228,7 @@ namespace Jcd.Utilities
                 sb.Add(CharacterSet[r]);
                 cv = (sbyte)(cv / Base);
             }
-            if (value < 1) sb.Add('-');
+            if (value < 0) sb.Add('-');
             return FormatResult(sb);
         }
 
@@ -238,7 +249,7 @@ namespace Jcd.Utilities
                 sb.Add(CharacterSet[r]);
                 cv = (cv / Base);
             }
-            if (value < 1) sb.Add('-');
+            if (value < 0) sb.Add('-');
             return FormatResult(sb);
         }
 
@@ -257,14 +268,14 @@ namespace Jcd.Utilities
 
             //TODO: Check for over/underflow
             var result = (Int64)0;
-            var isNeg = (value[0] == '-');
+            long isNeg = (value[0] == '-') ? -1 : 1;
             var digits = ExtractCoreDigits(value);
             foreach (var digit in digits)
             {
                 result *= Base;
-                result += charToValue[digit];
+                result += charToValue[digit] * isNeg;
             }
-            return isNeg ? -1 * result : result;
+            return result;
         }
 
         /// <summary>
@@ -281,14 +292,14 @@ namespace Jcd.Utilities
             if (!CaseSensitive) value = value.ToLowerInvariant();
             //TODO: Check for over/underflow
             var result = (Int32)0;
-            var isNeg = (value[0] == '-');
+            int isNeg = (value[0] == '-') ? -1 : 1;
             var digits = ExtractCoreDigits(value);
             foreach (var digit in digits)
             {
                 result *= (int)Base;
-                result += charToValue[digit];
+                result += charToValue[digit] * isNeg;
             }
-            return isNeg ? -1 * result : result;
+            return result;
         }
 
         /// <summary>
@@ -305,14 +316,14 @@ namespace Jcd.Utilities
             if (!CaseSensitive) value = value.ToLowerInvariant();
             //TODO: Check for over/underflow
             var result = (Int16)0;
-            var isNeg = (value[0] == '-');
+            Int16 isNeg = (value[0] == '-') ? (short)-1 : (short)1;
             var digits = ExtractCoreDigits(value);
             foreach (var digit in digits)
             {
                 result *= (Int16)Base;
-                result += (Int16)charToValue[digit];
+                result += (Int16)(charToValue[digit] * isNeg);
             }
-            return (Int16)(isNeg ? -1 * result : result);
+            return result;
         }
 
         /// <summary>
@@ -329,14 +340,14 @@ namespace Jcd.Utilities
             if (!CaseSensitive) value = value.ToLowerInvariant();
             //TODO: Check for over/underflow
             var result = (SByte)0;
-            var isNeg = (value[0] == '-');
+            SByte isNeg = (SByte)((value[0] == '-') ? -1 : 1);
             var digits = ExtractCoreDigits(value);
             foreach (var digit in digits)
             {
                 result *= (SByte)Base;
-                result += (SByte)charToValue[digit];
+                result += (SByte)(charToValue[digit] * isNeg);
             }
-            return (SByte)(isNeg ? -1 * result : result);
+            return result;
         }
 
         /// <summary>

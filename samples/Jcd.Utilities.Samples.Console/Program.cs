@@ -10,9 +10,9 @@ namespace Jcd.Utilities.Samples.ConsoleApp
     {
         static void Main(string[] args) {
             Console.WriteLine("Hello World!");
-            uint i = 4294967295;
+            var i = long.MinValue;
             var encoder = IntegerEncoders.Hexdecimal;
-            var parsed = encoder.ParseUInt32(encoder.Format(i));
+            var parsed = encoder.ParseInt64(encoder.Format(i));
             Console.WriteLine($"{encoder.Format(i)} == {Convert.ToString(parsed, encoder.Base)}");
             foreach(var j in new Int32SequenceGenerator(10,-20,-1))
             {

@@ -749,14 +749,14 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void PassesAll_FirstDelegateNull_ExpectItToBeIgnored()
+        public void PassesAll_FirstDelegateNull_ExpectArgumentNullException()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
             Check.Signature<int>[] delegates = { NullDelegate, TrueDelegate, TrueDelegate, TrueDelegate, TrueDelegate };
-            Assert.True(Check.PassesAny(delegates, 1, () => onSuccessCalled = true, () => onFailureCalled = true));
-            Assert.True(onSuccessCalled, "onSuccess was not called when it was expected to be called.");
-            Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
+            Assert.Throws<ArgumentNullException>(() => Check.PassesAny(delegates, 1, () => onSuccessCalled = true, () => onFailureCalled = true));
+            Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been.");
+            Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been.");
         }
 
         public void PassesAll_AllDelegatesReturnTrue_ExpectTrue()
@@ -792,14 +792,14 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void PassesAny_FirstDelegateNull_ExpectItToBeIgnored()
+        public void PassesAny_FirstDelegateNull_ExpectArgumentNullException()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
             Check.Signature<int>[] delegates = { NullDelegate, FalseDelegate, FalseDelegate, TrueDelegate, FalseDelegate };
-            Assert.True(Check.PassesAny(delegates, 1, () => onSuccessCalled = true, () => onFailureCalled = true));
-            Assert.True(onSuccessCalled, "onSuccess was not called when it was expected to be called.");
-            Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
+            Assert.Throws<ArgumentNullException>(() => Check.PassesAny(delegates, 1, () => onSuccessCalled = true, () => onFailureCalled = true));
+            Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been.");
+            Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been.");
         }
 
         [Fact]
@@ -847,14 +847,14 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void FailsAll_FirstDelegateNull_ExpectItToBeIgnored()
+        public void FailsAll_FirstDelegateNull_ExpectArgumentNullException()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
             Check.Signature<int>[] delegates = { NullDelegate, FalseDelegate, TrueDelegate, FalseDelegate, TrueDelegate };
-            Assert.False(Check.FailsAll(delegates, 1, () => onSuccessCalled = true, () => onFailureCalled = true));
-            Assert.True(onFailureCalled, "onFailure was not called when it was expected to be called.");
-            Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
+            Assert.Throws<ArgumentNullException>(()=>Check.FailsAll(delegates, 1, () => onSuccessCalled = true, () => onFailureCalled = true));
+            Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been.");
+            Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been.");
         }
 
         [Fact]
@@ -891,14 +891,14 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void FailsAny_FirstDelegateNull_ExpectItToBeIgnored()
+        public void FailsAny_FirstDelegateNull_ExpectArgumentNullException()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
             Check.Signature<int>[] delegates = { NullDelegate, TrueDelegate, TrueDelegate, FalseDelegate, TrueDelegate };
-            Assert.True(Check.FailsAny(delegates, 1, () => onSuccessCalled = true, () => onFailureCalled = true));
-            Assert.True(onSuccessCalled, "onSuccess was not called when it was expected to be called.");
-            Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
+            Assert.Throws<ArgumentNullException>(() => Check.FailsAny(delegates, 1, () => onSuccessCalled = true, () => onFailureCalled = true));
+            Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been.");
+            Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been.");
         }
 
         [Fact]

@@ -1,7 +1,6 @@
-﻿using System;
-using System.Numerics;
+﻿using System.Numerics;
 
-namespace Jcd.Utilities.Generators
+namespace Jcd.Utilities.Samples.ConsoleApp.Generators
 {
     public class BigIntegerSequenceState : EquatableSequenceState<BigInteger> { }
     public class Int64SequenceState : EquatableSequenceState<long> { }

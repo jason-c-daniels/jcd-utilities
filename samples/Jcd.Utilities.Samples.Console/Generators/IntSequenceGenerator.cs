@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Numerics;
+using Jcd.Utilities.Generators;
 
-namespace Jcd.Utilities.Generators
+namespace Jcd.Utilities.Samples.ConsoleApp.Generators
 {
     public class ByteSequenceGenerator : Generator<ByteSequenceState, Byte>
     {

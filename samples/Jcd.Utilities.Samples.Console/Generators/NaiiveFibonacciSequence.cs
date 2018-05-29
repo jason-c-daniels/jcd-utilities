@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Numerics;
-using System.Text;
+﻿using System.Numerics;
+using Jcd.Utilities.Generators;
 
-namespace Jcd.Utilities.Generators
+namespace Jcd.Utilities.Samples.ConsoleApp.Generators
 {
 
     public class NaiiveFibonacciSequence : Generator<NaiiveFibonacciSequence.State, BigInteger>

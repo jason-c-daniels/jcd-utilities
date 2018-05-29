@@ -1,7 +1,8 @@
-﻿using Jcd.Utilities.Generators;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Threading;
+using Jcd.Utilities.Generators;
+using Jcd.Utilities.Samples.ConsoleApp.Generators;
 
 namespace Jcd.Utilities.Samples.ConsoleApp
 {

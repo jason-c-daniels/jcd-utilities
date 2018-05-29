@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Jcd.Utilities.Generators
+namespace Jcd.Utilities.Samples.ConsoleApp.Generators
 {
     public class EquatableSequenceState<T> : IEquatable<EquatableSequenceState<T>>
         where T : IEquatable<T>

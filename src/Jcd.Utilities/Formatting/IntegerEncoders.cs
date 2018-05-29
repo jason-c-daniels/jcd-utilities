@@ -8,7 +8,7 @@
         static IntegerEncoders()
         {
             Base32_Crockford_DecodeCharacterSet = new[] { "0oO", "1iIlL", "2", "3", "4", "5", "6", "7", "8", "9", "aA", "bB", "cC", "dD", "eE", "fF", "gG", "hH", "jJ", "kK", "mM", "nN", "pP", "qQ", "rR", "sS", "tT", "vV", "wW", "xX", "yY", "zZ" };
-            Base32_Crockford = new IntegerEncoder("0123456789ABCDEFGHIJKLMNOPQRSTUV", Base32_Crockford_DecodeCharacterSet);
+            Base32_Crockford = new IntegerEncoder("0123456789ABCDEFGHJKMNPQRSTVWXYZ", Base32_Crockford_DecodeCharacterSet);
         }
 
         /// <summary>
@@ -100,6 +100,7 @@
         /// A base 32 formatter using 0-9A-V, case insensitive
         /// </summary>
         public readonly static IntegerEncoder Base32Hex = new IntegerEncoder("0123456789ABCDEFGHIJKLMNOPQRSTUV");
+
         /// <summary>
         /// A base 32 formatter for RFC4648 numnbers, case sensitive
         /// </summary>

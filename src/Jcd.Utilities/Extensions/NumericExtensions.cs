@@ -128,5 +128,16 @@ namespace Jcd.Utilities.Extensions
                     return false;
             }
         }
+
+        /// <summary>
+        /// Indicates if an object is of an integer data type.
+        /// </summary>
+        /// <param name="self">The object to check</param>
+        /// <returns>true if the object is of an integer data type</returns>
+        public static bool IsBigIntegerType(this object self)
+        {
+            return self.GetType() == typeof(BigInteger);
+        }
+
     }
 }

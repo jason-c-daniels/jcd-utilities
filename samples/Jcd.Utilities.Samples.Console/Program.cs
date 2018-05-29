@@ -10,9 +10,10 @@ namespace Jcd.Utilities.Samples.ConsoleApp
     {
         static void Main(string[] args) {
             Console.WriteLine("Hello World!");
-            int i = 3333;
+            uint i = 4294967295;
             var encoder = IntegerEncoders.Hexdecimal;
-            Console.WriteLine($"{encoder.Format(i)} == {Convert.ToString(encoder.ParseInt32(encoder.Format(i)), encoder.Base)}");
+            var parsed = encoder.ParseUInt32(encoder.Format(i));
+            Console.WriteLine($"{encoder.Format(i)} == {Convert.ToString(parsed, encoder.Base)}");
             foreach(var j in new Int32SequenceGenerator(10,-20,-1))
             {
                 Console.Write($"{j},");
@@ -34,7 +35,7 @@ namespace Jcd.Utilities.Samples.ConsoleApp
             Console.WriteLine();
             Console.WriteLine();
 
-            var enc = IntegerEncoders.Base128_0_Monotonic_ISO8859_15;
+            var enc = IntegerEncoders.Base32_Crockford;
             Console.WriteLine("Go!");
             foreach (var l in new NaiiveFibonacciSequence(1, 15000))
             {
@@ -50,7 +51,7 @@ namespace Jcd.Utilities.Samples.ConsoleApp
             var snum = int.MaxValue.ToString();
             var sw = new Stopwatch();
             sw.Reset();
-            const int iter = 1000000;
+            const int iter = 10000;
             for (int q = 0; q < iter; q++)
             {
                 sw.Start();

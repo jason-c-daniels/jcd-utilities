@@ -18,7 +18,7 @@ namespace Jcd.Utilities
         public readonly string CharacterSet;
         public readonly bool CaseSensitive;
         public readonly bool CharacterSetValuesAlwaysIncrease;
-        public readonly int Base;
+        public readonly ushort Base;
         static Type[] formattableTypes = { typeof(byte), typeof(sbyte), typeof(ushort), typeof(short), typeof(int), typeof(uint), typeof(long), typeof(ulong) };
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace Jcd.Utilities
             Argument.AreEqual(decodeCharacterSet.Length, encodeCharacterSet.Length, message: "decodeCharacterSet and encodeCharacterSet must be the same length.");
             this.CaseSensitive = true;
             this.CharacterSet = encodeCharacterSet;
-            Base = CharacterSet.Length;
+            Base = (ushort)CharacterSet.Length;
             for (int i = 0; i < decodeCharacterSet.Length; i++)
             {
                 foreach (char c in decodeCharacterSet[i])
@@ -57,7 +57,7 @@ namespace Jcd.Utilities
             Argument.IsGreaterThan(characterSet.Length, 0, "characterSet.Length");
             this.CaseSensitive = caseSensitive;
             this.CharacterSet = caseSensitive ? characterSet : characterSet.ToLowerInvariant();
-            Base = CharacterSet.Length;
+            Base = (ushort)CharacterSet.Length;
             int i = 0;
             char pc='\0';
             CharacterSetValuesAlwaysIncrease = true;
@@ -80,7 +80,7 @@ namespace Jcd.Utilities
             var cv = value;
             while (cv > 0)
             {
-                var r = (int)cv % Base;
+                var r = (int)(cv % Base);
                 sb.Add(CharacterSet[r]);
                 cv = (cv / (uint)Base);
             }
@@ -98,7 +98,7 @@ namespace Jcd.Utilities
             var cv = value;
             while (cv > 0)
             {
-                var r = (int)cv % Base;
+                var r = (int)(cv % Base);
                 sb.Add(CharacterSet[r]);
                 cv = (cv / (ulong)Base);
             }
@@ -116,7 +116,7 @@ namespace Jcd.Utilities
             var cv = value;
             while (cv > 0)
             {
-                var r = (int)cv % Base;
+                var r = (int)(cv % Base);
                 sb.Add(CharacterSet[r]);
                 cv = (ushort)(cv / Base);
             }
@@ -131,10 +131,10 @@ namespace Jcd.Utilities
         public string Format(byte value)
         {
             var sb = new List<char>();
-            var cv = Math.Abs(value);
+            var cv = value;
             while (cv > 0)
             {
-                var r = (int)cv % Base;
+                var r = (int)(cv % Base);
                 sb.Add(CharacterSet[r]);
                 cv = (byte)(cv / Base);
             }
@@ -149,10 +149,11 @@ namespace Jcd.Utilities
         public string Format(int value)
         {
             var sb = new List<char>();
-            var cv = Math.Abs(value);
+            var cv = value;
+            if (cv < 1) cv *= -1;
             while (cv > 0)
             {
-                var r = (int)cv % Base;
+                var r = (int)(cv % Base);
                 sb.Add(CharacterSet[r]);
                 cv = (cv / (int)Base);
             }
@@ -168,10 +169,11 @@ namespace Jcd.Utilities
         public string Format(long value)
         {
             var sb = new List<char>();
-            var cv = Math.Abs(value);
+            var cv = value;
+            if (cv < 1) cv *= -1;
             while (cv > 0)
             {
-                var r = (int)cv % Base;
+                var r = (int)(cv % Base);
                 sb.Add(CharacterSet[r]);
                 cv = (cv / (long)Base);
             }
@@ -188,9 +190,10 @@ namespace Jcd.Utilities
         {
             var sb = new List<char>();
             var cv = value;
+            if (cv < 1) cv *= -1;
             while (cv > 0)
             {
-                var r = (int)cv % Base;
+                var r = (int)(cv % Base);
                 sb.Add(CharacterSet[r]);
                 cv = (short)(cv / Base);
             }
@@ -207,9 +210,10 @@ namespace Jcd.Utilities
         {
             var sb = new List<char>();
             var cv = value;
+            if (cv < 1) cv *= -1;
             while (cv > 0)
             {
-                var r = (int)cv % Base;
+                var r = (int)(cv % Base);
                 sb.Add(CharacterSet[r]);
                 cv = (sbyte)(cv / Base);
             }
@@ -226,6 +230,7 @@ namespace Jcd.Utilities
         {
             var sb = new List<char>();
             var cv = value;
+            if (cv < 1) cv *= -1;
             while (cv > 0)
             {
                 var br = (cv % (int)Base);
@@ -280,7 +285,7 @@ namespace Jcd.Utilities
             var digits = ExtractCoreDigits(value);
             foreach (var digit in digits)
             {
-                result *= Base;
+                result *= (int)Base;
                 result += charToValue[digit];
             }
             return isNeg ? -1 * result : result;

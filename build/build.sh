@@ -87,7 +87,7 @@ while getopts "$optspec" optchar; do
     esac
 done
 
-if [ "$BUILD_SOURCE" != 1 ] && [ "$BUILD_DOCS" != 1 ] && [ "$BUILD_SAMPLES" != 1 ] && [ "$RUN_TESTS" != 1 ]; then
+if [ "$BUILD_CLEAN" != 1 ] && [ "$BUILD_SOURCE" != 1 ] && [ "$BUILD_DOCS" != 1 ] && [ "$BUILD_SAMPLES" != 1 ] && [ "$RUN_TESTS" != 1 ]; then
     BUILD_SOURCE=1
     RUN_TESTS=1
 fi

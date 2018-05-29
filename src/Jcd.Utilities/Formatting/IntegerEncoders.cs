@@ -1,5 +1,8 @@
 ﻿namespace Jcd.Utilities
 {
+    /// <summary>
+    /// A class with a set of predefined integer encoders.
+    /// </summary>
     public static class IntegerEncoders
     {
         static IntegerEncoders()
@@ -7,34 +10,42 @@
             Base32_Crockford_DecodeCharacterSet = new[] { "0oO", "1iIlL", "2", "3", "4", "5", "6", "7", "8", "9", "aA", "bB", "cC", "dD", "eE", "fF", "gG", "hH", "jJ", "kK", "mM", "nN", "pP", "qQ", "rR", "sS", "tT", "vV", "wW", "xX", "yY", "zZ" };
             Base32_Crockford = new IntegerEncoder("0123456789ABCDEFGHIJKLMNOPQRSTUV", Base32_Crockford_DecodeCharacterSet);
         }
+
         /// <summary>
         /// A base 2 formatter using 01
         /// </summary>
         public readonly static IntegerEncoder Binary = new IntegerEncoder("01", caseSensitive: true);
+
         /// <summary>
         /// A base 3 formatter  012
         /// </summary>
         public readonly static IntegerEncoder Ternary = new IntegerEncoder("012", caseSensitive: true);
+
         /// <summary>
         /// A quaternary formatter using 0123
         /// </summary>
         public readonly static IntegerEncoder Quaternary = new IntegerEncoder("0123", caseSensitive: true);
+
         /// <summary>
         /// A quinary (base 5) formatter using 0-4
         /// </summary>
         public readonly static IntegerEncoder Quinary = new IntegerEncoder("01234", caseSensitive: true);
+
         /// <summary>
         /// A base 6 formatter using 0-5
         /// </summary>
         public readonly static IntegerEncoder Senary = new IntegerEncoder("012345", caseSensitive: true);
+
         /// <summary>
         /// A base 7 formatter using 0-6
         /// </summary>
         public readonly static IntegerEncoder Septenary = new IntegerEncoder("0123456", caseSensitive: true);
+
         /// <summary>
         /// A base 8 formatter using 0-7
         /// </summary>
         public readonly static IntegerEncoder Octal = new IntegerEncoder("01234567", caseSensitive: true);
+
         /// <summary>
         /// A base 9 formatter using 0-8
         /// </summary>
@@ -49,26 +60,32 @@
         /// A base 11 formatter using 0-9A, case insensitive
         /// </summary>
         public readonly static IntegerEncoder Undecimal = new IntegerEncoder("0123456789A");
+
         /// <summary>
         /// A base 12 formatter using 0-9AB, case insensitive
         /// </summary>
         public readonly static IntegerEncoder Duodecimal = new IntegerEncoder("0123456789AB");
+
         /// <summary>
         /// A base 13 formatter using 0-9A-C, case insensitive
         /// </summary>
         public readonly static IntegerEncoder Tridecimal = new IntegerEncoder("0123456789ABC");
+
         /// <summary>
         /// A base 14 formatter using 0-9A-D, case insensitive
         /// </summary>
         public readonly static IntegerEncoder Tetradecimal = new IntegerEncoder("0123456789ABCD");
+
         /// <summary>
         /// A base 15 formatter using 0-9A-E, case insensitive
         /// </summary>
         public readonly static IntegerEncoder Pentadecimal = new IntegerEncoder("0123456789ABCDE");
+
         /// <summary>
         /// A base 16 formatter using 0-9A-F, case insensitive
         /// </summary>
         public readonly static IntegerEncoder Hexdecimal = new IntegerEncoder("0123456789ABCDEF");
+
         /// <summary>
         /// A base 17 formatter using 0-9A-G, case insensitive
         /// </summary>

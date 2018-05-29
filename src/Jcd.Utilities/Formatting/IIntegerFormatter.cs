@@ -2,6 +2,9 @@
 
 namespace Jcd.Utilities
 {
+    /// <summary>
+    /// An interface for formatting integers as text.
+    /// </summary>
     public interface IIntegerFormatter
     {
         string Format(byte value);

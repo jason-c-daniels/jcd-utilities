@@ -6,6 +6,9 @@ using System.Linq;
 
 namespace Jcd.Utilities.Formatting
 {
+    /// <summary>
+    /// A base class to simplify custom formatter implementation by requiring the implementer to only provide an array of handled types, and a formatting function.
+    /// </summary>
     public abstract class CustomFormatterBase : IFormatProvider, ICustomFormatter
     {
         protected class MyTypeComparer : IComparer<Type>
@@ -18,6 +21,22 @@ namespace Jcd.Utilities.Formatting
         protected MyTypeComparer typeComparer = new MyTypeComparer();
         private readonly Type[] handledTypes;
         private readonly Func<ICustomFormatter,string, object, IFormatProvider, string> formatFunction;
+
+        /// <summary>
+        /// This is the signature which custom formatting functions must abide by.
+        /// </summary>
+        /// <param name="customFormatter">The custom formatter object.</param>
+        /// <param name="formatString">the format string.</param>
+        /// <param name="argToFormat">The item to format.</param>
+        /// <param name="formatProvider">The format provider.</param>
+        /// <returns></returns>
+        public delegate string CustomFormattingFunction(ICustomFormatter customFormatter, string formatString, object argToFormat, IFormatProvider formatProvider);
+
+        /// <summary>
+        /// Constructs a custom formatter, and enforces some common rules.
+        /// </summary>
+        /// <param name="handledTypes">The data types the derived type will handle.</param>
+        /// <param name="formatFunction">The formatting function, provided by the derived type, abiding by the CustomFormattingFunction signature</param>
         protected CustomFormatterBase(IEnumerable<Type> handledTypes, Func<ICustomFormatter,string, object, IFormatProvider, string> formatFunction)
         {
             Argument.IsNotNull(handledTypes, nameof(handledTypes));
@@ -29,6 +48,11 @@ namespace Jcd.Utilities.Formatting
             this.handledTypes = ht.ToArray();
         }
 
+        /// <summary>
+        /// Gets the format object. (this)
+        /// </summary>
+        /// <param name="formatType">The data type for the format type</param>
+        /// <returns>this if custom formatting requested.</returns>
         public virtual object GetFormat(Type formatType)
         {
             Argument.IsNotNull(formatType);
@@ -38,6 +62,13 @@ namespace Jcd.Utilities.Formatting
                 return null;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fmt"></param>
+        /// <param name="arg"></param>
+        /// <param name="formatProvider"></param>
+        /// <returns></returns>
         public virtual string Format(string fmt, object arg, IFormatProvider formatProvider)
         {
             Argument.IsNotNull(formatProvider,nameof(formatProvider));

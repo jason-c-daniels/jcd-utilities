@@ -2,6 +2,9 @@
 
 namespace Jcd.Utilities
 {
+    /// <summary>
+    /// An interface specification for parsing integers.
+    /// </summary>
     public interface IIntegerParser
     {
         sbyte ParseSByte(string value);
@@ -13,7 +16,6 @@ namespace Jcd.Utilities
         ushort ParseUInt16(string value);
         uint ParseUInt32(string value);
         ulong ParseUInt64(string value);
-
         bool TryParseSByte(string value, ref sbyte result);
         bool TryParseInt16(string value, ref short result);
         bool TryParseInt32(string value, ref int result);

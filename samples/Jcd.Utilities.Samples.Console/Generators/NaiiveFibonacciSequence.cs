@@ -25,7 +25,7 @@ namespace Jcd.Utilities.Samples.ConsoleApp.Generators
         {
             // silently enumerate to the start.
             for (var i=0; i < start-1; i++)
-                generator(state, out bool ignore);
+                transitionFunction(state, out bool ignore);
 
             // reset nth to 0 so we can keep simple logic in the state transition function
             state.nth = 0;

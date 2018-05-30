@@ -37,24 +37,24 @@ namespace Jcd.Utilities.Validations
         #region Boolean and Null checks
         public static void IsTrue(bool value, string name = null, string message = null)
         {
-            Check.IsTrue(value, onFailure: () => RaiseExpectationViolation(true, false, name));
+            Check.IsTrue(value, onFailure: () => RaiseExpectationViolation(true, false, name, message));
         }
 
         public static void IsFalse(bool value, string name = null, string message = null)
         {
-            Check.IsFalse(value, onFailure: () => RaiseExpectationViolation(false, true, name));
+            Check.IsFalse(value, onFailure: () => RaiseExpectationViolation(false, true, name, message));
         }
 
         public static void IsNotNull<T>(T value, string name = null, string message = null)
             where T : class
         {
-            Check.IsNotNull(value, onFailure: () => RaiseArgumentNullException(name));
+            Check.IsNotNull(value, onFailure: () => RaiseArgumentNullException(name, message));
         }
 
         public static void IsNull<T>(T value, string name = null, string message = null)
             where T : class
         {
-            Check.IsNull(value, onFailure: () => RaiseExpectationViolation("null", "non-null", name));
+            Check.IsNull(value, onFailure: () => RaiseExpectationViolation("null", "non-null", name, message));
         }
         #endregion
 
@@ -98,7 +98,7 @@ namespace Jcd.Utilities.Validations
         public static void IsWhitespace(string value, string name = null, string message = null)
         {
             IsNotNull(value, name);
-            Check.IsWhitespace(value, onFailure: () => RaiseExpectationViolation("all whitespace","non-whitespace", name));
+            Check.IsWhitespace(value, onFailure: () => RaiseExpectationViolation("all whitespace","non-whitespace", name, message));
         }
         public static void IsWhitespaceOrEmpty(string value, string name = null, string message = null)
         {

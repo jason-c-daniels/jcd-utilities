@@ -7,6 +7,10 @@ namespace Jcd.Utilities.Test.Validations
 {
     public class ArgumentTests
     {
+        static string[] defaultExpectationViolationMessage = { "Expect", "to be", "it was" };
+        static string defaultArgumentExceptionMessage = "contains an invalid value";
+        static string defaultArgumentNullExceptionMessage = "expected non-null";
+        static string defaultArgumentOutOfRangeMessage = "Expected value within range";
         #region exception helpers		
 
         [Theory]
@@ -20,26 +24,11 @@ namespace Jcd.Utilities.Test.Validations
         [InlineData(0, 1, " ", "message")]
         public void RaiseExpectationViolation(int expected, int actual, string paramName, string message)
         {
-            var ex=Assert.Throws<ArgumentException>(() => Argument.RaiseExpectationViolation<int>(expected, actual, paramName, message));
-            if (message == null)
-            {
-                Assert.Contains("Expect", ex.Message);
-                Assert.Contains("to be", ex.Message);
-                Assert.Contains("it was", ex.Message);
-            }
-            else
-            {
-                Assert.StartsWith(message,ex.Message);
-            }
-            if (string.IsNullOrWhiteSpace(paramName))
-            {
-                Assert.StartsWith(Argument.UnspecifiedParamName, ex.ParamName );
-            }
-            else
-            {
-                Assert.StartsWith(paramName, ex.ParamName);
-            }
+            var ex = Assert.Throws<ArgumentException>(() => Argument.RaiseExpectationViolation<int>(expected, actual, paramName, message));
+
+            ValidateMessageAndParamName(ex, paramName, message, defaultExpectationViolationMessage);
         }
+
 
         [Theory]
         [InlineData("param",null)]
@@ -50,22 +39,7 @@ namespace Jcd.Utilities.Test.Validations
         public void RaiseArgumentException(string paramName, string message)
         {
             var ex = Assert.Throws<ArgumentException>(() => Argument.RaiseArgumentException(paramName, message));
-            if (message == null)
-            {
-                Assert.Contains("contains an invalid value", ex.Message);
-            }
-            else
-            {
-                Assert.StartsWith(message, ex.Message);
-            }
-            if (string.IsNullOrWhiteSpace(paramName))
-            {
-                Assert.StartsWith(Argument.UnspecifiedParamName, ex.ParamName);
-            }
-            else
-            {
-                Assert.StartsWith(paramName, ex.ParamName);
-            }
+            ValidateMessageAndParamName(ex, paramName, message, defaultArgumentExceptionMessage);
         }
 
         [Theory]
@@ -77,22 +51,7 @@ namespace Jcd.Utilities.Test.Validations
         public void RaiseArgumentNullException(string paramName, string message)
         {
             var ex = Assert.Throws<ArgumentNullException>(() => Argument.RaiseArgumentNullException(paramName, message));
-            if (message == null)
-            {
-                Assert.Contains("expected non-null", ex.Message);
-            }
-            else
-            {
-                Assert.StartsWith(message, ex.Message);
-            }
-            if (string.IsNullOrWhiteSpace(paramName))
-            {
-                Assert.StartsWith(Argument.UnspecifiedParamName, ex.ParamName);
-            }
-            else
-            {
-                Assert.StartsWith(paramName, ex.ParamName);
-            }
+            ValidateMessageAndParamName(ex, paramName, message, defaultArgumentNullExceptionMessage);
         }
 
         [Theory]
@@ -104,41 +63,52 @@ namespace Jcd.Utilities.Test.Validations
         public void RaiseArgumentOutOfRangeException_WithNullMessage_ExpectExceptionWithDefaultMessage(int actual, int min, int max, string paramName, string message)
         {
             var ex = Assert.Throws<ArgumentOutOfRangeException>(() => Argument.RaiseArgumentOutOfRangeException<int>(actual,min,max,paramName, message));
-            if (message == null)
-            {
-                Assert.Contains("Expected value within range", ex.Message);
-                Assert.Contains(actual.ToString(), ex.Message);
-                Assert.Contains(min.ToString(), ex.Message);
-                Assert.Contains(max.ToString(), ex.Message);
-            }
-            else
-            {
-                Assert.StartsWith(message, ex.Message);
-            }
-            if (string.IsNullOrWhiteSpace(paramName))
-            {
-                Assert.StartsWith(Argument.UnspecifiedParamName, ex.ParamName);
-            }
-            else
-            {
-                Assert.StartsWith(paramName, ex.ParamName);
-            }
+            ValidateMessageAndParamName(ex, paramName, message, defaultArgumentOutOfRangeMessage);
         }
 
         #endregion
 
         #region Boolean and Null checks
         [Fact]
-        public void IsTrue()
+        public void IsTrue_PassingTrue_ExpectNoExceptions()
         {
-            throw new NotImplementedException();
+            Argument.IsTrue(true);
+            Argument.IsTrue(true, "param");
+            Argument.IsTrue(true, "param","message");
+        }
+
+        [Theory]
+        [InlineData("param", null)]
+        [InlineData("param", "message")]
+        [InlineData(null, "message")]
+        [InlineData("", "message")]
+        [InlineData(" ", "message")]
+        public void IsTrue_PassingFalse_ExpectArgumentException(string paramName, string message)
+        {
+            var ex=Assert.Throws<ArgumentException>(()=>Argument.IsTrue(false,paramName,message));
+            ValidateMessageAndParamName(ex, paramName, message, defaultExpectationViolationMessage);
         }
 
         [Fact]
-        public void IsFalse()
+        public void IsFalse_PassingFalse_ExpectNoExceptions()
         {
-            throw new NotImplementedException();
+            Argument.IsFalse(false);
+            Argument.IsFalse(false, "param");
+            Argument.IsFalse(false, "param", "message");
         }
+
+        [Theory]
+        [InlineData("param", null)]
+        [InlineData("param", "message")]
+        [InlineData(null, "message")]
+        [InlineData("", "message")]
+        [InlineData(" ", "message")]
+        public void IsFalse_PassingTrue_ExpectArgumentException(string paramName, string message)
+        {
+            var ex = Assert.Throws<ArgumentException>(() => Argument.IsFalse(true,paramName,message));
+            ValidateMessageAndParamName(ex, paramName, message, defaultExpectationViolationMessage);
+        }
+
 
         [Fact]
         public void IsNotNull()
@@ -342,5 +312,31 @@ namespace Jcd.Utilities.Test.Validations
             throw new NotImplementedException();
         }
         #endregion
+        private static void ValidateMessageAndParamName(ArgumentException ex, string paramName, string message, string expectedDefaultMessage)
+        {
+            ValidateMessageAndParamName(ex, paramName, message, new[] { expectedDefaultMessage });
+        }
+        private static void ValidateMessageAndParamName(ArgumentException ex, string paramName, string message, string[] expectedDefaultMessage)
+        {
+            if (message == null)
+            {
+                foreach(var text in expectedDefaultMessage)
+                {
+                    Assert.Contains(text, ex.Message);
+                }
+            }
+            else
+            {
+                Assert.StartsWith(message, ex.Message);
+            }
+            if (string.IsNullOrWhiteSpace(paramName))
+            {
+                Assert.StartsWith(Argument.UnspecifiedParamName, ex.ParamName);
+            }
+            else
+            {
+                Assert.StartsWith(paramName, ex.ParamName);
+            }
+        }
     }
 }

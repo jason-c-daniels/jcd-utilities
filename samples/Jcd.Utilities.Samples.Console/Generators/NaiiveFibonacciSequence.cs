@@ -11,7 +11,7 @@ namespace Jcd.Utilities.Samples.ConsoleApp.Generators
             public BigInteger n1;
             public int nth;
             public int count;
-        };
+        }
 
         public NaiiveFibonacciSequence(int start, int count) : base(new State { count = count, n0 = 0, n1 = 1, nth = 0 },
                  (State state, out bool @continue) =>

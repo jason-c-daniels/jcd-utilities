@@ -1,7 +1,6 @@
 ﻿using Jcd.Utilities.Formatting;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace Jcd.Utilities.Test.Formatting
@@ -12,14 +11,20 @@ namespace Jcd.Utilities.Test.Formatting
         {
             public static Type[] handledTypes = new[] { typeof(int), typeof(Single) };
             protected string formatResult;
-            public FakeCustomFormatter(string formatResult, IEnumerable<Type> handledTypes=null, Func<ICustomFormatter, string, object, IFormatProvider, string> formatFunction=null) : base(handledTypes, formatFunction)
+
+            public FakeCustomFormatter(string formatResult, IEnumerable<Type> handledTypes = null,
+                                       Func<ICustomFormatter, string, object, IFormatProvider, string> formatFunction = null) : base(handledTypes, formatFunction)
             {
                 this.formatResult = formatResult;
             }
 
             public static string Format(ICustomFormatter formatter, string fmt, object arg, IFormatProvider fmtProvider)
             {
-                if (formatter is FakeCustomFormatter self) return self.formatResult;
+                if (formatter is FakeCustomFormatter self)
+                {
+                    return self.formatResult;
+                }
+
                 return null;
             }
         }
@@ -27,11 +32,12 @@ namespace Jcd.Utilities.Test.Formatting
         [Fact]
         public void Constructor_NullParams_ExpectArgumentNullExceptions()
         {
-            Assert.Throws<ArgumentNullException>(()=> new FakeCustomFormatter(null, null, null));
+            Assert.Throws<ArgumentNullException>(() => new FakeCustomFormatter(null, null, null));
             Assert.Throws<ArgumentNullException>(() => new FakeCustomFormatter("", null, null));
-            Assert.Throws<ArgumentNullException>(() => new FakeCustomFormatter("", new Type[] { typeof(int)}, null));
+            Assert.Throws<ArgumentNullException>(() => new FakeCustomFormatter("", new Type[] { typeof(int) }, null));
             Assert.Throws<ArgumentNullException>(() => new FakeCustomFormatter("", null, FakeCustomFormatter.Format));
         }
+
         [Fact]
         public void Constructor_EmptyHandledTypes_ExpectArgumentExceptions()
         {

@@ -7,11 +7,19 @@ namespace Jcd.Utilities.Test.Validations
 {
     public class CheckTests
     {
-        class IntHolder : IComparable<IntHolder>
+        private class IntHolder : IComparable<IntHolder>
         {
             public int Value;
-            public IntHolder() { }
-            public IntHolder(int v) { Value = v; }
+
+            public IntHolder()
+            {
+            }
+
+            public IntHolder(int v)
+            {
+                Value = v;
+            }
+
             public int CompareTo(IntHolder other)
             {
                 return Value.CompareTo(other.Value);
@@ -19,21 +27,35 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         #region boolean tests
+
         [Fact]
         public void IsTrue_PassFalse_ExpectFalseAndOnFailureCalled()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
-            Assert.False(Check.IsTrue(false, () => { onSuccessCalled = true; }, () => { onFailureCalled = true; }));
+            Assert.False(Check.IsTrue(false, () =>
+            {
+                onSuccessCalled = true;
+            }, () =>
+            {
+                onFailureCalled = true;
+            }));
             Assert.True(onFailureCalled, "onFailure was not called when it was expected to be called.");
             Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
         }
+
         [Fact]
         public void IsTrue_PassTrue_ExpectTrueAndOnSuccessCalled()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
-            Assert.True(Check.IsTrue(true, () => { onSuccessCalled = true; }, () => { onFailureCalled = true; }));
+            Assert.True(Check.IsTrue(true, () =>
+            {
+                onSuccessCalled = true;
+            }, () =>
+            {
+                onFailureCalled = true;
+            }));
             Assert.True(onSuccessCalled, "onSuccess was not called when it was expected to be called.");
             Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
         }
@@ -43,28 +65,49 @@ namespace Jcd.Utilities.Test.Validations
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
-            Assert.False(Check.IsFalse(true, () => { onSuccessCalled = true; }, () => { onFailureCalled = true; }));
+            Assert.False(Check.IsFalse(true, () =>
+            {
+                onSuccessCalled = true;
+            }, () =>
+            {
+                onFailureCalled = true;
+            }));
             Assert.True(onFailureCalled, "onFailure was not called when it was expected to be called.");
             Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
         }
+
         [Fact]
         public void IsFalse_PassFalse_ExpectTrueAndOnSuccessCalled()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
-            Assert.True(Check.IsFalse(false, () => { onSuccessCalled = true; }, () => { onFailureCalled = true; }));
+            Assert.True(Check.IsFalse(false, () =>
+            {
+                onSuccessCalled = true;
+            }, () =>
+            {
+                onFailureCalled = true;
+            }));
             Assert.True(onSuccessCalled, "onSuccess was not called when it was expected to be called.");
             Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
         }
-        #endregion
+
+        #endregion boolean tests
 
         #region null tests
+
         [Fact]
         public void IsNull_PassObject_ExpectFalse()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
-            Assert.False(Check.IsNull(new object(), () => { onSuccessCalled = true; }, () => { onFailureCalled = true; }));
+            Assert.False(Check.IsNull(new object(), () =>
+            {
+                onSuccessCalled = true;
+            }, () =>
+            {
+                onFailureCalled = true;
+            }));
             Assert.True(onFailureCalled, "onFailure was not called when it was expected to be called.");
             Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
         }
@@ -74,7 +117,13 @@ namespace Jcd.Utilities.Test.Validations
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
-            Assert.True(Check.IsNull((object)null, () => { onSuccessCalled = true; }, () => { onFailureCalled = true; }));
+            Assert.True(Check.IsNull((object)null, () =>
+            {
+                onSuccessCalled = true;
+            }, () =>
+            {
+                onFailureCalled = true;
+            }));
             Assert.True(onSuccessCalled, "onSuccess was not called when it was expected to be called.");
             Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
         }
@@ -84,7 +133,13 @@ namespace Jcd.Utilities.Test.Validations
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
-            Assert.True(Check.IsNotNull(new object(), () => { onSuccessCalled = true; }, () => { onFailureCalled = true; }));
+            Assert.True(Check.IsNotNull(new object(), () =>
+            {
+                onSuccessCalled = true;
+            }, () =>
+            {
+                onFailureCalled = true;
+            }));
             Assert.True(onSuccessCalled, "onSuccess was not called when it was expected to be called.");
             Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
         }
@@ -94,12 +149,18 @@ namespace Jcd.Utilities.Test.Validations
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
-            Assert.False(Check.IsNotNull((object)null, () => { onSuccessCalled = true; }, () => { onFailureCalled = true; }));
+            Assert.False(Check.IsNotNull((object)null, () =>
+            {
+                onSuccessCalled = true;
+            }, () =>
+            {
+                onFailureCalled = true;
+            }));
             Assert.True(onFailureCalled, "onFailure was not called when it was expected to be called.");
             Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
         }
 
-        #endregion
+        #endregion null tests
 
         #region collection tests
 
@@ -219,7 +280,8 @@ namespace Jcd.Utilities.Test.Validations
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
             List<int> list = null;
-            Assert.Throws<ArgumentNullException>(() => Check.DoesNotContain(list, 1, () => onSuccessCalled = true, () => onFailureCalled = true));
+            Assert.Throws<ArgumentNullException>(() => Check.DoesNotContain(list, 1, () => onSuccessCalled = true,
+                                                 () => onFailureCalled = true));
             Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been.");
             Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been.");
         }
@@ -256,9 +318,11 @@ namespace Jcd.Utilities.Test.Validations
             Assert.True(onFailureCalled, "onFailure was not called when it was expected to be called.");
             Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
         }
-        #endregion
+
+        #endregion collection tests
 
         #region string operations
+
         [Fact]
         public void IsEmpty_EmptyString_ExpectTrue()
         {
@@ -319,15 +383,22 @@ namespace Jcd.Utilities.Test.Validations
             Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
         }
 
-        #endregion
+        #endregion string operations
 
         #region range, equivalence, and relational tests
+
         [Fact]
         public void AreSameObject_BothNull_ExpectTrue()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
-            Assert.True(Check.AreSameObject(null, null, () => { onSuccessCalled = true; }, () => { onFailureCalled = true; }));
+            Assert.True(Check.AreSameObject(null, null, () =>
+            {
+                onSuccessCalled = true;
+            }, () =>
+            {
+                onFailureCalled = true;
+            }));
             Assert.True(onSuccessCalled, "onSuccess was not called when it was expected to be called.");
             Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
         }
@@ -338,11 +409,23 @@ namespace Jcd.Utilities.Test.Validations
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
             var o = new object();
-            Assert.False(Check.AreSameObject(o, null, () => { onSuccessCalled = true; }, () => { onFailureCalled = true; }));
+            Assert.False(Check.AreSameObject(o, null, () =>
+            {
+                onSuccessCalled = true;
+            }, () =>
+            {
+                onFailureCalled = true;
+            }));
             Assert.True(onFailureCalled, "onFailure was not called when it was expected to be called.");
             Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
 
-            Assert.False(Check.AreSameObject(null, o, () => { onSuccessCalled = true; }, () => { onFailureCalled = true; }));
+            Assert.False(Check.AreSameObject(null, o, () =>
+            {
+                onSuccessCalled = true;
+            }, () =>
+            {
+                onFailureCalled = true;
+            }));
             Assert.True(onFailureCalled, "onFailure was not called when it was expected to be called.");
             Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
         }
@@ -354,11 +437,23 @@ namespace Jcd.Utilities.Test.Validations
             bool onSuccessCalled = false;
             var o = new object();
             var o2 = o;
-            Assert.True(Check.AreSameObject(o, o2, () => { onSuccessCalled = true; }, () => { onFailureCalled = true; }));
+            Assert.True(Check.AreSameObject(o, o2, () =>
+            {
+                onSuccessCalled = true;
+            }, () =>
+            {
+                onFailureCalled = true;
+            }));
             Assert.True(onSuccessCalled, "onSuccess was not called when it was expected to be called.");
             Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
 
-            Assert.True(Check.AreSameObject(o2, o, () => { onSuccessCalled = true; }, () => { onFailureCalled = true; }));
+            Assert.True(Check.AreSameObject(o2, o, () =>
+            {
+                onSuccessCalled = true;
+            }, () =>
+            {
+                onFailureCalled = true;
+            }));
             Assert.True(onSuccessCalled, "onSuccess was not called when it was expected to be called.");
             Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
         }
@@ -370,11 +465,23 @@ namespace Jcd.Utilities.Test.Validations
             bool onSuccessCalled = false;
             var o = new object();
             var o2 = new object();
-            Assert.False(Check.AreSameObject(o, o2, () => { onSuccessCalled = true; }, () => { onFailureCalled = true; }));
+            Assert.False(Check.AreSameObject(o, o2, () =>
+            {
+                onSuccessCalled = true;
+            }, () =>
+            {
+                onFailureCalled = true;
+            }));
             Assert.True(onFailureCalled, "onFailure was not called when it was expected to be called.");
             Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
 
-            Assert.False(Check.AreSameObject(o2, o, () => { onSuccessCalled = true; }, () => { onFailureCalled = true; }));
+            Assert.False(Check.AreSameObject(o2, o, () =>
+            {
+                onSuccessCalled = true;
+            }, () =>
+            {
+                onFailureCalled = true;
+            }));
             Assert.True(onFailureCalled, "onFailure was not called when it was expected to be called.");
             Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
         }
@@ -385,16 +492,19 @@ namespace Jcd.Utilities.Test.Validations
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
             var x = new IntHolder(1);
-            IntHolder y = null; ;
-            Assert.Throws<ArgumentNullException>(() => Check.IsGreaterThan(x, y, () => onSuccessCalled = true, () => onFailureCalled = true));
+            IntHolder y = null;
+            Assert.Throws<ArgumentNullException>(() => Check.IsGreaterThan(x, y, () => onSuccessCalled = true,
+                                                 () => onFailureCalled = true));
             Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been.");
             Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been.");
 
-            Assert.Throws<ArgumentNullException>(() => Check.IsGreaterThan(y, x, () => onSuccessCalled = true, () => onFailureCalled = true));
+            Assert.Throws<ArgumentNullException>(() => Check.IsGreaterThan(y, x, () => onSuccessCalled = true,
+                                                 () => onFailureCalled = true));
             Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been.");
             Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
 
-            Assert.Throws<ArgumentNullException>(() => Check.IsGreaterThan(y, y, () => onSuccessCalled = true, () => onFailureCalled = true));
+            Assert.Throws<ArgumentNullException>(() => Check.IsGreaterThan(y, y, () => onSuccessCalled = true,
+                                                 () => onFailureCalled = true));
             Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been.");
             Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
         }
@@ -416,11 +526,13 @@ namespace Jcd.Utilities.Test.Validations
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
             int x = 2, y = 1;
-            Assert.False(Check.IsLessThan(x, y, () => onSuccessCalled = true, () => onFailureCalled = true), $"IsLessThan({x},{y}) failed.");
+            Assert.False(Check.IsLessThan(x, y, () => onSuccessCalled = true, () => onFailureCalled = true),
+                         $"IsLessThan({x},{y}) failed.");
             Assert.True(onFailureCalled, "onFailure was not called when it was expected to be called.");
             Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
             y = 2;
-            Assert.False(Check.IsLessThan(x, y, () => onSuccessCalled = true, () => onFailureCalled = true), $"IsLessThan({y},{x}) failed.");
+            Assert.False(Check.IsLessThan(x, y, () => onSuccessCalled = true, () => onFailureCalled = true),
+                         $"IsLessThan({y},{x}) failed.");
             Assert.True(onFailureCalled, "onFailure was not called when it was expected to be called.");
             Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
         }
@@ -431,16 +543,19 @@ namespace Jcd.Utilities.Test.Validations
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
             var x = new IntHolder(1);
-            IntHolder y = null; ;
-            Assert.Throws<ArgumentNullException>(() => Check.IsGreaterThan(x, y, () => onSuccessCalled = true, () => onFailureCalled = true));
+            IntHolder y = null;
+            Assert.Throws<ArgumentNullException>(() => Check.IsGreaterThan(x, y, () => onSuccessCalled = true,
+                                                 () => onFailureCalled = true));
             Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been.");
             Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
 
-            Assert.Throws<ArgumentNullException>(() => Check.IsGreaterThan(y, x, () => onSuccessCalled = true, () => onFailureCalled = true));
+            Assert.Throws<ArgumentNullException>(() => Check.IsGreaterThan(y, x, () => onSuccessCalled = true,
+                                                 () => onFailureCalled = true));
             Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been.");
             Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
 
-            Assert.Throws<ArgumentNullException>(() => Check.IsGreaterThan(y, y, () => onSuccessCalled = true, () => onFailureCalled = true));
+            Assert.Throws<ArgumentNullException>(() => Check.IsGreaterThan(y, y, () => onSuccessCalled = true,
+                                                 () => onFailureCalled = true));
             Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been.");
             Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
         }
@@ -451,7 +566,8 @@ namespace Jcd.Utilities.Test.Validations
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
             int x = 2, y = 1;
-            Assert.True(Check.IsGreaterThan(x, y, () => onSuccessCalled = true, () => onFailureCalled = true), $"AreEqual({x},{y}) failed.");
+            Assert.True(Check.IsGreaterThan(x, y, () => onSuccessCalled = true, () => onFailureCalled = true),
+                        $"AreEqual({x},{y}) failed.");
             Assert.True(onSuccessCalled, "onSuccess was not called when it was expected to be called.");
             Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
         }
@@ -462,11 +578,13 @@ namespace Jcd.Utilities.Test.Validations
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
             int x = 1, y = 2;
-            Assert.False(Check.IsGreaterThan(x, y, () => onSuccessCalled = true, () => onFailureCalled = true), $"IsGreaterThan({x},{y}) failed.");
+            Assert.False(Check.IsGreaterThan(x, y, () => onSuccessCalled = true, () => onFailureCalled = true),
+                         $"IsGreaterThan({x},{y}) failed.");
             Assert.True(onFailureCalled, "onFailure was not called when it was expected to be called.");
             Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
             y = 2;
-            Assert.False(Check.IsGreaterThan(x, y, () => onSuccessCalled = true, () => onFailureCalled = true), $"IsGreaterThan({y},{x}) failed.");
+            Assert.False(Check.IsGreaterThan(x, y, () => onSuccessCalled = true, () => onFailureCalled = true),
+                         $"IsGreaterThan({y},{x}) failed.");
             Assert.True(onFailureCalled, "onFailure was not called when it was expected to be called.");
             Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
         }
@@ -477,7 +595,7 @@ namespace Jcd.Utilities.Test.Validations
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
             var x = new IntHolder(1);
-            IntHolder y = null; ;
+            IntHolder y = null;
             Assert.Throws<ArgumentNullException>(() => Check.AreEqual(x, y, () => onSuccessCalled = true, () => onFailureCalled = true));
             Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been.");
             Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been.");
@@ -525,15 +643,18 @@ namespace Jcd.Utilities.Test.Validations
             var v0 = new IntHolder(1);
             var v1 = new IntHolder(5);
             IntHolder nv = null;
-            Assert.Throws<ArgumentNullException>(() => Check.InRange(nv, v0, v1, () => onSuccessCalled = true, () => onFailureCalled = true));
+            Assert.Throws<ArgumentNullException>(() => Check.InRange(nv, v0, v1, () => onSuccessCalled = true,
+                                                 () => onFailureCalled = true));
             Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been.");
             Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been.");
 
-            Assert.Throws<ArgumentNullException>(() => Check.InRange(v0, nv, v1, () => onSuccessCalled = true, () => onFailureCalled = true));
+            Assert.Throws<ArgumentNullException>(() => Check.InRange(v0, nv, v1, () => onSuccessCalled = true,
+                                                 () => onFailureCalled = true));
             Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been.");
             Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
 
-            Assert.Throws<ArgumentNullException>(() => Check.InRange(v1, v0, nv, () => onSuccessCalled = true, () => onFailureCalled = true));
+            Assert.Throws<ArgumentNullException>(() => Check.InRange(v1, v0, nv, () => onSuccessCalled = true,
+                                                 () => onFailureCalled = true));
             Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been.");
             Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
         }
@@ -572,15 +693,18 @@ namespace Jcd.Utilities.Test.Validations
             var v0 = new IntHolder(1);
             var v1 = new IntHolder(5);
             IntHolder nv = null;
-            Assert.Throws<ArgumentNullException>(() => Check.NotInRange(nv, v0, v1, () => onSuccessCalled = true, () => onFailureCalled = true));
+            Assert.Throws<ArgumentNullException>(() => Check.NotInRange(nv, v0, v1, () => onSuccessCalled = true,
+                                                 () => onFailureCalled = true));
             Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been.");
             Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been.");
 
-            Assert.Throws<ArgumentNullException>(() => Check.NotInRange(v0, nv, v1, () => onSuccessCalled = true, () => onFailureCalled = true));
+            Assert.Throws<ArgumentNullException>(() => Check.NotInRange(v0, nv, v1, () => onSuccessCalled = true,
+                                                 () => onFailureCalled = true));
             Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been.");
             Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
 
-            Assert.Throws<ArgumentNullException>(() => Check.NotInRange(v1, v0, nv, () => onSuccessCalled = true, () => onFailureCalled = true));
+            Assert.Throws<ArgumentNullException>(() => Check.NotInRange(v1, v0, nv, () => onSuccessCalled = true,
+                                                 () => onFailureCalled = true));
             Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been.");
             Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
         }
@@ -611,8 +735,7 @@ namespace Jcd.Utilities.Test.Validations
             Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
         }
 
-
-        #endregion
+        #endregion range, equivalence, and relational tests
 
         #region custom and multi-condition operations tests
 
@@ -631,7 +754,13 @@ namespace Jcd.Utilities.Test.Validations
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
-            Assert.True(Check.Passes((v, s, f) => true, 1, () => { onSuccessCalled = true; }, () => { onFailureCalled = true; }));
+            Assert.True(Check.Passes((v, s, f) => true, 1, () =>
+            {
+                onSuccessCalled = true;
+            }, () =>
+            {
+                onFailureCalled = true;
+            }));
             Assert.True(onSuccessCalled, "onSuccess was not called when it was expected to be called.");
             Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
         }
@@ -661,7 +790,7 @@ namespace Jcd.Utilities.Test.Validations
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
-            Assert.False(Check.Fails((v,s,f) => true, 1, () => onSuccessCalled = true, () => onFailureCalled = true));
+            Assert.False(Check.Fails((v, s, f) => true, 1, () => onSuccessCalled = true, () => onFailureCalled = true));
             Assert.True(onFailureCalled, "onFailure was not called when it was expected to be called.");
             Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
         }
@@ -671,7 +800,13 @@ namespace Jcd.Utilities.Test.Validations
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
-            Assert.True(Check.Fails((v, s, f) => false, 1, () => { onSuccessCalled = true; }, () => { onFailureCalled = true; }));
+            Assert.True(Check.Fails((v, s, f) => false, 1, () =>
+            {
+                onSuccessCalled = true;
+            }, () =>
+            {
+                onFailureCalled = true;
+            }));
             Assert.True(onSuccessCalled, "onSuccess was not called when it was expected to be called.");
             Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
         }
@@ -691,7 +826,13 @@ namespace Jcd.Utilities.Test.Validations
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
-            Assert.True(Check.Passes(() => true, () => { onSuccessCalled = true; }, () => { onFailureCalled = true; }));
+            Assert.True(Check.Passes(() => true, () =>
+            {
+                onSuccessCalled = true;
+            }, () =>
+            {
+                onFailureCalled = true;
+            }));
             Assert.True(onSuccessCalled, "onSuccess was not called when it was expected to be called.");
             Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
         }
@@ -705,7 +846,6 @@ namespace Jcd.Utilities.Test.Validations
             Assert.True(onFailureCalled, "onFailure was not called when it was expected to be called.");
             Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
         }
-
 
         [Fact]
         public void Fails_DelegateIsNull_ExpectArgumentNullException()
@@ -722,7 +862,7 @@ namespace Jcd.Utilities.Test.Validations
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
-            Assert.False(Check.Fails(()=>true, () => onSuccessCalled = true, () => onFailureCalled = true));
+            Assert.False(Check.Fails(() => true, () => onSuccessCalled = true, () => onFailureCalled = true));
             Assert.True(onFailureCalled, "onFailure was not called when it was expected to be called.");
             Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
         }
@@ -732,18 +872,24 @@ namespace Jcd.Utilities.Test.Validations
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
-            Assert.True(Check.Fails(() => false, () => { onSuccessCalled = true; }, () => { onFailureCalled = true; }));
+            Assert.True(Check.Fails(() => false, () =>
+            {
+                onSuccessCalled = true;
+            }, () =>
+            {
+                onFailureCalled = true;
+            }));
             Assert.True(onSuccessCalled, "onSuccess was not called when it was expected to be called.");
             Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
         }
-
 
         [Fact]
         public void PassesAll_DelegateListNull_ExpectArgumentNullException()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
-            Assert.Throws<ArgumentNullException>(() => Check.PassesAll(null, 1, () => onSuccessCalled = true, () => onFailureCalled = true));
+            Assert.Throws<ArgumentNullException>(() => Check.PassesAll(null, 1, () => onSuccessCalled = true,
+                                                 () => onFailureCalled = true));
             Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been.");
             Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been.");
         }
@@ -754,7 +900,8 @@ namespace Jcd.Utilities.Test.Validations
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
             Check.Signature<int>[] delegates = { NullDelegate, TrueDelegate, TrueDelegate, TrueDelegate, TrueDelegate };
-            Assert.Throws<ArgumentNullException>(() => Check.PassesAny(delegates, 1, () => onSuccessCalled = true, () => onFailureCalled = true));
+            Assert.Throws<ArgumentNullException>(() => Check.PassesAny(delegates, 1, () => onSuccessCalled = true,
+                                                 () => onFailureCalled = true));
             Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been.");
             Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been.");
         }
@@ -780,13 +927,13 @@ namespace Jcd.Utilities.Test.Validations
             Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
         }
 
-
         [Fact]
         public void PassesAny_DelegateListNull_ExpectArgumentNullException()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
-            Assert.Throws<ArgumentNullException>(() => Check.PassesAny(null, 1, () => onSuccessCalled = true, () => onFailureCalled = true));
+            Assert.Throws<ArgumentNullException>(() => Check.PassesAny(null, 1, () => onSuccessCalled = true,
+                                                 () => onFailureCalled = true));
             Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been.");
             Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been.");
         }
@@ -797,7 +944,8 @@ namespace Jcd.Utilities.Test.Validations
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
             Check.Signature<int>[] delegates = { NullDelegate, FalseDelegate, FalseDelegate, TrueDelegate, FalseDelegate };
-            Assert.Throws<ArgumentNullException>(() => Check.PassesAny(delegates, 1, () => onSuccessCalled = true, () => onFailureCalled = true));
+            Assert.Throws<ArgumentNullException>(() => Check.PassesAny(delegates, 1, () => onSuccessCalled = true,
+                                                 () => onFailureCalled = true));
             Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been.");
             Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been.");
         }
@@ -823,7 +971,6 @@ namespace Jcd.Utilities.Test.Validations
             Assert.True(onFailureCalled, "onFailure was not called when it was expected to be called.");
             Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
         }
-
 
         [Fact]
         public void PassesAny_AllDelegatesReturnTrue_ExpectTrue()
@@ -852,7 +999,8 @@ namespace Jcd.Utilities.Test.Validations
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
             Check.Signature<int>[] delegates = { NullDelegate, FalseDelegate, TrueDelegate, FalseDelegate, TrueDelegate };
-            Assert.Throws<ArgumentNullException>(()=>Check.FailsAll(delegates, 1, () => onSuccessCalled = true, () => onFailureCalled = true));
+            Assert.Throws<ArgumentNullException>(() => Check.FailsAll(delegates, 1, () => onSuccessCalled = true,
+                                                 () => onFailureCalled = true));
             Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been.");
             Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been.");
         }
@@ -879,7 +1027,6 @@ namespace Jcd.Utilities.Test.Validations
             Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
         }
 
-
         [Fact]
         public void FailsAny_DelegateListNull_ExpectArgumentNullException()
         {
@@ -896,7 +1043,8 @@ namespace Jcd.Utilities.Test.Validations
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
             Check.Signature<int>[] delegates = { NullDelegate, TrueDelegate, TrueDelegate, FalseDelegate, TrueDelegate };
-            Assert.Throws<ArgumentNullException>(() => Check.FailsAny(delegates, 1, () => onSuccessCalled = true, () => onFailureCalled = true));
+            Assert.Throws<ArgumentNullException>(() => Check.FailsAny(delegates, 1, () => onSuccessCalled = true,
+                                                 () => onFailureCalled = true));
             Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been.");
             Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been.");
         }
@@ -934,9 +1082,10 @@ namespace Jcd.Utilities.Test.Validations
             Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
         }
 
-        #endregion
+        #endregion custom and multi-condition operations tests
 
         #region misc tests
+
         [Fact]
         public void VariousMethods_LackingHandlers_NoExceptionsThrown()
         {
@@ -1027,15 +1176,17 @@ namespace Jcd.Utilities.Test.Validations
             Check.PassesAny(new Check.Signature<string>[] { Check.IsNull, Check.IsEmpty }, null);
             Check.PassesAny(new Check.Signature<string>[] { Check.IsWhitespace, Check.IsEmpty }, null);
         }
-        #endregion
+
+        #endregion misc tests
 
         #region fake delegates
+
         private static bool TrueDelegate<T>(T value, Action onSuccess = null, Action onFailure = null) => true;
 
         private static bool FalseDelegate<T>(T value, Action onSuccess = null, Action onFailure = null) => false;
 
-        Check.Signature<int> NullDelegate = null;
-        #endregion
+        private Check.Signature<int> NullDelegate = null;
 
+        #endregion fake delegates
     }
 }

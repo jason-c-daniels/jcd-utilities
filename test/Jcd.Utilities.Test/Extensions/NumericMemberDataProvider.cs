@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Numerics;
-using System.Text;
 
 namespace Jcd.Utilities.Test.Extensions
 {
@@ -62,7 +61,7 @@ namespace Jcd.Utilities.Test.Extensions
         public static IEnumerable<object[]> Int32s()
         {
             int two = 2;
-            int  one = 1;
+            int one = 1;
             yield return new[] { (object)Int32.MaxValue };
             yield return new[] { (object)Int32.MinValue };
             yield return new[] { (object)two };
@@ -88,7 +87,6 @@ namespace Jcd.Utilities.Test.Extensions
             yield return new[] { (object)two };
             yield return new[] { (object)one };
         }
-
 
         public static IEnumerable<object[]> Decimals()
         {
@@ -135,9 +133,8 @@ namespace Jcd.Utilities.Test.Extensions
         public static IEnumerable<object[]> NonNumbersCollection()
         {
             yield return new[] { new object() };
-            yield return new[] { (object)new [] { 1,2,3 } };
+            yield return new[] { (object)new[] { 1, 2, 3 } };
             yield return new[] { new Exception() };
         }
-
     }
 }

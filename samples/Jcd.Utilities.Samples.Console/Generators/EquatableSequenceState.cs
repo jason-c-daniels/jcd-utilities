@@ -3,7 +3,7 @@
 namespace Jcd.Utilities.Samples.ConsoleApp.Generators
 {
     public class EquatableSequenceState<T> : IEquatable<EquatableSequenceState<T>>
-        where T : IEquatable<T>
+       where T : IEquatable<T>
     {
         public T current;
         public T stop;

@@ -1,20 +1,20 @@
 ﻿using Jcd.Utilities.Validations;
 using System;
-using System.Linq;
 using Xunit;
 
 namespace Jcd.Utilities.Test.Validations
 {
     public class ArgumentTests
     {
-        static string[] defaultExpectationViolationMessage = { "Expect", "to be", "it was" };
-        static string defaultArgumentExceptionMessage = "contains an invalid value";
-        static string defaultArgumentNullExceptionMessage = "expected non-null";
-        static string defaultArgumentOutOfRangeMessage = "Expected value within range";
-        #region exception helpers		
+        private static string[] defaultExpectationViolationMessage = { "Expect", "to be", "it was" };
+        private static string defaultArgumentExceptionMessage = "contains an invalid value";
+        private static string defaultArgumentNullExceptionMessage = "expected non-null";
+        private static string defaultArgumentOutOfRangeMessage = "Expected value within range";
+
+        #region exception helpers
 
         [Theory]
-        [InlineData(0,1,null,null)]
+        [InlineData(0, 1, null, null)]
         [InlineData(0, 1, null, "message")]
         [InlineData(0, 1, "param", "message")]
         [InlineData(0, 1, "param", null)]
@@ -29,10 +29,9 @@ namespace Jcd.Utilities.Test.Validations
             ValidateMessageAndParamName(ex, paramName, message, defaultExpectationViolationMessage);
         }
 
-
         [Theory]
-        [InlineData("param",null)]
-        [InlineData("param","message")]
+        [InlineData("param", null)]
+        [InlineData("param", "message")]
         [InlineData(null, "message")]
         [InlineData("", "message")]
         [InlineData(" ", "message")]
@@ -60,21 +59,24 @@ namespace Jcd.Utilities.Test.Validations
         [InlineData(1, 2, 5, null, "message")]
         [InlineData(1, 2, 5, "", "message")]
         [InlineData(1, 2, 5, " ", "message")]
-        public void RaiseArgumentOutOfRangeException_WithNullMessage_ExpectExceptionWithDefaultMessage(int actual, int min, int max, string paramName, string message)
+        public void RaiseArgumentOutOfRangeException_WithNullMessage_ExpectExceptionWithDefaultMessage(int actual, int min, int max,
+              string paramName, string message)
         {
-            var ex = Assert.Throws<ArgumentOutOfRangeException>(() => Argument.RaiseArgumentOutOfRangeException<int>(actual,min,max,paramName, message));
+            var ex = Assert.Throws<ArgumentOutOfRangeException>(() => Argument.RaiseArgumentOutOfRangeException<int>(actual, min, max,
+                     paramName, message));
             ValidateMessageAndParamName(ex, paramName, message, defaultArgumentOutOfRangeMessage);
         }
 
-        #endregion
+        #endregion exception helpers
 
         #region Boolean and Null checks
+
         [Fact]
         public void IsTrue_PassingTrue_ExpectNoExceptions()
         {
             Argument.IsTrue(true);
             Argument.IsTrue(true, "param");
-            Argument.IsTrue(true, "param","message");
+            Argument.IsTrue(true, "param", "message");
         }
 
         [Theory]
@@ -85,7 +87,7 @@ namespace Jcd.Utilities.Test.Validations
         [InlineData(" ", "message")]
         public void IsTrue_PassingFalse_ExpectArgumentException(string paramName, string message)
         {
-            var ex=Assert.Throws<ArgumentException>(()=>Argument.IsTrue(false,paramName,message));
+            var ex = Assert.Throws<ArgumentException>(() => Argument.IsTrue(false, paramName, message));
             ValidateMessageAndParamName(ex, paramName, message, defaultExpectationViolationMessage);
         }
 
@@ -105,10 +107,9 @@ namespace Jcd.Utilities.Test.Validations
         [InlineData(" ", "message")]
         public void IsFalse_PassingTrue_ExpectArgumentException(string paramName, string message)
         {
-            var ex = Assert.Throws<ArgumentException>(() => Argument.IsFalse(true,paramName,message));
+            var ex = Assert.Throws<ArgumentException>(() => Argument.IsFalse(true, paramName, message));
             ValidateMessageAndParamName(ex, paramName, message, defaultExpectationViolationMessage);
         }
-
 
         [Fact]
         public void IsNotNull()
@@ -121,9 +122,11 @@ namespace Jcd.Utilities.Test.Validations
         {
             throw new NotImplementedException();
         }
-        #endregion
+
+        #endregion Boolean and Null checks
 
         #region collection operations
+
         [Fact]
         public void IsEmptyCollection()
         {
@@ -147,9 +150,11 @@ namespace Jcd.Utilities.Test.Validations
         {
             throw new NotImplementedException();
         }
-        #endregion
+
+        #endregion collection operations
 
         #region string operations
+
         [Fact]
         public void IsEmptyString()
         {
@@ -221,7 +226,8 @@ namespace Jcd.Utilities.Test.Validations
         {
             throw new NotImplementedException();
         }
-        #endregion
+
+        #endregion string operations
 
         #region range and relational operations
 
@@ -273,9 +279,10 @@ namespace Jcd.Utilities.Test.Validations
             throw new NotImplementedException();
         }
 
-        #endregion
+        #endregion range and relational operations
 
         #region custom and multi-condition operations
+
         [Fact]
         public void Passes()
         {
@@ -311,16 +318,21 @@ namespace Jcd.Utilities.Test.Validations
         {
             throw new NotImplementedException();
         }
-        #endregion
-        private static void ValidateMessageAndParamName(ArgumentException ex, string paramName, string message, string expectedDefaultMessage)
+
+        #endregion custom and multi-condition operations
+
+        private static void ValidateMessageAndParamName(ArgumentException ex, string paramName, string message,
+              string expectedDefaultMessage)
         {
             ValidateMessageAndParamName(ex, paramName, message, new[] { expectedDefaultMessage });
         }
-        private static void ValidateMessageAndParamName(ArgumentException ex, string paramName, string message, string[] expectedDefaultMessage)
+
+        private static void ValidateMessageAndParamName(ArgumentException ex, string paramName, string message,
+              string[] expectedDefaultMessage)
         {
             if (message == null)
             {
-                foreach(var text in expectedDefaultMessage)
+                foreach (var text in expectedDefaultMessage)
                 {
                     Assert.Contains(text, ex.Message);
                 }
@@ -329,6 +341,7 @@ namespace Jcd.Utilities.Test.Validations
             {
                 Assert.StartsWith(message, ex.Message);
             }
+
             if (string.IsNullOrWhiteSpace(paramName))
             {
                 Assert.StartsWith(Argument.UnspecifiedParamName, ex.ParamName);

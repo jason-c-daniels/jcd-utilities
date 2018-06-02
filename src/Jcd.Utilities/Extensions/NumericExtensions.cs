@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Numerics;
-using System.Text;
 
 namespace Jcd.Utilities.Extensions
 {
@@ -31,6 +29,7 @@ namespace Jcd.Utilities.Extensions
                 case TypeCode.Double:
                 case TypeCode.Single:
                     return true;
+
                 default:
                     return self.GetType() == typeof(BigInteger);
             }
@@ -48,6 +47,7 @@ namespace Jcd.Utilities.Extensions
                 case TypeCode.Double:
                 case TypeCode.Single:
                     return true;
+
                 default:
                     return false;
             }
@@ -81,9 +81,10 @@ namespace Jcd.Utilities.Extensions
                 case TypeCode.Int32:
                 case TypeCode.Int64:
                     return true;
+
                 default:
                     {
-                        return self.GetType()==typeof(BigInteger);
+                        return self.GetType() == typeof(BigInteger);
                     }
             }
         }
@@ -105,6 +106,7 @@ namespace Jcd.Utilities.Extensions
                 case TypeCode.Single:
                 case TypeCode.Double:
                     return true;
+
                 default:
                     return self.GetType() == typeof(BigInteger);
             }
@@ -124,6 +126,7 @@ namespace Jcd.Utilities.Extensions
                 case TypeCode.UInt32:
                 case TypeCode.UInt64:
                     return true;
+
                 default:
                     return false;
             }
@@ -138,6 +141,5 @@ namespace Jcd.Utilities.Extensions
         {
             return self.GetType() == typeof(BigInteger);
         }
-
     }
 }

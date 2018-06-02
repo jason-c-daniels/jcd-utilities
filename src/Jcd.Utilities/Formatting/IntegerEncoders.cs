@@ -17,7 +17,7 @@
         public readonly static IntegerEncoder Binary = new IntegerEncoder("01", caseSensitive: true);
 
         /// <summary>
-        /// A base 3 formatter  012
+        /// A base 3 formatter 012
         /// </summary>
         public readonly static IntegerEncoder Ternary = new IntegerEncoder("012", caseSensitive: true);
 
@@ -104,7 +104,8 @@
         /// <summary>
         /// A base 32 formatter for RFC4648 numnbers, case sensitive
         /// </summary>
-        public readonly static IntegerEncoder Base32_RFC4648 = new IntegerEncoder("ABCDEFGHIJKLMNOPQRSTUVXYZ234567", caseSensitive: true);
+        public readonly static IntegerEncoder Base32_RFC4648 = new IntegerEncoder("ABCDEFGHIJKLMNOPQRSTUVXYZ234567",
+              caseSensitive: true);
 
         /// <summary>
         /// A base 32 formatter for ZRTP encoded numbers, case sensitive
@@ -124,107 +125,121 @@
         /// <summary>
         /// A base 58 formatter IPFS compliant, case sensitive, alphabet: 123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz
         /// </summary>
-        public readonly static IntegerEncoder Base58_IPFS = new IntegerEncoder("123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz", caseSensitive: true);
+        public readonly static IntegerEncoder Base58_IPFS = new
+        IntegerEncoder("123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz", caseSensitive: true);
 
         /// <summary>
         /// A base 58 formatter Flickr short URL compliant, case sensitive, alphabet: 123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ
         /// </summary>
-        public readonly static IntegerEncoder FlickrBase58 = new IntegerEncoder("123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ", caseSensitive: true);
+        public readonly static IntegerEncoder FlickrBase58 = new
+        IntegerEncoder("123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ", caseSensitive: true);
 
         /// <summary>
         /// Base 60 formatter using this alphabet: 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwx
         /// </summary>
-        public readonly static IntegerEncoder Sexagesimal = new IntegerEncoder("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwx", caseSensitive: true);
+        public readonly static IntegerEncoder Sexagesimal = new
+        IntegerEncoder("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwx", caseSensitive: true);
 
         /// <summary>
         /// Base 62 formatter using: 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
         /// </summary>
-        public readonly static IntegerEncoder Base62 = new IntegerEncoder("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz", caseSensitive: true);
+        public readonly static IntegerEncoder Base62 = new
+        IntegerEncoder("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz", caseSensitive: true);
 
         /// <summary>
         /// Base 63 formatter using: 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+
         /// </summary>
-        public readonly static IntegerEncoder Base63 = new IntegerEncoder("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+", caseSensitive: true);
+        public readonly static IntegerEncoder Base63 = new
+        IntegerEncoder("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+", caseSensitive: true);
 
         /// <summary>
         /// Base 64 formatter using the standard: 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+/
         /// </summary>
-        public readonly static IntegerEncoder Base64 = new IntegerEncoder("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+/", caseSensitive: true);
+        public readonly static IntegerEncoder Base64 = new
+        IntegerEncoder("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+/", caseSensitive: true);
 
         /// <summary>
         /// Base 64 formatter: Bcrypt compliant
         /// </summary>
-        public readonly static IntegerEncoder Base64_Bcrypt = new IntegerEncoder("./ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789", caseSensitive: true);
-        
+        public readonly static IntegerEncoder Base64_Bcrypt = new
+        IntegerEncoder("./ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789", caseSensitive: true);
+
         /// <summary>
         /// Base 64 formatter: Xxencoding compliant
         /// </summary>
-        public readonly static IntegerEncoder Base64_Xxencoding = new IntegerEncoder("+-0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz", caseSensitive: true);
+        public readonly static IntegerEncoder Base64_Xxencoding = new
+        IntegerEncoder("+-0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz", caseSensitive: true);
 
         /// <summary>
         /// Base 64 formatter: Uuencoding compliant
         /// </summary>
-        public readonly static IntegerEncoder Base64_Uuencoding = new IntegerEncoder("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/", caseSensitive: true);
+        public readonly static IntegerEncoder Base64_Uuencoding = new
+        IntegerEncoder("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/", caseSensitive: true);
 
         /// <summary>
         /// Base 64 formatter: Unix B64 compliant
         /// </summary>
-        public readonly static IntegerEncoder Base64_UnixB64 = new IntegerEncoder("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+/", caseSensitive: true);
+        public readonly static IntegerEncoder Base64_UnixB64 = new
+        IntegerEncoder("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+/", caseSensitive: true);
 
         /// <summary>
         /// Base 64 formatter: Radix64 compliant
         /// </summary>
-        public readonly static IntegerEncoder Base64_Radix64 = new IntegerEncoder(" !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_", caseSensitive: true);
+        public readonly static IntegerEncoder Base64_Radix64 = new
+        IntegerEncoder(" !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_", caseSensitive: true);
 
         /// <summary>
         /// Base 64 formatter: BinHex4 compliant
         /// </summary>
-        public readonly static IntegerEncoder Base64_BinHex4 = new IntegerEncoder("!\"#$%&'()*+,-012345689@ABCDEFGHIJKLMNPQRSTUVXYZ[`abcdefhijklmpqr", caseSensitive: true);
+        public readonly static IntegerEncoder Base64_BinHex4 = new
+        IntegerEncoder("!\"#$%&'()*+,-012345689@ABCDEFGHIJKLMNPQRSTUVXYZ[`abcdefhijklmpqr", caseSensitive: true);
 
         /// <summary>
         /// ASCII 85 formatter, possibly under patent protection, need to check.
         /// </summary>
-        public readonly static IntegerEncoder Ascii85 = new IntegerEncoder("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.-:+=^!/*?&<>()[]{}@%$#", caseSensitive: true);
+        public readonly static IntegerEncoder Ascii85 = new
+        IntegerEncoder("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.-:+=^!/*?&<>()[]{}@%$#", caseSensitive: true);
 
         /// <summary>
         /// Base 91 formatter, basE91 compliant (see http://base91.sourceforge.net/)
         /// </summary>
-        public readonly static IntegerEncoder Base91 = new IntegerEncoder("ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz!#$%&()*+,./:;<=>?@[]^_`{|}~\"", caseSensitive: true);
+        public readonly static IntegerEncoder Base91 = new
+        IntegerEncoder("ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz!#$%&()*+,./:;<=>?@[]^_`{|}~\"", caseSensitive: true);
 
-        /// <summary>
-        /// Base 93 formatting, first 93 characters from this alphabet: ./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[]^_abcdefghijklmnopqrstuvwxyz{|}~¡¢£€¥Š§š©«¬®±Žµ¶ž»ŒœŸ¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ
-        /// </summary>
-        public readonly static IntegerEncoder Base93_Monotonic_ISO8859_15 = new IntegerEncoder(ISO8859_15_EncodingCharacters.Substring(0, 93), caseSensitive: true);
+        /// <summary> Base 93 formatting, first 93 characters from this alphabet:
+        /// ./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[]^_abcdefghijklmnopqrstuvwxyz{|}~¡¢£€¥Š§š©«¬®±Žµ¶ž»ŒœŸ¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ </summary>
+        public readonly static IntegerEncoder Base93_Monotonic_ISO8859_15 = new IntegerEncoder(ISO8859_15_EncodingCharacters.Substring(
+                 0, 93), caseSensitive: true);
 
-        /// <summary>
-        /// Base 93 formatting, 93 characters from this alphabet starting at 0: ./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[]^_abcdefghijklmnopqrstuvwxyz{|}~¡¢£€¥Š§š©«¬®±Žµ¶ž»ŒœŸ¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ
-        /// </summary>
-        public readonly static IntegerEncoder Base93_0_Monotonic_ISO8859_15 = new IntegerEncoder(ISO8859_15_EncodingCharacters.Substring(ISO8859_15_EncodingCharacters.IndexOf('0'), 93), caseSensitive: true);
+        /// <summary> Base 93 formatting, 93 characters from this alphabet starting at 0:
+        /// ./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[]^_abcdefghijklmnopqrstuvwxyz{|}~¡¢£€¥Š§š©«¬®±Žµ¶ž»ŒœŸ¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ </summary>
+        public readonly static IntegerEncoder Base93_0_Monotonic_ISO8859_15 = new IntegerEncoder(
+           ISO8859_15_EncodingCharacters.Substring(ISO8859_15_EncodingCharacters.IndexOf('0'), 93), caseSensitive: true);
 
-        /// <summary>
-        /// Base 93 formatting, 93 characters from this alphabet starting at A: ./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[]^_abcdefghijklmnopqrstuvwxyz{|}~¡¢£€¥Š§š©«¬®±Žµ¶ž»ŒœŸ¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ
-        /// </summary>
-        public readonly static IntegerEncoder Base93_A_Monotonic_ISO8859_15 = new IntegerEncoder(ISO8859_15_EncodingCharacters.Substring(ISO8859_15_EncodingCharacters.IndexOf('A'), 93), caseSensitive: true);
+        /// <summary> Base 93 formatting, 93 characters from this alphabet starting at A:
+        /// ./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[]^_abcdefghijklmnopqrstuvwxyz{|}~¡¢£€¥Š§š©«¬®±Žµ¶ž»ŒœŸ¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ </summary>
+        public readonly static IntegerEncoder Base93_A_Monotonic_ISO8859_15 = new IntegerEncoder(
+           ISO8859_15_EncodingCharacters.Substring(ISO8859_15_EncodingCharacters.IndexOf('A'), 93), caseSensitive: true);
 
-        /// <summary>
-        /// Base 93 formatting, 93 characters from this alphabet starting at a: ./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[]^_abcdefghijklmnopqrstuvwxyz{|}~¡¢£€¥Š§š©«¬®±Žµ¶ž»ŒœŸ¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ
-        /// </summary>
-        public readonly static IntegerEncoder Base93_a_Monotonic_ISO8859_15 = new IntegerEncoder(ISO8859_15_EncodingCharacters.Substring(ISO8859_15_EncodingCharacters.IndexOf('a'), 93), caseSensitive: true);
+        /// <summary> Base 93 formatting, 93 characters from this alphabet starting at a:
+        /// ./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[]^_abcdefghijklmnopqrstuvwxyz{|}~¡¢£€¥Š§š©«¬®±Žµ¶ž»ŒœŸ¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ </summary>
+        public readonly static IntegerEncoder Base93_a_Monotonic_ISO8859_15 = new IntegerEncoder(
+           ISO8859_15_EncodingCharacters.Substring(ISO8859_15_EncodingCharacters.IndexOf('a'), 93), caseSensitive: true);
 
-        /// <summary>
-        /// Base 128 formatting, first 128 characters from this alphabet: ./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[]^_abcdefghijklmnopqrstuvwxyz{|}~¡¢£€¥Š§š©«¬®±Žµ¶ž»ŒœŸ¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ
-        /// </summary>
-        public readonly static IntegerEncoder Base128_Monotonic_ISO8859_15 = new IntegerEncoder(ISO8859_15_EncodingCharacters.Substring(0,128), caseSensitive: true);
+        /// <summary> Base 128 formatting, first 128 characters from this alphabet:
+        /// ./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[]^_abcdefghijklmnopqrstuvwxyz{|}~¡¢£€¥Š§š©«¬®±Žµ¶ž»ŒœŸ¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ </summary>
+        public readonly static IntegerEncoder Base128_Monotonic_ISO8859_15 = new IntegerEncoder(ISO8859_15_EncodingCharacters.Substring(
+                 0, 128), caseSensitive: true);
 
-        /// <summary>
-        /// base 128 formatting, 128 characters from this alphabet starting at 0: ./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[]^_abcdefghijklmnopqrstuvwxyz{|}~¡¢£€¥Š§š©«¬®±Žµ¶ž»ŒœŸ¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ
-        /// </summary>
-        public readonly static IntegerEncoder Base128_0_Monotonic_ISO8859_15 = new IntegerEncoder(ISO8859_15_EncodingCharacters.Substring(ISO8859_15_EncodingCharacters.IndexOf('0'), 128), caseSensitive: true);
+        /// <summary> base 128 formatting, 128 characters from this alphabet starting at 0:
+        /// ./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[]^_abcdefghijklmnopqrstuvwxyz{|}~¡¢£€¥Š§š©«¬®±Žµ¶ž»ŒœŸ¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ </summary>
+        public readonly static IntegerEncoder Base128_0_Monotonic_ISO8859_15 = new IntegerEncoder(
+           ISO8859_15_EncodingCharacters.Substring(ISO8859_15_EncodingCharacters.IndexOf('0'), 128), caseSensitive: true);
 
-        /// <summary>
-        /// base 128 formatting, 128 characters from this alphabet starting at A: ./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[]^_abcdefghijklmnopqrstuvwxyz{|}~¡¢£€¥Š§š©«¬®±Žµ¶ž»ŒœŸ¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ
-        /// </summary>
-        public readonly static IntegerEncoder Base128_A_Monotonic_ISO8859_15 = new IntegerEncoder(ISO8859_15_EncodingCharacters.Substring(ISO8859_15_EncodingCharacters.IndexOf('A'), 128), caseSensitive: true);
+        /// <summary> base 128 formatting, 128 characters from this alphabet starting at A:
+        /// ./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[]^_abcdefghijklmnopqrstuvwxyz{|}~¡¢£€¥Š§š©«¬®±Žµ¶ž»ŒœŸ¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ </summary>
+        public readonly static IntegerEncoder Base128_A_Monotonic_ISO8859_15 = new IntegerEncoder(
+           ISO8859_15_EncodingCharacters.Substring(ISO8859_15_EncodingCharacters.IndexOf('A'), 128), caseSensitive: true);
 
         #region special constants
 
@@ -237,13 +252,14 @@
         ///    0xA0 (NBSP)
         ///    0xAD (SHY)
         /// </remarks>
-        public const string ISO8859_15_EncodingCharacters = "./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[]^_abcdefghijklmnopqrstuvwxyz{|}~¡¢£€¥Š§š©«¬®±Žµ¶ž»ŒœŸ¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ";
+        public const string ISO8859_15_EncodingCharacters =
+           "./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[]^_abcdefghijklmnopqrstuvwxyz{|}~¡¢£€¥Š§š©«¬®±Žµ¶ž»ŒœŸ¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ";
 
         /// <summary>
         /// The decoding mappings for Crockford base 32 decoding.
         /// </summary>
         public readonly static string[] Base32_Crockford_DecodeCharacterSet;
-        #endregion
 
+        #endregion special constants
     }
 }

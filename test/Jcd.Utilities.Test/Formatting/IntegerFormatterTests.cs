@@ -1,7 +1,7 @@
-﻿using System;
-using System.Numerics;
-using Jcd.Utilities.Extensions;
+﻿using Jcd.Utilities.Extensions;
 using Jcd.Utilities.Test.Extensions;
+using System;
+using System.Numerics;
 using Xunit;
 
 namespace Jcd.Utilities.Test.Formatting
@@ -24,6 +24,7 @@ namespace Jcd.Utilities.Test.Formatting
             try
             {
                 var encoder = IntegerEncoders.Hexdecimal;
+
                 if (number.IsBigIntegerType())
                 {
                     var encoded = encoder.Format((BigInteger)number);
@@ -65,6 +66,7 @@ namespace Jcd.Utilities.Test.Formatting
         public void CrockFordEncoder_BigIntegerRoundTrip_ExpectValuesMatch(object number)
         {
             var encoder = IntegerEncoders.Base32_Crockford;
+
             if (number.IsBigIntegerType())
             {
                 var encoded = encoder.Format((BigInteger)number);
@@ -87,7 +89,6 @@ namespace Jcd.Utilities.Test.Formatting
             }
         }
 
-
         [Theory]
         [MemberData(nameof(NumericMemberDataProvider.Bytes), MemberType = typeof(NumericMemberDataProvider))]
         [MemberData(nameof(NumericMemberDataProvider.UInt16s), MemberType = typeof(NumericMemberDataProvider))]
@@ -100,6 +101,7 @@ namespace Jcd.Utilities.Test.Formatting
         private void CrockFordEncoder_Int64RoundTrip_ExpectValuesMatch(object number)
         {
             var encoder = IntegerEncoders.Base32_Crockford;
+
             if (number.IsSignedType())
             {
                 var num = Convert.ToInt64(number);

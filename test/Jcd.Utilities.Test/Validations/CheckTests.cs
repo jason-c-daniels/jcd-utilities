@@ -1070,6 +1070,77 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
       }
 
+      [Theory]
+      [InlineData("")]
+      [InlineData(null)]
+      [InlineData("abc")]
+      public void IsWhitespace_WhenGivenNonWhitespace_ReturnsFalseAndOnFailureCalled(string data)
+      {
+         var onFailureCalled = false;
+         var onSuccessCalled = false;
+         Assert.False(Check.IsWhitespace(data, () =>
+         {
+            onSuccessCalled = true;
+         }, () =>
+         {
+            onFailureCalled = true;
+         }));
+         Assert.True(onFailureCalled, "onFailure was not called when it was expected to be called.");
+         Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
+      }
+
+      [Fact]
+      public void IsWhitespace_WhenGivenWhitespace_ReturnsTrueAndOnSuccessCalled()
+      {
+         var onFailureCalled = false;
+         var onSuccessCalled = false;
+         Assert.True(Check.IsWhitespace("   ", () =>
+         {
+            onSuccessCalled = true;
+         }, () =>
+         {
+            onFailureCalled = true;
+         }));
+         Assert.True(onSuccessCalled, "onSuccess was not called when it was expected to be called.");
+         Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
+      }
+
+      [Theory]
+      [InlineData("")]
+      [InlineData(null)]
+      [InlineData("abc")]
+      public void IsNotWhitespace_WhenGivenNonWhitespace_ReturnsTrueAndOnSuccessCalled(string data)
+      {
+         var onFailureCalled = false;
+         var onSuccessCalled = false;
+         Assert.True(Check.IsNotWhitespace(data, () =>
+         {
+            onSuccessCalled = true;
+         }, () =>
+         {
+            onFailureCalled = true;
+         }));
+         Assert.True(onSuccessCalled, "onSuccess was not called when it was expected to be called.");
+         Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
+      }
+
+      [Fact]
+      public void IsNotWhitespace_WhenGivenWhitespace_ReturnsFalseAndOnFailureCalled()
+      {
+         var onFailureCalled = false;
+         var onSuccessCalled = false;
+         Assert.False(Check.IsNotWhitespace("   ", () =>
+         {
+            onSuccessCalled = true;
+         }, () =>
+         {
+            onFailureCalled = true;
+         }));
+         Assert.True(onFailureCalled, "onFailure was not called when it was expected to be called.");
+         Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
+      }
+
+
       [Fact]
       public void VariousMethods_WhenNoHandlersAreProvided_NoExceptionsAreThrown()
       {

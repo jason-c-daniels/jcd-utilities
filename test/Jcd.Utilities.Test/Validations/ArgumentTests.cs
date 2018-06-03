@@ -196,7 +196,7 @@ namespace Jcd.Utilities.Test.Validations
       private void Contains_WhenGivenPopulatedCollectionAndTargetIsNotFound_ThrowsArgumentException(string paramName, string message)
       {
          var ex = Assert.Throws<ArgumentException>(() => Argument.Contains(populatedIntCollection, valueNotInList, paramName, message));
-         ValidateArgumentExceptionMessageAndParam(ex, paramName, message, "was not found in");
+         ValidateArgumentExceptionMessageAndParam(ex, paramName, message, defaultNotFoundInCollectionMessage);
       }
 
       /// <summary>
@@ -415,7 +415,7 @@ namespace Jcd.Utilities.Test.Validations
       }
 
       /// <summary>
-      /// Validate that IsEmpty throws an ArgumentNullException WhenGiven Null. And validate that the
+      /// Validate that IsEmpty throws an ArgumentNullException when given null. And validate that the
       /// paramName and message are set correctly on the exception.
       /// </summary>
       [Theory]
@@ -459,7 +459,7 @@ namespace Jcd.Utilities.Test.Validations
       }
 
       /// <summary>
-      /// Validate that IsNotNullOrEmpty throws an ArgumentException WhenGiven Null. And validate
+      /// Validate that IsNotNullOrEmpty throws an ArgumentException when given null. And validate
       /// that the paramName and message are set correctly on the exception.
       /// </summary>
       [Theory]
@@ -475,7 +475,7 @@ namespace Jcd.Utilities.Test.Validations
       }
 
       /// <summary>
-      /// Validate that IsNotNullOrEmpty throws an ArgumentException WhenGiven Empty string. And
+      /// Validate that IsNotNullOrEmpty throws an ArgumentException when given an empty string. And
       /// validate that the paramName and message are set correctly on the exception.
       /// </summary>
       [Theory]
@@ -490,30 +490,126 @@ namespace Jcd.Utilities.Test.Validations
          ValidateArgumentExceptionMessageAndParam(ex, paramName, message, "to be non-null and non-empty");
       }
 
-      [Fact]
-      public void IsNotNullOrWhitespace()
+      /// <summary>
+      /// Validate that IsNotNullOrWhitespace throws no exception when given nonwhitespace.
+      /// </summary>
+      [Theory]
+      [InlineData(nonWhitespaceString)]
+      [InlineData(someWhitespaceString)]
+      [InlineData(emptyString)]
+      public void IsNotNullOrWhitespace_WhenGivenNonWhitespace_ThrowsNoException(string data)
       {
-         throw new NotImplementedException();
+         Argument.IsNotNullOrWhitespace(data, "none", "this should never fail.");
       }
 
-      [Fact]
-      public void IsNotNullWhitespaceOrEmpty()
+      /// <summary>
+      /// Validate that IsNotNullOrWhitespace throws an ArgumentException when given null or whitespace.
+      /// And validate that the paramName and message are set correctly on the exception.
+      /// </summary>
+      [Theory]
+      [InlineData("param", null)]
+      [InlineData("param", "message")]
+      [InlineData(null, "message")]
+      [InlineData("", "message")]
+      [InlineData(" ", "message")]
+      public void IsNotNullOrWhitespace_WhenGivenNullOrWhitespace_ThrowsArgumentException(string paramName, string message)
       {
-         throw new NotImplementedException();
+         var ex = Assert.Throws<ArgumentNullException>(() => Argument.IsNotNullOrWhitespace(nullString, paramName, message));
+         ValidateArgumentExceptionMessageAndParam(ex, paramName, message, defaultArgumentNullExceptionMessage);
+         var ex2 = Assert.Throws<ArgumentException>(() => Argument.IsNotNullOrWhitespace(allWhitespaceString, paramName, message));
+         ValidateArgumentExceptionMessageAndParam(ex2, paramName, message, new[] {"null", "whitespace" });
       }
 
-      [Fact]
-      public void IsNotWhitespace()
+      /// <summary>
+      /// Validate that IsNotNullWhitespaceOrEmpty throws no exception when given nonwhitespace, non-empty, non-null strings.
+      /// </summary>
+      [Theory]
+      [InlineData(nonWhitespaceString)]
+      [InlineData(someWhitespaceString)]
+      public void IsNotNullWhitespaceOrEmpty_WhenGivenNonWhitespace_ThrowsNoException(string data)
       {
-         throw new NotImplementedException();
+         Argument.IsNotNullWhitespaceOrEmpty(data, "none", "this should never fail.");
       }
 
-      [Fact]
-      public void IsNotWhitespaceOrEmpty()
+      /// <summary>
+      /// Validate that IsNotNullOrWhitespace throws an ArgumentException when given empty, null or whitespace.
+      /// And validate that the paramName and message are set correctly on the exception.
+      /// </summary>
+      [Theory]
+      [InlineData("param", null)]
+      [InlineData("param", "message")]
+      [InlineData(null, "message")]
+      [InlineData("", "message")]
+      [InlineData(" ", "message")]
+      public void IsNotNullWhitespaceOrEmpty_WhenGivenEmptyNullOrWhitespace_ThrowsArgumentException(string paramName, string message)
       {
-         throw new NotImplementedException();
+         var ex = Assert.Throws<ArgumentNullException>(() => Argument.IsNotNullWhitespaceOrEmpty(nullString, paramName, message));
+         ValidateArgumentExceptionMessageAndParam(ex, paramName, message, defaultArgumentNullExceptionMessage);
+         var ex2 = Assert.Throws<ArgumentException>(() => Argument.IsNotNullWhitespaceOrEmpty(allWhitespaceString, paramName, message));
+         ValidateArgumentExceptionMessageAndParam(ex2, paramName, message, new[] { "null", "whitespace", "empty" });
+         ex2 = Assert.Throws<ArgumentException>(() => Argument.IsNotNullWhitespaceOrEmpty(string.Empty, paramName, message));
+         ValidateArgumentExceptionMessageAndParam(ex2, paramName, message, new[] { "null", "whitespace", "empty" });
       }
 
+      /// <summary>
+      /// Validate that IsNotWhitespace throws no exception when given nonwhitespace, non-empty, non-null strings.
+      /// </summary>
+      [Theory]
+      [InlineData(nonWhitespaceString)]
+      [InlineData(someWhitespaceString)]
+      [InlineData(nullString)]
+      [InlineData(emptyString)]
+      public void IsNotWhitespace_WhenGivenNonWhitespaceNullOrEmpty_ThrowsNoException(string data)
+      {
+         Argument.IsNotWhitespace(data, "none", "this should never fail.");
+      }
+
+
+      /// <summary>
+      /// Validate that IsNotNullOrWhitespace throws an ArgumentException when given empty, null or whitespace.
+      /// And validate that the paramName and message are set correctly on the exception.
+      /// </summary>
+      [Theory]
+      [InlineData("param", null)]
+      [InlineData("param", "message")]
+      [InlineData(null, "message")]
+      [InlineData("", "message")]
+      [InlineData(" ", "message")]
+      public void IsNotWhitespace_WhenGivenWhitespace_ThrowsArgumentException(string paramName, string message)
+      {
+         var ex = Assert.Throws<ArgumentException>(() => Argument.IsNotWhitespace(allWhitespaceString, paramName, message));
+         ValidateArgumentExceptionMessageAndParam(ex, paramName, message, "all whitespace");
+      }
+
+      /// <summary>
+      /// Validate that IsNotWhitespaceOrEmpty throws no exception when given nonwhitespace, but either empty or null strings.
+      /// </summary>
+      [Theory]
+      [InlineData(nonWhitespaceString)]
+      [InlineData(someWhitespaceString)]
+      [InlineData(nullString)]
+      public void IsNotWhitespaceOrEmpty_WhenGivenNonWhitespaceOrNull_ThrowsNoException(string data)
+      {
+         Argument.IsNotWhitespaceOrEmpty(data, "none", "this should never fail.");
+      }
+
+      /// <summary>
+      /// Validate that IsNotNullOrWhitespace throws an ArgumentException when given empty, null or whitespace.
+      /// And validate that the paramName and message are set correctly on the exception.
+      /// </summary>
+      [Theory]
+      [InlineData("param", null)]
+      [InlineData("param", "message")]
+      [InlineData(null, "message")]
+      [InlineData("", "message")]
+      [InlineData(" ", "message")]
+      public void IsNotWhitespaceOrEmpty_WhenGivenEmptyWhitespace_ThrowsArgumentException(string paramName, string message)
+      {
+         var ex2 = Assert.Throws<ArgumentException>(() => Argument.IsNotWhitespaceOrEmpty(allWhitespaceString, paramName, message));
+         ValidateArgumentExceptionMessageAndParam(ex2, paramName, message, "be non-empty and non-whitespace");
+         ex2 = Assert.Throws<ArgumentException>(() => Argument.IsNotWhitespaceOrEmpty(string.Empty, paramName, message));
+         ValidateArgumentExceptionMessageAndParam(ex2, paramName, message, "be non-empty and non-whitespace");
+      }
       [Fact]
       public void IsNullOrEmpty()
       {
@@ -617,7 +713,6 @@ namespace Jcd.Utilities.Test.Validations
          ValidateArgumentExceptionMessageAndParam(ex, paramName, message, "is not equal to");
       }
 
-
       /// <summary>
       /// Validate that AreSameObject throws no exception when both values are null.
       /// </summary>
@@ -635,7 +730,6 @@ namespace Jcd.Utilities.Test.Validations
       {
          Argument.AreSameObject(nonNullObject, nonNullObject, "none", "this should not fail.");
       }
-
 
       /// <summary>
       /// Validate that AreSameObject throws an ArgumentException when objects are different.

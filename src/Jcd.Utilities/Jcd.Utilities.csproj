@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Product Condition="'$(Product)' == ''">JCD Utilities</Product>
+    <Title Condition="'$(Title)' == ''">JCD Utilities</Title>
+    <Company Condition="'$(Company)' == ''">N/A</Company>
+    <Copyright Condition="'$(Copyright)' == ''">(C) 2018 Jason C Daniels</Copyright>
+    <Description Condition="'$(Description)' == ''">A set of utilities that I use.</Description>
+    <PackageLicenseUrl>license URL</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/jason-c-daniels/jcd-utilities</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/jason-c-daniels/jcd-utilities</RepositoryUrl>
+    <RepositoryType>Git Hub</RepositoryType>
+    <PackageTags>Validation, Parsing, Formatting, Generator</PackageTags>
+  </PropertyGroup>
+
+</Project>

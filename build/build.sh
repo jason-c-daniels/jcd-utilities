@@ -93,6 +93,7 @@ if [ "$BUILD_CLEAN" != 1 ] && [ "$BUILD_SOURCE" != 1 ] && [ "$BUILD_DOCS" != 1 ]
 fi
 
 main() {
+    #TODO: nix GitVersion, it's only good on Windows. Find some other way to do it.
     set -xe 
     # determine the location this script is running from.
     DIR=$(get_script_dir)

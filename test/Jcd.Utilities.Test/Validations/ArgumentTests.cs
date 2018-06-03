@@ -610,34 +610,148 @@ namespace Jcd.Utilities.Test.Validations
          ex2 = Assert.Throws<ArgumentException>(() => Argument.IsNotWhitespaceOrEmpty(string.Empty, paramName, message));
          ValidateArgumentExceptionMessageAndParam(ex2, paramName, message, "be non-empty and non-whitespace");
       }
+
+      /// <summary>
+      /// Validate that IsWhitespace throws no exception when given only whitespace.
+      /// </summary>
       [Fact]
-      public void IsNullOrEmpty()
+      public void IsWhitespace_WhenGivenWhitespace_ThrowsNoException()
       {
-         throw new NotImplementedException();
+         Argument.IsWhitespace(allWhitespaceString, "none", "this should never fail.");
       }
 
-      [Fact]
-      public void IsNullOrWhitespace()
+
+      /// <summary>
+      /// Validate that IsNotNullOrWhitespace throws an ArgumentException when given empty, null or whitespace.
+      /// And validate that the paramName and message are set correctly on the exception.
+      /// </summary>
+      [Theory]
+      [InlineData("param", null)]
+      [InlineData("param", "message")]
+      [InlineData(null, "message")]
+      [InlineData("", "message")]
+      [InlineData(" ", "message")]
+      public void IsWhitespace_WhenGivenNonWhitespace_ThrowsArgumentException(string paramName, string message)
       {
-         throw new NotImplementedException();
+         var ex = Assert.Throws<ArgumentNullException>(() => Argument.IsWhitespace(nullString, paramName, message));
+         ValidateArgumentExceptionMessageAndParam(ex, paramName, message, defaultArgumentNullExceptionMessage);
+         var ex2 = Assert.Throws<ArgumentException>(() => Argument.IsWhitespace(someWhitespaceString, paramName, message));
+         ValidateArgumentExceptionMessageAndParam(ex2, paramName, message, "whitespace");
       }
 
-      [Fact]
-      public void IsNullWhitespaceOrEmpty()
+      /// <summary>
+      /// Validate that IsNullOrEmpty throws no exception when given empty, or null strings.
+      /// </summary>
+      [Theory]
+      [InlineData(emptyString)]
+      [InlineData(nullString)]
+      public void IsNullOrEmpty_WhenGivenNullOrEmpty_ThrowsNoException(string data)
       {
-         throw new NotImplementedException();
+         Argument.IsNullOrEmpty(data, "none", "this should never fail.");
       }
 
-      [Fact]
-      public void IsWhitespace()
+      /// <summary>
+      /// Validate that IsNullOrEmpty throws an ArgumentException when given whitespace and non-whitespace strings.
+      /// And validate that the paramName and message are set correctly on the exception.
+      /// </summary>
+      [Theory]
+      [InlineData("param", null)]
+      [InlineData("param", "message")]
+      [InlineData(null, "message")]
+      [InlineData("", "message")]
+      [InlineData(" ", "message")]
+      public void IsNullOrEmpty_WhenGivenNonWhitespaceOrWhitespace_ThrowsArgumentException(string paramName, string message)
       {
-         throw new NotImplementedException();
+         var ex = Assert.Throws<ArgumentException>(() => Argument.IsNullOrEmpty(someWhitespaceString, paramName, message));
+         ValidateArgumentExceptionMessageAndParam(ex, paramName, message, "null or empty");
+         ex = Assert.Throws<ArgumentException>(() => Argument.IsNullOrEmpty(allWhitespaceString, paramName, message));
+         ValidateArgumentExceptionMessageAndParam(ex, paramName, message, "null or empty");
       }
 
-      [Fact]
-      public void IsWhitespaceOrEmpty()
+      /// <summary>
+      /// Validate that IsNullOrWhitespace throws no exception when given whitespace, empty, or null strings.
+      /// </summary>
+      [Theory]
+      [InlineData(allWhitespaceString)]
+      [InlineData(nullString)]
+      public void IsNullOrWhitespace_WhenGivenWhitespaceNullOrEmpty_ThrowsNoException(string data)
       {
-         throw new NotImplementedException();
+         Argument.IsNullOrWhitespace(data, "none", "this should never fail.");
+      }
+
+      /// <summary>
+      /// Validate that IsNullOrWhitespace throws an ArgumentException when given non-null, non-whitespace strings.
+      /// And validate that the paramName and message are set correctly on the exception.
+      /// </summary>
+      [Theory]
+      [InlineData("param", null)]
+      [InlineData("param", "message")]
+      [InlineData(null, "message")]
+      [InlineData("", "message")]
+      [InlineData(" ", "message")]
+      public void IsNullOrWhitespace_WhenGivenNonEmptyNonWhitespace_ThrowsArgumentException(string paramName, string message)
+      {
+         var ex = Assert.Throws<ArgumentException>(() => Argument.IsNullOrWhitespace(someWhitespaceString, paramName, message));
+         ValidateArgumentExceptionMessageAndParam(ex, paramName, message, "null or whitespace");
+         ex = Assert.Throws<ArgumentException>(() => Argument.IsNullOrWhitespace(emptyString, paramName, message));
+         ValidateArgumentExceptionMessageAndParam(ex, paramName, message, "null or whitespace");
+      }
+
+      /// <summary>
+      /// Validate that IsNullWhitespaceOrEmpty throws no exception when given whitespace, empty, or null strings.
+      /// </summary>
+      [Theory]
+      [InlineData(allWhitespaceString)]
+      [InlineData(nullString)]
+      [InlineData(emptyString)]
+      public void IsNullWhitespaceOrEmpty_WhenGivenWhitespaceNullOrEmpty_ThrowsNoException(string data)
+      {
+         Argument.IsNullWhitespaceOrEmpty(data, "none", "this should never fail.");
+      }
+
+      /// <summary>
+      /// Validate that IsNullOrWhitespace throws an ArgumentException when given non-empty, non-null, non-whitespace strings.
+      /// And validate that the paramName and message are set correctly on the exception.
+      /// </summary>
+      [Theory]
+      [InlineData("param", null)]
+      [InlineData("param", "message")]
+      [InlineData(null, "message")]
+      [InlineData("", "message")]
+      [InlineData(" ", "message")]
+      public void IsNullWhitespaceOrEmpty_WhenGivenEmptyNullOrWhitespace_ThrowsArgumentException(string paramName, string message)
+      {
+         var ex = Assert.Throws<ArgumentException>(() => Argument.IsNullWhitespaceOrEmpty(someWhitespaceString, paramName, message));
+         ValidateArgumentExceptionMessageAndParam(ex, paramName, message, new[] { "null", "whitespace", "empty" });
+      }
+
+      /// <summary>
+      /// Validate that IsWhitespaceOrEmpty throws no exception when given whitespace or an empty string.
+      /// </summary>
+      [Theory]
+      [InlineData(allWhitespaceString)]
+      [InlineData(emptyString)]
+      public void IsWhitespaceOrEmpty_WhenGivenWhitespaceOrEmptyString_ThrowsNoException(string data)
+      {
+         Argument.IsWhitespaceOrEmpty(data, "none", "this should never fail.");
+      }
+
+      /// <summary>
+      /// Validate that IsWhitespaceOrEmpty throws an ArgumentException when given non-empty, non-null, non-whitespace input.
+      /// And validate that the paramName and message are set correctly on the exception.
+      /// </summary>
+      [Theory]
+      [InlineData("param", null)]
+      [InlineData("param", "message")]
+      [InlineData(null, "message")]
+      [InlineData("", "message")]
+      [InlineData(" ", "message")]
+      public void IsWhitespaceOrEmpty_WhenGivenEmptyWhitespace_ThrowsArgumentException(string paramName, string message)
+      {
+         var ex = Assert.Throws<ArgumentNullException>(() => Argument.IsWhitespaceOrEmpty(nullString, paramName, message));
+         ValidateArgumentExceptionMessageAndParam(ex, paramName, message, defaultArgumentNullExceptionMessage);
+         var ex2 = Assert.Throws<ArgumentException>(() => Argument.IsWhitespaceOrEmpty(someWhitespaceString, paramName, message));
+         ValidateArgumentExceptionMessageAndParam(ex2, paramName, message, "be whitespace or empty");
       }
 
       #endregion string operations

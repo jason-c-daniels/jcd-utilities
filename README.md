@@ -2,4 +2,7 @@
 This assembly will host a variety of utility classes. Most of it is 
 just to humor myself.
 
-[![Coverage Status](https://coveralls.io/repos/github/jason-c-daniels/jcd-utilities/badge.svg?branch=develop)](https://coveralls.io/github/jason-c-daniels/jcd-utilities?branch=develop)
+## Status
+ Build | Code Quality | Coverage
+ :---: | :---: | :---:
+[![Build status](https://ci.appveyor.com/api/projects/status/w63sc8tf2y8fxx7s/branch/develop?svg=true)](https://ci.appveyor.com/project/jason-c-daniels/jcd-utilities/branch/develop) | [![CodeFactor](https://www.codefactor.io/repository/github/jason-c-daniels/jcd-utilities/badge/feature/initial-setup)](https://www.codefactor.io/repository/github/jason-c-daniels/jcd-utilities/overview/develop) | [![Coverage Status](https://coveralls.io/repos/github/jason-c-daniels/jcd-utilities/badge.svg?branch=develop)](https://coveralls.io/github/jason-c-daniels/jcd-utilities?branch=develop)

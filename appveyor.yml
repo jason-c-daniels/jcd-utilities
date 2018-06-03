@@ -1,4 +1,4 @@
-version: 0.1.1.{build}
+version: 0.1.{build}.0
 image: Ubuntu
 dotnet_csproj:
   patch: true
@@ -7,9 +7,11 @@ dotnet_csproj:
   package_version: '{version}'
   assembly_version: '{version}'
   file_version: '{version}'
-  informational_version: '{version}'
+  informational_version: '{version}-{label}'
+environment:
+  Configuration: Release
 install:
-  - sudo apt-get install doxygen
+- sh: sudo apt-get install -y doxygen
 nuget:
   account_feed: true
   disable_publish_on_pr: true
@@ -21,12 +23,7 @@ build_script:
 
     ./build/build.sh -cbd
 test_script:
-- sh: >-
-    set -xe
-
-    chmod u+x ./build/build.sh
-
-    ./build/build.sh -t
+- sh: dotnet test test/Jcd.Utilities.Test/Jcd.Utilities.Test.csproj -c Release
 artifacts:
 - path: ./docs
-  name: jcd-utilities-doc
+  name: jcd-utilities-docs

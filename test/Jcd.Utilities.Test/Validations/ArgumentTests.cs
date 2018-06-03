@@ -568,7 +568,6 @@ namespace Jcd.Utilities.Test.Validations
          Argument.IsNotWhitespace(data, "none", "this should never fail.");
       }
 
-
       /// <summary>
       /// Validate that IsNotNullOrWhitespace throws an ArgumentException when given empty, null or whitespace.
       /// And validate that the paramName and message are set correctly on the exception.
@@ -623,7 +622,6 @@ namespace Jcd.Utilities.Test.Validations
       {
          Argument.IsWhitespace(allWhitespaceString, "none", "this should never fail.");
       }
-
 
       /// <summary>
       /// Validate that IsNotNullOrWhitespace throws an ArgumentException when given empty, null or whitespace.
@@ -967,7 +965,6 @@ namespace Jcd.Utilities.Test.Validations
          Argument.IsGreaterThanOrEqual(2, 1, "none", "this should never fail");
       }
 
-
       /// <summary>
       /// Validate that IsGreaterThanOrEqual throws an ArgumentException When ValueIsLessThanComparison.
       /// And validate that the paramName and message are set correctly on the exception.
@@ -994,7 +991,6 @@ namespace Jcd.Utilities.Test.Validations
          Argument.IsLessThan(5, 9, "none", "This should never fail.");
       }
 
-
       /// <summary>
       /// Validate that IsLessThan throws an ArgumentException When ValueIsGreaterOrEqualToComparison.
       /// And validate that the paramName and message are set correctly on the exception.
@@ -1016,7 +1012,6 @@ namespace Jcd.Utilities.Test.Validations
          ex = Assert.Throws<ArgumentException>(() => Argument.IsLessThan(intholder9, intholder9, paramName, message));
          ValidateArgumentExceptionMessageAndParam(ex, paramName, message, "less than");
       }
-
 
       /// <summary>
       /// Validate that IsLessThan throws no exception when value is less than comparison.
@@ -1060,8 +1055,6 @@ namespace Jcd.Utilities.Test.Validations
       {
          Argument.Fails(Check.IsTrue, false, "none", "this should never fail.");
       }
-
-
 
       /// <summary>
       /// Validate that Fails throws an ArgumentException when custom condition succeeds.
@@ -1114,7 +1107,6 @@ namespace Jcd.Utilities.Test.Validations
       {
          Argument.PassesAny(new Check.Signature<bool>[] { Check.IsTrue, Check.IsFalse }, true);
       }
-
 
       /// <summary>
       /// Validate that Passes throws no exception when custom condition succeeds.

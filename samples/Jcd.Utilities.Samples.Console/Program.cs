@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Jcd.Utilities.Generators;
+using Jcd.Utilities.Samples.ConsoleApp.Generators;
+using System;
 using System.Diagnostics;
 using System.Threading;
-using Jcd.Utilities.Generators;
-using Jcd.Utilities.Samples.ConsoleApp.Generators;
 
 namespace Jcd.Utilities.Samples.ConsoleApp
 {
@@ -16,24 +16,28 @@ namespace Jcd.Utilities.Samples.ConsoleApp
          var parsed = encoder.ParseInt64(encoder.Format(i));
          Console.WriteLine($"{encoder.Format(i)} == {Convert.ToString(parsed, encoder.Base)}");
 
-         foreach (var j in new Int32SequenceGenerator(10, -20, -1)) {
+         foreach (var j in new Int32SequenceGenerator(10, -20, -1))
+         {
             Console.Write($"{j},");
          }
 
          Console.WriteLine();
+         Generator<Int16SequenceState, short> numberGenerator = new Generator<Int16SequenceState, short>(
+            new Int16SequenceState { current = 100, stop = 0, step = -1 },
+            (Int16SequenceState state, out bool @continue) =>
+         {
+            var result = state.current;
+            state.current += state.step;
+            @continue = (state.step < 0 && state.current >= state.stop) // handle counting down.
+                        || (state.step > 0 && state.current <= state.stop); // handle counting up.
+            return result;
+         });
 
-         foreach (var k in new Generator<Int16SequenceState, short>(
-                     new Int16SequenceState {current = 100, stop = 0, step = -1},
-                     (Int16SequenceState state, out bool @continue) =>
-      {
-         var result = state.current;
-         state.current += state.step;
-         @continue = state.step < 0 && state.current >= state.stop
-                     || state.step > 0 && state.current <= state.stop;
-         return result;
-      })
-              )
-         Console.Write($"{k} ");
+         foreach (var k in numberGenerator)
+         {
+            Console.Write($"{k} ");
+         }
+
          Console.WriteLine();
          Console.WriteLine();
          var enc = IntegerEncoders.Base32_Crockford;
@@ -45,7 +49,8 @@ namespace Jcd.Utilities.Samples.ConsoleApp
             var e = enc.Format(l);
             var d = enc.ParseBigInteger(e);
 
-            if (l != d) {
+            if (l != d)
+            {
                Console.WriteLine($"ERROR: {l} -> {e} -> {d}");
             }
          }

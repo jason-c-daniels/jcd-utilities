@@ -1140,7 +1140,6 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
       }
 
-
       [Fact]
       public void VariousMethods_WhenNoHandlersAreProvided_NoExceptionsAreThrown()
       {

@@ -117,20 +117,20 @@ main() {
 
     if [ "$BUILD_SOURCE" == 1 ]; then 
         # build the main library
-        build_folder $build_configuration "src/*/"
+        build_folder $build_configuration "./src"
     fi
 
     if [ "$RUN_TESTS" == 1 ]; then 
         # build the tests
-        build_folder $build_configuration "test/*/"
+        build_folder $build_configuration "./test"
         
         # execute the tests
-        execute_tests $build_configuration "test/*/"
+        execute_tests $build_configuration "./test"
     fi
     
     if [ "$BUILD_SAMPLES" == 1 ]; then 
         # build the sample apps.
-        build_folder $build_configuration "samples/*/"
+        build_folder $build_configuration "./samples"
     fi
 
     if [ "$BUILD_DOCS" == 1 ]; then 
@@ -148,7 +148,7 @@ execute_tests(){
     set -xe 
     cfg=$1
     folder=$2
-    find $folder -maxdepth 1 -type f -exec dotnet test --no-build -c $cfg {} \;
+    find $folder -maxdepth 2 -type f -name *.csproj -print0 | xargs -0 -n1 dotnet test -c $cfg 
 }
 
 build_folder() {
@@ -156,7 +156,7 @@ build_folder() {
     cfg=$1
     folder=$2
     echo "building $folder"
-    find $folder -maxdepth 1 -type f -exec dotnet build -c $cfg {} \;
+    find $folder -maxdepth 2 -type f -name *.csproj -print0 | xargs -0 -n1 dotnet build -c $cfg 
 }
 
 clean_docs() {

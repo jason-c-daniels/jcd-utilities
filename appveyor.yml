@@ -4,10 +4,10 @@ dotnet_csproj:
   patch: true
   file: '**\*.csproj'
   version: '{version}'
-  package_version: '{version}-{label}'
+  package_version: '{version}-$(label)'
   assembly_version: '{version}'
   file_version: '{version}'
-  informational_version: '{version}-{label}'
+  informational_version: '{version}-$(label)'
 environment:
   Configuration: Release
 install:

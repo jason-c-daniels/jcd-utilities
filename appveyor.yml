@@ -12,6 +12,7 @@ environment:
   Configuration: Release
 install:
 - sh: sudo apt-get install -y doxygen
+- sh: sudo apt-get install -y gitversion
 nuget:
   account_feed: true
 build_script:

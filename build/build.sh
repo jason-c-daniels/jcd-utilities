@@ -1,6 +1,8 @@
 #!/bin/bash
 set -xe # fail on any error
-
+env | grep -i version
+env | grep -i appv
+exit 1
 usage() {
     echo "usage: $0 [--help|-h] [--all|-a] [--build|-b] [--test|-t] [--docs|-d] [--samples|-s] [--clean|c]" >&2
 }
@@ -102,8 +104,8 @@ main() {
     pushd "$DIR/.."
 
 	#capture the version information for the build.
-    export Version=$(gitversion -showvariable SemVer)
-    export AssemblyVersion=$(gitversion -showvariable AssemblySemVer)
+    #export Version=$(gitversion -showvariable SemVer)
+    #export AssemblyVersion=$(gitversion -showvariable AssemblySemVer)
 
     # set the default build configuration to Release, unless already set.
     if [ -z ${build_configuration+x} ]; then build_configuration="Release";  fi
@@ -152,7 +154,7 @@ execute_tests(){
     set -xe 
     cfg=$1
     folder=$2
-    find "$folder" -maxdepth 2 -type f -name "*.csproj" -print0 | xargs -0 -n1 dotnet test -c "$cfg" 
+    #find "$folder" -maxdepth 2 -type f -name "*.csproj" -print0 | xargs -0 -n1 dotnet test -c "$cfg" 
 }
 
 build_folder() {
@@ -160,7 +162,8 @@ build_folder() {
     cfg=$1
     folder=$2
     echo "building $folder"
-    find "$folder" -maxdepth 2 -type f -name "*.csproj" -print0 | xargs -0 -n1 dotnet build -c "$cfg" 
+    #find "$folder" -maxdepth 2 -type f -name "*.csproj" -print0 | xargs -0 -n1 dotnet build -c "$cfg" 
+    dotnet build -c "$cfg" 
 }
 
 pack_folder() {
@@ -187,7 +190,8 @@ build_docs() {
     set -xe 
     clean_docs
 
-    export ProjectNumber=$(gitversion -showvariable SemVer)
+    #export ProjectNumber=$(gitversion -showvariable SemVer)
+    #TODO: Fix this.
     # generate the new API docs
     ( cat Doxyfile ; echo "PROJECT_NUMBER=$ProjectNumber" ) | doxygen -
 }

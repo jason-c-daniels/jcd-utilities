@@ -101,8 +101,8 @@ main() {
     pushd "$DIR/.."
 
 	#capture the version information for the build.
-    export Version=`gitversion -showvariable SemVer`
-    export AssemblyVersion=`gitversion -showvariable AssemblySemVer`
+    export Version=$(gitversion -showvariable SemVer)
+    export AssemblyVersion=$(gitversion -showvariable AssemblySemVer)
 
     # set the default build configuration to Release, unless already set.
     if [ -z ${build_configuration+x} ]; then build_configuration="Release";  fi
@@ -112,7 +112,7 @@ main() {
         dotnet clean
         find . -type d -name obj -prune -exec rm -rf {} \;
         find . -type d -name bin -prune -exec rm -rf {} \;
-        find docs -not -name '*.md' -not -name docs -delete
+        clean_docs
     fi
 
     if [ "$BUILD_SOURCE" == 1 ]; then 
@@ -147,22 +147,26 @@ main() {
 execute_tests(){
     cfg=$1
     folder=$2
-    dotnet test -c $cfg $folder --no-build
+    find $folder -maxdepth 1 -type f -exec dotnet test --no-build -c $cfg {} \;
 }
 
 build_folder() {
     cfg=$1
     folder=$2
     echo "building $folder"
-    dotnet build -c $cfg $folder
+    find $folder -maxdepth 1 -type f -exec dotnet build -c $cfg {} \;
+}
+
+clean_docs() {
+    find docs -not -name '*.md' -not -name docs -delete
 }
 
 build_docs() {
-    # purge the old files
-    find docs -not -name '*.md' -not -name docs -delete
+    clean_docs
 
-    # generate the new
-    doxygen
+    export ProjectNumber=$(gitversion -showvariable SemVer)
+    # generate the new API docs
+    ( cat Doxyfile ; echo "PROJECT_NUMBER=$ProjectNumber" ) | doxygen -
 }
 
 get_script_dir () {

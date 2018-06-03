@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>
+				Specialized xUnit Theory for the Argument class.
+			</Title>
+			<Author>
+				Jason Daniels
+			</Author>
+			<Description>
+				Generates an xUnit Theory test method for the Arguments class. These are always negative tests.
+			</Description>
+			<Shortcut>
+				xta
+			</Shortcut>
+		</Header>
+		<Snippet>
+			<Imports>
+				<Import>
+					<Namespace>
+						Xunit
+					</Namespace>
+				</Import>
+			</Imports>
+			<Declarations>
+				<Literal>
+					<ID>
+						Description
+					</ID>
+					<ToolTip>
+						Describe the purpose of the test.
+					</ToolTip>
+					<Default>
+						Describe the purpose of the test.
+					</Default>
+				</Literal>
+				<Literal>
+					<ID>
+						MethodName
+					</ID>
+					<ToolTip>
+						The name of the method under test
+					</ToolTip>
+					<Default>
+						MethodName
+					</Default>
+				</Literal>
+				<Literal>
+					<ID>
+						ValueDescription
+					</ID>
+					<ToolTip>
+						A very brief description of the value being tested. Use camel casing to delimit words.
+					</ToolTip>
+					<Default>
+						ValueDescription
+					</Default>
+				</Literal>
+				<Literal>
+					<ID>
+						Exception
+					</ID>
+					<ToolTip>
+						A very brief description of the expected result. Use camel casing to delimit words.
+					</ToolTip>
+					<Default>
+						ArgumentException
+					</Default>
+				</Literal>
+				<Literal>
+					<ID>
+						validation_args
+					</ID>
+					<ToolTip>
+						The argument/arguments being validated.
+					</ToolTip>
+					<Default>
+						nullObject
+					</Default>
+				</Literal>
+				<Literal>
+					<ID>
+						Conjunction
+					</ID>
+					<ToolTip>
+						A camel cased conjunction or conjunction phrase for the scenario. (e.g. When)
+					</ToolTip>
+					<Default>
+						When
+					</Default>
+				</Literal>
+			</Declarations>
+			<Code Language="CSharp" Kind="method decl" Delimiter="$">
+				<![CDATA[
+				/// <summary>
+				/// Validate that $MethodName$ throws an $Exception$ $Conjunction$ $ValueDescription$.
+				/// And validate that the paramName and message are set correctly on the exception.
+				/// </summary>
+				[Theory]
+				[InlineData("param", null)]
+				[InlineData("param", "message")]
+				[InlineData(null, "message")]
+				[InlineData("", "message")]
+				[InlineData(" ", "message")]
+				public void $MethodName$_$Conjunction$$ValueDescription$_Throws$Exception$(string paramName, string message)
+				{
+				var ex = Assert.Throws<$Exception$>(() => Argument.$MethodName$($validation_args$, paramName, message));
+				ValidateArgumentExceptionMessageAndParam(ex, paramName, message, defaultExpectationViolationMessage);
+				}
+				]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>

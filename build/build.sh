@@ -139,7 +139,7 @@ main() {
     fi
 
     # TODO: package, sign, and push to nuget
-
+    echo $?
     # restore prior working dir
     popd
 }
@@ -188,3 +188,5 @@ get_script_dir () {
 
 # now do the work!
 main
+echo $?
+exit $?

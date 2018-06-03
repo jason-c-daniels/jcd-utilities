@@ -353,7 +353,7 @@ namespace Jcd.Utilities
       /// </exception>
       public BigInteger ParseBigInteger(string value)
       {
-         Argument.IsNotNullOrEmpty(value, nameof(value));
+         Argument.IsNotNullWhitespaceOrEmpty(value, nameof(value));
 
          if (!CaseSensitive)
          {
@@ -388,7 +388,7 @@ namespace Jcd.Utilities
       /// </exception>
       public Byte ParseByte(string value)
       {
-         Argument.IsNotNullOrEmpty(value, nameof(value));
+         Argument.IsNotNullWhitespaceOrEmpty(value, nameof(value));
 
          if (!CaseSensitive)
          {
@@ -423,7 +423,7 @@ namespace Jcd.Utilities
       /// </exception>
       public Int16 ParseInt16(string value)
       {
-         Argument.IsNotNullOrEmpty(value, nameof(value));
+         Argument.IsNotNullWhitespaceOrEmpty(value, nameof(value));
 
          if (!CaseSensitive)
          {
@@ -432,7 +432,7 @@ namespace Jcd.Utilities
 
          //TODO: Check for over/underflow
          var result = (Int16)0;
-         Int16 isNeg = (value[0] == '-') ? (short)-1 : (short)1;
+         Int16 isNeg = (value[0] == '-') ? (short) -1 : (short)1;
          var digits = ExtractCoreDigits(value);
 
          foreach (var digit in digits)
@@ -458,7 +458,7 @@ namespace Jcd.Utilities
       /// </exception>
       public Int32 ParseInt32(string value)
       {
-         Argument.IsNotNullOrEmpty(value, nameof(value));
+         Argument.IsNotNullWhitespaceOrEmpty(value, nameof(value));
 
          if (!CaseSensitive)
          {
@@ -493,7 +493,7 @@ namespace Jcd.Utilities
       /// </exception>
       public Int64 ParseInt64(string value)
       {
-         Argument.IsNotNullOrEmpty(value, nameof(value));
+         Argument.IsNotNullWhitespaceOrEmpty(value, nameof(value));
 
          if (!CaseSensitive)
          {
@@ -528,7 +528,7 @@ namespace Jcd.Utilities
       /// </exception>
       public SByte ParseSByte(string value)
       {
-         Argument.IsNotNullOrEmpty(value, nameof(value));
+         Argument.IsNotNullWhitespaceOrEmpty(value, nameof(value));
 
          if (!CaseSensitive)
          {
@@ -563,7 +563,7 @@ namespace Jcd.Utilities
       /// </exception>
       public UInt16 ParseUInt16(string value)
       {
-         Argument.IsNotNullOrEmpty(value, nameof(value));
+         Argument.IsNotNullWhitespaceOrEmpty(value, nameof(value));
 
          if (!CaseSensitive)
          {
@@ -603,7 +603,7 @@ namespace Jcd.Utilities
       /// </exception>
       public UInt32 ParseUInt32(string value)
       {
-         Argument.IsNotNullOrEmpty(value, nameof(value));
+         Argument.IsNotNullWhitespaceOrEmpty(value, nameof(value));
 
          if (!CaseSensitive)
          {
@@ -643,7 +643,7 @@ namespace Jcd.Utilities
       /// </exception>
       public UInt64 ParseUInt64(string value)
       {
-         Argument.IsNotNullOrEmpty(value, nameof(value));
+         Argument.IsNotNullWhitespaceOrEmpty(value, nameof(value));
 
          if (!CaseSensitive)
          {

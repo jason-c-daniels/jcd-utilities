@@ -112,7 +112,7 @@ main() {
         dotnet clean
         find . -type d -name obj -prune -exec rm -rf {} \;
         find . -type d -name bin -prune -exec rm -rf {} \;
-        find docs -not -name '*.md' -not -name docs -delete
+        clean_docs
     fi
 
     if [ "$BUILD_SOURCE" == 1 ]; then 
@@ -157,12 +157,16 @@ build_folder() {
     find $folder -maxdepth 1 -type f -exec dotnet build -c $cfg {} \;
 }
 
-build_docs() {
-    # purge the old files
+clean_docs() {
     find docs -not -name '*.md' -not -name docs -delete
+}
 
+build_docs() {
+    clean_docs
+
+    export ProjectNumber=$(gitversion -showvariable SemVer)
     # generate the new API docs
-    doxygen
+    ( cat Doxyfile ; echo "PROJECT_NUMBER=$ProjectNumber" ) | doxygen -
 }
 
 get_script_dir () {

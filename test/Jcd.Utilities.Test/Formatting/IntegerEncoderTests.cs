@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Jcd.Utilities.Test.Formatting
 {
-   public class IntegerFormatterTests
+   public class IntegerEncoderTests
    {
       #region Public Methods
 
@@ -91,10 +91,6 @@ namespace Jcd.Utilities.Test.Formatting
          }
       }
 
-      #endregion Public Methods
-
-      #region Private Methods
-
       [Theory]
       [MemberData(nameof(NumericMemberDataProvider.Bytes), MemberType = typeof(NumericMemberDataProvider))]
       [MemberData(nameof(NumericMemberDataProvider.UInt16s), MemberType = typeof(NumericMemberDataProvider))]
@@ -104,7 +100,7 @@ namespace Jcd.Utilities.Test.Formatting
       [MemberData(nameof(NumericMemberDataProvider.Int16s), MemberType = typeof(NumericMemberDataProvider))]
       [MemberData(nameof(NumericMemberDataProvider.Int32s), MemberType = typeof(NumericMemberDataProvider))]
       [MemberData(nameof(NumericMemberDataProvider.Int64s), MemberType = typeof(NumericMemberDataProvider))]
-      private void CrockFordEncoder_Int64RoundTrip_ExpectValuesMatch(object number)
+      public void CrockFordEncoder_Int64RoundTrip_ExpectValuesMatch(object number)
       {
          var encoder = IntegerEncoders.Base32_Crockford;
 
@@ -124,8 +120,10 @@ namespace Jcd.Utilities.Test.Formatting
          }
       }
 
-      #endregion Private Methods
+      #endregion Public Methods
 
       //TODO: Add a test "Theory" (what an awful term) that tests all encoders vs all sample data.
+      //TODO: Add negative testing for all of the Parse methods. (e.g. pass in all whitespace to all of the parse methods...etc.)
+      //TODO: Add positive testing for all of the Parse methods.
    }
 }

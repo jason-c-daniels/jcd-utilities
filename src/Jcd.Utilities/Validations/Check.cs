@@ -8,7 +8,7 @@ namespace Jcd.Utilities.Validations
    /// A helper class to assist in making certain classes of validations more human readable.
    /// </summary>
    /// <remarks>
-   /// The mthods in this helper build from a basic set of rudimentary validations, to aggregates
+   /// The methods in this helper build from a basic set of rudimentary validations, to aggregates
    /// like PassesAll. These are in turn used within the Argument enforcement helper, Argument and
    /// its derived methods, Keeping those methods as readable as possible. Additionally, while
    /// Argument is used for enforcing a non-null for its consumers it could not be used within this
@@ -240,8 +240,12 @@ namespace Jcd.Utilities.Validations
       public static bool AreEqual<T>(T left, T right, Action onSuccess = null, Action onFailure = null)
       where T : IComparable<T>
       {
-         EnforceNonNull(left, right);
-         return Passes(() => left.CompareTo(right) == 0, onSuccess, onFailure);
+         if (left != null && right != null)
+         {
+            return Passes(() => left.CompareTo(right) == 0, onSuccess, onFailure);
+         }
+
+         return false;
       }
 
       /// <summary>
@@ -254,7 +258,7 @@ namespace Jcd.Utilities.Validations
       /// <param name="onFailure">The action to take if they're not the same instance.</param>
       /// <returns>true if left and right are the same instance.</returns>
       /// <exception cref="ArgumentNullException">
-      /// If <paramref name="left"/> or <paramref name="right"/> are null.
+      /// If only one of <paramref name="left"/> or <paramref name="right"/> are null.
       /// </exception>
       public static bool AreSameObject(object left, object right, Action onSuccess = null, Action onFailure = null)
       {
@@ -587,6 +591,11 @@ namespace Jcd.Utilities.Validations
 
       #region Private Methods
 
+      /// <summary>
+      /// A helper to ensure we have a valid set of checks.
+      /// </summary>
+      /// <typeparam name="T">The type of the data the check will evaluate</typeparam>
+      /// <param name="conditions">the set of checks</param>
       private static void EnforceAllEntriesNonNull<T>(IEnumerable<Signature<T>> conditions)
       {
          if (conditions.Any(c => c == null))
@@ -595,6 +604,11 @@ namespace Jcd.Utilities.Validations
          }
       }
 
+      /// <summary>
+      /// Enforces that all values are non-null.
+      /// </summary>
+      /// <typeparam name="T">The type of data to evaluate</typeparam>
+      /// <param name="values">the values to evaluate.</param>
       private static void EnforceNonNull<T>(params T[] values)
       {
          foreach (var val in values)

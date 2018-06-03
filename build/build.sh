@@ -93,7 +93,7 @@ if [ "$BUILD_CLEAN" != 1 ] && [ "$BUILD_SOURCE" != 1 ] && [ "$BUILD_DOCS" != 1 ]
 fi
 
 main() {
-
+    set -xe 
     # determine the location this script is running from.
     DIR=$(get_script_dir)
     echo $SOURCE
@@ -145,12 +145,14 @@ main() {
 }
 
 execute_tests(){
+    set -xe 
     cfg=$1
     folder=$2
     find $folder -maxdepth 1 -type f -exec dotnet test --no-build -c $cfg {} \;
 }
 
 build_folder() {
+    set -xe 
     cfg=$1
     folder=$2
     echo "building $folder"
@@ -158,10 +160,12 @@ build_folder() {
 }
 
 clean_docs() {
+    set -xe 
     find docs -not -name '*.md' -not -name docs -delete
 }
 
 build_docs() {
+    set -xe 
     clean_docs
 
     export ProjectNumber=$(gitversion -showvariable SemVer)

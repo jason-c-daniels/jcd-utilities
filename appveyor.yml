@@ -26,3 +26,4 @@ test_script:
     set -xe
 
     ./build/build.sh -t
+    

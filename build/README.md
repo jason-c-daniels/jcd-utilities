@@ -2,9 +2,10 @@
 
 ## Prerequisites
 
-* dotnet core 2.0 or higher installed and in your PATH.
-* doxygen installed and in your PATH.
-* Either BASH and Visual Studio Code (non-windows OS) or Visual Studio 2017 Community Edition or later.
+* _dotnet core 2.0_ or higher installed and in your PATH.
+* _doxygen 1.8_ or higher installed and in your PATH.
+* _gitversion_ installed and in your PATH
+* Either BASH and _Visual Studio Code_ (non-windows OS) or _Visual Studio 2017 Community Edition_ or later.
 
 ## Building with Visual Studio 2017 Community Edition
 
@@ -49,15 +50,15 @@ It will build the source code and tests, and execute the tests. Documentation an
 
 For all builds using `build.sh` the following build order is preserved, and only the selected steps are executed:
 
-1.  Clean all build artifacts.
-2.  Build `src` folder
-3.  Build and execute tests from the `test` folder
-4.  Build `samples` folder
-5.  Build API documentation into the `docs` folder
+1.  Clean all build artifacts, including documentation.
+2.  Build libraries in the `src` folder.
+3.  Build and execute tests from the `test` folder.
+4.  Build the sample apps in the `samples` folder.
+5.  Build API documentation into the `docs` folder.
 
 #### A note on the options
 
-The single letter options can be stacked after a single dash. The multi-letter options cannot.
+The single letter options can be stacked after a single dash. The long options must be written individually.
 
 For example:
 

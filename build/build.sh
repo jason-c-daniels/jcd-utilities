@@ -182,4 +182,5 @@ get_script_dir () {
      echo "$DIR"
 }
 
+# now do the work!
 main

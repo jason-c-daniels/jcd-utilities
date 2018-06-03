@@ -118,6 +118,9 @@ main() {
     if [ "$BUILD_SOURCE" == 1 ]; then 
         # build the main library
         build_folder $build_configuration "./src"
+        pkg_folder="$(pwd)/packages";
+        mkdir -p "$pkg_folder"
+        pack_folder $build_configuration "./src" "$pkg_folder"
     fi
 
     if [ "$RUN_TESTS" == 1 ]; then 
@@ -157,6 +160,21 @@ build_folder() {
     folder=$2
     echo "building $folder"
     find "$folder" -maxdepth 2 -type f -name "*.csproj" -print0 | xargs -0 -n1 dotnet build -c "$cfg" 
+}
+
+pack_folder() {
+    set -xe 
+    cfg=$1
+    folder=$2
+    pkg_folder=$3
+    echo "building $folder"
+    find "$folder" -maxdepth 2 -type f -name "*.csproj" -print0 | xargs -0 -n1 dotnet pack -o "$pkg_folder" --no-build -c "$cfg" 
+}
+
+clean_packages() {
+    set -xe 
+    #find docs -not -name '*.md' -not -name docs -delete
+    rm -rf "./packages"
 }
 
 clean_docs() {

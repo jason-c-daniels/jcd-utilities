@@ -1,8 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\Jcd.Utilities\Jcd.Utilities.csproj" />
-  </ItemGroup>
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -10,6 +6,11 @@
     <StartupObject>Jcd.Utilities.Samples.ConsoleApp.Program</StartupObject>
     <RootNamespace>Jcd.Utilities.Samples.ConsoleApp</RootNamespace>
     <AssemblyName>Jcd.Utilities.Samples.ConsoleApp</AssemblyName>
+    <Version>1.0.1</Version>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Jcd.Utilities\Jcd.Utilities.csproj" />
+  </ItemGroup>
 
 </Project>

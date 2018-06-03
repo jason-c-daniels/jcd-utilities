@@ -25,7 +25,7 @@ namespace Jcd.Utilities.Test.Validations
       private const int valueInList3 = 9;
 
       private const string nullString = null;
-      private const string emptyString = null;
+      private const string emptyString = "";
       private const string allWhitespaceString = "    \r\n\t";
       private const string someWhitespaceString = "    abc \r d \n e \t";
       private const string nonWhitespaceString = "abcdefghijklmnop";
@@ -382,16 +382,10 @@ namespace Jcd.Utilities.Test.Validations
       /// Validate that IsNotEmpty throws an ArgumentNullException when given a null string. And
       /// validate that the paramName and message are set correctly on the exception.
       /// </summary>
-      [Theory]
-      [InlineData("param", null)]
-      [InlineData("param", "message")]
-      [InlineData(null, "message")]
-      [InlineData("", "message")]
-      [InlineData(" ", "message")]
-      public void IsNotEmpty_WhenGivenNullString_ThrowsArgumentNullException(string paramName, string message)
+      [Fact]
+      public void IsNotEmpty_WhenGivenNullString_ThrowsNoException()
       {
-         var ex = Assert.Throws<ArgumentNullException>(() => Argument.IsNotEmpty(nullString, paramName, message));
-         ValidateArgumentExceptionMessageAndParam(ex, paramName, message, defaultArgumentNullExceptionMessage);
+         Argument.IsNotEmpty(nullString, "none", "This shouldn't fail.");
       }
 
       /// <summary>
@@ -458,9 +452,9 @@ namespace Jcd.Utilities.Test.Validations
       [InlineData(nonWhitespaceString)]
       [InlineData(someWhitespaceString)]
       [InlineData(allWhitespaceString)]
-      public void IsNotNullOrEmpty_WhenGivenNullOrEmptyString_ThrowsNoException(string data)
+      public void IsNotNullOrEmpty_WhenGivenNonNullAndNonEmptyString_ThrowsNoException(string data)
       {
-         Argument.IsNotNullOrEmpty(data);
+         Argument.IsNotNullOrEmpty(data, nameof(data), "this should never fail!");
       }
 
       /// <summary>
@@ -473,10 +467,10 @@ namespace Jcd.Utilities.Test.Validations
       [InlineData(null, "message")]
       [InlineData("", "message")]
       [InlineData(" ", "message")]
-      public void IsNotNullOrEmpty_WhenGivenNull_ThrowsArgumentException(string paramName, string message)
+      public void IsNotNullOrEmpty_WhenGivenNull_ThrowsArgumentNullException(string paramName, string message)
       {
-         var ex = Assert.Throws<ArgumentException>(() => Argument.IsNotNullOrEmpty(nullString, paramName, message));
-         ValidateArgumentExceptionMessageAndParam(ex, paramName, message, "to be non-null and non-empty");
+         var ex = Assert.Throws<ArgumentNullException>(() => Argument.IsNotNullOrEmpty(nullString, paramName, message));
+         ValidateArgumentExceptionMessageAndParam(ex, paramName, message, "expected non-null");
       }
 
       /// <summary>

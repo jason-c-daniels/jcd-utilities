@@ -166,7 +166,7 @@ namespace Jcd.Utilities.Validations
       #region string operations
 
       /// <summary>
-      /// Checks if a string has 1 or more characters in it.
+      /// Checks if a string has 1 or more characters in it, or is null.
       /// </summary>
       /// <param name="value">The string to check.</param>
       /// <param name="onSuccess">The action to take if the string is not empty</param>
@@ -174,7 +174,7 @@ namespace Jcd.Utilities.Validations
       /// <returns>True if the string is not empty, false otherwise.</returns>
       public static bool IsNotEmpty(string value, Action onSuccess = null, Action onFailure = null)
       {
-         return Passes(() => value != null && value.Length > 0, onSuccess, onFailure);
+         return Passes(() => value == null || value.Length > 0, onSuccess, onFailure);
       }
 
       /// <summary>
@@ -214,7 +214,7 @@ namespace Jcd.Utilities.Validations
       /// <returns>True if the string is non-zero length and only contains whitespace.</returns>
       public static bool IsWhitespace(string value, Action onSuccess = null, Action onFailure = null)
       {
-         return Passes(() => IsNotEmpty(value) && value.TrimStart() == "", onSuccess, onFailure);
+         return Passes(() => IsNotNull(value) && IsNotEmpty(value) && value.TrimStart() == "", onSuccess, onFailure);
       }
 
       #endregion string operations
@@ -245,7 +245,7 @@ namespace Jcd.Utilities.Validations
             return Passes(() => left.CompareTo(right) == 0, onSuccess, onFailure);
          }
 
-         return false;
+         return IsTrue(ReferenceEquals(left, right), onSuccess, onFailure);
       }
 
       /// <summary>

@@ -253,8 +253,8 @@ namespace Jcd.Utilities.Validations
       public static void IsNotNullOrEmpty(string value, string name = null, string message = null)
       {
          IsNotNull(value, name, message);
-         Check.IsEmpty(value, onFailure: () => RaiseArgumentException(name,
-                       message ?? $"Expected {name} to be non-null and non-empty."));
+         Check.IsNotEmpty(value, onFailure: () => RaiseArgumentException(name,
+                          message ?? $"Expected {name} to be non-null and non-empty."));
       }
 
       /// <summary>

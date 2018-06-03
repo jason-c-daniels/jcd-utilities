@@ -360,13 +360,13 @@ namespace Jcd.Utilities.Test.Validations
       }
 
       [Fact]
-      public void IsNotEmpty_WhenGivenNullString_ReturnsFalse()
+      public void IsNotEmpty_WhenGivenNullString_ReturnsTrue()
       {
          bool onFailureCalled = false;
          bool onSuccessCalled = false;
-         Assert.False(Check.IsNotEmpty((string)null, () => onSuccessCalled = true, () => onFailureCalled = true));
-         Assert.True(onFailureCalled, "onFailure was not called when it was expected to be called.");
-         Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
+         Assert.True(Check.IsNotEmpty((string)null, () => onSuccessCalled = true, () => onFailureCalled = true));
+         Assert.True(onSuccessCalled, "onSuccess was not called when it was expected to be called.");
+         Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
       }
 
       [Fact]
@@ -429,20 +429,22 @@ namespace Jcd.Utilities.Test.Validations
       }
 
       [Fact]
-      public void AreEqual_WhenGivenNullArgs_ThrowsArgumentNullException()
+      public void AreEqual_WhenGivenNullArgs_ThrowsNoException()
       {
          bool onFailureCalled = false;
          bool onSuccessCalled = false;
          var x = new IntHolder(1);
          IntHolder y = null;
-         Assert.Throws<ArgumentNullException>(() => Check.AreEqual(x, y, () => onSuccessCalled = true, () => onFailureCalled = true));
-         Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been.");
-         Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been.");
-         Assert.Throws<ArgumentNullException>(() => Check.AreEqual(y, x, () => onSuccessCalled = true, () => onFailureCalled = true));
-         Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been.");
-         Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
-         Assert.Throws<ArgumentNullException>(() => Check.AreEqual(y, y, () => onSuccessCalled = true, () => onFailureCalled = true));
-         Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been.");
+         Check.AreEqual(x, y, () => onSuccessCalled = true, () => onFailureCalled = true);
+         Assert.True(onFailureCalled, "onFailure was not called when it was expected to be called.");
+         Assert.False(onSuccessCalled, "onFailure was called when it shouldn't have been.");
+         onFailureCalled = onSuccessCalled = false;
+         Check.AreEqual(y, x, () => onSuccessCalled = true, () => onFailureCalled = true);
+         Assert.True(onFailureCalled, "onFailure was not called when it was expected to be called.");
+         Assert.False(onSuccessCalled, "onFailure was called when it shouldn't have been");
+         onFailureCalled = onSuccessCalled = false;
+         Check.AreEqual(y, y, () => onSuccessCalled = true, () => onFailureCalled = true);
+         Assert.True(onSuccessCalled, "onSuccess was not called when it should have been.");
          Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
       }
 

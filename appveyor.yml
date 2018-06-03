@@ -1,6 +1,5 @@
 version: 0.1.1.{build}
-image:
-- Ubuntu
+image: Ubuntu
 dotnet_csproj:
   patch: true
   file: '**\*.csproj'
@@ -13,16 +12,19 @@ nuget:
   account_feed: true
   disable_publish_on_pr: true
 build_script:
-- bash: >-
+- sh: >-
     set -xe
 
     chmod u+x ./build/build.sh
 
-    ./build/build.sh
+    ./build/build.sh -cbd
 test_script:
-- bash: >-
+- sh: >-
     set -xe
 
     chmod u+x ./build/build.sh
 
     ./build/build.sh -t
+artifacts:
+- path: ./docs
+  name: jcd-utilities-doc

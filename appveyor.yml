@@ -17,9 +17,13 @@ build_script:
 - sh: >-
     chmod u+x ./build/build.sh
 
+    set -xe
+
     ./build/build.sh
 test_script:
 - sh: >-
     chmod u+x ./build/build.sh
+
+    set -xe
 
     ./build/build.sh -t

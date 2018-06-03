@@ -13,17 +13,16 @@ nuget:
   account_feed: true
   disable_publish_on_pr: true
 build_script:
-- sh: >-
-    chmod u+x ./build/build.sh
-
+- bash: >-
     set -xe
+
+    chmod u+x ./build/build.sh
 
     ./build/build.sh
 test_script:
-- sh: >-
-    chmod u+x ./build/build.sh
-
+- bash: >-
     set -xe
 
+    chmod u+x ./build/build.sh
+
     ./build/build.sh -t
-    

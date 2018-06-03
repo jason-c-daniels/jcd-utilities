@@ -16,6 +16,7 @@ namespace Jcd.Utilities.Test.Validations
       private static readonly string[] defaultExpectationViolationMessage = { "Expect", "to be", "it was" };
       private static readonly object nullObject = null;
       private static readonly object nonNullObject = new object();
+      private static readonly object nonNullObject2 = new object();
       private static readonly object[] emptyObjectCollection = new object[] { };
       private static readonly object[] nullObjectCollection = null;
       private static readonly List<int> populatedIntCollection = new List<int>(new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 0 });
@@ -616,10 +617,44 @@ namespace Jcd.Utilities.Test.Validations
          ValidateArgumentExceptionMessageAndParam(ex, paramName, message, "is not equal to");
       }
 
+
+      /// <summary>
+      /// Validate that AreSameObject throws no exception when both values are null.
+      /// </summary>
       [Fact]
-      public void AreSameObject()
+      public void AreSameObject_WhenBothValuesAreNull_ThrowsNoException()
       {
-         throw new NotImplementedException();
+         Argument.AreSameObject(null, null, "none", "this should not fail.");
+      }
+
+      /// <summary>
+      /// Validate that AreSameObject throws no exception when both values are the same object.
+      /// </summary>
+      [Fact]
+      public void AreSameObject_WhenBothValuesAreTheSameObject_ThrowsNoException()
+      {
+         Argument.AreSameObject(nonNullObject, nonNullObject, "none", "this should not fail.");
+      }
+
+
+      /// <summary>
+      /// Validate that AreSameObject throws an ArgumentException when objects are different.
+      /// And validate that the paramName and message are set correctly on the exception.
+      /// </summary>
+      [Theory]
+      [InlineData("param", null)]
+      [InlineData("param", "message")]
+      [InlineData(null, "message")]
+      [InlineData("", "message")]
+      [InlineData(" ", "message")]
+      public void AreSameObject_WhenObjectsAreDifferent_ThrowsArgumentException(string paramName, string message)
+      {
+         var ex = Assert.Throws<ArgumentException>(() => Argument.AreSameObject(nullObject, nonNullObject, paramName, message));
+         ValidateArgumentExceptionMessageAndParam(ex, paramName, message, "was not the expected instance");
+         ex = Assert.Throws<ArgumentException>(() => Argument.AreSameObject(nonNullObject, nullObject, paramName, message));
+         ValidateArgumentExceptionMessageAndParam(ex, paramName, message, "was not the expected instance");
+         ex = Assert.Throws<ArgumentException>(() => Argument.AreSameObject(nonNullObject, nonNullObject2, paramName, message));
+         ValidateArgumentExceptionMessageAndParam(ex, paramName, message, "was not the expected instance");
       }
 
       [Fact]

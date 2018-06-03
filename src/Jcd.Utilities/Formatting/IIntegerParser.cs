@@ -3,7 +3,7 @@
 namespace Jcd.Utilities
 {
    /// <summary>
-   /// An interface specification for parsing integers.
+   ///     An interface specification for parsing integers.
    /// </summary>
    public interface IIntegerParser
    {

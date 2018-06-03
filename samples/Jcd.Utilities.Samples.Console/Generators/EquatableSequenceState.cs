@@ -6,8 +6,8 @@ namespace Jcd.Utilities.Samples.ConsoleApp.Generators
       where T : IEquatable<T>
    {
       public T current;
-      public T stop;
       public T step;
+      public T stop;
 
       public bool Equals(EquatableSequenceState<T> other)
       {

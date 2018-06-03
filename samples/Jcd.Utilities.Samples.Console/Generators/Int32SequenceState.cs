@@ -1,4 +1,6 @@
 ﻿namespace Jcd.Utilities.Samples.ConsoleApp.Generators
 {
-   public class Int32SequenceState : EquatableSequenceState<int> { }
+   public class Int32SequenceState : EquatableSequenceState<int>
+   {
+   }
 }

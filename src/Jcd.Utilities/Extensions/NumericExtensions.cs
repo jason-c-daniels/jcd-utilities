@@ -4,14 +4,14 @@ using System.Numerics;
 namespace Jcd.Utilities.Extensions
 {
    /// <summary>
-   /// An extension method class providing numeric type information detection.
+   ///     An extension method class providing numeric type information detection.
    /// </summary>
    public static class NumericExtensions
    {
       #region Public Methods
 
       /// <summary>
-      /// Indicates if an object is of an integer data type.
+      ///     Indicates if an object is of an integer data type.
       /// </summary>
       /// <param name="self">The object to check</param>
       /// <returns>true if the object is of an integer data type</returns>
@@ -21,7 +21,7 @@ namespace Jcd.Utilities.Extensions
       }
 
       /// <summary>
-      /// Indicates if an object is of a decimal data type.
+      ///     Indicates if an object is of a decimal data type.
       /// </summary>
       /// <param name="self">The object to check</param>
       /// <returns>true if the object is of a decimal data type</returns>
@@ -31,7 +31,7 @@ namespace Jcd.Utilities.Extensions
       }
 
       /// <summary>
-      /// Indicates if an object is of a floating point data type.
+      ///     Indicates if an object is of a floating point data type.
       /// </summary>
       /// <param name="self">The object to check</param>
       /// <returns>true if the object is of a floating point data type</returns>
@@ -49,7 +49,7 @@ namespace Jcd.Utilities.Extensions
       }
 
       /// <summary>
-      /// Indicates if an object is of an integer data type.
+      ///     Indicates if an object is of an integer data type.
       /// </summary>
       /// <param name="self">The object to check</param>
       /// <returns>true if the object is of an integer data type</returns>
@@ -75,7 +75,7 @@ namespace Jcd.Utilities.Extensions
       }
 
       /// <summary>
-      /// Indicates if an object is of a numeric data type.
+      ///     Indicates if an object is of a numeric data type.
       /// </summary>
       /// <param name="self">The object to check</param>
       /// <returns>true if the object is of a numeric data type</returns>
@@ -102,7 +102,7 @@ namespace Jcd.Utilities.Extensions
       }
 
       /// <summary>
-      /// Indicates if an object is of a signed data type.
+      ///     Indicates if an object is of a signed data type.
       /// </summary>
       /// <param name="self">The object to check</param>
       /// <returns>true if the object is of a signed data type</returns>
@@ -125,7 +125,7 @@ namespace Jcd.Utilities.Extensions
       }
 
       /// <summary>
-      /// Indicates if an object is of an unsigned data type.
+      ///     Indicates if an object is of an unsigned data type.
       /// </summary>
       /// <param name="self">The object to check</param>
       /// <returns>true if the object is of an unsigned data type</returns>

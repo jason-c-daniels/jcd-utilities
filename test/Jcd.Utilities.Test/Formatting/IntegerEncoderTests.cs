@@ -1,7 +1,7 @@
-﻿using Jcd.Utilities.Extensions;
-using Jcd.Utilities.Test.Extensions;
-using System;
+﻿using System;
 using System.Numerics;
+using Jcd.Utilities.Extensions;
+using Jcd.Utilities.Test.Extensions;
 using Xunit;
 
 namespace Jcd.Utilities.Test.Formatting
@@ -26,7 +26,7 @@ namespace Jcd.Utilities.Test.Formatting
 
          if (number.IsBigIntegerType())
          {
-            var encoded = encoder.Format((BigInteger)number);
+            var encoded = encoder.Format((BigInteger) number);
             var decoded = encoder.ParseBigInteger(encoded);
             Assert.Equal(number, decoded);
          }
@@ -58,14 +58,13 @@ namespace Jcd.Utilities.Test.Formatting
       [MemberData(nameof(NumericMemberDataProvider.BigIntegers), MemberType = typeof(NumericMemberDataProvider))]
       public void HexadecimalEncoder_BigIntegerRoundTrip_ExpectValuesMatch(object number)
       {
-         //TODO: actually convert them all to BigIntegers... or rename the test to reflect what it's actually testing.
          try
          {
             var encoder = IntegerEncoders.Hexdecimal;
 
             if (number.IsBigIntegerType())
             {
-               var encoded = encoder.Format((BigInteger)number);
+               var encoded = encoder.Format((BigInteger) number);
                var decoded = encoder.ParseBigInteger(encoded);
                Assert.Equal(number, decoded);
             }

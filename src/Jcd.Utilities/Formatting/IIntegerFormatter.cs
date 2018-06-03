@@ -3,7 +3,7 @@
 namespace Jcd.Utilities
 {
    /// <summary>
-   /// An interface for formatting integers as text.
+   ///     An interface for formatting integers as text.
    /// </summary>
    public interface IIntegerFormatter
    {

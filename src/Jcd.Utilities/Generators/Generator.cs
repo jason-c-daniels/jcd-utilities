@@ -4,25 +4,29 @@ using System.Collections.Generic;
 namespace Jcd.Utilities.Generators
 {
    /// <summary>
-   /// A base class to help with implementing state-transition based enumeration.
+   ///     A base class to help with implementing state-transition based enumeration.
    /// </summary>
    /// <typeparam name="TState">The type of the state data</typeparam>
    /// <typeparam name="TResult">The type of the transition result data.</typeparam>
    public class Generator<TState, TResult> : IEnumerable<TResult>
       where TState : class
    {
-      #region Protected Fields
+      #region Public Delegates
 
-      protected TState state;
+      /// <summary>
+      ///     The state transition function signature.
+      /// </summary>
+      /// <param name="state">The data to manipulate</param>
+      /// <param name="continue">A flag indicating if there are more states to transition to.</param>
+      /// <returns>The result of the state transition operation</returns>
+      public delegate TResult StateTransitionFunction(TState state, out bool @continue);
 
-      protected StateTransitionFunction transitionFunction;
-
-      #endregion Protected Fields
+      #endregion Public Delegates
 
       #region Public Constructors
 
       /// <summary>
-      /// Constructs a state transition based IEnumerable data generator.
+      ///     Constructs a state transition based IEnumerable data generator.
       /// </summary>
       /// <param name="initial">The initial state.</param>
       /// <param name="transitionFunction">The state transition function.</param>
@@ -34,23 +38,19 @@ namespace Jcd.Utilities.Generators
 
       #endregion Public Constructors
 
-      #region Public Delegates
+      #region Protected Fields
 
-      /// <summary>
-      /// The state transition function signature.
-      /// </summary>
-      /// <param name="state">The data to manipulate</param>
-      /// <param name="continue">A flag indicating if there are more states to transition to.</param>
-      /// <returns>The result of the state transition operation</returns>
-      public delegate TResult StateTransitionFunction(TState state, out bool @continue);
+      protected TState state;
 
-      #endregion Public Delegates
+      protected StateTransitionFunction transitionFunction;
+
+      #endregion Protected Fields
 
       #region Public Methods
 
       /// <summary>
-      /// Retrieves an enmerator that yields data from calling transitionFunction. This is
-      /// guaranteed to be called once for the initial state.
+      ///     Retrieves an enmerator that yields data from calling transitionFunction. This is
+      ///     guaranteed to be called once for the initial state.
       /// </summary>
       /// <returns>The result of transitionFunction(state, out @continue)</returns>
       public IEnumerator<TResult> GetEnumerator()
@@ -65,8 +65,8 @@ namespace Jcd.Utilities.Generators
       }
 
       /// <summary>
-      /// Retrieves an enmerator that yields data from calling transitionFunction(state, out
-      /// @continue). This is guaranteed to be called once for the initial state.
+      ///     Retrieves an enmerator that yields data from calling transitionFunction(state, out
+      ///     @continue). This is guaranteed to be called once for the initial state.
       /// </summary>
       /// <returns>The result of transitionFunction(state, out @continue)</returns>
       IEnumerator IEnumerable.GetEnumerator()

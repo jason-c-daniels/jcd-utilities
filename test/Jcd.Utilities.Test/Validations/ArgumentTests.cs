@@ -238,8 +238,8 @@ namespace Jcd.Utilities.Test.Validations
       }
 
       /// <summary>
-      /// Validate that DoesNotContain throws an ArgumentNullException when passed a null
-      /// exception. Also validate the expected param name and message are correct.
+      /// Validate that DoesNotContain throws an ArgumentNullException when passed a null exception.
+      /// Also validate the expected param name and message are correct.
       /// </summary>
       [Theory]
       [InlineData("param", null)]
@@ -331,8 +331,8 @@ namespace Jcd.Utilities.Test.Validations
       }
 
       /// <summary>
-      /// Validate that IsEmpty throws an ArgumentNullException when given a null. And validate
-      /// that the paramName and message are set correctly on the exception.
+      /// Validate that IsEmpty throws an ArgumentNullException when given a null. And validate that
+      /// the paramName and message are set correctly on the exception.
       /// </summary>
       [Theory]
       [InlineData("param", null)]
@@ -414,8 +414,8 @@ namespace Jcd.Utilities.Test.Validations
       }
 
       /// <summary>
-      /// Validate that IsEmpty throws an ArgumentNullException WhenGiven Null. And validate that
-      /// the paramName and message are set correctly on the exception.
+      /// Validate that IsEmpty throws an ArgumentNullException WhenGiven Null. And validate that the
+      /// paramName and message are set correctly on the exception.
       /// </summary>
       [Theory]
       [InlineData("param", null)]
@@ -547,10 +547,73 @@ namespace Jcd.Utilities.Test.Validations
 
       #region range and relational operations
 
+      /// <summary>
+      /// Validate that AreEqual throws no exceptions when the values are equal.
+      /// </summary>
       [Fact]
-      public void AreEqual()
+      public void AreEqual_WhenTheValuesAreEqual_ThrowsNoExceptions()
       {
-         throw new NotImplementedException();
+         var ih1 = new IntHolder(1);
+         var ih2 = new IntHolder(1);
+         Argument.AreEqual(1, 1, "none", "this shouldn't ever fail");
+         Argument.AreEqual(ih1, ih2, "none", "this shouldn't ever fail");
+         Argument.AreEqual(ih1, ih1, "none", "this shouldn't ever fail");
+         Argument.AreEqual<IntHolder>(null, null, "none", "this shouldn't ever fail");
+      }
+
+      /// <summary>
+      /// Validate that AreEqual throws an argument exception when the values are not equal. And
+      /// validate that the paramName and message are set correctly on the exception.
+      /// </summary>
+      [Theory]
+      [InlineData("param", null)]
+      [InlineData("param", "message")]
+      [InlineData(null, "message")]
+      [InlineData("", "message")]
+      [InlineData(" ", "message")]
+      public void AreEqual_ValueTypes_WhenTheValuesAreNotEqual_ThrowsArgumentException(string paramName, string message)
+      {
+         var ex = Assert.Throws<ArgumentException>(() => Argument.AreEqual(1, 2, paramName, message));
+         ValidateArgumentExceptionMessageAndParam(ex, paramName, message, "is not equal to");
+      }
+
+      /// <summary>
+      /// Validate that AreEqual throws an argument exception when the values are not equal. And
+      /// validate that the paramName and message are set correctly on the exception.
+      /// </summary>
+      [Theory]
+      [InlineData("param", null)]
+      [InlineData("param", "message")]
+      [InlineData(null, "message")]
+      [InlineData("", "message")]
+      [InlineData(" ", "message")]
+      public void AreEqual_ReferenceTypes_WhenTheValuesAreNotEqual_ThrowsArgumentException(string paramName, string message)
+      {
+         var ih1 = new IntHolder(1);
+         var ih2 = new IntHolder(2);
+         var ex = Assert.Throws<ArgumentException>(() => Argument.AreEqual(ih1, ih2, paramName, message));
+         ValidateArgumentExceptionMessageAndParam(ex, paramName, message, "is not equal to");
+      }
+
+      /// <summary>
+      /// Validate that AreEqual throws an argument exception when the values are not equal. And
+      /// validate that the paramName and message are set correctly on the exception.
+      /// </summary>
+      [Theory]
+      [InlineData("param", null)]
+      [InlineData("param", "message")]
+      [InlineData(null, "message")]
+      [InlineData("", "message")]
+      [InlineData(" ", "message")]
+      public void AreEqual_ReferenceTypes_WhenOneValuesIsNull_ThrowsArgumentException(string paramName, string message)
+      {
+         var ih1 = new IntHolder(1);
+         var ih2 = new IntHolder(2);
+         var ex = Assert.Throws<ArgumentException>(() => Argument.AreEqual(ih1, null, paramName, message));
+         ValidateArgumentExceptionMessageAndParam(ex, paramName, message, "is not equal to");
+         // now test the other side.
+         ex = Assert.Throws<ArgumentException>(() => Argument.AreEqual(null, ih2, paramName, message));
+         ValidateArgumentExceptionMessageAndParam(ex, paramName, message, "is not equal to");
       }
 
       [Fact]

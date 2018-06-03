@@ -2,5 +2,5 @@
 
 namespace Jcd.Utilities.Samples.ConsoleApp.Generators
 {
-    public class BigIntegerSequenceState : EquatableSequenceState<BigInteger> { }
+   public class BigIntegerSequenceState : EquatableSequenceState<BigInteger> { }
 }

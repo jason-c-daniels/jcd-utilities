@@ -595,9 +595,9 @@ namespace Jcd.Utilities.Validations
                       "You must setup your guard code correctly if this is going to work. Sadly, you did not.");
          }
 
-         Check.Passes(() => value.CompareTo(comparison) >= 0,
+         Check.Passes(() => value.CompareTo(comparison) <= 0,
                       onFailure: () => RaiseArgumentException(name,
-                            message ?? $"Value for {name} ({value}) was expected to be less than {comparison}"));
+                            message ?? $"Value for {name} ({value}) was expected to be less than or equal to {comparison}"));
       }
 
       /// <summary>
@@ -612,7 +612,7 @@ namespace Jcd.Utilities.Validations
       /// <exception cref="ArgumentNullException">
       /// When <paramref name="value"/>, <paramref name="min"/> or <paramref name="max"/> are null.
       /// </exception>
-      /// <exception cref="ArgumentException">When the value is within the specified range.</exception>
+      /// <exception cref="ArgumentOutOfRangeException">When the value is within the specified range.</exception>
       public static void NotInRange<T>(T value, T min, T max, string name = null, string message = null)
       where T : IComparable<T>
       {

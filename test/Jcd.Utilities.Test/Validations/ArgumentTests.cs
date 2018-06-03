@@ -31,6 +31,10 @@ namespace Jcd.Utilities.Test.Validations
       private const string someWhitespaceString = "    abc \r d \n e \t";
       private const string nonWhitespaceString = "abcdefghijklmnop";
 
+      private static IntHolder intholder1 = new IntHolder(1);
+      private static IntHolder intholder5 = new IntHolder(5);
+      private static IntHolder intholder9 = new IntHolder(9);
+
       #endregion Private Fields
 
       #region exception helpers
@@ -865,80 +869,339 @@ namespace Jcd.Utilities.Test.Validations
          ValidateArgumentExceptionMessageAndParam(ex, paramName, message, "was not the expected instance");
       }
 
-      [Fact]
-      public void InRange()
+      /// <summary>
+      /// Validate that InRange Throws NoException When ValueIsBetweenMinAndMax.
+      /// </summary>
+      ///
+      [Theory]
+      [InlineData(1, 1, 5)]
+      [InlineData(3, 1, 5)]
+      [InlineData(5, 1, 5)]
+      public void InRange_WhenValueIsBetweenMinAndMax_ThrowsNoException(int value, int min, int max)
       {
-         throw new NotImplementedException();
+         Argument.InRange(value, min, max, "none", "this should never fail!");
       }
 
-      [Fact]
-      public void IsGreaterThan()
+      /// <summary>
+      /// Validate that InRange throws an ArgumentOutOfRangeException When ValueIsOutsideOfRange.
+      /// And validate that the paramName and message are set correctly on the exception.
+      /// </summary>
+      [Theory]
+      [InlineData("param", null)]
+      [InlineData("param", "message")]
+      [InlineData(null, "message")]
+      [InlineData("", "message")]
+      [InlineData(" ", "message")]
+      public void InRange_WhenValueIsOutsideOfRange_ThrowsArgumentOutOfRangeException(string paramName, string message)
       {
-         throw new NotImplementedException();
+         var ex = Assert.Throws<ArgumentOutOfRangeException>(() => Argument.InRange(1, 2, 5, paramName, message));
+         ValidateArgumentExceptionMessageAndParam(ex, paramName, message, "Expected value within range");
+         ex = Assert.Throws<ArgumentOutOfRangeException>(() => Argument.InRange(6, 2, 5, paramName, message));
+         ValidateArgumentExceptionMessageAndParam(ex, paramName, message, "Expected value within range");
       }
 
-      [Fact]
-      public void IsGreaterThanOrEqual()
+      /// <summary>
+      /// Validate that NotInRagne throws no exception when value is not between min and max.
+      /// </summary>
+      ///
+      [Theory]
+      [InlineData(0, 1, 5)]
+      [InlineData(8, 1, 5)]
+      public void NotInRange_WhenValueIsNotInRange_ThrowsNoException(int value, int min, int max)
       {
-         throw new NotImplementedException();
+         Argument.NotInRange(value, min, max, "none", "this should never fail!");
       }
 
-      [Fact]
-      public void IsLessThan()
+      /// <summary>
+      /// Validate that NotInRagne throws an ArgumentEArgumentOutOfRangeExceptionxception when value is inside of range.
+      /// And validate that the paramName and message are set correctly on the exception.
+      /// </summary>
+      [Theory]
+      [InlineData("param", null)]
+      [InlineData("param", "message")]
+      [InlineData(null, "message")]
+      [InlineData("", "message")]
+      [InlineData(" ", "message")]
+      public void NotInRange_WhenValueIsInsideOfRange_ThrowsArgumentOutOfRangeException(string paramName, string message)
       {
-         throw new NotImplementedException();
+         var ex = Assert.Throws<ArgumentOutOfRangeException>(() => Argument.NotInRange(1, 1, 5, paramName, message));
+         ValidateArgumentExceptionMessageAndParam(ex, paramName, message, "Expected value outside of the range ");
+         ex = Assert.Throws<ArgumentOutOfRangeException>(() => Argument.NotInRange(5, 2, 5, paramName, message));
+         ValidateArgumentExceptionMessageAndParam(ex, paramName, message, "Expected value outside of the range ");
       }
 
+      /// <summary>
+      /// Validate that IsGreaterThan Throws NoException When LeftIsGreaterThanRight.
+      /// </summary>
       [Fact]
-      public void IsLessThanOrEqual()
+      public void IsGreaterThan_WhenLeftIsGreaterThanRight_ThrowsNoException()
       {
-         throw new NotImplementedException();
+         Argument.IsGreaterThan(intholder9, intholder5, "none", "This should never fail!");
       }
 
-      [Fact]
-      public void NotInRange()
+      /// <summary>
+      /// Validate that IsGreaterThan throws an ArgumentException when left is less than or equal to right.
+      /// And validate that the paramName and message are set correctly on the exception.
+      /// </summary>
+      [Theory]
+      [InlineData("param", null)]
+      [InlineData("param", "message")]
+      [InlineData(null, "message")]
+      [InlineData("", "message")]
+      [InlineData(" ", "message")]
+      public void IsGreaterThan_WhenLeftIsLessThanOrEqualToRight_ThrowsArgumentException(string paramName, string message)
       {
-         throw new NotImplementedException();
+         var ex = Assert.Throws<ArgumentException>(() => Argument.IsGreaterThan(intholder5, intholder9, paramName, message));
+         ValidateArgumentExceptionMessageAndParam(ex, paramName, message, "greater than");
+         ex = Assert.Throws<ArgumentException>(() => Argument.IsGreaterThan(intholder9, intholder9, paramName, message));
+         ValidateArgumentExceptionMessageAndParam(ex, paramName, message, "greater than");
+      }
+
+      /// <summary>
+      /// Validate that IsGreaterThanOrEqual throws no exception when value is greater than or equal to comparison.
+      /// </summary>
+      [Fact]
+      public void IsGreaterThanOrEqual_WhenValueIsGreaterThanOrEqualToComparison_ThrowsNoException()
+      {
+         Argument.IsGreaterThanOrEqual(1, 1, "none", "this should never fail");
+         Argument.IsGreaterThanOrEqual(2, 1, "none", "this should never fail");
+      }
+
+
+      /// <summary>
+      /// Validate that IsGreaterThanOrEqual throws an ArgumentException When ValueIsLessThanComparison.
+      /// And validate that the paramName and message are set correctly on the exception.
+      /// </summary>
+      [Theory]
+      [InlineData("param", null)]
+      [InlineData("param", "message")]
+      [InlineData(null, "message")]
+      [InlineData("", "message")]
+      [InlineData(" ", "message")]
+      public void IsGreaterThanOrEqual_WhenValueIsLessThanComparison_ThrowsArgumentException(string paramName, string message)
+      {
+         var ex = Assert.Throws<ArgumentException>(() => Argument.IsGreaterThanOrEqual(1, 2, paramName, message));
+         ValidateArgumentExceptionMessageAndParam(ex, paramName, message, "was expected to be greater than or equal to");
+      }
+
+      /// <summary>
+      /// Validate that IsLessThan throws no exception when value is less than comparison.
+      /// </summary>
+      [Fact]
+      public void IsLessThan_WhenValueIsLessThanComparison_ThrowsNoException()
+      {
+         Argument.IsLessThan(intholder5, intholder9, "none", "This should never fail.");
+         Argument.IsLessThan(5, 9, "none", "This should never fail.");
+      }
+
+
+      /// <summary>
+      /// Validate that IsLessThan throws an ArgumentException When ValueIsGreaterOrEqualToComparison.
+      /// And validate that the paramName and message are set correctly on the exception.
+      /// </summary>
+      [Theory]
+      [InlineData("param", null)]
+      [InlineData("param", "message")]
+      [InlineData(null, "message")]
+      [InlineData("", "message")]
+      [InlineData(" ", "message")]
+      public void IsLessThan_WhenValueIsGreaterOrEqualToComparison_ThrowsArgumentException(string paramName, string message)
+      {
+         var ex = Assert.Throws<ArgumentException>(() => Argument.IsLessThan(9, 1, paramName, message));
+         ValidateArgumentExceptionMessageAndParam(ex, paramName, message, "less than");
+         ex = Assert.Throws<ArgumentException>(() => Argument.IsLessThan(1, 1, paramName, message));
+         ValidateArgumentExceptionMessageAndParam(ex, paramName, message, "less than");
+         ex = Assert.Throws<ArgumentException>(() => Argument.IsLessThan(intholder9, intholder1, paramName, message));
+         ValidateArgumentExceptionMessageAndParam(ex, paramName, message, "less than");
+         ex = Assert.Throws<ArgumentException>(() => Argument.IsLessThan(intholder9, intholder9, paramName, message));
+         ValidateArgumentExceptionMessageAndParam(ex, paramName, message, "less than");
+      }
+
+
+      /// <summary>
+      /// Validate that IsLessThan throws no exception when value is less than comparison.
+      /// </summary>
+      [Fact]
+      public void IsLessThanOrEqual_WhenValueIsLessThanOrEqualToComparison_ThrowsNoException()
+      {
+         Argument.IsLessThanOrEqual(intholder5, intholder9, "none", "This should never fail.");
+         Argument.IsLessThanOrEqual(5, 9, "none", "This should never fail.");
+         Argument.IsLessThanOrEqual(intholder5, intholder5, "none", "This should never fail.");
+         Argument.IsLessThanOrEqual(9, 9, "none", "This should never fail.");
+      }
+
+      /// <summary>
+      /// Validate that IsLessThanOrEqual throws an ArgumentException When ValueIsGreaterOrEqualToComparison.
+      /// And validate that the paramName and message are set correctly on the exception.
+      /// </summary>
+      [Theory]
+      [InlineData("param", null)]
+      [InlineData("param", "message")]
+      [InlineData(null, "message")]
+      [InlineData("", "message")]
+      [InlineData(" ", "message")]
+      public void IsLessThanOrEqual_WhenValueIsGreaterThanToComparison_ThrowsArgumentException(string paramName, string message)
+      {
+         var ex = Assert.Throws<ArgumentException>(() => Argument.IsLessThanOrEqual(9, 1, paramName, message));
+         ValidateArgumentExceptionMessageAndParam(ex, paramName, message, "less than or equal to");
+         ex = Assert.Throws<ArgumentException>(() => Argument.IsLessThanOrEqual(intholder9, intholder1, paramName, message));
+         ValidateArgumentExceptionMessageAndParam(ex, paramName, message, "less than or equal to");
       }
 
       #endregion range and relational operations
 
       #region custom and multi-condition operations
 
+      /// <summary>
+      /// Validate that Fails throws no exception when custom condition fails.
+      /// </summary>
       [Fact]
-      public void Fails()
+      public void Fails_WhenCustomConditionFails_ThrowsNoException()
       {
-         throw new NotImplementedException();
+         Argument.Fails(Check.IsTrue, false, "none", "this should never fail.");
       }
 
-      [Fact]
-      public void FailsAll()
+
+
+      /// <summary>
+      /// Validate that Fails throws an ArgumentException when custom condition succeeds.
+      /// And validate that the paramName and message are set correctly on the exception.
+      /// </summary>
+      [Theory]
+      [InlineData("param", null)]
+      [InlineData("param", "message")]
+      [InlineData(null, "message")]
+      [InlineData("", "message")]
+      [InlineData(" ", "message")]
+      public void Fails_WhenCustomConditionFails_ThrowsArgumentException(string paramName, string message)
       {
-         throw new NotImplementedException();
+         var ex = Assert.Throws<ArgumentException>(() => Argument.Fails(Check.IsTrue, true, paramName, message));
+         ValidateArgumentExceptionMessageAndParam(ex, paramName, message, "contains an invalid value");
       }
 
+      /// <summary>
+      /// Validate that FailsAll does not throw an exception when all conditions fail.
+      /// </summary>
       [Fact]
-      public void FailsAny()
+      public void FailsAll_WhenAllConditionsFail_ThrowsNoException()
       {
-         throw new NotImplementedException();
+         Argument.FailsAll(new Check.Signature<bool>[] { Check.IsTrue, Check.IsTrue }, false);
       }
 
+      /// <summary>
+      /// Validate that FailsAll does not throw an exception when all conditions fail.
+      /// </summary>
       [Fact]
-      public void Passes()
+      public void FailsAny_WhenAnyConditionsFail_ThrowsNoException()
       {
-         throw new NotImplementedException();
+         Argument.FailsAny(new Check.Signature<bool>[] { Check.IsTrue, Check.IsTrue }, false);
       }
 
+      /// <summary>
+      /// Validate that PassesAll does not throw an exception when all conditions fail.
+      /// </summary>
       [Fact]
-      public void PassesAll()
+      public void PassesAll_WhenAllConditionsSucceed_ThrowsNoException()
       {
-         throw new NotImplementedException();
+         Argument.PassesAny(new Check.Signature<bool>[] { Check.IsTrue, Check.IsTrue }, true);
       }
 
+      /// <summary>
+      /// Validate that PassesAll does not throw an exception when all conditions fail.
+      /// </summary>
       [Fact]
-      public void PassesAny()
+      public void PassesAny_WhenAnyConditionsSucceeds_ThrowsNoException()
       {
-         throw new NotImplementedException();
+         Argument.PassesAny(new Check.Signature<bool>[] { Check.IsTrue, Check.IsFalse }, true);
+      }
+
+
+      /// <summary>
+      /// Validate that Passes throws no exception when custom condition succeeds.
+      /// </summary>
+      [Fact]
+      public void Passes_WhenCustomConditionSucceeds_ThrowsNoException()
+      {
+         Argument.Passes(Check.IsTrue, true, "none", "this should never fail.");
+      }
+
+      /// <summary>
+      /// Validate that FailsAny throws an ArgumentException when all conditions succeed.
+      /// </summary>
+      [Theory]
+      [InlineData("param", null)]
+      [InlineData("param", "message")]
+      [InlineData(null, "message")]
+      [InlineData("", "message")]
+      [InlineData(" ", "message")]
+      public void FailsAny_WhenNoConditionsFail_ThrowsArgumentException(string paramName, string message)
+      {
+         var ex = Assert.Throws<ArgumentException>(() => Argument.FailsAny(new Check.Signature<bool>[] { Check.IsTrue, Check.IsTrue },
+                  true, paramName, message));
+         ValidateArgumentExceptionMessageAndParam(ex, paramName, message, "contains an invalid value");
+      }
+
+      /// <summary>
+      /// Validate that FailsAll throws an ArgumentException when one conditions succeeds.
+      /// </summary>
+      [Theory]
+      [InlineData("param", null)]
+      [InlineData("param", "message")]
+      [InlineData(null, "message")]
+      [InlineData("", "message")]
+      [InlineData(" ", "message")]
+      public void FailsAll_WhenOneConditionsSucceeds_ThrowsArgumentException(string paramName, string message)
+      {
+         var ex = Assert.Throws<ArgumentException>(() => Argument.FailsAll(new Check.Signature<bool>[] { Check.IsTrue, Check.IsFalse },
+                  true, paramName, message));
+         ValidateArgumentExceptionMessageAndParam(ex, paramName, message, "contains an invalid value");
+      }
+
+      /// <summary>
+      /// Validate that PassesAny throws an ArgumentException when no condition succeeds.
+      /// </summary>
+      [Theory]
+      [InlineData("param", null)]
+      [InlineData("param", "message")]
+      [InlineData(null, "message")]
+      [InlineData("", "message")]
+      [InlineData(" ", "message")]
+      public void PassesAny_WhenAllConditionsFail_ThrowsArgumentException(string paramName, string message)
+      {
+         var ex = Assert.Throws<ArgumentException>(() => Argument.PassesAny(new Check.Signature<bool>[] { Check.IsFalse, Check.IsFalse },
+                  true, paramName, message));
+         ValidateArgumentExceptionMessageAndParam(ex, paramName, message, "contains an invalid value");
+      }
+      /// <summary>
+      /// Validate that PassesAll throws an ArgumentException when one condition fails.
+      /// </summary>
+      [Theory]
+      [InlineData("param", null)]
+      [InlineData("param", "message")]
+      [InlineData(null, "message")]
+      [InlineData("", "message")]
+      [InlineData(" ", "message")]
+      public void PassesAll_WhenOneConditionsFail_ThrowsArgumentException(string paramName, string message)
+      {
+         var ex = Assert.Throws<ArgumentException>(() => Argument.PassesAll(new Check.Signature<bool>[] { Check.IsTrue, Check.IsFalse },
+                  true, paramName, message));
+         ValidateArgumentExceptionMessageAndParam(ex, paramName, message, "contains an invalid value");
+      }
+
+      /// <summary>
+      /// Validate that Passes throws an ArgumentException when custom condition fails.
+      /// And validate that the paramName and message are set correctly on the exception.
+      /// </summary>
+      [Theory]
+      [InlineData("param", null)]
+      [InlineData("param", "message")]
+      [InlineData(null, "message")]
+      [InlineData("", "message")]
+      [InlineData(" ", "message")]
+      public void Passes_WhenCustomConditionFails_ThrowsArgumentException(string paramName, string message)
+      {
+         var ex = Assert.Throws<ArgumentException>(() => Argument.Passes(Check.IsTrue, false, paramName, message));
+         ValidateArgumentExceptionMessageAndParam(ex, paramName, message, "contains an invalid value");
       }
 
       #endregion custom and multi-condition operations

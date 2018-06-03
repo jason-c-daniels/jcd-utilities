@@ -372,7 +372,7 @@ namespace Jcd.Utilities.Validations
       where T : IComparable<T>
       {
          EnforceNonNull(value, min, max);
-         return Passes(() => value.CompareTo(min) <= 0 || value.CompareTo(max) >= 0, onSuccess, onFailure);
+         return Passes(() => value.CompareTo(min) < 0 || value.CompareTo(max) > 0, onSuccess, onFailure);
       }
 
       #endregion range and relational operations

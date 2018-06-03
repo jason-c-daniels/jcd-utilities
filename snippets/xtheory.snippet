@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>
+				xUnit Theory
+			</Title>
+			<Author>
+				Jason Daniels
+			</Author>
+			<Description>
+				Generates an xUnit Theory test method
+			</Description>
+			<Shortcut>
+				xtheory
+			</Shortcut>
+		</Header>
+		<Snippet>
+			<Imports>
+				<Import>
+					<Namespace>
+						Xunit
+					</Namespace>
+				</Import>
+			</Imports>
+			<Declarations>
+				<Literal>
+					<ID>
+						MoreDescription
+					</ID>
+					<ToolTip>
+						Provide additional information about the purpose of the test, if appropriate.
+					</ToolTip>
+					<Default>
+						Additional test description.
+					</Default>
+				</Literal>
+				<Literal>
+					<ID>
+						MethodName
+					</ID>
+					<ToolTip>
+						The name of the method under test
+					</ToolTip>
+					<Default>
+						MethodName
+					</Default>
+				</Literal>
+				<Literal>
+					<ID>
+						ScenarioDescription
+					</ID>
+					<ToolTip>
+						A very brief description of the scenario being tested. Use camel casing to delimit words.
+					</ToolTip>
+					<Default>
+						ScenarioDescription
+					</Default>
+				</Literal>
+				<Literal>
+					<ID>
+						Expectation
+					</ID>
+					<ToolTip>
+						A very brief description of the expected result. Use camel casing to delimit words.
+					</ToolTip>
+					<Default>
+						Expectation
+					</Default>
+				</Literal>
+				<Literal>
+					<ID>
+						TData1
+					</ID>
+					<ToolTip>
+						The data type for the first parameter
+					</ToolTip>
+					<Default>
+						string
+					</Default>
+				</Literal>
+				<Literal>
+					<ID>
+						TData2
+					</ID>
+					<ToolTip>
+						The data type for the second parameter
+					</ToolTip>
+					<Default>
+						string
+					</Default>
+				</Literal>
+				<Literal>
+					<ID>
+						param1
+					</ID>
+					<ToolTip>
+						The name of the parameter
+					</ToolTip>
+					<Default>
+						p1
+					</Default>
+				</Literal>
+				<Literal>
+					<ID>
+						param2
+					</ID>
+					<ToolTip>
+						The name of the parameter
+					</ToolTip>
+					<Default>
+						p2
+					</Default>
+				</Literal>
+				<Literal>
+					<ID>
+						Verb
+					</ID>
+					<ToolTip>
+						A verb or camel cased verb phrase for the expectation. (e.g. Returns, Throws)
+					</ToolTip>
+					<Default>
+						Returns
+					</Default>
+				</Literal>
+				<Literal>
+					<ID>
+						Conjunction
+					</ID>
+					<ToolTip>
+						A camel cased conjunction or conjunction phrase for the scenario. (e.g. When)
+					</ToolTip>
+					<Default>
+						When
+					</Default>
+				</Literal>
+			</Declarations>
+			<Code Language="CSharp" Kind="method decl" Delimiter="$">
+				<![CDATA[
+				/// <summary>
+				/// Validate that $MethodName$ $Verb$ $Expectation$ $Conjunction$ $ScenarioDescription$. $MoreDescription$
+				/// </summary>
+				[Theory]
+				[InlineData(default($TData1$),default($TData2$))]
+				public void void $MethodName$_$Conjunction$$ScenarioDescription$_$Verb$$Expectation$($TData1$ $param1$,$TData2$ $param2$)
+				{
+				// setup
+				
+				// act
+				// do something with $param1$ here, or in setup above
+				
+				// assert
+				// include $param1$ in the assertion
+				throw new NotImplementedException();
+				}
+				]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>

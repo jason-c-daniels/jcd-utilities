@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Jcd.Utilities.Generators
 {
    /// <summary>
-   ///     A base class to help with implementing state-transition based enumeration.
+   /// A base class to help with implementing state-transition based enumeration.
    /// </summary>
    /// <typeparam name="TState">The type of the state data</typeparam>
    /// <typeparam name="TResult">The type of the transition result data.</typeparam>
@@ -14,7 +14,7 @@ namespace Jcd.Utilities.Generators
       #region Public Delegates
 
       /// <summary>
-      ///     The state transition function signature.
+      /// The state transition function signature.
       /// </summary>
       /// <param name="state">The data to manipulate</param>
       /// <param name="continue">A flag indicating if there are more states to transition to.</param>
@@ -26,7 +26,7 @@ namespace Jcd.Utilities.Generators
       #region Public Constructors
 
       /// <summary>
-      ///     Constructs a state transition based IEnumerable data generator.
+      /// Constructs a state transition based IEnumerable data generator.
       /// </summary>
       /// <param name="initial">The initial state.</param>
       /// <param name="transitionFunction">The state transition function.</param>
@@ -49,10 +49,10 @@ namespace Jcd.Utilities.Generators
       #region Public Methods
 
       /// <summary>
-      ///     Retrieves an enmerator that yields data from calling transitionFunction. This is
-      ///     guaranteed to be called once for the initial state.
+      ///Retrieves an enmerator that yields data from calling transitionFunction. This is
+      ///guaranteed to be called once for the initial state.
       /// </summary>
-      /// <returns>The result of transitionFunction(state, out @continue)</returns>
+      /// <returns>The result of transitionFunction</returns>
       public IEnumerator<TResult> GetEnumerator()
       {
          bool @continue;
@@ -65,8 +65,8 @@ namespace Jcd.Utilities.Generators
       }
 
       /// <summary>
-      ///     Retrieves an enmerator that yields data from calling transitionFunction(state, out
-      ///     @continue). This is guaranteed to be called once for the initial state.
+      /// Retrieves an enmerator that yields data from calling transitionFunction(state, out
+      /// @continue). This is guaranteed to be called once for the initial state.
       /// </summary>
       /// <returns>The result of transitionFunction(state, out @continue)</returns>
       IEnumerator IEnumerable.GetEnumerator()

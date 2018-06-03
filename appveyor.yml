@@ -4,7 +4,7 @@ dotnet_csproj:
   patch: true
   file: '**\*.csproj'
   version: '{version}'
-  package_version: '{version}'
+  package_version: '{version}-{label}'
   assembly_version: '{version}'
   file_version: '{version}'
   informational_version: '{version}-{label}'
@@ -14,7 +14,6 @@ install:
 - sh: sudo apt-get install -y doxygen
 nuget:
   account_feed: true
-  disable_publish_on_pr: true
 build_script:
 - sh: bash ./build/build.sh -bd
 test_script:
@@ -22,3 +21,5 @@ test_script:
 artifacts:
 - path: ./docs
   name: jcd-utilities-docs
+- path: ./packages
+  name: jcd-utilities-nupkg

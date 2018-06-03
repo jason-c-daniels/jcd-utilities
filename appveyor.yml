@@ -1,0 +1,25 @@
+version: 0.1.1.{build}
+image:
+- Ubuntu
+- Visual Studio 2017
+dotnet_csproj:
+  patch: true
+  file: '**\*.csproj'
+  version: '{version}'
+  package_version: '{version}'
+  assembly_version: '{version}'
+  file_version: '{version}'
+  informational_version: '{version}'
+nuget:
+  account_feed: true
+  disable_publish_on_pr: true
+build_script:
+- sh: >-
+    chmod u+x ./build/build.sh
+
+    ./build/build.sh
+test_script:
+- sh: >-
+    chmod u+x ./build/build.sh
+
+    ./build/build.sh -t

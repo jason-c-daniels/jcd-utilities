@@ -12,28 +12,21 @@ namespace Jcd.Utilities.Formatting
     /// </summary>
     public abstract class CustomFormatterBase : IFormatProvider, ICustomFormatter
     {
-        protected class MyTypeComparer : IComparer<Type>
-        {
-            public int Compare(Type x, Type y)
-            {
-                return x.ToString().CompareTo(y.ToString());
-            }
-        }
+        #region Protected Fields
 
         protected MyTypeComparer typeComparer = new MyTypeComparer();
-        private readonly Type[] handledTypes;
+
+        #endregion Protected Fields
+
+        #region Private Fields
+
         private readonly Func<ICustomFormatter, string, object, IFormatProvider, string> formatFunction;
 
-        /// <summary>
-        /// This is the signature which custom formatting functions must abide by.
-        /// </summary>
-        /// <param name="customFormatter">The custom formatter object.</param>
-        /// <param name="formatString">the format string.</param>
-        /// <param name="argToFormat">The item to format.</param>
-        /// <param name="formatProvider">The format provider.</param>
-        /// <returns></returns>
-        public delegate string CustomFormattingFunction(ICustomFormatter customFormatter, string formatString, object argToFormat,
-              IFormatProvider formatProvider);
+        private readonly Type[] handledTypes;
+
+        #endregion Private Fields
+
+        #region Protected Constructors
 
         /// <summary>
         /// Constructs a custom formatter, and enforces some common rules.
@@ -55,24 +48,24 @@ namespace Jcd.Utilities.Formatting
             this.handledTypes = ht.ToArray();
         }
 
-        /// <summary>
-        /// Gets the format object. (this)
-        /// </summary>
-        /// <param name="formatType">The data type for the format type</param>
-        /// <returns>this if custom formatting requested.</returns>
-        public virtual object GetFormat(Type formatType)
-        {
-            Argument.IsNotNull(formatType);
+        #endregion Protected Constructors
 
-            if (formatType == typeof(ICustomFormatter))
-            {
-                return this;
-            }
-            else
-            {
-                return null;
-            }
-        }
+        #region Public Delegates
+
+        /// <summary>
+        /// This is the signature which custom formatting functions must abide by.
+        /// </summary>
+        /// <param name="customFormatter">The custom formatter object.</param>
+        /// <param name="formatString">the format string.</param>
+        /// <param name="argToFormat">The item to format.</param>
+        /// <param name="formatProvider">The format provider.</param>
+        /// <returns></returns>
+        public delegate string CustomFormattingFunction(ICustomFormatter customFormatter, string formatString, object argToFormat,
+              IFormatProvider formatProvider);
+
+        #endregion Public Delegates
+
+        #region Public Methods
 
         /// <summary>
         /// </summary>
@@ -99,12 +92,34 @@ namespace Jcd.Utilities.Formatting
             return HandleOtherFormats(fmt, arg);
         }
 
+        /// <summary>
+        /// Gets the format object. (this)
+        /// </summary>
+        /// <param name="formatType">The data type for the format type</param>
+        /// <returns>this if custom formatting requested.</returns>
+        public virtual object GetFormat(Type formatType)
+        {
+            Argument.IsNotNull(formatType);
+
+            if (formatType == typeof(ICustomFormatter))
+            {
+                return this;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        #endregion Public Methods
+
+        #region Private Methods
+
         private string HandleOtherFormats(string format, object arg)
         {
 #if DEBUG // this shouldn't ever be violated if the UTs are done correctly. For performance reasons it's omitted from release mode code.
             Argument.IsNotNull(arg, nameof(arg));
 #endif
-
             if (arg is IFormattable formattable)
             {
                 return formattable.ToString(format, CultureInfo.CurrentCulture);
@@ -118,5 +133,23 @@ namespace Jcd.Utilities.Formatting
                 return String.Empty;
             }
         }
+
+        #endregion Private Methods
+
+        #region Protected Classes
+
+        protected class MyTypeComparer : IComparer<Type>
+        {
+            #region Public Methods
+
+            public int Compare(Type x, Type y)
+            {
+                return x.ToString().CompareTo(y.ToString());
+            }
+
+            #endregion Public Methods
+        }
+
+        #endregion Protected Classes
     }
 }

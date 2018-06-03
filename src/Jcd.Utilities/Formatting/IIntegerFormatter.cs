@@ -7,6 +7,8 @@ namespace Jcd.Utilities
     /// </summary>
     public interface IIntegerFormatter
     {
+        #region Public Methods
+
         string Format(byte value);
 
         string Format(int value);
@@ -24,5 +26,7 @@ namespace Jcd.Utilities
         string Format(ushort value);
 
         string Format(BigInteger value);
+
+        #endregion Public Methods
     }
 }

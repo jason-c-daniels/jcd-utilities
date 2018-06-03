@@ -11,16 +11,15 @@ namespace Jcd.Utilities.Generators
     public class Generator<TState, TResult> : IEnumerable<TResult>
        where TState : class
     {
-        /// <summary>
-        /// The state transition function signature.
-        /// </summary>
-        /// <param name="state">The data to manipulate</param>
-        /// <param name="continue">A flag indicating if there are more states to transition to.</param>
-        /// <returns>The result of the state transition operation</returns>
-        public delegate TResult StateTransitionFunction(TState state, out bool @continue);
+        #region Protected Fields
 
         protected TState state;
+
         protected StateTransitionFunction transitionFunction;
+
+        #endregion Protected Fields
+
+        #region Public Constructors
 
         /// <summary>
         /// Constructs a state transition based IEnumerable data generator.
@@ -32,6 +31,22 @@ namespace Jcd.Utilities.Generators
             state = initial;
             this.transitionFunction = transitionFunction;
         }
+
+        #endregion Public Constructors
+
+        #region Public Delegates
+
+        /// <summary>
+        /// The state transition function signature.
+        /// </summary>
+        /// <param name="state">The data to manipulate</param>
+        /// <param name="continue">A flag indicating if there are more states to transition to.</param>
+        /// <returns>The result of the state transition operation</returns>
+        public delegate TResult StateTransitionFunction(TState state, out bool @continue);
+
+        #endregion Public Delegates
+
+        #region Public Methods
 
         /// <summary>
         /// Retrieves an enmerator that yields data from calling transitionFunction. This is
@@ -57,5 +72,7 @@ namespace Jcd.Utilities.Generators
         {
             return GetEnumerator();
         }
+
+        #endregion Public Methods
     }
 }

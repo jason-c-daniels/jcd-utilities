@@ -8,31 +8,26 @@ namespace Jcd.Utilities.Extensions
     /// </summary>
     public static class NumericExtensions
     {
+        #region Public Methods
+
         /// <summary>
-        /// Indicates if an object is of a numeric data type.
+        /// Indicates if an object is of an integer data type.
         /// </summary>
         /// <param name="self">The object to check</param>
-        /// <returns>true if the object is of a numeric data type</returns>
-        public static bool IsNumericType(this object self)
+        /// <returns>true if the object is of an integer data type</returns>
+        public static bool IsBigIntegerType(this object self)
         {
-            switch (Type.GetTypeCode(self.GetType()))
-            {
-                case TypeCode.Byte:
-                case TypeCode.SByte:
-                case TypeCode.UInt16:
-                case TypeCode.UInt32:
-                case TypeCode.UInt64:
-                case TypeCode.Int16:
-                case TypeCode.Int32:
-                case TypeCode.Int64:
-                case TypeCode.Decimal:
-                case TypeCode.Double:
-                case TypeCode.Single:
-                    return true;
+            return self.GetType() == typeof(BigInteger);
+        }
 
-                default:
-                    return self.GetType() == typeof(BigInteger);
-            }
+        /// <summary>
+        /// Indicates if an object is of a decimal data type.
+        /// </summary>
+        /// <param name="self">The object to check</param>
+        /// <returns>true if the object is of a decimal data type</returns>
+        public static bool IsDecimalType(this object self)
+        {
+            return Type.GetTypeCode(self.GetType()) == TypeCode.Decimal;
         }
 
         /// <summary>
@@ -51,16 +46,6 @@ namespace Jcd.Utilities.Extensions
                 default:
                     return false;
             }
-        }
-
-        /// <summary>
-        /// Indicates if an object is of a decimal data type.
-        /// </summary>
-        /// <param name="self">The object to check</param>
-        /// <returns>true if the object is of a decimal data type</returns>
-        public static bool IsDecimalType(this object self)
-        {
-            return Type.GetTypeCode(self.GetType()) == TypeCode.Decimal;
         }
 
         /// <summary>
@@ -86,6 +71,33 @@ namespace Jcd.Utilities.Extensions
                     {
                         return self.GetType() == typeof(BigInteger);
                     }
+            }
+        }
+
+        /// <summary>
+        /// Indicates if an object is of a numeric data type.
+        /// </summary>
+        /// <param name="self">The object to check</param>
+        /// <returns>true if the object is of a numeric data type</returns>
+        public static bool IsNumericType(this object self)
+        {
+            switch (Type.GetTypeCode(self.GetType()))
+            {
+                case TypeCode.Byte:
+                case TypeCode.SByte:
+                case TypeCode.UInt16:
+                case TypeCode.UInt32:
+                case TypeCode.UInt64:
+                case TypeCode.Int16:
+                case TypeCode.Int32:
+                case TypeCode.Int64:
+                case TypeCode.Decimal:
+                case TypeCode.Double:
+                case TypeCode.Single:
+                    return true;
+
+                default:
+                    return self.GetType() == typeof(BigInteger);
             }
         }
 
@@ -132,14 +144,6 @@ namespace Jcd.Utilities.Extensions
             }
         }
 
-        /// <summary>
-        /// Indicates if an object is of an integer data type.
-        /// </summary>
-        /// <param name="self">The object to check</param>
-        /// <returns>true if the object is of an integer data type</returns>
-        public static bool IsBigIntegerType(this object self)
-        {
-            return self.GetType() == typeof(BigInteger);
-        }
+        #endregion Public Methods
     }
 }

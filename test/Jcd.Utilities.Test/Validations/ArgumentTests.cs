@@ -6,28 +6,16 @@ namespace Jcd.Utilities.Test.Validations
 {
     public class ArgumentTests
     {
-        private static string[] defaultExpectationViolationMessage = { "Expect", "to be", "it was" };
+        #region Private Fields
+
         private static string defaultArgumentExceptionMessage = "contains an invalid value";
         private static string defaultArgumentNullExceptionMessage = "expected non-null";
         private static string defaultArgumentOutOfRangeMessage = "Expected value within range";
+        private static string[] defaultExpectationViolationMessage = { "Expect", "to be", "it was" };
+
+        #endregion Private Fields
 
         #region exception helpers
-
-        [Theory]
-        [InlineData(0, 1, null, null)]
-        [InlineData(0, 1, null, "message")]
-        [InlineData(0, 1, "param", "message")]
-        [InlineData(0, 1, "param", null)]
-        [InlineData(0, 1, "", null)]
-        [InlineData(0, 1, "", "message")]
-        [InlineData(0, 1, " ", null)]
-        [InlineData(0, 1, " ", "message")]
-        public void RaiseExpectationViolation(int expected, int actual, string paramName, string message)
-        {
-            var ex = Assert.Throws<ArgumentException>(() => Argument.RaiseExpectationViolation<int>(expected, actual, paramName, message));
-
-            ValidateMessageAndParamName(ex, paramName, message, defaultExpectationViolationMessage);
-        }
 
         [Theory]
         [InlineData("param", null)]
@@ -60,36 +48,32 @@ namespace Jcd.Utilities.Test.Validations
         [InlineData(1, 2, 5, "", "message")]
         [InlineData(1, 2, 5, " ", "message")]
         public void RaiseArgumentOutOfRangeException_WithNullMessage_ExpectExceptionWithDefaultMessage(int actual, int min, int max,
-              string paramName, string message)
+            string paramName, string message)
         {
             var ex = Assert.Throws<ArgumentOutOfRangeException>(() => Argument.RaiseArgumentOutOfRangeException<int>(actual, min, max,
                      paramName, message));
             ValidateMessageAndParamName(ex, paramName, message, defaultArgumentOutOfRangeMessage);
         }
 
+        [Theory]
+        [InlineData(0, 1, null, null)]
+        [InlineData(0, 1, null, "message")]
+        [InlineData(0, 1, "param", "message")]
+        [InlineData(0, 1, "param", null)]
+        [InlineData(0, 1, "", null)]
+        [InlineData(0, 1, "", "message")]
+        [InlineData(0, 1, " ", null)]
+        [InlineData(0, 1, " ", "message")]
+        public void RaiseExpectationViolation(int expected, int actual, string paramName, string message)
+        {
+            var ex = Assert.Throws<ArgumentException>(() => Argument.RaiseExpectationViolation<int>(expected, actual, paramName, message));
+
+            ValidateMessageAndParamName(ex, paramName, message, defaultExpectationViolationMessage);
+        }
+
         #endregion exception helpers
 
         #region Boolean and Null checks
-
-        [Fact]
-        public void IsTrue_PassingTrue_ExpectNoExceptions()
-        {
-            Argument.IsTrue(true);
-            Argument.IsTrue(true, "param");
-            Argument.IsTrue(true, "param", "message");
-        }
-
-        [Theory]
-        [InlineData("param", null)]
-        [InlineData("param", "message")]
-        [InlineData(null, "message")]
-        [InlineData("", "message")]
-        [InlineData(" ", "message")]
-        public void IsTrue_PassingFalse_ExpectArgumentException(string paramName, string message)
-        {
-            var ex = Assert.Throws<ArgumentException>(() => Argument.IsTrue(false, paramName, message));
-            ValidateMessageAndParamName(ex, paramName, message, defaultExpectationViolationMessage);
-        }
 
         [Fact]
         public void IsFalse_PassingFalse_ExpectNoExceptions()
@@ -123,21 +107,29 @@ namespace Jcd.Utilities.Test.Validations
             throw new NotImplementedException();
         }
 
+        [Theory]
+        [InlineData("param", null)]
+        [InlineData("param", "message")]
+        [InlineData(null, "message")]
+        [InlineData("", "message")]
+        [InlineData(" ", "message")]
+        public void IsTrue_PassingFalse_ExpectArgumentException(string paramName, string message)
+        {
+            var ex = Assert.Throws<ArgumentException>(() => Argument.IsTrue(false, paramName, message));
+            ValidateMessageAndParamName(ex, paramName, message, defaultExpectationViolationMessage);
+        }
+
+        [Fact]
+        public void IsTrue_PassingTrue_ExpectNoExceptions()
+        {
+            Argument.IsTrue(true);
+            Argument.IsTrue(true, "param");
+            Argument.IsTrue(true, "param", "message");
+        }
+
         #endregion Boolean and Null checks
 
         #region collection operations
-
-        [Fact]
-        public void IsEmptyCollection()
-        {
-            throw new NotImplementedException();
-        }
-
-        [Fact]
-        public void HasItems()
-        {
-            throw new NotImplementedException();
-        }
 
         [Fact]
         public void Contains()
@@ -151,15 +143,21 @@ namespace Jcd.Utilities.Test.Validations
             throw new NotImplementedException();
         }
 
-        #endregion collection operations
-
-        #region string operations
-
         [Fact]
-        public void IsEmptyString()
+        public void HasItems()
         {
             throw new NotImplementedException();
         }
+
+        [Fact]
+        public void IsEmptyCollection()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion collection operations
+
+        #region string operations
 
         [Fact]
         public void HasData()
@@ -168,43 +166,13 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void IsWhitespace()
+        public void IsEmptyString()
         {
             throw new NotImplementedException();
         }
 
         [Fact]
-        public void IsWhitespaceOrEmpty()
-        {
-            throw new NotImplementedException();
-        }
-
-        [Fact]
-        public void IsNullOrWhitespace()
-        {
-            throw new NotImplementedException();
-        }
-
-        [Fact]
-        public void IsNullWhitespaceOrEmpty()
-        {
-            throw new NotImplementedException();
-        }
-
-        [Fact]
-        public void IsNullOrEmpty()
-        {
-            throw new NotImplementedException();
-        }
-
-        [Fact]
-        public void IsNotWhitespace()
-        {
-            throw new NotImplementedException();
-        }
-
-        [Fact]
-        public void IsNotWhitespaceOrEmpty()
+        public void IsNotNullOrEmpty()
         {
             throw new NotImplementedException();
         }
@@ -222,7 +190,43 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void IsNotNullOrEmpty()
+        public void IsNotWhitespace()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Fact]
+        public void IsNotWhitespaceOrEmpty()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Fact]
+        public void IsNullOrEmpty()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Fact]
+        public void IsNullOrWhitespace()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Fact]
+        public void IsNullWhitespaceOrEmpty()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Fact]
+        public void IsWhitespace()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Fact]
+        public void IsWhitespaceOrEmpty()
         {
             throw new NotImplementedException();
         }
@@ -232,7 +236,19 @@ namespace Jcd.Utilities.Test.Validations
         #region range and relational operations
 
         [Fact]
+        public void AreEqual()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Fact]
         public void AreSameObject()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Fact]
+        public void InRange()
         {
             throw new NotImplementedException();
         }
@@ -262,18 +278,6 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void AreEqual()
-        {
-            throw new NotImplementedException();
-        }
-
-        [Fact]
-        public void InRange()
-        {
-            throw new NotImplementedException();
-        }
-
-        [Fact]
         public void NotInRange()
         {
             throw new NotImplementedException();
@@ -284,25 +288,7 @@ namespace Jcd.Utilities.Test.Validations
         #region custom and multi-condition operations
 
         [Fact]
-        public void Passes()
-        {
-            throw new NotImplementedException();
-        }
-
-        [Fact]
         public void Fails()
-        {
-            throw new NotImplementedException();
-        }
-
-        [Fact]
-        public void PassesAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        [Fact]
-        public void PassesAny()
         {
             throw new NotImplementedException();
         }
@@ -319,10 +305,30 @@ namespace Jcd.Utilities.Test.Validations
             throw new NotImplementedException();
         }
 
+        [Fact]
+        public void Passes()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Fact]
+        public void PassesAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Fact]
+        public void PassesAny()
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion custom and multi-condition operations
 
+        #region Private Methods
+
         private static void ValidateMessageAndParamName(ArgumentException ex, string paramName, string message,
-              string expectedDefaultMessage)
+            string expectedDefaultMessage)
         {
             ValidateMessageAndParamName(ex, paramName, message, new[] { expectedDefaultMessage });
         }
@@ -351,5 +357,7 @@ namespace Jcd.Utilities.Test.Validations
                 Assert.StartsWith(paramName, ex.ParamName);
             }
         }
+
+        #endregion Private Methods
     }
 }

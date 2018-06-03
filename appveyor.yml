@@ -4,10 +4,10 @@ dotnet_csproj:
   patch: true
   file: '**\*.csproj'
   version: '{version}'
-  package_version: '{version}-$(label)'
+  package_version: '{version}-{branch}'
   assembly_version: '{version}'
   file_version: '{version}'
-  informational_version: '{version}-$(label)'
+  informational_version: '{version}-{branch}'
 environment:
   Configuration: Release
 install:
@@ -15,7 +15,7 @@ install:
 nuget:
   account_feed: true
 build_script:
-- sh: bash ./build/build.sh -bd
+- sh: bash ./build/build.sh -cbd
 test_script:
 - sh: dotnet test test/Jcd.Utilities.Test/Jcd.Utilities.Test.csproj -c Release
 artifacts:

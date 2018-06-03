@@ -63,7 +63,7 @@ namespace Jcd.Utilities.Test.Formatting
             #region Public Constructors
 
             public FakeCustomFormatter(string formatResult, IEnumerable<Type> handledTypes = null,
-                                    Func<ICustomFormatter, string, object, IFormatProvider, string> formatFunction = null) : base(handledTypes, formatFunction)
+                                       Func<ICustomFormatter, string, object, IFormatProvider, string> formatFunction = null) : base(handledTypes, formatFunction)
             {
                 this.formatResult = formatResult;
             }

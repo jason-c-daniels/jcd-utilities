@@ -120,6 +120,7 @@ namespace Jcd.Utilities.Formatting
 #if DEBUG // this shouldn't ever be violated if the UTs are done correctly. For performance reasons it's omitted from release mode code.
             Argument.IsNotNull(arg, nameof(arg));
 #endif
+
             if (arg is IFormattable formattable)
             {
                 return formattable.ToString(format, CultureInfo.CurrentCulture);

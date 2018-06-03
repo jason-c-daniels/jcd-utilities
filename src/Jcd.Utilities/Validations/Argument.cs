@@ -55,13 +55,13 @@ namespace Jcd.Utilities.Validations
         }
 
         public static void IsNotNull<T>(T value, string name = null, string message = null)
-      where T : class
+        where T : class
         {
             Check.IsNotNull(value, onFailure: () => RaiseArgumentNullException(name, message));
         }
 
         public static void IsNull<T>(T value, string name = null, string message = null)
-      where T : class
+        where T : class
         {
             Check.IsNull(value, onFailure: () => RaiseExpectationViolation("null", "non-null", name, message));
         }
@@ -77,27 +77,27 @@ namespace Jcd.Utilities.Validations
 
         public static void Contains<T>(IEnumerable<T> list, T target, string name = null, string message = null)
         {
-            IsNotNull(list, name);
+            IsNotNull(list, name, message);
             Check.Contains(list, target, onFailure: () => RaiseArgumentException(name, message ?? $"{target} was not found in {name}."));
         }
 
         public static void DoesNotContain<T>(IEnumerable<T> list, T target, string name = null, string message = null)
         {
-            IsNotNull(list, name);
+            IsNotNull(list, name, message);
             Check.DoesNotContain(list, target, onFailure: () => RaiseArgumentException(name,
                                  message ?? $"{target} was expected to not be in {name}, but was found."));
         }
 
         public static void HasItems<T>(IEnumerable<T> list, string name = null, string message = null)
         {
-            IsNotNull(list, name);
+            IsNotNull(list, name, message);
             Check.HasItems(list, onFailure: () => RaiseArgumentException(name,
                            message ?? $"Expected {name} to contain at least one item, but it was empty."));
         }
 
         public static void IsEmpty<T>(IEnumerable<T> list, string name = null, string message = null)
         {
-            IsNotNull(list, name);
+            IsNotNull(list, name, message);
             Check.IsEmpty(list, onFailure: () => RaiseArgumentException(name,
                           message ?? $"Expected {name} to be an empty collection, but it contained values."));
         }
@@ -106,16 +106,16 @@ namespace Jcd.Utilities.Validations
 
         #region string operations
 
-        public static void HasData(string value, string name = null, string message = null)
+        public static void IsNotEmpty(string value, string name = null, string message = null)
         {
-            IsNotNull(value, name);
-            Check.HasData(value, onFailure: () => RaiseArgumentException(name,
-                          message ?? $"Expected {name} to be a non-empty string, but it contains text."));
+            IsNotNull(value, name, message);
+            Check.IsNotEmpty(value, onFailure: () => RaiseArgumentException(name,
+                             message ?? $"Expected {name} to be a non-empty string, but it was empty."));
         }
 
         public static void IsEmpty(string value, string name = null, string message = null)
         {
-            IsNotNull(value, name);
+            IsNotNull(value, name, message);
             Check.IsEmpty(value, onFailure: () => RaiseArgumentException(name,
                           message ?? $"Expected {name} to be an empty string, but it contains text."));
         }
@@ -170,13 +170,13 @@ namespace Jcd.Utilities.Validations
 
         public static void IsWhitespace(string value, string name = null, string message = null)
         {
-            IsNotNull(value, name);
+            IsNotNull(value, name, message);
             Check.IsWhitespace(value, onFailure: () => RaiseExpectationViolation("all whitespace", "non-whitespace", name, message));
         }
 
         public static void IsWhitespaceOrEmpty(string value, string name = null, string message = null)
         {
-            IsNotNull(value, name);
+            IsNotNull(value, name, message);
             Check.PassesAny(new Check.Signature<string>[] { Check.IsWhitespace, Check.IsEmpty }, value,
                             onFailure: () => RaiseArgumentException(name, message ?? $"Expected {name} to be whitespace or empty."));
         }
@@ -194,7 +194,7 @@ namespace Jcd.Utilities.Validations
         public static void AreSameObject(object value, object comparison, string name = null, string message = null)
         {
             Check.AreSameObject(value, comparison, onFailure: () => RaiseArgumentException(name,
-                             message ?? $"Object for {name} was not the expected instance."));
+                                message ?? $"Object for {name} was not the expected instance."));
         }
 
         public static void InRange<T>(T value, T min, T max, string name = null, string message = null)
@@ -204,7 +204,7 @@ namespace Jcd.Utilities.Validations
         }
 
         public static void IsGreaterThan<T>(T value, T comparison, string name = null, string message = null)
-              where T : IComparable<T>
+        where T : IComparable<T>
         {
             Check.IsGreaterThan(value, comparison, onFailure: () => RaiseArgumentException(name, message ?? $"Value for {name} ({value}) was expected to be greater than {comparison}"));
         }

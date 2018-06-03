@@ -172,7 +172,7 @@ namespace Jcd.Utilities.Validations
         /// <param name="onSuccess">The action to take if the string is not empty</param>
         /// <param name="onFailure">The action to take if the string is empty</param>
         /// <returns>True if the string is not empty, false otherwise.</returns>
-        public static bool HasData(string value, Action onSuccess = null, Action onFailure = null)
+        public static bool IsNotEmpty(string value, Action onSuccess = null, Action onFailure = null)
         {
             return Passes(() => value != null && value.Length > 0, onSuccess, onFailure);
         }
@@ -214,7 +214,7 @@ namespace Jcd.Utilities.Validations
         /// <returns>True if the string is non-zero length and only contains whitespace.</returns>
         public static bool IsWhitespace(string value, Action onSuccess = null, Action onFailure = null)
         {
-            return Passes(() => HasData(value) && value.TrimStart() == "", onSuccess, onFailure);
+            return Passes(() => IsNotEmpty(value) && value.TrimStart() == "", onSuccess, onFailure);
         }
 
         #endregion string operations
@@ -310,7 +310,7 @@ namespace Jcd.Utilities.Validations
         /// If <paramref name="left"/> or <paramref name="right"/> are null.
         /// </exception>
         public static bool IsGreaterThan<T>(T left, T right, Action onSuccess = null, Action onFailure = null)
-      where T : IComparable<T>
+        where T : IComparable<T>
         {
             EnforceNonNull(left, right);
             return Passes(() => left.CompareTo(right) > 0, onSuccess, onFailure);

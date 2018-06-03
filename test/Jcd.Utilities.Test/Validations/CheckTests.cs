@@ -45,7 +45,7 @@ namespace Jcd.Utilities.Test.Validations
         #region boolean tests
 
         [Fact]
-        public void IsFalse_PassFalse_ExpectTrueAndOnSuccessCalled()
+        public void IsFalse_WhenGivenFalse_ReturnsTrueAndOnSuccessCalled()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -61,7 +61,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void IsFalse_PassTrue_ExpectFalseAndOnFailureCalled()
+        public void IsFalse_WhenGivenTrue_ReturnsFalseAndOnFailureCalled()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -77,7 +77,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void IsTrue_PassFalse_ExpectFalseAndOnFailureCalled()
+        public void IsTrue_WhenGivenFalse_ReturnsFalseAndOnFailureCalled()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -93,7 +93,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void IsTrue_PassTrue_ExpectTrueAndOnSuccessCalled()
+        public void IsTrue_WhenGivenTrue_ReturnsTrueAndOnSuccessCalled()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -113,7 +113,7 @@ namespace Jcd.Utilities.Test.Validations
         #region null tests
 
         [Fact]
-        public void IsNotNull_PassNull_ExpectFalse()
+        public void IsNotNull_WhenGivenNull_ReturnsFalse()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -129,7 +129,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void IsNotNull_PassObject_ExpectTrue()
+        public void IsNotNull_WhenGivenAnObject_ReturnsTrue()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -145,7 +145,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void IsNull_PassNull_ExpectTrue()
+        public void IsNull_WhenGivenNull_ReturnsTrue()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -161,7 +161,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void IsNull_PassObject_ExpectFalse()
+        public void IsNull_WhenGivenAnObject_ReturnsFalse()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -181,7 +181,7 @@ namespace Jcd.Utilities.Test.Validations
         #region collection tests
 
         [Fact]
-        public void Contains_EmptyCollection_ExpectFalse()
+        public void Contains_WhenGivenEmptyCollection_ReturnsFalse()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -192,7 +192,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void Contains_NonEmptyCollectionItemFound_ExpectTrue()
+        public void Contains_WhenGivenNonEmptyCollectionAndItemFound_ReturnsTrue()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -203,7 +203,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void Contains_NonEmptyCollectionItemNotFound_ExpectFalse()
+        public void Contains_WhenGivenNonEmptyCollectionAndItemNotFound_ReturnsFalse()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -214,7 +214,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void Contains_NullCollection_ExpectArgumentNullException()
+        public void Contains_WhenGivenNullCollection_ThrowsArgumentNullException()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -225,7 +225,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void DoesNotContain_EmptyCollection_ExpectTrue()
+        public void DoesNotContain_WhenGivenEmptyCollection_ReturnsTrue()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -236,7 +236,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void DoesNotContain_NonEmptyCollectionItemFound_ExpectFalse()
+        public void DoesNotContain_WhenGivenNonEmptyCollectionAndItemFound_ReturnsFalse()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -247,7 +247,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void DoesNotContain_NonEmptyCollectionItemNotFound_ExpectTrue()
+        public void DoesNotContain_WhenGivenNonEmptyCollectionAndItemNotFound_ReturnsTrue()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -258,7 +258,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void DoesNotContain_NullCollection_ExpectArgumentNullException()
+        public void DoesNotContain_WhenGivenNullCollection_ThrowsArgumentNullException()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -270,7 +270,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void HasItems_EmptyCollection_ExpectFalse()
+        public void HasItems_WhenGivenEmptyCollection_ReturnsFalse()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -281,7 +281,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void HasItems_NonEmptyCollection_ExpectTrue()
+        public void HasItems_WhenGivenNonEmptyCollection_ReturnsTrue()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -292,7 +292,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void HasItems_NullCollection_ExpectArgumentNullException()
+        public void HasItems_WhenGivenNullCollection_ThrowsArgumentNullException()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -303,7 +303,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void IsEmpty_EmptyCollection_ExpectTrue()
+        public void IsEmpty_WhenGivenEmptyCollection_ReturnsTrue()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -314,7 +314,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void IsEmpty_NonEmptyCollection_ExpectFalse()
+        public void IsEmpty_WhenGivenNonEmptyCollection_ReturnsFalse()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -325,7 +325,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void IsEmpty_NullCollection_ExpectArgumentNullException()
+        public void IsEmpty_WhenGivenNullCollection_ThrowsArgumentNullException()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -340,37 +340,37 @@ namespace Jcd.Utilities.Test.Validations
         #region string operations
 
         [Fact]
-        public void HasData_EmptyString_ExpectFalse()
+        public void IsNotEmpty_WhenGivenEmptyString_ReturnsFalse()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
-            Assert.False(Check.HasData("", () => onSuccessCalled = true, () => onFailureCalled = true));
+            Assert.False(Check.IsNotEmpty("", () => onSuccessCalled = true, () => onFailureCalled = true));
             Assert.True(onFailureCalled, "onFailure was not called when it was expected to be called.");
             Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
         }
 
         [Fact]
-        public void HasData_NonEmptyString_ExpectF()
+        public void IsNotEmpty_WhenGivenNonEmptyString_ReturnsFalse()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
-            Assert.True(Check.HasData("123", () => onSuccessCalled = true, () => onFailureCalled = true));
+            Assert.True(Check.IsNotEmpty("123", () => onSuccessCalled = true, () => onFailureCalled = true));
             Assert.True(onSuccessCalled, "onSuccess was not called when it was expected to be called.");
             Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
         }
 
         [Fact]
-        public void HasData_NullString_ExpectFalse()
+        public void IsNotEmpty_WhenGivenNullString_ReturnsFalse()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
-            Assert.False(Check.HasData((string)null, () => onSuccessCalled = true, () => onFailureCalled = true));
+            Assert.False(Check.IsNotEmpty((string)null, () => onSuccessCalled = true, () => onFailureCalled = true));
             Assert.True(onFailureCalled, "onFailure was not called when it was expected to be called.");
             Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
         }
 
         [Fact]
-        public void IsEmpty_EmptyString_ExpectTrue()
+        public void IsEmpty_WhenGivenEmptyString_ReturnsTrue()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -380,7 +380,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void IsEmpty_NonEmptyString_ExpectFalse()
+        public void IsEmpty_WhenGivenNonEmptyString_ReturnsFalse()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -390,7 +390,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void IsEmpty_NullString_ExpectFalse()
+        public void IsEmpty_WhenGivenNullString_ReturnsFalse()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -404,7 +404,7 @@ namespace Jcd.Utilities.Test.Validations
         #region range, equivalence, and relational tests
 
         [Fact]
-        public void AreEqual_LeftIsEqualToRight_ExpectTrue()
+        public void AreEqual_WhenLeftIsEqualToRight_ReturnsTrue()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -415,7 +415,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void AreEqual_LeftIsNotEqualToRight_ExpectFalse()
+        public void AreEqual_WhenLeftIsNotEqualToRight_ReturnsFalse()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -430,7 +430,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void AreEqual_NullArgs_ExpectArgumentNullException()
+        public void AreEqual_WhenGivenNullArgs_ThrowsArgumentNullException()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -450,7 +450,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void AreSameObject_BothDifferentObjects_ExpectFalse()
+        public void AreSameObject_WhenBothDifferentObjects_ReturnsFalse()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -478,7 +478,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void AreSameObject_BothNull_ExpectTrue()
+        public void AreSameObject_WhenBothAreNull_ReturnsTrue()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -494,7 +494,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void AreSameObject_BothSameObject_ExpectTrue()
+        public void AreSameObject_WhenBothAreSameObject_ReturnsTrue()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -522,7 +522,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void AreSameObject_OnlyOneNull_ExpectFalse()
+        public void AreSameObject_WhenOnlyOneIsNull_ReturnsFalse()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -549,7 +549,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void InRange_NullArgs_ExpectArgumentNullException()
+        public void InRange_WhenGivenNullArgs_ThrowsArgumentNullException()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -573,7 +573,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void InRange_ValueIsInRange_ExpectTrue()
+        public void InRange_WhenValueIsInRange_ReturnsTrue()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -583,7 +583,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void InRange_ValueIsNotInRange_ExpectFalse()
+        public void InRange_WhenValueIsNotInRange_ReturnsFalse()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -599,7 +599,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void IsGreaterThan_LeftIsGreaterThanRight_ExpectTrue()
+        public void IsGreaterThan_WhenLeftIsGreaterThanRight_ReturnsTrue()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -611,7 +611,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void IsGreaterThan_LeftIsLessOrEqualToRight_ExpectFalse()
+        public void IsGreaterThan_WhenLeftIsLessOrEqualToRight_ReturnsFalse()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -628,7 +628,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void IsGreaterThan_NullArgs_ExpectArgumentNullException()
+        public void IsGreaterThan_WhenNullArgs_ThrowsArgumentNullException()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -651,7 +651,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void IsLessThan_LeftIsGreaterOrEqualToRight_ExpectFalse()
+        public void IsLessThan_WhenLeftIsGreaterOrEqualToRight_ReturnsFalse()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -668,7 +668,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void IsLessThan_LeftIsLessThanRight_ExpectTrue()
+        public void IsLessThan_WhenLeftIsLessThanRight_ReturnsTrue()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -679,7 +679,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void IsLessThan_NullArgs_ExpectArgumentNullException()
+        public void IsLessThan_WhenGivenNullArgs_ThrowsArgumentNullException()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -702,7 +702,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void NotInRange_NullArgs_ExpectArgumentNullException()
+        public void NotInRange_WhenGivenNullArgs_ThrowsArgumentNullException()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -726,7 +726,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void NotInRange_ValueIsNotInRange_ExpectFalse()
+        public void NotInRange_WhenValueIsNotInRange_ReturnsFalse()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -736,7 +736,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void NotInRange_ValueIsNotInRange_ExpectTrue()
+        public void NotInRange_ValueIsNotInRange_ReturnsTrue()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -756,7 +756,7 @@ namespace Jcd.Utilities.Test.Validations
         #region custom and multi-condition operations tests
 
         [Fact]
-        public void Fails_DelegateIsNull_ExpectArgumentNullException()
+        public void Fails_WhenDelegateIsNull_ThrowsArgumentNullException()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -766,7 +766,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void Fails_DelegateReturnsFalse_ExpectTrue()
+        public void Fails_WhenDelegateReturnsFalse_ReturnsTrue()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -782,7 +782,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void Fails_DelegateReturnsTrue_ExpectFalse()
+        public void Fails_WhenDelegateReturnsTrue_ReturnsFalse()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -792,7 +792,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void Fails_T_DelegateIsNull_ExpectArgumentNullException()
+        public void Fails_T_WhenDelegateIsNull_ThrowsArgumentNullException()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -802,7 +802,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void Fails_T_DelegateReturnsFalse_ExpectTrue()
+        public void Fails_T_WhenDelegateReturnsFalse_ReturnsTrue()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -818,7 +818,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void Fails_T_DelegateReturnsTrue_ExpectFalse()
+        public void Fails_T_WhenDelegateReturnsTrue_ReturnsFalse()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -828,7 +828,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void FailsAll_AllDelegatesReturnFalse_ExpectTrue()
+        public void FailsAll_WhenAllDelegatesReturnFalse_ReturnsTrue()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -839,7 +839,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void FailsAll_DelegateListNull_ExpectArgumentNullException()
+        public void FailsAll_WhenDelegateListIsNull_ThrowsArgumentNullException()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -849,7 +849,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void FailsAll_FirstDelegateNull_ExpectArgumentNullException()
+        public void FailsAll_WhenFirstDelegateIsNull_ThrowsArgumentNullException()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -861,7 +861,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void FailsAll_OneDelegateReturnsTrue_ExpectFalse()
+        public void FailsAll_WhenOneDelegateReturnsTrue_ReturnsFalse()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -872,7 +872,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void FailsAny_AllDelegatesReturnFalse_ExpectTrue()
+        public void FailsAny_WhenAllDelegatesReturnFalse_ReturnsTrue()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -883,7 +883,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void FailsAny_AllDelegatesReturnTrue_ExpectFalse()
+        public void FailsAny_WhenAllDelegatesReturnTrue_ReturnsFalse()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -894,7 +894,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void FailsAny_DelegateListNull_ExpectArgumentNullException()
+        public void FailsAny_WhenDelegateListIsNull_ThrowsArgumentNullException()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -904,7 +904,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void FailsAny_FirstDelegateNull_ExpectArgumentNullException()
+        public void FailsAny_WhenFirstDelegateIsNull_ThrowsArgumentNullException()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -916,7 +916,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void FailsAny_OneDelegateReturnsFalse_ExpectTrue()
+        public void FailsAny_WhenOneDelegateReturnsFalse_ReturnsTrue()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -927,7 +927,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void Passes_DelegateIsNull_ExpectArgumentNullException()
+        public void Passes_WhenDelegateIsNull_ThrowsArgumentNullException()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -937,7 +937,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void Passes_DelegateReturnsFalse_ExpectFalse()
+        public void Passes_WhenDelegateReturnsFalse_ReturnsFalse()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -947,7 +947,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void Passes_DelegateReturnsTrue_ExpectTrue()
+        public void Passes_WhenDelegateReturnsTrue_ReturnsTrue()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -963,7 +963,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void Passes_T_DelegateIsNull_ExpectArgumentNullException()
+        public void Passes_T_WhenDelegateIsNull_ThrowsArgumentNullException()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -973,7 +973,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void Passes_T_DelegateReturnsFalse_ExpectFalse()
+        public void Passes_T_WhenDelegateReturnsFalse_ReturnsFalse()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -983,7 +983,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void Passes_T_DelegateReturnsTrue_ExpectTrue()
+        public void Passes_T_WhenDelegateReturnsTrue_ReturnsTrue()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -998,7 +998,8 @@ namespace Jcd.Utilities.Test.Validations
             Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
         }
 
-        public void PassesAll_AllDelegatesReturnTrue_ExpectTrue()
+        [Fact]
+        public void PassesAll_WhenAllDelegatesReturnTrue_ReturnsTrue()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -1009,7 +1010,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void PassesAll_DelegateListNull_ExpectArgumentNullException()
+        public void PassesAll_WhenDelegateListIsNull_ThrowsArgumentNullException()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -1020,7 +1021,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void PassesAll_FirstDelegateNull_ExpectArgumentNullException()
+        public void PassesAll_WhenFirstDelegateIsNull_ThrowsArgumentNullException()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -1032,7 +1033,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void PassesAll_OneDelegateReturnsFalse_ExpectFalse()
+        public void PassesAll_WhenOneDelegateReturnsFalse_ReturnsFalse()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -1043,7 +1044,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void PassesAny_AllDelegatesReturnFalse_ExpectFalse()
+        public void PassesAny_WhenAllDelegatesReturnFalse_ReturnsFalse()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -1054,7 +1055,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void PassesAny_AllDelegatesReturnTrue_ExpectTrue()
+        public void PassesAny_WhenAllDelegatesReturnTrue_ReturnsTrue()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -1065,7 +1066,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void PassesAny_DelegateListNull_ExpectArgumentNullException()
+        public void PassesAny_WhenDelegateListIsNull_ThrowsArgumentNullException()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -1076,7 +1077,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void PassesAny_FirstDelegateNull_ExpectArgumentNullException()
+        public void PassesAny_WhenFirstDelegateIsNull_ThrowsArgumentNullException()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -1088,7 +1089,7 @@ namespace Jcd.Utilities.Test.Validations
         }
 
         [Fact]
-        public void PassesAny_OneDelegateReturnsTrue_ExpectTrue()
+        public void PassesAny_WhenOneDelegateReturnsTrue_ReturnsTrue()
         {
             bool onFailureCalled = false;
             bool onSuccessCalled = false;
@@ -1103,7 +1104,7 @@ namespace Jcd.Utilities.Test.Validations
         #region misc tests
 
         [Fact]
-        public void VariousMethods_LackingHandlers_NoExceptionsThrown()
+        public void VariousMethods_WhenNoHandlersAreProvided_NoExceptionsAreThrown()
         {
             var o1 = new object();
             var o2 = new object();
@@ -1156,9 +1157,9 @@ namespace Jcd.Utilities.Test.Validations
             Check.IsEmpty("");
             Check.IsEmpty(" ");
             Check.IsEmpty(null);
-            Check.HasData("");
-            Check.HasData(" ");
-            Check.HasData(null);
+            Check.IsNotEmpty("");
+            Check.IsNotEmpty(" ");
+            Check.IsNotEmpty(null);
 
             Check.IsWhitespace("");
             Check.IsWhitespace(" ");

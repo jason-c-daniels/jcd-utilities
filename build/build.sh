@@ -147,21 +147,21 @@ main() {
 execute_tests(){
     cfg=$1
     folder=$2
-    dotnet test -c $cfg $folder --no-build
+    find $folder -maxdepth 1 -type f -exec dotnet test --no-build -c $cfg {} \;
 }
 
 build_folder() {
     cfg=$1
     folder=$2
     echo "building $folder"
-    dotnet build -c $cfg $folder
+    find $folder -maxdepth 1 -type f -exec dotnet build -c $cfg {} \;
 }
 
 build_docs() {
     # purge the old files
     find docs -not -name '*.md' -not -name docs -delete
 
-    # generate the new
+    # generate the new API docs
     doxygen
 }
 

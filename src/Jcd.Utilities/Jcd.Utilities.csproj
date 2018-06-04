@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -7,11 +7,18 @@
     <Company Condition="'$(Company)' == ''">N/A</Company>
     <Copyright Condition="'$(Copyright)' == ''">(C) 2018 Jason C Daniels</Copyright>
     <Description Condition="'$(Description)' == ''">A set of utilities that I use.</Description>
-    <PackageLicenseUrl>license URL</PackageLicenseUrl>
+    <PackageLicenseUrl>https://github.com/jason-c-daniels/jcd-utilities/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/jason-c-daniels/jcd-utilities</PackageProjectUrl>
     <RepositoryUrl>https://github.com/jason-c-daniels/jcd-utilities</RepositoryUrl>
     <RepositoryType>Git Hub</RepositoryType>
+    <VersionPrefix Condition="'$(VersionPrefix)' == ''">0.1.1</VersionPrefix>
+    <VersionSuffix Condition="'$(VersionSuffix)' == ''">alpha</VersionSuffix>
     <PackageTags>Validation, Parsing, Formatting, Generator</PackageTags>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageReleaseNotes>A pre-release version. While I will do my best not to upend the world, do not assume the features will remain stable.</PackageReleaseNotes>
+    <SignAssembly>false</SignAssembly>
+    <DelaySign>false</DelaySign>
   </PropertyGroup>
 
 </Project>

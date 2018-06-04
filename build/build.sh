@@ -1,17 +1,13 @@
 #!/bin/bash
 set -xe # fail on any error
 
-usage() {
-    echo "usage: $0 [--help|-h] [--all|-a] [--build|-b] [--test|-t] [--docs|-d] [--samples|-s] [--clean|c]" >&2
-}
-
 #parse options
 BUILD_SOURCE=0
 BUILD_SAMPLES=0
 RUN_TESTS=0
 BUILD_DOCS=0
 BUILD_CLEAN=0
-#BUILD_NUGET=0
+
 optspec=":cahbsdt-:"
 while getopts "$optspec" optchar; do
     case "${optchar}" in
@@ -92,45 +88,67 @@ if [ "$BUILD_CLEAN" != 1 ] && [ "$BUILD_SOURCE" != 1 ] && [ "$BUILD_DOCS" != 1 ]
     RUN_TESTS=1
 fi
 
+export BUILD_SOURCE
+export BUILD_SAMPLES
+export RUN_TESTS
+export BUILD_DOCS
+export BUILD_CLEAN   
+
 main() {
-    set -xe 
+    
+    echo $BUILD_CLEAN "clean"
+    echo $BUILD_SOURCE "source"
+    #TODO: nix GitVersion, it's only good on Windows. Find some other way to do it.
+
     # determine the location this script is running from.
     DIR=$(get_script_dir)
-    echo $SOURCE
 
     pushd "$DIR/.."
 
-	#capture the version information for the build.
-    export Version=$(gitversion -showvariable SemVer)
-    export AssemblyVersion=$(gitversion -showvariable AssemblySemVer)
-
+	# capture the version information for the build.    
+    if [ -z ${Configuration+x} ]; then Configuration="Release"; fi
+    if [ -z ${VersionPrefix+x} ]; then VersionPrefix=$(get_prefix); fi
+    if [ -z ${VersionSuffix+x} ]; then VersionSuffix=$(get_suffix); fi
+    if [ -z ${Version+x} ]; then 
+        # do nothing this is exactly what we want.
+        echo "Version was not set"
+    else
+        unset -v Version
+    fi
+    export SemanticVersion="$VersionPrefix-$VersionSuffix"
+    
     # set the default build configuration to Release, unless already set.
-    if [ -z ${build_configuration+x} ]; then build_configuration="Release";  fi
+    export Configuration
+    export VersionPrefix
+    export VersionSuffix
 
     if [ "$BUILD_CLEAN" == 1 ]; then 
         # cleanup build artifacts
-        dotnet clean
+        (unset -v Version; dotnet clean)
         find . -type d -name obj -prune -exec rm -rf {} \;
         find . -type d -name bin -prune -exec rm -rf {} \;
         clean_docs
     fi
-
+    
     if [ "$BUILD_SOURCE" == 1 ]; then 
         # build the main library
-        build_folder $build_configuration "./src"
+        build_folder "./src"
+        pkg_folder="$(pwd)/packages";
+        mkdir -p "$pkg_folder"
+        pack_folder "./src" "$pkg_folder"
     fi
 
     if [ "$RUN_TESTS" == 1 ]; then 
         # build the tests
-        build_folder $build_configuration "./test"
+        build_folder "./test"
         
         # execute the tests
-        execute_tests $build_configuration "./test"
+        execute_tests "./test"
     fi
     
     if [ "$BUILD_SAMPLES" == 1 ]; then 
         # build the sample apps.
-        build_folder $build_configuration "./samples"
+        build_folder "./samples"
     fi
 
     if [ "$BUILD_DOCS" == 1 ]; then 
@@ -144,31 +162,44 @@ main() {
     popd
 }
 
-execute_tests(){
-    set -xe 
-    cfg=$1
-    folder=$2
-    find "$folder" -maxdepth 2 -type f -name "*.csproj" -print0 | xargs -0 -n1 dotnet test -c "$cfg" 
+usage() {
+    echo "usage: $0 [--help|-h] [--all|-a] [--build|-b] [--test|-t] [--docs|-d] [--samples|-s] [--clean|c]" >&2
+}
+
+execute_tests() {
+    folder=$1
+    #find "$folder" -maxdepth 2 -type f -name "*.csproj" -print0 | xargs -0 -n1 dotnet test -c "$cfg" 
+    find "$folder" -maxdepth 2 -type f -name "*.csproj" -print0 | xargs -0 -n1 dotnet test
 }
 
 build_folder() {
-    set -xe 
-    cfg=$1
-    folder=$2
+    folder=$1
     echo "building $folder"
-    find "$folder" -maxdepth 2 -type f -name "*.csproj" -print0 | xargs -0 -n1 dotnet build -c "$cfg" 
+    find "$folder" -maxdepth 2 -type f -name "*.csproj" -print0 | xargs -0 -n1 dotnet build
+    #dotnet build -c "$cfg" "$folder"
+}
+
+pack_folder() {
+    folder=$1
+    pkg_folder=$2
+    echo "building $folder"
+    find "$folder" -maxdepth 2 -type f -name "*.csproj" -print0 | xargs -0 -n1 dotnet pack -o "$pkg_folder" --no-build
+}
+
+clean_packages() {
+    rm -rf "./packages"
 }
 
 clean_docs() {
-    set -xe 
     find docs -not -name '*.md' -not -name docs -delete
 }
 
 build_docs() {
-    set -xe 
     clean_docs
-
-    export ProjectNumber=$(gitversion -showvariable SemVer)
+    local suffix="$(get_suffix)"
+    ProjectNumber="$(get_prefix)"
+    if [[ "$suffix" != "" ]]; then ProjectNumber="$ProjectNumber-$suffix";  fi
+    export ProjectNumber
     # generate the new API docs
     ( cat Doxyfile ; echo "PROJECT_NUMBER=$ProjectNumber" ) | doxygen -
 }
@@ -186,7 +217,38 @@ get_script_dir () {
      echo "$DIR"
 }
 
+git_rev() {
+    local rev=$(git rev-list $(git rev-list --tags --no-walk --max-count=1)..HEAD --count)
+    echo "$rev"
+}
+
+get_prefix() {
+    local prefix="$(git rev-parse --symbolic --tags | sort -i | tail -1 | sed -e 's/\(.*\)\([-].*\)/\1/')"
+
+    if [[ "$APPVEYOR" == "true" ]]; then
+        prefix=$APPVEYOR_BUILD_VERSION
+    fi
+
+    if [[ "$prefix" == "" ]]; then prefix="0.0.$(git_rev)"; fi
+    echo $prefix
+}
+
+get_suffix() {
+    # local system defaults. These are overridden by appveyor
+    local rev=$(git_rev)
+    local suffix="$(git rev-parse --symbolic --tags | sort -i | tail -1 | sed -e 's/\(.*\)\([-]\)\(.*\)/\3/').$rev"
+    local branch_type=$(git rev-parse --abbrev-ref HEAD | sed -e 's/\(develop\|master\|feature\)\(.*\)$/\1/')
+    if [[ "$APPVEYOR" == "true" ]]; then
+        rev=$APPVEYOR_PULL_REQUEST_NUMBER
+    fi
+
+    if [[ "$branch_type" == "master" ]]; then suffix=""; fi
+    if [[ "$branch_type" == "develop" ]]; then suffix="rc.$rev"; fi
+    if [[ "$branch_type" == "feature" ]]; then suffix="pre.$rev"; fi
+
+
+    echo $suffix
+}
+
 # now do the work!
 main
-echo $?
-exit $?

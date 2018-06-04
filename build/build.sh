@@ -1,6 +1,8 @@
 #!/bin/bash
 set -xe # fail on any error
 
+#TODO: Comment the heck out of this file!
+
 #parse options
 BUILD_SOURCE=0
 BUILD_SAMPLES=0

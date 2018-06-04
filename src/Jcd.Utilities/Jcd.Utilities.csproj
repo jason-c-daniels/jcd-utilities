@@ -11,6 +11,8 @@
     <PackageProjectUrl>https://github.com/jason-c-daniels/jcd-utilities</PackageProjectUrl>
     <RepositoryUrl>https://github.com/jason-c-daniels/jcd-utilities</RepositoryUrl>
     <RepositoryType>Git Hub</RepositoryType>
+    <VersionPrefix Condition="'$(VersionPrefix)' == ''">0.0.1</VersionPrefix>
+    <VersionSuffix Condition="'$(VersionSuffix)' == ''">alpha</VersionSuffix>
     <PackageTags>Validation, Parsing, Formatting, Generator</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>

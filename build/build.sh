@@ -218,7 +218,8 @@ get_script_dir () {
 }
 
 git_rev() {
-    echo $(git rev-list $(git rev-list --tags --no-walk --max-count=1)..HEAD --count)
+    local rev=$(git rev-list $(git rev-list --tags --no-walk --max-count=1)..HEAD --count)
+    echo "$rev"
 }
 
 get_prefix() {

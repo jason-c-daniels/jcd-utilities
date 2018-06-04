@@ -9,7 +9,7 @@ nuget:
 build_script:
 - sh: bash ./build/build.sh -bcd
 test_script:
-- sh: dotnet test test/Jcd.Utilities.Test/Jcd.Utilities.Test.csproj --no-build
+- sh: dotnet test test/Jcd.Utilities.Test/Jcd.Utilities.Test.csproj
 artifacts:
 - path: ./docs
   name: jcd-utilities-docs

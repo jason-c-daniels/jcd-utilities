@@ -113,10 +113,9 @@ main() {
         rm tools/git-ver*
     fi
     mkdir -p $TOOLS_DIR
-    curl https://codeload.github.com/jason-c-daniels/git-ver/zip/v0.0.1-pre > git-ver.zip    
+    curl https://codeload.github.com/jason-c-daniels/git-ver/zip/v0.0.1-pre+r2 > git-ver.zip    
     unzip -jo git-ver.zip **/git-ver* -d ./tools
     export PATH="$TOOLS_DIR":$PATH
-    ls -alR
     chmod u+x "./tools/git-ver"
 
 	# capture the version information for the build.    

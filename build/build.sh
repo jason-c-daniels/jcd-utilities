@@ -116,7 +116,9 @@ main() {
     curl https://codeload.github.com/jason-c-daniels/git-ver/zip/v0.0.1-pre > git-ver.zip    
     unzip -jo git-ver.zip **/git-ver* -d ./tools
     export PATH="$TOOLS_DIR":$PATH
+    ls "$TOOLS_DIR/git-ver*"
     chmod a+x "$TOOLS_DIR/git-ver*"
+
 	# capture the version information for the build.    
     if [ -z ${Configuration+x} ]; then Configuration="Release"; fi
     if [ -z ${VersionPrefix+x} ]; then VersionPrefix=$(git-ver get-version); fi

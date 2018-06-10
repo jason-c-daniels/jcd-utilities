@@ -12,7 +12,7 @@ namespace Jcd.Utilities.Samples.ConsoleApp
       {
          Console.WriteLine("Hello World!");
          var i = long.MinValue;
-         var encoder = IntegerEncoders.Hexdecimal;
+         var encoder = IntegerEncoders.Hexadecimal;
          var parsed = encoder.ParseInt64(encoder.Format(i));
          Console.WriteLine($"{encoder.Format(i)} == {Convert.ToString(parsed, encoder.Base)}");
 

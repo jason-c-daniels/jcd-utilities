@@ -204,7 +204,7 @@
       /// <summary>
       ///     A base 16 formatter using 0-9A-F, case insensitive
       /// </summary>
-      public static readonly IntegerEncoder Hexdecimal = new IntegerEncoder("0123456789ABCDEF");
+      public static readonly IntegerEncoder Hexadecimal = new IntegerEncoder("0123456789ABCDEF");
 
       /// <summary>
       ///     A base 9 formatter using 0-8

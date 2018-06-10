@@ -2,13 +2,14 @@
 using System.Numerics;
 using Jcd.Utilities.Extensions;
 using Jcd.Utilities.Test.Extensions;
+using Jcd.Utilities.Test.TestHelpers;
 using Xunit;
 
 namespace Jcd.Utilities.Test.Formatting
 {
    public class IntegerEncoderTests
    {
-      #region Public Methods
+      #region CrockFordEncoder and Hex Tests
 
       [Theory]
       [MemberData(nameof(NumericMemberDataProvider.Bytes), MemberType = typeof(NumericMemberDataProvider))]
@@ -60,7 +61,7 @@ namespace Jcd.Utilities.Test.Formatting
       {
          try
          {
-            var encoder = IntegerEncoders.Hexdecimal;
+            var encoder = IntegerEncoders.Hexadecimal;
 
             if (number.IsBigIntegerType())
             {
@@ -119,10 +120,212 @@ namespace Jcd.Utilities.Test.Formatting
          }
       }
 
-      #endregion Public Methods
+      #endregion CrockFordEncoder and Hex Tests
 
-      //TODO: Add a test "Theory" (what an awful term) that tests all encoders vs all sample data.
-      //TODO: Add tests for Format: uint, ushort, byte, int, short, sbyte, negative biginteger,
+      #region Format positive number tests
+      /// <summary>
+      /// Validate that Format Returns correct hex string when given UInt64.
+      /// </summary>
+      [Theory]
+      [MemberData(nameof(NumericMemberDataProvider.FibonacciiBigIntegers), MemberType = typeof(NumericMemberDataProvider))]
+      public void Format_WhenGivenBigInteger_ReturnsCorrectHexString(BigInteger data)
+      {
+         // for some odd reason BigInteger zero pads its hex representation. Ensure we've stripped the leading zeros from both. We're looking for hex encoding equivalence, not string equivalence.
+         var expected = data.ToString("X").ToLowerInvariant().TrimLeadingZeros();
+         var actual = IntegerEncoders.Hexadecimal.Format(data).ToLowerInvariant().TrimLeadingZeros();
+         Assert.Equal(expected, actual);
+      }
+
+      /// <summary>
+      /// Validate that Format Returns correct hex string when given UInt64.
+      /// </summary>
+      [Theory]
+      [MemberData(nameof(NumericMemberDataProvider.FibonacciiUInt32s), MemberType = typeof(NumericMemberDataProvider))]
+      public void Format_WhenGivenUInt64_ReturnsCorrectHexString(UInt64 data)
+      {
+         var expected = data.ToString("X").ToLowerInvariant();
+         var actual = IntegerEncoders.Hexadecimal.Format(data).ToLowerInvariant();
+         Assert.Equal(expected, actual);
+      }
+
+      /// <summary>
+      /// Validate that Format Returns correct hex string when given Int64.
+      /// </summary>
+      [Theory]
+      [MemberData(nameof(NumericMemberDataProvider.FibonacciiInt32s), MemberType = typeof(NumericMemberDataProvider))]
+      public void Format_WhenGivenInt64_ReturnsCorrectHexString(Int64 data)
+      {
+         var expected = data.ToString("X").ToLowerInvariant();
+         var actual = IntegerEncoders.Hexadecimal.Format(data).ToLowerInvariant();
+         Assert.Equal(expected, actual);
+      }
+
+      /// <summary>
+      /// Validate that Format Returns correct hex string when given UInt32.
+      /// </summary>
+      [Theory]
+      [MemberData(nameof(NumericMemberDataProvider.FibonacciiUInt32s), MemberType = typeof(NumericMemberDataProvider))]
+      public void Format_WhenGivenUInt32_ReturnsCorrectHexString(UInt32 data)
+      {
+         var expected = data.ToString("X").ToLowerInvariant();
+         var actual = IntegerEncoders.Hexadecimal.Format(data).ToLowerInvariant();
+         Assert.Equal(expected, actual);
+      }
+
+      /// <summary>
+      /// Validate that Format Returns correct hex string when given Int32.
+      /// </summary>
+      [Theory]
+      [MemberData(nameof(NumericMemberDataProvider.FibonacciiInt32s), MemberType = typeof(NumericMemberDataProvider))]
+      public void Format_WhenGivenInt32_ReturnsCorrectHexString(Int32 data)
+      {
+         var expected = data.ToString("X").ToLowerInvariant();
+         var actual = IntegerEncoders.Hexadecimal.Format(data).ToLowerInvariant();
+         Assert.Equal(expected, actual);
+      }
+
+      /// <summary>
+      /// Validate that Format Returns correct hex string when given UInt16.
+      /// </summary>
+      [Theory]
+      [MemberData(nameof(NumericMemberDataProvider.FibonacciiUInt16s), MemberType = typeof(NumericMemberDataProvider))]
+      public void Format_WhenGivenUInt16_ReturnsCorrectHexString(UInt16 data)
+      {
+         var expected = data.ToString("X").ToLowerInvariant();
+         var actual = IntegerEncoders.Hexadecimal.Format(data).ToLowerInvariant();
+         Assert.Equal(expected, actual);
+      }
+
+      /// <summary>
+      /// Validate that Format Returns correct hex string when given Int16.
+      /// </summary>
+      [Theory]
+      [MemberData(nameof(NumericMemberDataProvider.FibonacciiInt16s), MemberType = typeof(NumericMemberDataProvider))]
+      public void Format_WhenGivenInt16_ReturnsCorrectHexString(Int16 data)
+      {
+         var expected = data.ToString("X").ToLowerInvariant();
+         var actual = IntegerEncoders.Hexadecimal.Format(data).ToLowerInvariant();
+         Assert.Equal(expected, actual);
+      }
+
+      /// <summary>
+      /// Validate that Format Returns correct hex string when given UInt16.
+      /// </summary>
+      [Theory]
+      [MemberData(nameof(NumericMemberDataProvider.FibonacciiBytes), MemberType = typeof(NumericMemberDataProvider))]
+      public void Format_WhenGivenByte_ReturnsCorrectHexString(Byte data)
+      {
+         var expected = data.ToString("X").ToLowerInvariant();
+         var actual = IntegerEncoders.Hexadecimal.Format(data).ToLowerInvariant();
+         Assert.Equal(expected, actual);
+      }
+
+      /// <summary>
+      /// Validate that Format Returns correct hex string when given Int16.
+      /// </summary>
+      [Theory]
+      [MemberData(nameof(NumericMemberDataProvider.FibonacciiSBytes), MemberType = typeof(NumericMemberDataProvider))]
+      public void Format_WhenGivenSByte_ReturnsCorrectHexString(SByte data)
+      {
+         var expected = data.ToString("X").ToLowerInvariant();
+         var actual = IntegerEncoders.Hexadecimal.Format(data).ToLowerInvariant();
+         Assert.Equal(expected, actual);
+      }
+
+      #endregion
+
+      #region negative number formatting test
+      /// <summary>
+      /// Validate that Format Returns correct hex string when given negative sbyte.
+      /// </summary>
+      [Theory]
+      [MemberData(nameof(NumericMemberDataProvider.NegativeFibonacciiSBytes), MemberType = typeof(NumericMemberDataProvider))]
+      public void Format_WhenGivenNegativeSByte_ReturnsCorrectHexString(SByte data)
+      {
+         var abs = (byte)Math.Abs((short)data);
+         var expected = abs.ToString("X").ToLowerInvariant();
+         var actual = IntegerEncoders.Hexadecimal.Format(data).ToLowerInvariant();
+         Assert.EndsWith(expected, actual);
+
+         if (data < 0) {
+            Assert.StartsWith("-", actual);
+         }
+      }
+
+      /// <summary>
+      /// Validate that Format Returns correct hex string when given negative short.
+      /// </summary>
+      [Theory]
+      [MemberData(nameof(NumericMemberDataProvider.NegativeFibonacciiInt16s), MemberType = typeof(NumericMemberDataProvider))]
+      public void Format_WhenGivenNegativeInt16_ReturnsCorrectHexString(short data)
+      {
+         var abs = (ushort)Math.Abs((int)data);
+         var expected = abs.ToString("X").ToLowerInvariant();
+         var actual = IntegerEncoders.Hexadecimal.Format(data).ToLowerInvariant();
+         Assert.EndsWith(expected, actual);
+
+         if (data < 0)
+         {
+            Assert.StartsWith("-", actual);
+         }
+      }
+
+      /// <summary>
+      /// Validate that Format Returns correct hex string when given negative int.
+      /// </summary>
+      [Theory]
+      [MemberData(nameof(NumericMemberDataProvider.NegativeFibonacciiInt16s), MemberType = typeof(NumericMemberDataProvider))]
+      public void Format_WhenGivenNegativeInt32_ReturnsCorrectHexString(int data)
+      {
+         var abs = (uint)Math.Abs((long)data);
+         var expected = abs.ToString("X").ToLowerInvariant();
+         var actual = IntegerEncoders.Hexadecimal.Format(data).ToLowerInvariant();
+         Assert.EndsWith(expected, actual);
+
+         if (data < 0)
+         {
+            Assert.StartsWith("-", actual);
+         }
+      }
+
+      /// <summary>
+      /// Validate that Format Returns correct hex string when given negative int.
+      /// </summary>
+      [Theory]
+      [MemberData(nameof(NumericMemberDataProvider.NegativeFibonacciiInt64s), MemberType = typeof(NumericMemberDataProvider))]
+      public void Format_WhenGivenNegativeInt64_ReturnsCorrectHexString(long data)
+      {
+         var abs = (ulong)((BigInteger)data * -1);
+         var expected = abs.ToString("X").ToLowerInvariant();
+         var actual = IntegerEncoders.Hexadecimal.Format(data).ToLowerInvariant();
+         Assert.EndsWith(expected, actual);
+
+         if (data < 0)
+         {
+            Assert.StartsWith("-", actual);
+         }
+      }
+
+      /// <summary>
+      /// Validate that Format Returns correct hex string when given negative int.
+      /// </summary>
+      [Theory]
+      [MemberData(nameof(NumericMemberDataProvider.NegativeFibonacciiBigIntegers), MemberType = typeof(NumericMemberDataProvider))]
+      public void Format_WhenGivenNegativebigInteger_ReturnsCorrectHexString(BigInteger data)
+      {
+         var abs = data * -1;
+         var expected = abs.ToString("X").ToLowerInvariant().TrimLeadingZeros();
+         var actual = IntegerEncoders.Hexadecimal.Format(data).ToLowerInvariant();
+
+         if (data < 0)
+         {
+            Assert.StartsWith("-", actual);
+         }
+
+         Assert.EndsWith(expected, actual.Replace("-", ""));
+      }
+      #endregion
+
       //TODO: Add tests for Parse: Byte, Int16, Int32, SByte, UInt16, UInt32, result is negative - UInt64
       //TODO: Add tests for TryParse: BigInteger, SByte, Int16, Int32, Int64, Byte, UInt16, UInt32, UInt64
       //TODO: Add tests for FormatObject: all data types.

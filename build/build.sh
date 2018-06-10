@@ -97,7 +97,6 @@ export BUILD_DOCS
 export BUILD_CLEAN   
 
 main() {
-    
     echo $BUILD_CLEAN "clean"
     echo $BUILD_SOURCE "source"
     #TODO: nix GitVersion, it's only good on Windows. Find some other way to do it.
@@ -106,18 +105,25 @@ main() {
     DIR=$(get_script_dir)
 
     pushd "$DIR/.."
+    TOOLS_DIR="$(pwd)/tools"
+    mkdir -p $TOOLS_DIR
+    curl https://codeload.github.com/jason-c-daniels/git-ver/zip/v0.0.1-pre > git-ver.zip
+    rm tools/git-ver*
+    unzip -jo git-ver.zip **/git-ver* -d ./tools
+    export PATH="$TOOLS_DIR":$PATH
 
 	# capture the version information for the build.    
     if [ -z ${Configuration+x} ]; then Configuration="Release"; fi
-    if [ -z ${VersionPrefix+x} ]; then VersionPrefix=$(get_prefix); fi
-    if [ -z ${VersionSuffix+x} ]; then VersionSuffix=$(get_suffix); fi
+    if [ -z ${VersionPrefix+x} ]; then VersionPrefix=$(git-ver get-version); fi
+    if [ -z ${VersionSuffix+x} ]; then VersionSuffix=$(git-ver get-suffix -d); fi
     if [ -z ${Version+x} ]; then 
         # do nothing this is exactly what we want.
         echo "Version was not set"
     else
+        echo unsetting Version, using VersionPrefix and VersionSuffix instead
         unset -v Version
     fi
-    export SemanticVersion="$VersionPrefix-$VersionSuffix"
+    export SemanticVersion="$(git-ver get-semver -d)"
     
     # set the default build configuration to Release, unless already set.
     export Configuration
@@ -134,28 +140,29 @@ main() {
     
     if [ "$BUILD_SOURCE" == 1 ]; then 
         # build the main library
-        build_folder "./src"
+        ( unset -v Version; export Configuration; export VersionPrefix; export VersionSuffix; build_folder "./src" )
         pkg_folder="$(pwd)/packages";
         mkdir -p "$pkg_folder"
-        pack_folder "./src" "$pkg_folder"
+        ( unset -v Version; export Configuration; export VersionPrefix; export VersionSuffix; pack_folder "./src" "$pkg_folder")
     fi
 
     if [ "$RUN_TESTS" == 1 ]; then 
         # build the tests
-        build_folder "./test"
+        ( unset -v Version; export Configuration; export VersionPrefix; export VersionSuffix; build_folder "./test" )
         
         # execute the tests
-        execute_tests "./test"
+        ( unset -v Version; export Configuration; export VersionPrefix; export VersionSuffix; execute_tests "./test" )
+
     fi
     
     if [ "$BUILD_SAMPLES" == 1 ]; then 
         # build the sample apps.
-        build_folder "./samples"
+        ( unset -v Version; export Configuration; export VersionPrefix; export VersionSuffix; build_folder "./samples" )
     fi
 
     if [ "$BUILD_DOCS" == 1 ]; then 
         # build api docs if the flag to do so was provided.
-        build_docs
+        ( unset -v Version; export Configuration; export VersionPrefix; export VersionSuffix; build_docs )
     fi
 
     # TODO: package, sign, and push to nuget
@@ -170,22 +177,20 @@ usage() {
 
 execute_tests() {
     folder=$1
-    #find "$folder" -maxdepth 2 -type f -name "*.csproj" -print0 | xargs -0 -n1 dotnet test -c "$cfg" 
-    find "$folder" -maxdepth 2 -type f -name "*.csproj" -print0 | xargs -0 -n1 dotnet test
+    for project in "$folder/**/*.csproj"; do dotnet test --no-build -p:CollectCoverage=true -p:CoverletOutputFormat=opencover $project; done
 }
 
 build_folder() {
     folder=$1
     echo "building $folder"
-    find "$folder" -maxdepth 2 -type f -name "*.csproj" -print0 | xargs -0 -n1 dotnet build
-    #dotnet build -c "$cfg" "$folder"
+    for project in "$folder/**/*.csproj"; do dotnet build $project; done
 }
 
 pack_folder() {
     folder=$1
     pkg_folder=$2
     echo "building $folder"
-    find "$folder" -maxdepth 2 -type f -name "*.csproj" -print0 | xargs -0 -n1 dotnet pack -o "$pkg_folder" --no-build
+    for project in "$folder/**/*.csproj"; do dotnet pack --no-build -o $pkg_folder $project; done
 }
 
 clean_packages() {
@@ -198,8 +203,8 @@ clean_docs() {
 
 build_docs() {
     clean_docs
-    local suffix="$(get_suffix)"
-    ProjectNumber="$(get_prefix)"
+    local suffix="$(git-ver get-suffix)"
+    ProjectNumber="$(git-ver get-version)"
     if [[ "$suffix" != "" ]]; then ProjectNumber="$ProjectNumber-$suffix";  fi
     export ProjectNumber
     # generate the new API docs
@@ -237,7 +242,7 @@ get_prefix() {
 
 get_suffix() {
     # local system defaults. These are overridden by appveyor
-    local rev=$(git_rev)
+    local rev=$(git-ver get-rev)
     local suffix="$(git rev-parse --symbolic --tags | sort -i | tail -1 | sed -e 's/\(.*\)\([-]\)\(.*\)/\3/').$rev"
     local branch_type=$(git rev-parse --abbrev-ref HEAD | sed -e 's/\(develop\|master\|feature\)\(.*\)$/\1/')
     if [[ "$APPVEYOR" == "true" ]]; then

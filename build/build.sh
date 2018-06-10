@@ -117,7 +117,7 @@ main() {
     unzip -jo git-ver.zip **/git-ver* -d ./tools
     export PATH="$TOOLS_DIR":$PATH
     ls -alR
-    chmod a+x "./tools/*"
+    chmod u+x "./tools/git-ver"
 
 	# capture the version information for the build.    
     if [ -z ${Configuration+x} ]; then Configuration="Release"; fi

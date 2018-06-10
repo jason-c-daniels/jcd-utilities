@@ -329,3 +329,22 @@ ASALocalRun/
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
 /.vscode
+/test/Jcd.Utilities.Test/coverage.xml
+/tools/git-ver-version
+/tools/git-ver-help-version
+/tools/git-ver-help-get-version
+/tools/git-ver-help-get-suffix
+/tools/git-ver-help-get-prefix
+/tools/git-ver-help-get-patch
+/tools/git-ver-help-get-minor
+/tools/git-ver-help-get-major
+/tools/git-ver-help
+/tools/git-ver-get-version
+/tools/git-ver-get-suffix
+/tools/git-ver-get-semver
+/tools/git-ver-get-rev
+/tools/git-ver-get-prefix
+/tools/git-ver-get-patch
+/tools/git-ver-get-minor
+/tools/git-ver-get-major
+/tools/git-ver

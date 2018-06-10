@@ -106,18 +106,17 @@ main() {
 
     pushd "$DIR/.."
     TOOLS_DIR="$(pwd)/tools"
-    mkdir -p $TOOLS_DIR
     if [[ -f git-ver.zip ]]; then
         rm git-ver.zip
     fi
     if [[ -f tools/git-ver ]]; then
         rm tools/git-ver*
     fi
-    curl https://codeload.github.com/jason-c-daniels/git-ver/zip/v0.0.1-pre > git-ver.zip    
+    mkdir -p $TOOLS_DIR
+    curl https://codeload.github.com/jason-c-daniels/git-ver/zip/v0.0.1-pre+r2 > git-ver.zip    
     unzip -jo git-ver.zip **/git-ver* -d ./tools
     export PATH="$TOOLS_DIR":$PATH
-    ls "tools/*"
-    chmod a+x "tools/*"
+    chmod u+x "./tools/git-ver"
 
 	# capture the version information for the build.    
     if [ -z ${Configuration+x} ]; then Configuration="Release"; fi

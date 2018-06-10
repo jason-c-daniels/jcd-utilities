@@ -167,8 +167,9 @@ main() {
         # execute the tests
         ( unset -v Version; export Configuration; export VersionPrefix; export VersionSuffix; execute_tests "./test" )
 
+        echo UPLOADING TO COVERALLS! "csmacnz.coveralls --opencover -i ./test/Jcd.Utilities.Test/coverage.xml --repoToken $COVERALLS_REPO_TOKEN --commitId $APPVEYOR_REPO_COMMIT --commitBranch $APPVEYOR_REPO_BRANCH --commitAuthor $APPVEYOR_REPO_COMMIT_AUTHOR --commitEmail $APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL --commitMessage $APPVEYOR_REPO_COMMIT_MESSAGE --jobId $APPVEYOR_JOB_ID"
         if [[ "$APPVEYOR" == "true" ]]; then
-            csmacnz.coveralls --opencover -i test/Jcd.Utilities.Test/coverage.xml --repoToken $COVERALLS_REPO_TOKEN --commitId $APPVEYOR_REPO_COMMIT --commitBranch $APPVEYOR_REPO_BRANCH --commitAuthor $APPVEYOR_REPO_COMMIT_AUTHOR --commitEmail $APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL --commitMessage $APPVEYOR_REPO_COMMIT_MESSAGE --jobId $APPVEYOR_JOB_ID
+            csmacnz.coveralls --opencover -i ./test/Jcd.Utilities.Test/coverage.xml --repoToken $COVERALLS_REPO_TOKEN --commitId $APPVEYOR_REPO_COMMIT --commitBranch $APPVEYOR_REPO_BRANCH --commitAuthor $APPVEYOR_REPO_COMMIT_AUTHOR --commitEmail $APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL --commitMessage $APPVEYOR_REPO_COMMIT_MESSAGE --jobId $APPVEYOR_JOB_ID
         fi
     fi
     

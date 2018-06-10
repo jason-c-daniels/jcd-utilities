@@ -9,6 +9,7 @@ BUILD_SAMPLES=0
 RUN_TESTS=0
 BUILD_DOCS=0
 BUILD_CLEAN=0
+COVERALLS_REPO_TOKEN=zz2bNDOl8nUn69apQm6YMCg5l0hILlKql
 
 optspec=":cahbsdt-:"
 while getopts "$optspec" optchar; do
@@ -97,6 +98,11 @@ export BUILD_DOCS
 export BUILD_CLEAN   
 
 main() {
+    if [[ "$APPVEYOR" == "true" ]]; then
+        # ensure the coveralls tool is installed
+        dotnet tool install -g coveralls.net --version 1.0.0
+    fi
+
     echo $BUILD_CLEAN "clean"
     echo $BUILD_SOURCE "source"
     #TODO: nix GitVersion, it's only good on Windows. Find some other way to do it.
@@ -117,6 +123,7 @@ main() {
     unzip -jo git-ver.zip **/git-ver* -d ./tools
     export PATH="$TOOLS_DIR":$PATH
     chmod u+x "./tools/git-ver"
+    rm ./git-ver.zip
 
 	# capture the version information for the build.    
     if [ -z ${Configuration+x} ]; then Configuration="Release"; fi
@@ -141,6 +148,7 @@ main() {
         (unset -v Version; dotnet clean)
         find . -type d -name obj -prune -exec rm -rf {} \;
         find . -type d -name bin -prune -exec rm -rf {} \;
+        #rm -rf tools
         clean_docs
     fi
     
@@ -159,6 +167,9 @@ main() {
         # execute the tests
         ( unset -v Version; export Configuration; export VersionPrefix; export VersionSuffix; execute_tests "./test" )
 
+        if [[ "$APPVEYOR" == "true" ]]; then
+            csmacnz.coveralls --opencover -i test/Jcd.Utilities.Test/coverage.xml --repoToken $COVERALLS_REPO_TOKEN --commitId $APPVEYOR_REPO_COMMIT --commitBranch $APPVEYOR_REPO_BRANCH --commitAuthor $APPVEYOR_REPO_COMMIT_AUTHOR --commitEmail $APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL --commitMessage $APPVEYOR_REPO_COMMIT_MESSAGE --jobId $APPVEYOR_JOB_ID
+        fi
     fi
     
     if [ "$BUILD_SAMPLES" == 1 ]; then 

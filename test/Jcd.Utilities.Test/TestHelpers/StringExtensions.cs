@@ -20,6 +20,10 @@ namespace Jcd.Utilities.Test.TestHelpers
             }
          }
 
+         if (sb.Length == 0 && text.Length > 0) {
+            sb.Append('0');
+         }
+
          return sb.ToString();
       }
    }

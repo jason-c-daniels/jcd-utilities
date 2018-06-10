@@ -130,34 +130,37 @@ namespace Jcd.Utilities.Test.Formatting
       [MemberData(nameof(NumericMemberDataProvider.FibonacciiBigIntegers), MemberType = typeof(NumericMemberDataProvider))]
       public void Format_WhenGivenBigInteger_ReturnsCorrectHexString(BigInteger data)
       {
+         var expected = data.ToString("X").ToLowerInvariant();
+         var actual = IntegerEncoders.Hexadecimal.Format(data).ToLowerInvariant();
          // for some odd reason BigInteger zero pads its hex representation. Ensure we've stripped the leading zeros from both. We're looking for hex encoding equivalence, not string equivalence.
-         var expected = data.ToString("X").ToLowerInvariant().TrimLeadingZeros();
-         var actual = IntegerEncoders.Hexadecimal.Format(data).ToLowerInvariant().TrimLeadingZeros();
-         Assert.Equal(expected, actual);
+         Assert.Equal(expected.TrimLeadingZeros(), actual.TrimLeadingZeros());
+         Assert.Equal(data, IntegerEncoders.Hexadecimal.ParseBigInteger(actual));
       }
 
       /// <summary>
       /// Validate that Format Returns correct hex string when given UInt64.
       /// </summary>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.FibonacciiUInt32s), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.FibonacciiUInt64s), MemberType = typeof(NumericMemberDataProvider))]
       public void Format_WhenGivenUInt64_ReturnsCorrectHexString(UInt64 data)
       {
          var expected = data.ToString("X").ToLowerInvariant();
          var actual = IntegerEncoders.Hexadecimal.Format(data).ToLowerInvariant();
          Assert.Equal(expected, actual);
+         Assert.Equal(data, IntegerEncoders.Hexadecimal.ParseUInt64(actual));
       }
 
       /// <summary>
       /// Validate that Format Returns correct hex string when given Int64.
       /// </summary>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.FibonacciiInt32s), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.FibonacciiInt64s), MemberType = typeof(NumericMemberDataProvider))]
       public void Format_WhenGivenInt64_ReturnsCorrectHexString(Int64 data)
       {
          var expected = data.ToString("X").ToLowerInvariant();
          var actual = IntegerEncoders.Hexadecimal.Format(data).ToLowerInvariant();
          Assert.Equal(expected, actual);
+         Assert.Equal(data, IntegerEncoders.Hexadecimal.ParseInt64(actual));
       }
 
       /// <summary>
@@ -170,6 +173,7 @@ namespace Jcd.Utilities.Test.Formatting
          var expected = data.ToString("X").ToLowerInvariant();
          var actual = IntegerEncoders.Hexadecimal.Format(data).ToLowerInvariant();
          Assert.Equal(expected, actual);
+         Assert.Equal(data, IntegerEncoders.Hexadecimal.ParseUInt32(actual));
       }
 
       /// <summary>
@@ -182,6 +186,7 @@ namespace Jcd.Utilities.Test.Formatting
          var expected = data.ToString("X").ToLowerInvariant();
          var actual = IntegerEncoders.Hexadecimal.Format(data).ToLowerInvariant();
          Assert.Equal(expected, actual);
+         Assert.Equal(data, IntegerEncoders.Hexadecimal.ParseInt32(actual));
       }
 
       /// <summary>
@@ -194,6 +199,7 @@ namespace Jcd.Utilities.Test.Formatting
          var expected = data.ToString("X").ToLowerInvariant();
          var actual = IntegerEncoders.Hexadecimal.Format(data).ToLowerInvariant();
          Assert.Equal(expected, actual);
+         Assert.Equal(data, IntegerEncoders.Hexadecimal.ParseUInt16(actual));
       }
 
       /// <summary>
@@ -206,6 +212,7 @@ namespace Jcd.Utilities.Test.Formatting
          var expected = data.ToString("X").ToLowerInvariant();
          var actual = IntegerEncoders.Hexadecimal.Format(data).ToLowerInvariant();
          Assert.Equal(expected, actual);
+         Assert.Equal(data, IntegerEncoders.Hexadecimal.ParseInt16(actual));
       }
 
       /// <summary>
@@ -218,10 +225,11 @@ namespace Jcd.Utilities.Test.Formatting
          var expected = data.ToString("X").ToLowerInvariant();
          var actual = IntegerEncoders.Hexadecimal.Format(data).ToLowerInvariant();
          Assert.Equal(expected, actual);
+         Assert.Equal(data, IntegerEncoders.Hexadecimal.ParseByte(actual));
       }
 
       /// <summary>
-      /// Validate that Format Returns correct hex string when given Int16.
+      /// Validate that Format Returns correct hex string when given Int16. And validate round trip. (Parse)
       /// </summary>
       [Theory]
       [MemberData(nameof(NumericMemberDataProvider.FibonacciiSBytes), MemberType = typeof(NumericMemberDataProvider))]
@@ -230,6 +238,7 @@ namespace Jcd.Utilities.Test.Formatting
          var expected = data.ToString("X").ToLowerInvariant();
          var actual = IntegerEncoders.Hexadecimal.Format(data).ToLowerInvariant();
          Assert.Equal(expected, actual);
+         Assert.Equal(data, IntegerEncoders.Hexadecimal.ParseSByte(actual));
       }
 
       #endregion
@@ -250,6 +259,8 @@ namespace Jcd.Utilities.Test.Formatting
          if (data < 0) {
             Assert.StartsWith("-", actual);
          }
+
+         Assert.Equal(data, IntegerEncoders.Hexadecimal.ParseSByte(actual));
       }
 
       /// <summary>
@@ -268,13 +279,15 @@ namespace Jcd.Utilities.Test.Formatting
          {
             Assert.StartsWith("-", actual);
          }
+
+         Assert.Equal(data, IntegerEncoders.Hexadecimal.ParseInt16(actual));
       }
 
       /// <summary>
       /// Validate that Format Returns correct hex string when given negative int.
       /// </summary>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.NegativeFibonacciiInt16s), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.NegativeFibonacciiInt32s), MemberType = typeof(NumericMemberDataProvider))]
       public void Format_WhenGivenNegativeInt32_ReturnsCorrectHexString(int data)
       {
          var abs = (uint)Math.Abs((long)data);
@@ -286,6 +299,8 @@ namespace Jcd.Utilities.Test.Formatting
          {
             Assert.StartsWith("-", actual);
          }
+
+         Assert.Equal(data, IntegerEncoders.Hexadecimal.ParseInt32(actual));
       }
 
       /// <summary>
@@ -304,6 +319,8 @@ namespace Jcd.Utilities.Test.Formatting
          {
             Assert.StartsWith("-", actual);
          }
+
+         Assert.Equal(data, IntegerEncoders.Hexadecimal.ParseInt64(actual));
       }
 
       /// <summary>
@@ -323,6 +340,7 @@ namespace Jcd.Utilities.Test.Formatting
          }
 
          Assert.EndsWith(expected, actual.Replace("-", ""));
+         Assert.Equal(data, IntegerEncoders.Hexadecimal.ParseBigInteger(actual));
       }
       #endregion
 

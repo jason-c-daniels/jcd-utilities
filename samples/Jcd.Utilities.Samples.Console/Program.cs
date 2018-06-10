@@ -22,7 +22,8 @@ namespace Jcd.Utilities.Samples.ConsoleApp
          }
 
          Console.WriteLine();
-         Generator<Int16SequenceState, short> numberGenerator = new Generator<Int16SequenceState, short>(
+         CaptureAndTransitionGenerator<Int16SequenceState, short> numberGenerator = new
+         CaptureAndTransitionGenerator<Int16SequenceState, short>(
             new Int16SequenceState { current = 100, stop = 0, step = -1 },
             (Int16SequenceState state, out bool @continue) =>
          {

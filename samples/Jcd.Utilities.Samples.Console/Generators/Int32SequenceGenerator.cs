@@ -2,7 +2,7 @@
 
 namespace Jcd.Utilities.Samples.ConsoleApp.Generators
 {
-   public class Int32SequenceGenerator : Generator<Int32SequenceState, int>
+   public class Int32SequenceGenerator : CaptureAndTransitionGenerator<Int32SequenceState, int>
    {
       public Int32SequenceGenerator(int from, int to, int by = 1)
       : base(new Int32SequenceState {current = from, stop = to, step = by},

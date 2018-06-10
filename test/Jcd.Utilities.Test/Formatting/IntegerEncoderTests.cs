@@ -122,7 +122,10 @@ namespace Jcd.Utilities.Test.Formatting
       #endregion Public Methods
 
       //TODO: Add a test "Theory" (what an awful term) that tests all encoders vs all sample data.
-      //TODO: Add negative testing for all of the Parse methods. (e.g. pass in all whitespace to all of the parse methods...etc.)
-      //TODO: Add positive testing for all of the Parse methods.
+      //TODO: Add tests for Format: uint, ushort, byte, int, short, sbyte, negative biginteger,
+      //TODO: Add tests for Parse: Byte, Int16, Int32, SByte, UInt16, UInt32, result is negative - UInt64
+      //TODO: Add tests for TryParse: BigInteger, SByte, Int16, Int32, Int64, Byte, UInt16, UInt32, UInt64
+      //TODO: Add tests for FormatObject: all data types.
+
    }
 }

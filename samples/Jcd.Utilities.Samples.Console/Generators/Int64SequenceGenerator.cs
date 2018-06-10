@@ -2,7 +2,7 @@
 
 namespace Jcd.Utilities.Samples.ConsoleApp.Generators
 {
-   public class Int64SequenceGenerator : Generator<Int64SequenceState, long>
+   public class Int64SequenceGenerator : CaptureAndTransitionGenerator<Int64SequenceState, long>
    {
       public Int64SequenceGenerator(long from, long to, long by = 1)
       : base(new Int64SequenceState {current = from, stop = to, step = by},

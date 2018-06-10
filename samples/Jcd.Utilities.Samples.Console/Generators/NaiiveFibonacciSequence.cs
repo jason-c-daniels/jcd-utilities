@@ -3,10 +3,10 @@ using Jcd.Utilities.Generators;
 
 namespace Jcd.Utilities.Samples.ConsoleApp.Generators
 {
-   public class NaiiveFibonacciSequence : Generator<NaiiveFibonacciSequence.State, BigInteger>
+   public class NaiiveFibonacciSequence : CaptureAndTransitionGenerator<NaiiveFibonacciSequence.State, BigInteger>
    {
       public NaiiveFibonacciSequence(int start, int count) : base(new State {count = count, n0 = 0, n1 = 1, nth = 0},
-               (State state, out bool @continue) =>
+            (State state, out bool @continue) =>
       {
          var t = state.n0;
          state.n0 = state.n1;

@@ -30,7 +30,7 @@ namespace Jcd.Utilities.Test.Formatting
 
          public FakeCustomFormatter(string formatResult, IEnumerable<Type> handledTypes = null,
                                     Func<ICustomFormatter, string, object, IFormatProvider, string> formatFunction = null) : base(
-                                          handledTypes, formatFunction)
+                                       handledTypes, formatFunction)
          {
             this.formatResult = formatResult;
          }
@@ -75,5 +75,15 @@ namespace Jcd.Utilities.Test.Formatting
          Assert.Throws<ArgumentNullException>(() => sut.Format("", new object(), null));
          Assert.Throws<ArgumentNullException>(() => sut.Format(null, new object(), sut));
       }
+
+      //TODO: HandleOtherFormats: when arg is IFormattable
+      //TODO: HandleOtherFormats: when arg is not IFormattable and non-null
+      //TODO: HandleOtherFormats: when arg is not IFormattable and null
+      //TODO: Format: non-self format provider
+      //TODO: Format supported data type
+      //TODO: Format unsupported data type
+      //TODO: GetFormatType null type
+      //TODO: GetFormatType ICustomFormatter type
+      //TODO: GetFormatType built-in type.
    }
 }

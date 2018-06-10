@@ -2,7 +2,7 @@
 
 namespace Jcd.Utilities.Samples.ConsoleApp.Generators
 {
-   public class UInt32SequenceGenerator : Generator<UInt32SequenceState, uint>
+   public class UInt32SequenceGenerator : CaptureAndTransitionGenerator<UInt32SequenceState, uint>
    {
       public UInt32SequenceGenerator(uint from, uint to, uint by = 1)
       : base(new UInt32SequenceState {current = from, stop = to, step = by},

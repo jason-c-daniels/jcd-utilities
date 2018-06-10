@@ -2,7 +2,7 @@
 
 namespace Jcd.Utilities.Samples.ConsoleApp.Generators
 {
-   public class Int16SequenceGenerator : Generator<Int16SequenceState, short>
+   public class Int16SequenceGenerator : CaptureAndTransitionGenerator<Int16SequenceState, short>
    {
       public Int16SequenceGenerator(short from, short to, short by = 1)
       : base(new Int16SequenceState {current = from, stop = to, step = by},

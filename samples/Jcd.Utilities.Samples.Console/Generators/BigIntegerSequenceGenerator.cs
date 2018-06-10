@@ -3,7 +3,7 @@ using Jcd.Utilities.Generators;
 
 namespace Jcd.Utilities.Samples.ConsoleApp.Generators
 {
-   public class BigIntegerSequenceGenerator : Generator<BigIntegerSequenceState, BigInteger>
+   public class BigIntegerSequenceGenerator : CaptureAndTransitionGenerator<BigIntegerSequenceState, BigInteger>
    {
       public BigIntegerSequenceGenerator(BigInteger from, BigInteger to) : this(from, to, BigInteger.One)
       {

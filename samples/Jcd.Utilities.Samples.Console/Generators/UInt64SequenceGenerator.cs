@@ -2,7 +2,7 @@
 
 namespace Jcd.Utilities.Samples.ConsoleApp.Generators
 {
-   public class UInt64SequenceGenerator : Generator<UInt64SequenceState, ulong>
+   public class UInt64SequenceGenerator : CaptureAndTransitionGenerator<UInt64SequenceState, ulong>
    {
       public UInt64SequenceGenerator(ulong from, ulong to, ulong by = 1)
       : base(new UInt64SequenceState {current = from, stop = to, step = by},

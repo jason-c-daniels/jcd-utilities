@@ -2,7 +2,7 @@
 
 namespace Jcd.Utilities.Samples.ConsoleApp.Generators
 {
-   public class ByteSequenceGenerator : Generator<ByteSequenceState, byte>
+   public class ByteSequenceGenerator : CaptureAndTransitionGenerator<ByteSequenceState, byte>
    {
       public ByteSequenceGenerator(byte from, byte to, byte by = 1)
       : base(new ByteSequenceState {current = from, stop = to, step = by},

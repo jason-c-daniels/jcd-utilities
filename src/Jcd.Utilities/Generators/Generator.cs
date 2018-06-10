@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Jcd.Utilities.Validations;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace Jcd.Utilities.Generators
@@ -6,9 +7,14 @@ namespace Jcd.Utilities.Generators
    /// <summary>
    /// A base class to help with implementing state-transition based enumeration.
    /// </summary>
+   /// <remarks>
+   /// 1. This generator assumes a valid starting state, that will be returned (used to compute the initial return and new state).
+   /// 2. To successfully use this in an expected manner follow these steps: Capture current result. Transition to new state. Set the continue flag to false if the new state is invalid or a terminal state, otherwise set it to true.
+   /// 3. Always have a reachable terminating state, otherwise you'll have an infinite loop.
+   /// </remarks>
    /// <typeparam name="TState">The type of the state data</typeparam>
    /// <typeparam name="TResult">The type of the transition result data.</typeparam>
-   public class Generator<TState, TResult> : IEnumerable<TResult>
+   public class CaptureAndTransitionGenerator<TState, TResult> : IEnumerable<TResult>
       where TState : class
    {
       #region Public Delegates
@@ -30,8 +36,9 @@ namespace Jcd.Utilities.Generators
       /// </summary>
       /// <param name="initial">The initial state.</param>
       /// <param name="transitionFunction">The state transition function.</param>
-      public Generator(TState initial, StateTransitionFunction transitionFunction)
+      public CaptureAndTransitionGenerator(TState initial, StateTransitionFunction transitionFunction)
       {
+         Argument.IsNotNull(transitionFunction);
          state = initial;
          this.transitionFunction = transitionFunction;
       }

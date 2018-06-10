@@ -2,7 +2,7 @@
 
 namespace Jcd.Utilities.Samples.ConsoleApp.Generators
 {
-   public class SByteSequenceGenerator : Generator<SByteSequenceState, sbyte>
+   public class SByteSequenceGenerator : CaptureAndTransitionGenerator<SByteSequenceState, sbyte>
    {
       public SByteSequenceGenerator(sbyte from, sbyte to, sbyte by = 1)
       : base(new SByteSequenceState {current = from, stop = to, step = by},

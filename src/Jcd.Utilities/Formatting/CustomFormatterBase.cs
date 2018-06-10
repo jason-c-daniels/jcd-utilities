@@ -62,10 +62,6 @@ namespace Jcd.Utilities.Formatting
 
       private string HandleOtherFormats(string format, object arg)
       {
-#if DEBUG // this shouldn't ever be violated if the UTs are done correctly. For performance reasons it's omitted from release mode code.
-         Argument.IsNotNull(arg, nameof(arg));
-#endif
-
          if (arg is IFormattable formattable) {
             return formattable.ToString(format, CultureInfo.CurrentCulture);
          }
@@ -114,14 +110,14 @@ namespace Jcd.Utilities.Formatting
       public virtual string Format(string fmt, object arg, IFormatProvider formatProvider)
       {
          Argument.IsNotNull(formatProvider, nameof(formatProvider));
-         Argument.IsNotNull(arg, nameof(arg));
+         //Argument.IsNotNull(arg, nameof(arg));
          Argument.IsNotNull(fmt, nameof(fmt));
 
          if (!ReferenceEquals(this, formatProvider)) {
             return null;
          }
 
-         if (Array.BinarySearch(handledTypes, arg.GetType(), typeComparer) >= 0) {
+         if (Array.BinarySearch(handledTypes, arg==null? typeof(object) : arg.GetType(), typeComparer) >= 0) {
             return formatFunction(this, fmt, arg, formatProvider);
          }
 

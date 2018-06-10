@@ -72,7 +72,7 @@ namespace Jcd.Utilities.Test.Formatting
       public void Format_NullParameters_ExpectArgumentNullException()
       {
          var sut = CreateSut();
-         Assert.Throws<ArgumentNullException>(() => sut.Format("", null, sut));
+         //         Assert.Throws<ArgumentNullException>(() => sut.Format("", null, sut));
          Assert.Throws<ArgumentNullException>(() => sut.Format("", new object(), null));
          Assert.Throws<ArgumentNullException>(() => sut.Format(null, new object(), sut));
       }
@@ -123,7 +123,26 @@ namespace Jcd.Utilities.Test.Formatting
          Assert.Equal(fake_formatted_result, result);
       }
 
+      /// <summary>
+      /// Validate that Format returns empty string when given null arg.
+      /// </summary>
+      [Fact]
+      public void Format_WhenGivenNullArg_ReturnsEmptyString()
+      {
+         var sut = CreateSut();
+         Assert.Empty(sut.Format("", null, sut));
+      }
 
+      /// <summary>
+      /// Validate that Format returns "ToString" when given non-null non-formattable arg.
+      /// </summary>
+      [Fact]
+      public void Format_WhenGivenNonNullNonFormattableArg_ReturnsToString()
+      {
+         var arg = new List<int>();
+         var sut = CreateSut();
+         Assert.Equal(arg.ToString(), sut.Format("", arg, sut));
+      }
 
       /// <summary>
       /// Validate that GetFormat throws ArgumentNullException when given null format type.
@@ -155,5 +174,7 @@ namespace Jcd.Utilities.Test.Formatting
          var sut = CreateSut();
          Assert.Same(sut, sut.GetFormat(typeof(ICustomFormatter)));
       }
+
+
    }
 }

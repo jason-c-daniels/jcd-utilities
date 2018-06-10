@@ -126,6 +126,5 @@ namespace Jcd.Utilities.Test.Formatting
       //TODO: Add tests for Parse: Byte, Int16, Int32, SByte, UInt16, UInt32, result is negative - UInt64
       //TODO: Add tests for TryParse: BigInteger, SByte, Int16, Int32, Int64, Byte, UInt16, UInt32, UInt64
       //TODO: Add tests for FormatObject: all data types.
-
    }
 }

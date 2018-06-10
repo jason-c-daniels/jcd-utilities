@@ -114,7 +114,7 @@ main() {
     fi
     mkdir -p $TOOLS_DIR
     curl https://codeload.github.com/jason-c-daniels/git-ver/zip/v0.0.1-pre+r2 > git-ver.zip    
-    unzip -jo git-ver.zip **/git-ver* -d ./tools
+    unzip -jo git-ver.zip "**/git-ver*" -d ./tools
     export PATH="$TOOLS_DIR":$PATH
     chmod u+x "./tools/git-ver"
     rm ./git-ver.zip
@@ -184,20 +184,20 @@ usage() {
 
 execute_tests() {
     folder=$1
-    for project in "$folder/**/*.csproj"; do dotnet test --no-build -p:CollectCoverage=true -p:CoverletOutputFormat=opencover $project; done
+    for project in $folder/**/*.csproj; do dotnet test --no-build -p:CollectCoverage=true -p:CoverletOutputFormat=opencover $project; done
 }
 
 build_folder() {
     folder=$1
     echo "building $folder"
-    for project in "$folder/**/*.csproj"; do dotnet build $project; done
+    for project in $folder/**/*.csproj; do dotnet build $project; done
 }
 
 pack_folder() {
     folder=$1
     pkg_folder=$2
     echo "building $folder"
-    for project in "$folder/**/*.csproj"; do dotnet pack --no-build -o $pkg_folder $project; done
+    for project in $folder/**/*.csproj; do dotnet pack --no-build -o $pkg_folder $project; done
 }
 
 clean_packages() {

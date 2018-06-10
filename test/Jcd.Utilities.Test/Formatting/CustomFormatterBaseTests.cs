@@ -77,7 +77,6 @@ namespace Jcd.Utilities.Test.Formatting
          Assert.Throws<ArgumentNullException>(() => sut.Format(null, new object(), sut));
       }
 
-
       /// <summary>
       /// Validate that Format Returns default format for an unhandled data type
       /// </summary>
@@ -154,7 +153,6 @@ namespace Jcd.Utilities.Test.Formatting
          Assert.Throws<ArgumentNullException>(() => sut.GetFormat(null));
       }
 
-
       /// <summary>
       /// Validate that GetFormat returns null when given non-custom formatter type.
       /// </summary>
@@ -174,7 +172,5 @@ namespace Jcd.Utilities.Test.Formatting
          var sut = CreateSut();
          Assert.Same(sut, sut.GetFormat(typeof(ICustomFormatter)));
       }
-
-
    }
 }

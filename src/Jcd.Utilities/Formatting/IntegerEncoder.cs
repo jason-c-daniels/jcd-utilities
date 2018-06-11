@@ -442,7 +442,12 @@ namespace Jcd.Utilities
 
          //TODO: Check for over/underflow
          var result = (byte) 0;
-         var isNeg = value[0] == '-';
+
+         if (value[0] == '-')
+         {
+            throw new ArgumentException("A negative number cannot be converted into unsigned.", nameof(value));
+         }
+
          var digits = ExtractCoreDigits(value);
 
          foreach (var digit in digits)

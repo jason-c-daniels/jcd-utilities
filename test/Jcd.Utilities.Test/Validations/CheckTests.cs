@@ -1,3 +1,4 @@
+using Jcd.Utilities.Test.TestHelpers;
 using Jcd.Utilities.Validations;
 using System;
 using System.Collections.Generic;
@@ -1290,6 +1291,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// A catch-all.
+      /// </summary>
       [Fact]
       public void VariousMethods_WhenNoHandlersAreProvided_NoExceptionsAreThrown()
       {

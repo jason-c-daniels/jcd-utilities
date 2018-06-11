@@ -1,4 +1,5 @@
-﻿using Jcd.Utilities.Validations;
+﻿using Jcd.Utilities.Test.TestHelpers;
+using Jcd.Utilities.Validations;
 using System;
 using System.Collections.Generic;
 using Xunit;

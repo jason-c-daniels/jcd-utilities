@@ -9,7 +9,6 @@ namespace Jcd.Utilities.Test.Extensions
 
    public class NumericMemberDataProvider
    {
-
       public static IEnumerable<object[]> BigIntegers()
       {
          var biMax = new BigInteger(ulong.MaxValue) * 2;
@@ -139,7 +138,6 @@ namespace Jcd.Utilities.Test.Extensions
          yield return new[] { (object)one };
       }
 
-
       public static IEnumerable<object[]> FibonacciiBigIntegers()
       {
          foreach (var bi in new NaiiveFibonacciGenerator(long.MaxValue*(BigInteger)15))
@@ -147,7 +145,6 @@ namespace Jcd.Utilities.Test.Extensions
             yield return new[] { (object)bi };
          }
       }
-
 
       public static IEnumerable<object[]> FibonacciiUInt64s()
       {

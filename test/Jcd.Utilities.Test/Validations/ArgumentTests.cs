@@ -893,7 +893,6 @@ namespace Jcd.Utilities.Test.Validations
          Argument.InRange(value, min, max, "none", "this should never fail!");
       }
 
-
       /// <summary>
       /// Validate that InRange throws an ArgumentOutOfRangeException when value is outside of range.
       /// And validate that the paramName and message are set correctly on the exception.

@@ -12,8 +12,6 @@ namespace Jcd.Utilities.Test.Formatting
       const string NegativeDecimal = "-29";
       const string ElevenAsBinary = "1011";
       const string NonBinaryNegativeTestData = "nonbinary-pass to binary decoder, this should make it sad.";
-      //const BigInteger bi11 = 11;
-
 
       #region CrockFordEncoder and Hex Tests
 
@@ -145,8 +143,6 @@ namespace Jcd.Utilities.Test.Formatting
          Assert.Equal(isAlwaysIncreasing, encoder.CharacterSetValuesAlwaysIncrease);
       }
 
-
-
       /// <summary>
       /// Validate that Constructor throws ArgumentException when encode character set has extra characters.
       /// </summary>
@@ -198,7 +194,6 @@ namespace Jcd.Utilities.Test.Formatting
             var encoder = new IntegerEncoder(encodeSet, decodeSet);
          });
       }
-
 
       #endregion constructor tests
 
@@ -489,7 +484,6 @@ namespace Jcd.Utilities.Test.Formatting
          Assert.Throws<ArgumentOutOfRangeException>(() => IntegerEncoders.Binary.ParseInt16(NonBinaryNegativeTestData));
       }
 
-
       /// <summary>
       /// Validate that ParseByte throws ArgumentException when given characters not in the encoding scheme.
       /// </summary>
@@ -666,7 +660,6 @@ namespace Jcd.Utilities.Test.Formatting
             Assert.Equal(decoded, result);
          }
       }
-
 
       /// <summary>
       /// Validate that ParseByte throws ArgumentException when given characters not in the encoding scheme.

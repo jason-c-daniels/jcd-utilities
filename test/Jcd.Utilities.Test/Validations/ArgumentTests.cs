@@ -1333,18 +1333,32 @@ namespace Jcd.Utilities.Test.Validations
 
       #region Private Methods
 
+      /// <summary>
+      /// Validation helper that ensures a message contains the necessary text.
+      /// </summary>
+      /// <param name="ex">teh exception to validate</param>
+      /// <param name="paramName">the parameter name</param>
+      /// <param name="message">the custom message, if any.</param>
+      /// <param name="expectedDefaultMessage">the default message</param>
       private static void ValidateArgumentExceptionMessageAndParam(ArgumentException ex, string paramName, string message,
             string expectedDefaultMessage)
       {
          ValidateArgumentExceptionMessageAndParam(ex, paramName, message, new[] { expectedDefaultMessage });
       }
 
+      /// <summary>
+      /// Validation helper that ensures a message contains the necessary text.
+      /// </summary>
+      /// <param name="ex">teh exception to validate</param>
+      /// <param name="paramName">the parameter name</param>
+      /// <param name="message">the custom message, if any.</param>
+      /// <param name="expectedDefaultMessageFragments">the default message fragments to look for</param>
       private static void ValidateArgumentExceptionMessageAndParam(ArgumentException ex, string paramName, string message,
-            string[] expectedDefaultMessage)
+            string[] expectedDefaultMessageFragments)
       {
          if (message == null)
          {
-            foreach (var text in expectedDefaultMessage)
+            foreach (var text in expectedDefaultMessageFragments)
             {
                Assert.Contains(text, ex.Message);
             }

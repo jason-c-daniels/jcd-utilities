@@ -2,6 +2,9 @@
 
 namespace Jcd.Utilities.Test.Validations
 {
+   /// <summary>
+   /// A helper class that implements IComparable
+   /// </summary>
    public class IntHolder : IComparable<IntHolder>
    {
       #region Public Fields

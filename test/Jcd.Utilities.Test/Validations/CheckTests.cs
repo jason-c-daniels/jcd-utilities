@@ -19,6 +19,9 @@ namespace Jcd.Utilities.Test.Validations
          return true;
       }
 
+      /// <summary>
+      /// Validate that AreEqual considers nulls equal. Ensure the correct handler is called.
+      /// </summary>
       [Fact]
       public void AreEqual_WhenGivenNullArgs_ThrowsNoException()
       {
@@ -39,6 +42,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that AreEqual considers equivalent values to be equal. Ensure the correct handler is called.
+      /// </summary>
       [Fact]
       public void AreEqual_WhenLeftIsEqualToRight_ReturnsTrue()
       {
@@ -51,6 +57,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that AreEqual considers non-equivalent values to be not equal. Ensure the correct handler is called.
+      /// </summary>
       [Fact]
       public void AreEqual_WhenLeftIsNotEqualToRight_ReturnsFalse()
       {
@@ -67,6 +76,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that AreSameObject considers null values to be same instance. Ensure the correct handler is called.
+      /// </summary>
       [Fact]
       public void AreSameObject_WhenBothAreNull_ReturnsTrue()
       {
@@ -84,6 +96,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that AreSameObject correctly determines same-ness when given the same object. Ensure the correct handler is called.
+      /// </summary>
       [Fact]
       public void AreSameObject_WhenBothAreSameObject_ReturnsTrue()
       {
@@ -113,6 +128,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that AreSameObject correctly determines same-ness when given the different objects. Ensure the correct handler is called.
+      /// </summary>
       [Fact]
       public void AreSameObject_WhenBothDifferentObjects_ReturnsFalse()
       {
@@ -142,6 +160,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that AreSameObject correctly determines objects are different when given only one null. Ensure the correct handler is called.
+      /// </summary>
       [Fact]
       public void AreSameObject_WhenOnlyOneIsNull_ReturnsFalse()
       {
@@ -170,6 +191,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that Contains returns false when given an empty collection.
+      /// </summary>
       [Fact]
       public void Contains_WhenGivenEmptyCollection_ReturnsFalse()
       {
@@ -181,6 +205,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that Contains returns true when item is found.
+      /// </summary>
       [Fact]
       public void Contains_WhenGivenNonEmptyCollectionAndItemFound_ReturnsTrue()
       {
@@ -192,6 +219,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that Contains returns false when item is not found in non-empty collection.
+      /// </summary>
       [Fact]
       public void Contains_WhenGivenNonEmptyCollectionAndItemNotFound_ReturnsFalse()
       {
@@ -203,6 +233,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that Contains throws ArgumentNullException give a null collection.
+      /// </summary>
       [Fact]
       public void Contains_WhenGivenNullCollection_ThrowsArgumentNullException()
       {
@@ -215,6 +248,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been.");
       }
 
+      /// <summary>
+      /// Validate that DoesNotContain returns true when given an empty collection.
+      /// </summary>
       [Fact]
       public void DoesNotContain_WhenGivenEmptyCollection_ReturnsTrue()
       {
@@ -226,6 +262,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that DoesNotContain returns false when item is found.
+      /// </summary>
       [Fact]
       public void DoesNotContain_WhenGivenNonEmptyCollectionAndItemFound_ReturnsFalse()
       {
@@ -237,6 +276,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that DoesNotContain returns true when item is not found.
+      /// </summary>
       [Fact]
       public void DoesNotContain_WhenGivenNonEmptyCollectionAndItemNotFound_ReturnsTrue()
       {
@@ -248,6 +290,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that DoesNotContain throws NullArgumentException when collection is null.
+      /// </summary>
       [Fact]
       public void DoesNotContain_WhenGivenNullCollection_ThrowsArgumentNullException()
       {
@@ -260,6 +305,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been.");
       }
 
+      /// <summary>
+      /// Validate that Fails&lt;T&gt; throws ArgumentNullException when the delegate to evaluate is null.
+      /// </summary>
       [Fact]
       public void Fails_T_WhenDelegateIsNull_ThrowsArgumentNullException()
       {
@@ -271,6 +319,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been.");
       }
 
+      /// <summary>
+      /// Validate that Fails&lt;T&gt; returns true when the delegate returns false.
+      /// </summary>
       [Fact]
       public void Fails_T_WhenDelegateReturnsFalse_ReturnsTrue()
       {
@@ -288,6 +339,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that Fails&lt;T&gt; returns false when the delegate returns true.
+      /// </summary>
       [Fact]
       public void Fails_T_WhenDelegateReturnsTrue_ReturnsFalse()
       {
@@ -298,6 +352,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that Fails throws ArgumentNullException when the delegate to evaluate is null.
+      /// </summary>
       [Fact]
       public void Fails_WhenDelegateIsNull_ThrowsArgumentNullException()
       {
@@ -309,6 +366,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been.");
       }
 
+      /// <summary>
+      /// Validate that Fails throws returns true when the delegate returns false
+      /// </summary>
       [Fact]
       public void Fails_WhenDelegateReturnsFalse_ReturnsTrue()
       {
@@ -325,6 +385,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that Fails throws returns false when the delegate returns true
+      /// </summary>
       [Fact]
       public void Fails_WhenDelegateReturnsTrue_ReturnsFalse()
       {
@@ -335,6 +398,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that FailsAll true when the delegates all returns false
+      /// </summary>
       [Fact]
       public void FailsAll_WhenAllDelegatesReturnFalse_ReturnsTrue()
       {
@@ -346,6 +412,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that FailsAll throws ArgumentNullException when the delegate list is null
+      /// </summary>
       [Fact]
       public void FailsAll_WhenDelegateListIsNull_ThrowsArgumentNullException()
       {
@@ -357,6 +426,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been.");
       }
 
+      /// <summary>
+      /// Validate that FailsAll throws ArgumentNullException when a delegate in the list is null
+      /// </summary>
       [Fact]
       public void FailsAll_WhenFirstDelegateIsNull_ThrowsArgumentNullException()
       {
@@ -369,6 +441,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been.");
       }
 
+      /// <summary>
+      /// Validate that FailsAll returns false if oen delegate in the list returns true
+      /// </summary>
       [Fact]
       public void FailsAll_WhenOneDelegateReturnsTrue_ReturnsFalse()
       {
@@ -380,6 +455,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that FailsAny returns true if one delegate in the list returns false
+      /// </summary>
       [Fact]
       public void FailsAny_WhenAllDelegatesReturnFalse_ReturnsTrue()
       {
@@ -391,6 +469,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that FailsAny returns false if all delegates in the list returns true
+      /// </summary>
       [Fact]
       public void FailsAny_WhenAllDelegatesReturnTrue_ReturnsFalse()
       {
@@ -402,6 +483,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that FailsAny throws ArgumentNullException when the delegate list is null
+      /// </summary>
       [Fact]
       public void FailsAny_WhenDelegateListIsNull_ThrowsArgumentNullException()
       {
@@ -413,6 +497,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been.");
       }
 
+      /// <summary>
+      /// Validate that FailsAny throws ArgumentNullException when a delegate in the list is null
+      /// </summary>
       [Fact]
       public void FailsAny_WhenFirstDelegateIsNull_ThrowsArgumentNullException()
       {
@@ -425,6 +512,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been.");
       }
 
+      /// <summary>
+      /// Validate that FailsAny returns true when at least one delegate returns false
+      /// </summary>
       [Fact]
       public void FailsAny_WhenOneDelegateReturnsFalse_ReturnsTrue()
       {
@@ -436,6 +526,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that HasItems returns false when given an empty collection
+      /// </summary>
       [Fact]
       public void HasItems_WhenGivenEmptyCollection_ReturnsFalse()
       {
@@ -447,6 +540,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that HasItems returns true when given a non-empty collection
+      /// </summary>
       [Fact]
       public void HasItems_WhenGivenNonEmptyCollection_ReturnsTrue()
       {
@@ -458,6 +554,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that HasItems throws an ArgumentNullException when given a null list.
+      /// </summary>
       [Fact]
       public void HasItems_WhenGivenNullCollection_ThrowsArgumentNullException()
       {
@@ -470,6 +569,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been.");
       }
 
+      /// <summary>
+      /// Validate that InRange throws an ArgumentNullException when given a null value for any item.
+      /// </summary>
       [Fact]
       public void InRange_WhenGivenNullArgs_ThrowsArgumentNullException()
       {
@@ -492,6 +594,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that InRange returns true when the value is between min and max
+      /// </summary>
       [Fact]
       public void InRange_WhenValueIsInRange_ReturnsTrue()
       {
@@ -502,6 +607,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that InRange returns true when the value is not between min and max
+      /// </summary>
       [Fact]
       public void InRange_WhenValueIsNotInRange_ReturnsFalse()
       {
@@ -517,6 +625,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that IsEmpty returns true when the collection is empty
+      /// </summary>
       [Fact]
       public void IsEmpty_WhenGivenEmptyCollection_ReturnsTrue()
       {
@@ -528,6 +639,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that IsEmpty (string) returns true when the string is empty
+      /// </summary>
       [Fact]
       public void IsEmpty_WhenGivenEmptyString_ReturnsTrue()
       {
@@ -538,6 +652,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that IsEmpty (collection) returns false when the collection is not empty
+      /// </summary>
       [Fact]
       public void IsEmpty_WhenGivenNonEmptyCollection_ReturnsFalse()
       {
@@ -549,6 +666,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that IsEmpty (string) returns false when the string is not empty
+      /// </summary>
       [Fact]
       public void IsEmpty_WhenGivenNonEmptyString_ReturnsFalse()
       {
@@ -559,6 +679,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that IsEmpty (collection) throws ArgumentNullException when the collection is null
+      /// </summary>
       [Fact]
       public void IsEmpty_WhenGivenNullCollection_ThrowsArgumentNullException()
       {
@@ -571,6 +694,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been.");
       }
 
+      /// <summary>
+      /// Validate that IsEmpty (string) throws ArgumentNullException when the string is null
+      /// </summary>
       [Fact]
       public void IsEmpty_WhenGivenNullString_ReturnsFalse()
       {
@@ -581,8 +707,11 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that IsFalse returns true when given false;
+      /// </summary>
       [Fact]
-      public void IsFalse_WhenGivenFalse_ReturnsTrueAndOnSuccessCalled()
+      public void IsFalse_WhenGivenFalse_ReturnsTrue()
       {
          var onFailureCalled = false;
          var onSuccessCalled = false;
@@ -597,8 +726,11 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that IsFalse returns false when given true
+      /// </summary>
       [Fact]
-      public void IsFalse_WhenGivenTrue_ReturnsFalseAndOnFailureCalled()
+      public void IsFalse_WhenGivenTrue_ReturnsFalse()
       {
          bool onFailureCalled;
          bool onSuccessCalled;
@@ -615,6 +747,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that IsGreaterThan returns true when left is greater than right.
+      /// </summary>
       [Fact]
       public void IsGreaterThan_WhenLeftIsGreaterThanRight_ReturnsTrue()
       {
@@ -627,6 +762,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that IsGreaterThan returns false when left is less than or equal to right
+      /// </summary>
       [Fact]
       public void IsGreaterThan_WhenLeftIsLessOrEqualToRight_ReturnsFalse()
       {
@@ -644,6 +782,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that IsGreaterThan throws ArgumentNullException when given any null argument.
+      /// </summary>
       [Fact]
       public void IsGreaterThan_WhenNullArgs_ThrowsArgumentNullException()
       {
@@ -665,6 +806,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that IsLessThan throws ArgumentNullException when given any null argument.
+      /// </summary>
       [Fact]
       public void IsLessThan_WhenGivenNullArgs_ThrowsArgumentNullException()
       {
@@ -672,20 +816,23 @@ namespace Jcd.Utilities.Test.Validations
          var onSuccessCalled = false;
          var x = new IntHolder(1);
          IntHolder y = null;
-         Assert.Throws<ArgumentNullException>(() => Check.IsGreaterThan(x, y, () => onSuccessCalled = true,
+         Assert.Throws<ArgumentNullException>(() => Check.IsLessThan(x, y, () => onSuccessCalled = true,
                                               () => onFailureCalled = true));
          Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been.");
          Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been.");
-         Assert.Throws<ArgumentNullException>(() => Check.IsGreaterThan(y, x, () => onSuccessCalled = true,
+         Assert.Throws<ArgumentNullException>(() => Check.IsLessThan(y, x, () => onSuccessCalled = true,
                                               () => onFailureCalled = true));
          Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been.");
          Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
-         Assert.Throws<ArgumentNullException>(() => Check.IsGreaterThan(y, y, () => onSuccessCalled = true,
+         Assert.Throws<ArgumentNullException>(() => Check.IsLessThan(y, y, () => onSuccessCalled = true,
                                               () => onFailureCalled = true));
          Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been.");
          Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that IsLessThan returns false when left is greater than or equal to right
+      /// </summary>
       [Fact]
       public void IsLessThan_WhenLeftIsGreaterOrEqualToRight_ReturnsFalse()
       {
@@ -703,6 +850,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that IsLessThan returns true when left is less than right
+      /// </summary>
       [Fact]
       public void IsLessThan_WhenLeftIsLessThanRight_ReturnsTrue()
       {

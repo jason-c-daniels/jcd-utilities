@@ -9,6 +9,11 @@ namespace Jcd.Utilities.Test.Formatting
 {
    public class IntegerEncoderTests
    {
+      const string ElevenAsBinary = "1011";
+      const string NonBinaryNegativeTestData = "nonbinary-pass to binary decoder, this should make it sad.";
+      //const BigInteger bi11 = 11;
+
+
       #region CrockFordEncoder and Hex Tests
 
       [Theory]
@@ -121,6 +126,80 @@ namespace Jcd.Utilities.Test.Formatting
       }
 
       #endregion CrockFordEncoder and Hex Tests
+
+      #region Constructor tests
+
+      /// <summary>
+      /// Validate that Constructor Returns ValidMonotonic When MonotonicAlphabetUsed.
+      /// </summary>
+      [Theory]
+      [InlineData("0123456789", true)]
+      [InlineData("0246789", true)]
+      [InlineData("1234567890", false)]
+      [InlineData("10246789", false)]
+      public void Constructor_WhenGivenAnAlphabet_SetsCharacterSetValuesAlwaysIncreaseCorrectly(string alphabet,
+            bool isAlwaysIncreasing)
+      {
+         var encoder = new IntegerEncoder(alphabet);
+         Assert.Equal(isAlwaysIncreasing, encoder.CharacterSetValuesAlwaysIncrease);
+      }
+
+
+
+      /// <summary>
+      /// Validate that Constructor throws ArgumentException when encode character set has extra characters.
+      /// </summary>
+      [Fact]
+      public void Constructor_WhenEncodeCharacterSetHasExtraCharacters_ThrowsArgumentException()
+      {
+         var decodeSet= new[]
+         {
+            "0oO", "1iIlL", "2"
+         };
+         string encodeSet = "0!2";
+         Assert.Throws<ArgumentException>(() => {
+            var encoder = new IntegerEncoder(encodeSet, decodeSet);
+         });
+      }
+
+      /// <summary>
+      /// Validate that Constructor throws ArgumentException when encode character set has extra characters.
+      /// </summary>
+      [Fact]
+      public void Constructor_WhenEncodeCharacterAndDecodeCharacterMapMismatchInCount_ThrowsArgumentException()
+      {
+         var decodeSet = new[]
+         {
+            "0oO", "1iIlL", "2"
+         };
+         string encodeSet = "012!";
+         Assert.Throws<ArgumentException>(() => {
+            var encoder = new IntegerEncoder(encodeSet, decodeSet);
+         });
+         encodeSet = "01";
+         Assert.Throws<ArgumentException>(() => {
+            var encoder = new IntegerEncoder(encodeSet, decodeSet);
+         });
+      }
+
+      /// <summary>
+      /// Validate that Constructor throws ArgumentException when encode character set encodes to different value than decode character set.
+      /// </summary>
+      [Fact]
+      public void Constructor_WhenEncodeCharacterSetEncodesToDifferentValueThanDecodeCharacterSet_ThrowsArgumentException()
+      {
+         var decodeSet = new[]
+         {
+            "1iIlL", "2", "0oO"
+         };
+         string encodeSet = "012";
+         Assert.Throws<ArgumentException>(() => {
+            var encoder = new IntegerEncoder(encodeSet, decodeSet);
+         });
+      }
+
+
+      #endregion constructor tests
 
       #region Format positive number tests
       /// <summary>
@@ -344,8 +423,339 @@ namespace Jcd.Utilities.Test.Formatting
       }
       #endregion
 
-      //TODO: Add tests for Parse: Byte, Int16, Int32, SByte, UInt16, UInt32, result is negative - UInt64
-      //TODO: Add tests for TryParse: BigInteger, SByte, Int16, Int32, Int64, Byte, UInt16, UInt32, UInt64
-      //TODO: Add tests for FormatObject: all data types.
+      #region Parse tests, expect exceptions.
+
+      /// <summary>
+      /// Validate that ParseByte throws ArgumentException when given characters not in the encoding scheme.
+      /// </summary>
+      [Fact]
+      public void ParseBigInteger_WhenGivenCharactersNotInTheEncodingScheme_ThrowsArgumentOutOfRangeException()
+      {
+         Assert.Throws<ArgumentOutOfRangeException>(() => IntegerEncoders.Binary.ParseBigInteger(NonBinaryNegativeTestData));
+      }
+
+      /// <summary>
+      /// Validate that ParseByte throws ArgumentException when given characters not in the encoding scheme.
+      /// </summary>
+      [Fact]
+      public void ParseUInt64_WhenGivenCharactersNotInTheEncodingScheme_ThrowsArgumentOutOfRangeException()
+      {
+         Assert.Throws<ArgumentOutOfRangeException>(() => IntegerEncoders.Binary.ParseUInt64(NonBinaryNegativeTestData));
+      }
+
+      /// <summary>
+      /// Validate that ParseSByte throws ArgumentException when given characters not in the encoding scheme.
+      /// </summary>
+      [Fact]
+      public void ParseInt64_WhenGivenCharactersNotInTheEncodingScheme_ThrowsArgumentOutOfRangeException()
+      {
+         Assert.Throws<ArgumentOutOfRangeException>(() => IntegerEncoders.Binary.ParseInt64(NonBinaryNegativeTestData));
+      }
+
+      /// <summary>
+      /// Validate that ParseByte throws ArgumentException when given characters not in the encoding scheme.
+      /// </summary>
+      [Fact]
+      public void ParseUInt32_WhenGivenCharactersNotInTheEncodingScheme_ThrowsArgumentOutOfRangeException()
+      {
+         Assert.Throws<ArgumentOutOfRangeException>(() => IntegerEncoders.Binary.ParseUInt32(NonBinaryNegativeTestData));
+      }
+
+      /// <summary>
+      /// Validate that ParseSByte throws ArgumentException when given characters not in the encoding scheme.
+      /// </summary>
+      [Fact]
+      public void ParseInt32_WhenGivenCharactersNotInTheEncodingScheme_ThrowsArgumentOutOfRangeException()
+      {
+         Assert.Throws<ArgumentOutOfRangeException>(() => IntegerEncoders.Binary.ParseInt32(NonBinaryNegativeTestData));
+      }
+
+      /// <summary>
+      /// Validate that ParseByte throws ArgumentException when given characters not in the encoding scheme.
+      /// </summary>
+      [Fact]
+      public void ParseUInt16_WhenGivenCharactersNotInTheEncodingScheme_ThrowsArgumentOutOfRangeException()
+      {
+         Assert.Throws<ArgumentOutOfRangeException>(() => IntegerEncoders.Binary.ParseUInt16(NonBinaryNegativeTestData));
+      }
+
+      /// <summary>
+      /// Validate that ParseSByte throws ArgumentException when given characters not in the encoding scheme.
+      /// </summary>
+      [Fact]
+      public void ParseInt16_WhenGivenCharactersNotInTheEncodingScheme_ThrowsArgumentOutOfRangeException()
+      {
+         Assert.Throws<ArgumentOutOfRangeException>(() => IntegerEncoders.Binary.ParseInt16(NonBinaryNegativeTestData));
+      }
+
+
+      /// <summary>
+      /// Validate that ParseByte throws ArgumentException when given characters not in the encoding scheme.
+      /// </summary>
+      [Fact]
+      public void ParseByte_WhenGivenCharactersNotInTheEncodingScheme_ThrowsArgumentOutOfRangeException()
+      {
+         Assert.Throws<ArgumentOutOfRangeException>(() => IntegerEncoders.Binary.ParseByte(NonBinaryNegativeTestData));
+      }
+
+      /// <summary>
+      /// Validate that ParseSByte throws ArgumentException when given characters not in the encoding scheme.
+      /// </summary>
+      [Fact]
+      public void ParseSByte_WhenGivenCharactersNotInTheEncodingScheme_ThrowsArgumentOutOfRangeException()
+      {
+         Assert.Throws<ArgumentOutOfRangeException>(() => IntegerEncoders.Binary.ParseSByte(NonBinaryNegativeTestData));
+      }
+
+      #endregion
+
+      #region TryParse tests
+      /// <summary>
+      /// Validate that ParseByte throws ArgumentException when given characters not in the encoding scheme.
+      /// </summary>
+      [Theory]
+      [InlineData(ElevenAsBinary, true)]
+      [InlineData(NonBinaryNegativeTestData, false)]
+      public void TryParseBigInteger_WhenGivenText_ReturnsTrueWhenDecodedFalseWhenNot(string text, bool parsed)
+      {
+         BigInteger result = 0;
+         BigInteger decoded = 11; // BigInteger can't be const. Have to use this hack.
+         Assert.Equal(parsed, IntegerEncoders.Binary.TryParseBigInteger(text, ref result));
+
+         if (parsed)
+         {
+            Assert.Equal(decoded, result);
+         }
+      }
+
+      /// <summary>
+      /// Validate that ParseByte throws ArgumentException when given characters not in the encoding scheme.
+      /// </summary>
+      [Theory]
+      [InlineData(ElevenAsBinary, true, 11)]
+      [InlineData(NonBinaryNegativeTestData, false, 0)]
+      public void TryParseUInt64_WhenGivenText_ReturnsTrueWhenDecodedFalseWhenNot(string text, bool parsed, ulong decoded)
+      {
+         ulong result = 0;
+         Assert.Equal(parsed, IntegerEncoders.Binary.TryParseUInt64(text, ref result));
+
+         if (parsed)
+         {
+            Assert.Equal(decoded, result);
+         }
+      }
+
+      /// <summary>
+      /// Validate that ParseSByte throws ArgumentException when given characters not in the encoding scheme.
+      /// </summary>
+      [Theory]
+      [InlineData(ElevenAsBinary, true, 11)]
+      [InlineData(NonBinaryNegativeTestData, false, 0)]
+      public void TryParseInt64_WhenGivenText_ReturnsTrueWhenDecodedFalseWhenNot(string text, bool parsed, long decoded)
+      {
+         long result = 0;
+         Assert.Equal(parsed, IntegerEncoders.Binary.TryParseInt64(text, ref result));
+
+         if (parsed)
+         {
+            Assert.Equal(decoded, result);
+         }
+      }
+
+      /// <summary>
+      /// Validate that ParseByte throws ArgumentException when given characters not in the encoding scheme.
+      /// </summary>
+      [Theory]
+      [InlineData(ElevenAsBinary, true, 11)]
+      [InlineData(NonBinaryNegativeTestData, false, 0)]
+      public void TryParseUInt32_WhenGivenText_ReturnsTrueWhenDecodedFalseWhenNot(string text, bool parsed, uint decoded)
+      {
+         uint result = 0;
+         Assert.Equal(parsed, IntegerEncoders.Binary.TryParseUInt32(text, ref result));
+
+         if (parsed)
+         {
+            Assert.Equal(decoded, result);
+         }
+      }
+
+      /// <summary>
+      /// Validate that ParseSByte throws ArgumentException when given characters not in the encoding scheme.
+      /// </summary>
+      [Theory]
+      [InlineData(ElevenAsBinary, true, 11)]
+      [InlineData(NonBinaryNegativeTestData, false, 0)]
+      public void TryParseInt32_WhenGivenText_ReturnsTrueWhenDecodedFalseWhenNot(string text, bool parsed, int decoded)
+      {
+         int result = 0;
+         Assert.Equal(parsed, IntegerEncoders.Binary.TryParseInt32(text, ref result));
+
+         if (parsed)
+         {
+            Assert.Equal(decoded, result);
+         }
+      }
+
+      /// <summary>
+      /// Validate that ParseByte throws ArgumentException when given characters not in the encoding scheme.
+      /// </summary>
+      [Theory]
+      [InlineData(ElevenAsBinary, true, 11)]
+      [InlineData(NonBinaryNegativeTestData, false, 0)]
+      public void TryParseUInt16_WhenGivenText_ReturnsTrueWhenDecodedFalseWhenNot(string text, bool parsed, ushort decoded)
+      {
+         ushort result = 0;
+         Assert.Equal(parsed, IntegerEncoders.Binary.TryParseUInt16(text, ref result));
+
+         if (parsed)
+         {
+            Assert.Equal(decoded, result);
+         }
+      }
+
+      /// <summary>
+      /// Validate that ParseSByte throws ArgumentException when given characters not in the encoding scheme.
+      /// </summary>
+      [Theory]
+      [InlineData(ElevenAsBinary, true, 11)]
+      [InlineData(NonBinaryNegativeTestData, false, 0)]
+      public void TryParseInt16_WhenGivenText_ReturnsTrueWhenDecodedFalseWhenNot(string text, bool parsed, short decoded)
+      {
+         short result = 0;
+         Assert.Equal(parsed, IntegerEncoders.Binary.TryParseInt16(text, ref result));
+
+         if (parsed)
+         {
+            Assert.Equal(decoded, result);
+         }
+      }
+
+
+      /// <summary>
+      /// Validate that ParseByte throws ArgumentException when given characters not in the encoding scheme.
+      /// </summary>
+      [Theory]
+      [InlineData(ElevenAsBinary, true, 11)]
+      [InlineData(NonBinaryNegativeTestData, false, 0)]
+      public void TryParseByte_WhenGivenText_ReturnsTrueWhenDecodedFalseWhenNot(string text, bool parsed, byte decoded)
+      {
+         byte result = 0;
+         Assert.Equal(parsed, IntegerEncoders.Binary.TryParseByte(text, ref result));
+
+         if (parsed)
+         {
+            Assert.Equal(decoded, result);
+         }
+      }
+
+      /// <summary>
+      /// Validate that ParseSByte throws ArgumentException when given characters not in the encoding scheme.
+      /// </summary>
+      [Theory]
+      [InlineData(ElevenAsBinary, true, 11)]
+      [InlineData(NonBinaryNegativeTestData, false, 0)]
+      public void TryParseSByte_WhenGivenText_ReturnsTrueWhenDecodedFalseWhenNot(string text, bool parsed, sbyte decoded)
+      {
+         sbyte result = 0;
+         Assert.Equal(parsed, IntegerEncoders.Binary.TryParseSByte(text, ref result));
+
+         if (parsed)
+         {
+            Assert.Equal(decoded, result);
+         }
+      }
+
+      #endregion
+
+      #region Format
+
+      /// <summary>
+      /// Validate that Format Returns a formatted value when given a BigInteger.
+      /// </summary>
+      [Theory]
+      [MemberData(nameof(NumericMemberDataProvider.BigIntegers), MemberType = typeof(NumericMemberDataProvider))]
+      public void Format_WhenGivenABigInteger_ReturnsFormattedValue(BigInteger data)
+      {
+         Assert.Equal(data.ToString(), IntegerEncoders.Decimal.Format(data));
+      }
+      /// <summary>
+      /// Validate that Format Returns a formatted value when given an UInt64.
+      /// </summary>
+      [Theory]
+      [MemberData(nameof(NumericMemberDataProvider.UInt64s), MemberType = typeof(NumericMemberDataProvider))]
+      public void Format_WhenGivenAUInt64_ReturnsFormattedValue(UInt64 data)
+      {
+         Assert.Equal(data.ToString(), IntegerEncoders.Decimal.Format(data));
+      }
+
+      /// <summary>
+      /// Validate that Format returns a formatted value when given an Int16.
+      /// </summary>
+      [Theory]
+      [MemberData(nameof(NumericMemberDataProvider.Int64s), MemberType = typeof(NumericMemberDataProvider))]
+      public void Format_WhenGivenAnInt64_ReturnsFormattedValue(Int64 data)
+      {
+         Assert.Equal(data.ToString(), IntegerEncoders.Decimal.Format(data));
+      }
+      /// <summary>
+      /// Validate that Format Returns a formatted value when given an UInt32.
+      /// </summary>
+      [Theory]
+      [MemberData(nameof(NumericMemberDataProvider.UInt32s), MemberType = typeof(NumericMemberDataProvider))]
+      public void Format_WhenGivenAUInt32_ReturnsFormattedValue(UInt32 data)
+      {
+         Assert.Equal(data.ToString(), IntegerEncoders.Decimal.Format(data));
+      }
+
+      /// <summary>
+      /// Validate that Format returns a formatted value when given an Int16.
+      /// </summary>
+      [Theory]
+      [MemberData(nameof(NumericMemberDataProvider.Int32s), MemberType = typeof(NumericMemberDataProvider))]
+      public void Format_WhenGivenAnInt32_ReturnsFormattedValue(Int32 data)
+      {
+         Assert.Equal(data.ToString(), IntegerEncoders.Decimal.Format(data));
+      }
+
+      /// <summary>
+      /// Validate that Format Returns a formatted value when given an UInt16.
+      /// </summary>
+      [Theory]
+      [MemberData(nameof(NumericMemberDataProvider.UInt16s), MemberType = typeof(NumericMemberDataProvider))]
+      public void Format_WhenGivenAUInt16_ReturnsFormattedValue(UInt16 data)
+      {
+         Assert.Equal(data.ToString(), IntegerEncoders.Decimal.Format(data));
+      }
+
+      /// <summary>
+      /// Validate that Format returns a formatted value when given an Int16.
+      /// </summary>
+      [Theory]
+      [MemberData(nameof(NumericMemberDataProvider.Int16s), MemberType = typeof(NumericMemberDataProvider))]
+      public void Format_WhenGivenAnInt16_ReturnsFormattedValue(short data)
+      {
+         Assert.Equal(data.ToString(), IntegerEncoders.Decimal.Format(data));
+      }
+
+      /// <summary>
+      /// Validate that Format Returns a formatted value when given a byte.
+      /// </summary>
+      [Theory]
+      [MemberData(nameof(NumericMemberDataProvider.Bytes), MemberType = typeof(NumericMemberDataProvider))]
+      public void Format_WhenGivenAByte_ReturnsFormattedValue(byte data)
+      {
+         Assert.Equal(data.ToString(), IntegerEncoders.Decimal.Format(data));
+      }
+
+      /// <summary>
+      /// Validate that Format returns a formatted value when given an sbyte.
+      /// </summary>
+      [Theory]
+      [MemberData(nameof(NumericMemberDataProvider.SBytes), MemberType = typeof(NumericMemberDataProvider))]
+      public void Format_WhenGivenAnSByte_ReturnsFormattedValue(sbyte data)
+      {
+         Assert.Equal(data.ToString(), IntegerEncoders.Decimal.Format(data));
+      }
+      #endregion
    }
 }

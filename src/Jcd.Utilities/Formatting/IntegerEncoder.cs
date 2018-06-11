@@ -48,7 +48,7 @@ namespace Jcd.Utilities
       ///     base value.)
       /// </param>
       public IntegerEncoder(string encodeCharacterSet, string[] decodeCharacterSet)
-         : base(formattableTypes, Format)
+      : base(formattableTypes, Format)
       {
          Argument.IsNotNullWhitespaceOrEmpty(encodeCharacterSet, nameof(encodeCharacterSet));
          Argument.IsNotNull(decodeCharacterSet, nameof(decodeCharacterSet));
@@ -60,9 +60,31 @@ namespace Jcd.Utilities
          Base = (ushort) CharacterSet.Length;
 
          for (var i = 0; i < decodeCharacterSet.Length; i++)
-            foreach (var c in decodeCharacterSet[i]) {
+         {
+            foreach (var c in decodeCharacterSet[i])
+            {
                charToValue.Add(c, i);
             }
+         }
+
+         // now validate that there is the ability to decode that which we encode.
+         for (var i = 0; i< encodeCharacterSet.Length; i++)
+         {
+            var ec = encodeCharacterSet[i];
+
+            if (!charToValue.ContainsKey(ec))
+            {
+               throw new ArgumentException($"Encoding char: {ec} was not found in the decode set.", nameof(encodeCharacterSet));
+            }
+
+            var dv = charToValue[ec];
+
+            if (dv!=i)
+            {
+               throw new ArgumentException($"Encoding char: {ec} was expected to decode to {i} but decoded to {dv}.",
+                                           nameof(decodeCharacterSet));
+            }
+         }
       }
 
       /// <summary>
@@ -74,7 +96,7 @@ namespace Jcd.Utilities
       /// </param>
       /// <param name="caseSensitive">indicates if the characters are case sensitive for encoding/decoding.</param>
       public IntegerEncoder(string characterSet, bool caseSensitive = false)
-         : base(formattableTypes, Format)
+      : base(formattableTypes, Format)
       {
          Argument.IsNotNullWhitespaceOrEmpty(characterSet, nameof(characterSet));
          Argument.IsGreaterThan(characterSet.Length, 0, "characterSet.Length");
@@ -89,10 +111,11 @@ namespace Jcd.Utilities
          {
             charToValue.Add(c, i);
 
-            if (CharacterSetValuesAlwaysIncrease && pc >= c) {
+            if (CharacterSetValuesAlwaysIncrease && pc > c) {
                CharacterSetValuesAlwaysIncrease = false;
             }
 
+            pc = c;
             i++;
          }
       }
@@ -191,18 +214,27 @@ namespace Jcd.Utilities
          var sb = new List<char>();
          var cv = value;
 
-         if (cv < 1) {
-            cv *= -1;
-         }
-
-         while (cv > 0)
+         if (cv < 1)
          {
-            var r = cv % Base;
-            sb.Add(CharacterSet[r]);
-            cv = cv / Base;
+            while (cv < 0)
+            {
+               var r = (int)(cv % Base);
+               sb.Add(CharacterSet[Math.Abs(r)]);
+               cv = cv / Base;
+            }
+         }
+         else
+         {
+            while (cv > 0)
+            {
+               var r = (int)(cv % Base);
+               sb.Add(CharacterSet[r]);
+               cv = cv / Base;
+            }
          }
 
-         if (value < 0) {
+         if (value < 0)
+         {
             sb.Add('-');
          }
 
@@ -220,19 +252,23 @@ namespace Jcd.Utilities
          var cv = value;
 
          if (cv < 1)
+         {
             while (cv < 0)
             {
                var r = (int)(cv % Base);
                sb.Add(CharacterSet[Math.Abs(r)]);
                cv = cv / Base;
             }
+         }
          else
+         {
             while (cv > 0)
             {
                var r = (int)(cv % Base);
                sb.Add(CharacterSet[r]);
                cv = cv / Base;
             }
+         }
 
          if (value < 0) {
             sb.Add('-');
@@ -251,18 +287,27 @@ namespace Jcd.Utilities
          var sb = new List<char>();
          var cv = value;
 
-         if (cv < 1) {
-            cv *= -1;
-         }
-
-         while (cv > 0)
+         if (cv < 1)
          {
-            var r = cv % Base;
-            sb.Add(CharacterSet[r]);
-            cv = (short)(cv / Base);
+            while (cv < 0)
+            {
+               var r = (int)(cv % Base);
+               sb.Add(CharacterSet[Math.Abs(r)]);
+               cv = (short)(cv / Base);
+            }
+         }
+         else
+         {
+            while (cv > 0)
+            {
+               var r = (int)(cv % Base);
+               sb.Add(CharacterSet[r]);
+               cv = (short)(cv / Base);
+            }
          }
 
-         if (value < 0) {
+         if (value < 0)
+         {
             sb.Add('-');
          }
 
@@ -279,15 +324,23 @@ namespace Jcd.Utilities
          var sb = new List<char>();
          var cv = value;
 
-         if (cv < 1) {
-            cv *= -1;
-         }
-
-         while (cv > 0)
+         if (cv < 1)
          {
-            var r = cv % Base;
-            sb.Add(CharacterSet[r]);
-            cv = (sbyte)(cv / Base);
+            while (cv < 0)
+            {
+               var r = (int)(cv % Base);
+               sb.Add(CharacterSet[Math.Abs(r)]);
+               cv = (sbyte)(cv / Base);
+            }
+         }
+         else
+         {
+            while (cv > 0)
+            {
+               var r = (int)(cv % Base);
+               sb.Add(CharacterSet[r]);
+               cv = (sbyte)(cv / Base);
+            }
          }
 
          if (value < 0) {
@@ -355,6 +408,12 @@ namespace Jcd.Utilities
          foreach (var digit in digits)
          {
             result *= Base;
+
+            if (!charToValue.ContainsKey(digit))
+            {
+               throw new ArgumentOutOfRangeException($"{digit} cannont be decoded.");
+            }
+
             result += charToValue[digit];
          }
 
@@ -389,6 +448,12 @@ namespace Jcd.Utilities
          foreach (var digit in digits)
          {
             result *= (byte) Base;
+
+            if (!charToValue.ContainsKey(digit))
+            {
+               throw new ArgumentOutOfRangeException($"{digit} cannont be decoded.");
+            }
+
             result += (byte) charToValue[digit];
          }
 
@@ -423,6 +488,12 @@ namespace Jcd.Utilities
          foreach (var digit in digits)
          {
             result *= (short) Base;
+
+            if (!charToValue.ContainsKey(digit))
+            {
+               throw new ArgumentOutOfRangeException($"{digit} cannont be decoded.");
+            }
+
             result += (short)(charToValue[digit] * isNeg);
          }
 
@@ -457,6 +528,12 @@ namespace Jcd.Utilities
          foreach (var digit in digits)
          {
             result *= Base;
+
+            if (!charToValue.ContainsKey(digit))
+            {
+               throw new ArgumentOutOfRangeException($"{digit} cannont be decoded.");
+            }
+
             result += charToValue[digit] * isNeg;
          }
 
@@ -491,6 +568,12 @@ namespace Jcd.Utilities
          foreach (var digit in digits)
          {
             result *= Base;
+
+            if (!charToValue.ContainsKey(digit))
+            {
+               throw new ArgumentOutOfRangeException($"{digit} cannont be decoded.");
+            }
+
             result += charToValue[digit] * isNeg;
          }
 
@@ -525,6 +608,12 @@ namespace Jcd.Utilities
          foreach (var digit in digits)
          {
             result *= (sbyte) Base;
+
+            if (!charToValue.ContainsKey(digit))
+            {
+               throw new ArgumentOutOfRangeException($"{digit} cannont be decoded.");
+            }
+
             result += (sbyte)(charToValue[digit] * isNeg);
          }
 
@@ -563,6 +652,12 @@ namespace Jcd.Utilities
          foreach (var digit in digits)
          {
             result *= Base;
+
+            if (!charToValue.ContainsKey(digit))
+            {
+               throw new ArgumentOutOfRangeException($"{digit} cannont be decoded.");
+            }
+
             result += (ushort) charToValue[digit];
          }
 
@@ -601,6 +696,12 @@ namespace Jcd.Utilities
          foreach (var digit in digits)
          {
             result *= Base;
+
+            if (!charToValue.ContainsKey(digit))
+            {
+               throw new ArgumentOutOfRangeException($"{digit} cannont be decoded.");
+            }
+
             result += (uint) charToValue[digit];
          }
 
@@ -639,6 +740,12 @@ namespace Jcd.Utilities
          foreach (var digit in digits)
          {
             result *= Base;
+
+            if (!charToValue.ContainsKey(digit))
+            {
+               throw new ArgumentOutOfRangeException($"{digit} cannont be decoded.");
+            }
+
             result += (ulong) charToValue[digit];
          }
 

@@ -868,7 +868,20 @@ namespace Jcd.Utilities.Test.Validations
       }
 
       /// <summary>
-      /// Validate that InRange Throws NoException When ValueIsBetweenMinAndMax.
+      /// Validate that InRange for reference type throws noexception when value is between min and max.
+      /// </summary>
+      ///
+      [Fact]
+      public void InRangeReferenceType_WhenValueIsBetweenMinAndMax_ThrowsNoException()
+      {
+         var value = new IntHolder(2);
+         var min = new IntHolder(1);
+         var max = new IntHolder(5);
+         Argument.InRange(value, min, max, "none", "this should never fail!");
+      }
+
+      /// <summary>
+      /// Validate that InRange throws no exception when value is between min and max.
       /// </summary>
       ///
       [Theory]
@@ -878,6 +891,28 @@ namespace Jcd.Utilities.Test.Validations
       public void InRange_WhenValueIsBetweenMinAndMax_ThrowsNoException(int value, int min, int max)
       {
          Argument.InRange(value, min, max, "none", "this should never fail!");
+      }
+
+      /// <summary>
+      /// Validate that InRange throws an ArgumentOutOfRangeException when value is outside of range.
+      /// And validate that the paramName and message are set correctly on the exception.
+      /// </summary>
+      [Theory]
+      [InlineData("param", null)]
+      [InlineData("param", "message")]
+      [InlineData(null, "message")]
+      [InlineData("", "message")]
+      [InlineData(" ", "message")]
+      public void InRangeReferenceType_WhenValueIsOutsideOfRange_ThrowsArgumentOutOfRangeException(string paramName, string message)
+      {
+         var value1 = new IntHolder(0);
+         var value2 = new IntHolder(6);
+         var min = new IntHolder(1);
+         var max = new IntHolder(5);
+         var ex = Assert.Throws<ArgumentOutOfRangeException>(() => Argument.InRange(value1, min, max, paramName, message));
+         ValidateArgumentExceptionMessageAndParam(ex, paramName, message, "Expected value within range");
+         ex = Assert.Throws<ArgumentOutOfRangeException>(() => Argument.InRange(value2, min, max, paramName, message));
+         ValidateArgumentExceptionMessageAndParam(ex, paramName, message, "Expected value within range");
       }
 
       /// <summary>
@@ -911,7 +946,28 @@ namespace Jcd.Utilities.Test.Validations
       }
 
       /// <summary>
-      /// Validate that NotInRagne throws an ArgumentEArgumentOutOfRangeExceptionxception when value is inside of range.
+      /// Validate that NotInRagne throws an ArgumentOutOfRangeException when value is inside of range.
+      /// And validate that the paramName and message are set correctly on the exception.
+      /// </summary>
+      [Theory]
+      [InlineData("param", null)]
+      [InlineData("param", "message")]
+      [InlineData(null, "message")]
+      [InlineData("", "message")]
+      [InlineData(" ", "message")]
+      public void NotInRangeReferenceType_WhenValueIsInsideOfRange_ThrowsArgumentOutOfRangeException(string paramName, string message)
+      {
+         var value1 = new IntHolder(1);
+         var value2 = new IntHolder(5);
+         var min = new IntHolder(1);
+         var max = new IntHolder(5);
+         var ex = Assert.Throws<ArgumentOutOfRangeException>(() => Argument.NotInRange(value1, min, max, paramName, message));
+         ValidateArgumentExceptionMessageAndParam(ex, paramName, message, "Expected value outside of the range ");
+         ex = Assert.Throws<ArgumentOutOfRangeException>(() => Argument.NotInRange(value2, min, max, paramName, message));
+         ValidateArgumentExceptionMessageAndParam(ex, paramName, message, "Expected value outside of the range ");
+      }
+      /// <summary>
+      /// Validate that NotInRagne throws an ArgumentOutOfRangeExceptionxception when value is inside of range.
       /// And validate that the paramName and message are set correctly on the exception.
       /// </summary>
       [Theory]
@@ -978,6 +1034,25 @@ namespace Jcd.Utilities.Test.Validations
       public void IsGreaterThanOrEqual_WhenValueIsLessThanComparison_ThrowsArgumentException(string paramName, string message)
       {
          var ex = Assert.Throws<ArgumentException>(() => Argument.IsGreaterThanOrEqual(1, 2, paramName, message));
+         ValidateArgumentExceptionMessageAndParam(ex, paramName, message, "was expected to be greater than or equal to");
+      }
+
+      /// <summary>
+      /// Validate that IsGreaterThanOrEqual throws an ArgumentException When ValueIsLessThanComparison.
+      /// And validate that the paramName and message are set correctly on the exception.
+      /// </summary>
+      [Theory]
+      [InlineData("param", null)]
+      [InlineData("param", "message")]
+      [InlineData(null, "message")]
+      [InlineData("", "message")]
+      [InlineData(" ", "message")]
+      public void IsGreaterThanOrEqualReferenceType_WhenValueIsLessThanComparison_ThrowsArgumentException(string paramName,
+            string message)
+      {
+         var value1 = new IntHolder(1);
+         var value2 = new IntHolder(5);
+         var ex = Assert.Throws<ArgumentException>(() => Argument.IsGreaterThanOrEqual(value1, value2, paramName, message));
          ValidateArgumentExceptionMessageAndParam(ex, paramName, message, "was expected to be greater than or equal to");
       }
 

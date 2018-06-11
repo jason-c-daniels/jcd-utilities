@@ -7,13 +7,13 @@ using Xunit;
 
 namespace Jcd.Utilities.Test.Generators
 {
-   public class GeneratorBaseTests
+   public class CaptureAndTransitionGeneratorTests
    {
       public class CounterGenerator : CaptureAndTransitionGenerator<CounterGenerator.State, int>
       {
          public class State {
             public int current;
-         };
+         }
          public CounterGenerator(int start, int end, int step) : base(new State { current = start }, (State s, out bool @continue)=> {
             // capture current state.
             var result = s.current;
@@ -32,7 +32,7 @@ namespace Jcd.Utilities.Test.Generators
          public class State
          {
             public int current;
-         };
+         }
          public BadGenerator(int start, int end, int step) : base(new State { current = start }, null)
          {
          }
@@ -59,7 +59,6 @@ namespace Jcd.Utilities.Test.Generators
          var good = new CounterGenerator(1, 5, 1);
       }
 
-
       /// <summary>
       /// Validate that GetEnumerator returns an enumerator for valid generator.
       /// </summary>
@@ -80,7 +79,6 @@ namespace Jcd.Utilities.Test.Generators
          var baseEnumerable = good as IEnumerable;
          Assert.NotNull(baseEnumerable.GetEnumerator());
       }
-
 
       /// <summary>
       /// Validate that we enumerate all generated elements successfully when given valid data.

@@ -14,8 +14,11 @@ namespace Jcd.Utilities.Validations
    /// Argument.IsWhitespace(string.Empty);
    /// </code>
    /// This is because an empty string has no characters, which means none of the characters are whitespace.
+   /// Furthermore, if you wish to customize the kinds of validations available, create your own public static partial class Argument class, and add your own validation methods.
+   /// It's highly recommended, that for consistency you use the existing Passes.. or Fails... methods. Or alternately you can use the underlying "Check." class.
+   /// Craft your calls based on uses within this implementation.
    /// </remarks>
-   public static class Argument
+   public static partial class Argument
    {
       #region exception helpers
 

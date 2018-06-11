@@ -12,11 +12,15 @@ namespace Jcd.Utilities.Test.Formatting
       {
          return new FakeCustomFormatter(fake_formatted_result, FakeCustomFormatter.handledTypes, FakeCustomFormatter.Format);
       }
-
+      /// <summary>
+      /// A helper class that yields a fixed result for any calls to format
+      /// </summary>
       public class FakeCustomFormatter : CustomFormatterBase
       {
          #region Public Fields
-
+         /// <summary>
+         /// The types of data this fake formatter will handle
+         /// </summary>
          public static Type[] handledTypes = {typeof(int), typeof(float)};
 
          #endregion Public Fields
@@ -52,14 +56,21 @@ namespace Jcd.Utilities.Test.Formatting
          #endregion Public Methods
       }
 
+
+      /// <summary>
+      /// Validate that the Constructor throws an ArgumentException when passing an empty set of handled types.
+      /// </summary>
       [Fact]
-      public void Constructor_EmptyHandledTypes_ExpectArgumentExceptions()
+      public void Constructor_WhenGivenEmptyHandledTypes_ThrowsArgumentException()
       {
          Assert.Throws<ArgumentException>(() => new FakeCustomFormatter(null, new Type[] { }, null));
       }
 
+      /// <summary>
+      /// Validate that the Constructor throws an ArgumentNullException when passing any null parameters.
+      /// </summary>
       [Fact]
-      public void Constructor_NullParams_ExpectArgumentNullExceptions()
+      public void Constructor_WhenGivenNullParams_ThrowsArgumentNullException()
       {
          Assert.Throws<ArgumentNullException>(() => new FakeCustomFormatter(null, null, null));
          Assert.Throws<ArgumentNullException>(() => new FakeCustomFormatter("", null, null));
@@ -68,11 +79,13 @@ namespace Jcd.Utilities.Test.Formatting
                (formatter, s, o, arg4) => FakeCustomFormatter.Format(formatter, s, o, arg4)));
       }
 
+      /// <summary>
+      /// Validate that the Format throws ArgumentNullException when given null arguments for format or format provider.
+      /// </summary>
       [Fact]
-      public void Format_NullParameters_ExpectArgumentNullException()
+      public void Format_WhenGivenNullParameters_ThrowsArgumentNullException()
       {
          var sut = CreateSut();
-         //         Assert.Throws<ArgumentNullException>(() => sut.Format("", null, sut));
          Assert.Throws<ArgumentNullException>(() => sut.Format("", new object(), null));
          Assert.Throws<ArgumentNullException>(() => sut.Format(null, new object(), sut));
       }

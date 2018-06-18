@@ -1,6 +1,6 @@
 #!/bin/bash
 set -xe # fail on any error
-echo "current branch: $(git rev-parse --abbrev-ref HEAD)"
+#echo "current branch: $(git rev-parse --abbrev-ref HEAD)"
 
 #TODO: Comment the heck out of this file!
 
@@ -114,7 +114,7 @@ main() {
         rm tools/git-ver*
     fi
     mkdir -p $TOOLS_DIR
-    curl https://codeload.github.com/jason-c-daniels/git-ver/zip/v0.0.2-beta > git-ver.zip
+    curl https://codeload.github.com/jason-c-daniels/git-ver/zip/v0.0.2-beta%2Br1 > git-ver.zip
     unzip -jo git-ver.zip "**/git-ver*" -d ./tools
     export PATH="$TOOLS_DIR":$PATH
     chmod u+x "./tools/git-ver"

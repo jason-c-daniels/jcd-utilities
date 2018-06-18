@@ -47,8 +47,14 @@ namespace Jcd.Utilities.Generators
 
       #region Protected Fields
 
+      /// <summary>
+      /// The current, internal state.
+      /// </summary>
       protected TState state;
 
+      /// <summary>
+      /// The state transition function.
+      /// </summary>
       protected StateTransitionFunction transitionFunction;
 
       #endregion Protected Fields

@@ -4,7 +4,7 @@ using System.Numerics;
 namespace Jcd.Utilities.Test.TestHelpers
 {
    /// <summary>
-   /// Generates all Fibonacci numbers equal to or less than the maxValue
+   /// Generates all Fibonacci numbers equal to or greter than the minValue
    /// </summary>
    public class NegativeNaiiveFibonacciGenerator :
       CaptureAndTransitionGenerator<NegativeNaiiveFibonacciGenerator.State, BigInteger>

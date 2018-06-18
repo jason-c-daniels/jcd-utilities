@@ -30,22 +30,19 @@
                      true);
 
       /// <summary>
-      ///     base 128 formatting, 128 characters from this alphabet starting at 0:
-      ///     ./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[]^_abcdefghijklmnopqrstuvwxyz{|}~¡¢£€¥Š§š©«¬®±Žµ¶ž»ŒœŸ¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ
+      ///     Base 128 formatting, first 128 characters from the ISO8859_15_EncodingCharacters alphabet, starting at "0"
       /// </summary>
       public static readonly IntegerEncoder Base128_0_Monotonic_ISO8859_15 = new IntegerEncoder(
          ISO8859_15_EncodingCharacters.Substring(ISO8859_15_EncodingCharacters.IndexOf('0'), 128), true);
 
       /// <summary>
-      ///     base 128 formatting, 128 characters from this alphabet starting at A:
-      ///     ./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[]^_abcdefghijklmnopqrstuvwxyz{|}~¡¢£€¥Š§š©«¬®±Žµ¶ž»ŒœŸ¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ
+      ///     Base 128 formatting, first 128 characters from the ISO8859_15_EncodingCharacters alphabet, starting at "A"
       /// </summary>
       public static readonly IntegerEncoder Base128_A_Monotonic_ISO8859_15 = new IntegerEncoder(
          ISO8859_15_EncodingCharacters.Substring(ISO8859_15_EncodingCharacters.IndexOf('A'), 128), true);
 
       /// <summary>
-      ///     Base 128 formatting, first 128 characters from this alphabet:
-      ///     ./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[]^_abcdefghijklmnopqrstuvwxyz{|}~¡¢£€¥Š§š©«¬®±Žµ¶ž»ŒœŸ¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ
+      ///     Base 128 formatting, first 128 characters from the ISO8859_15_EncodingCharacters alphabet.
       /// </summary>
       public static readonly IntegerEncoder Base128_Monotonic_ISO8859_15 = new IntegerEncoder(
          ISO8859_15_EncodingCharacters.Substring(
@@ -53,6 +50,7 @@
 
       /// <summary>
       ///     A base 32 formatter for Crockford numnbers, special parsing rules.
+      ///     TODO: Fully implement the "check code symbol" ala https://www.crockford.com/wrmg/base32.html
       /// </summary>
       public static readonly IntegerEncoder Base32_Crockford;
 
@@ -146,33 +144,28 @@
       IntegerEncoder("ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz!#$%&()*+,./:;<=>?@[]^_`{|}~\"", true);
 
       /// <summary>
-      ///     Base 93 formatting, 93 characters from this alphabet starting at 0:
-      ///     ./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[]^_abcdefghijklmnopqrstuvwxyz{|}~¡¢£€¥Š§š©«¬®±Žµ¶ž»ŒœŸ¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ
+      ///     Base 93 formatting, first 93 characters from the ISO8859_15_EncodingCharacters alphabet, starting at "0"
       /// </summary>
       public static readonly IntegerEncoder Base93_0_Monotonic_ISO8859_15 = new IntegerEncoder(
          ISO8859_15_EncodingCharacters.Substring(ISO8859_15_EncodingCharacters.IndexOf('0'), 93), true);
 
       /// <summary>
-      ///     Base 93 formatting, 93 characters from this alphabet starting at a:
-      ///     ./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[]^_abcdefghijklmnopqrstuvwxyz{|}~¡¢£€¥Š§š©«¬®±Žµ¶ž»ŒœŸ¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ
+      ///     Base 93 formatting, first 93 characters from the ISO8859_15_EncodingCharacters alphabet, starting at "a"
       /// </summary>
       public static readonly IntegerEncoder Base93_a_Monotonic_ISO8859_15 = new IntegerEncoder(
          ISO8859_15_EncodingCharacters.Substring(ISO8859_15_EncodingCharacters.IndexOf('a'), 93), true);
 
       /// <summary>
-      ///     Base 93 formatting, 93 characters from this alphabet starting at A:
-      ///     ./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[]^_abcdefghijklmnopqrstuvwxyz{|}~¡¢£€¥Š§š©«¬®±Žµ¶ž»ŒœŸ¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ
+      ///     Base 93 formatting, first 93 characters from the ISO8859_15_EncodingCharacters alphabet, starting at "A"
       /// </summary>
       public static readonly IntegerEncoder Base93_A_Monotonic_ISO8859_15 = new IntegerEncoder(
          ISO8859_15_EncodingCharacters.Substring(ISO8859_15_EncodingCharacters.IndexOf('A'), 93), true);
 
       /// <summary>
-      ///     Base 93 formatting, first 93 characters from this alphabet:
-      ///     ./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[]^_abcdefghijklmnopqrstuvwxyz{|}~¡¢£€¥Š§š©«¬®±Žµ¶ž»ŒœŸ¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ
+      ///     Base 93 formatting, first 93 characters from the ISO8859_15_EncodingCharacters alphabet"
       /// </summary>
       public static readonly IntegerEncoder Base93_Monotonic_ISO8859_15 = new IntegerEncoder(
-         ISO8859_15_EncodingCharacters.Substring(
-            0, 93), true);
+         ISO8859_15_EncodingCharacters.Substring(0, 93), true);
 
       /// <summary>
       ///     A base 2 formatter using 01

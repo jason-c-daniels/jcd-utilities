@@ -5,10 +5,14 @@ using System.Numerics;
 
 namespace Jcd.Utilities.Test.Extensions
 {
-   //NOTE: don't yield a 0, it will confuse XUnit into thinking tests have already been run, when we need type info, not value info.
-
+   /// <summary>
+   /// An XUnit data provider. This one provides lists of numeric data of a various sorts.
+   /// </summary>
    public class NumericMemberDataProvider
    {
+      /// <summary>
+      /// Provides a set of BigIntegers
+      /// </summary>
       public static IEnumerable<object[]> BigIntegers()
       {
          var biMax = new BigInteger(ulong.MaxValue) * 2;
@@ -21,6 +25,9 @@ namespace Jcd.Utilities.Test.Extensions
          yield return new[] { (object)bi1 };
       }
 
+      /// <summary>
+      /// Provides a set of Bytes
+      /// </summary>
       public static IEnumerable<object[]> Bytes()
       {
          byte two = 2;
@@ -31,6 +38,9 @@ namespace Jcd.Utilities.Test.Extensions
          yield return new[] { (object)one };
       }
 
+      /// <summary>
+      /// Provides a set of Decimals
+      /// </summary>
       public static IEnumerable<object[]> Decimals()
       {
          decimal two = 2;
@@ -41,6 +51,9 @@ namespace Jcd.Utilities.Test.Extensions
          yield return new[] { (object)one };
       }
 
+      /// <summary>
+      /// Provides a set of Doubles
+      /// </summary>
       public static IEnumerable<object[]> Doubles()
       {
          double two = 2;
@@ -51,6 +64,9 @@ namespace Jcd.Utilities.Test.Extensions
          yield return new[] { (object)one };
       }
 
+      /// <summary>
+      /// Provides a set of Int16s
+      /// </summary>
       public static IEnumerable<object[]> Int16s()
       {
          short two = 2;
@@ -61,6 +77,9 @@ namespace Jcd.Utilities.Test.Extensions
          yield return new[] { (object)one };
       }
 
+      /// <summary>
+      /// Provides a set of Int32s
+      /// </summary>
       public static IEnumerable<object[]> Int32s()
       {
          var two = 2;
@@ -71,6 +90,9 @@ namespace Jcd.Utilities.Test.Extensions
          yield return new[] { (object)one };
       }
 
+      /// <summary>
+      /// Provides a set of Int64s
+      /// </summary>
       public static IEnumerable<object[]> Int64s()
       {
          long two = 2;
@@ -81,6 +103,9 @@ namespace Jcd.Utilities.Test.Extensions
          yield return new[] { (object)one };
       }
 
+      /// <summary>
+      /// Provides a set of non-numeric data.
+      /// </summary>
       public static IEnumerable<object[]> NonNumbersCollection()
       {
          yield return new[] { new object() };
@@ -88,6 +113,9 @@ namespace Jcd.Utilities.Test.Extensions
          yield return new[] { new Exception() };
       }
 
+      /// <summary>
+      /// Provides a set of signed bytes
+      /// </summary>
       public static IEnumerable<object[]> SBytes()
       {
          sbyte two = 2;
@@ -98,6 +126,9 @@ namespace Jcd.Utilities.Test.Extensions
          yield return new[] { (object)one };
       }
 
+      /// <summary>
+      /// Provides a set of Singles
+      /// </summary>
       public static IEnumerable<object[]> Singles()
       {
          float two = 2;
@@ -108,6 +139,9 @@ namespace Jcd.Utilities.Test.Extensions
          yield return new[] { (object)one };
       }
 
+      /// <summary>
+      /// Provides a set of UInt16s
+      /// </summary>
       public static IEnumerable<object[]> UInt16s()
       {
          ushort two = 2;
@@ -118,6 +152,9 @@ namespace Jcd.Utilities.Test.Extensions
          yield return new[] { (object)one };
       }
 
+      /// <summary>
+      /// Provides a set of UInt32s
+      /// </summary>
       public static IEnumerable<object[]> UInt32s()
       {
          uint two = 2;
@@ -128,6 +165,9 @@ namespace Jcd.Utilities.Test.Extensions
          yield return new[] { (object)one };
       }
 
+      /// <summary>
+      /// Provides a set of UInt64s
+      /// </summary>
       public static IEnumerable<object[]> UInt64s()
       {
          ulong two = 2;
@@ -138,15 +178,21 @@ namespace Jcd.Utilities.Test.Extensions
          yield return new[] { (object)one };
       }
 
-      public static IEnumerable<object[]> FibonacciiBigIntegers()
+      /// <summary>
+      /// Provides a set of BigIntegers from the fibonacci sequence,
+      /// </summary>
+      public static IEnumerable<object[]> FibonacciBigIntegers()
       {
-         foreach (var bi in new NaiiveFibonacciGenerator(long.MaxValue*(BigInteger)15))
+         foreach (var bi in new NaiiveFibonacciGenerator(long.MaxValue * (BigInteger)15))
          {
             yield return new[] { (object)bi };
          }
       }
 
-      public static IEnumerable<object[]> FibonacciiUInt64s()
+      /// <summary>
+      /// Provides a set of UInt64s from the fibonacci sequence,
+      /// </summary>
+      public static IEnumerable<object[]> FibonacciUInt64s()
       {
          foreach (var bi in new NaiiveFibonacciGenerator(ulong.MaxValue))
          {
@@ -155,7 +201,10 @@ namespace Jcd.Utilities.Test.Extensions
          }
       }
 
-      public static IEnumerable<object[]> FibonacciiInt64s()
+      /// <summary>
+      /// Provides a set of Int64s from the fibonacci sequence,
+      /// </summary>
+      public static IEnumerable<object[]> FibonacciInt64s()
       {
          foreach (var bi in new NaiiveFibonacciGenerator(long.MaxValue))
          {
@@ -164,16 +213,22 @@ namespace Jcd.Utilities.Test.Extensions
          }
       }
 
-      public static IEnumerable<object[]> FibonacciiUInt32s()
+      /// <summary>
+      /// Provides a set of UInt32s from the fibonacci sequence,
+      /// </summary>
+      public static IEnumerable<object[]> FibonacciUInt32s()
       {
          foreach (var bi in new NaiiveFibonacciGenerator(uint.MaxValue))
          {
             var v = (uint)bi;
-            yield return new [] { (object) v };
+            yield return new[] { (object)v };
          }
       }
 
-      public static IEnumerable<object[]> FibonacciiInt32s()
+      /// <summary>
+      /// Provides a set of Int32s from the fibonacci sequence,
+      /// </summary>
+      public static IEnumerable<object[]> FibonacciInt32s()
       {
          foreach (var bi in new NaiiveFibonacciGenerator(int.MaxValue))
          {
@@ -182,7 +237,10 @@ namespace Jcd.Utilities.Test.Extensions
          }
       }
 
-      public static IEnumerable<object[]> FibonacciiUInt16s()
+      /// <summary>
+      /// Provides a set of UInt16s from the fibonacci sequence,
+      /// </summary>
+      public static IEnumerable<object[]> FibonacciUInt16s()
       {
          foreach (var bi in new NaiiveFibonacciGenerator(ushort.MaxValue))
          {
@@ -191,7 +249,10 @@ namespace Jcd.Utilities.Test.Extensions
          }
       }
 
-      public static IEnumerable<object[]> FibonacciiInt16s()
+      /// <summary>
+      /// Provides a set of Int16s from the fibonacci sequence,
+      /// </summary>
+      public static IEnumerable<object[]> FibonacciInt16s()
       {
          foreach (var bi in new NaiiveFibonacciGenerator(short.MaxValue))
          {
@@ -200,7 +261,10 @@ namespace Jcd.Utilities.Test.Extensions
          }
       }
 
-      public static IEnumerable<object[]> FibonacciiBytes()
+      /// <summary>
+      /// Provides a set of Bytes from the fibonacci sequence,
+      /// </summary>
+      public static IEnumerable<object[]> FibonacciBytes()
       {
          foreach (var bi in new NaiiveFibonacciGenerator(byte.MaxValue))
          {
@@ -209,7 +273,10 @@ namespace Jcd.Utilities.Test.Extensions
          }
       }
 
-      public static IEnumerable<object[]> FibonacciiSBytes()
+      /// <summary>
+      /// Provides a set of SBytes from the fibonacci sequence,
+      /// </summary>
+      public static IEnumerable<object[]> FibonacciSBytes()
       {
          foreach (var bi in new NaiiveFibonacciGenerator(sbyte.MaxValue))
          {
@@ -218,7 +285,10 @@ namespace Jcd.Utilities.Test.Extensions
          }
       }
 
-      public static IEnumerable<object[]> NegativeFibonacciiSBytes()
+      /// <summary>
+      /// Provides a set of SBytes from the negative fibonacci sequence,
+      /// </summary>
+      public static IEnumerable<object[]> NegativeFibonacciSBytes()
       {
          foreach (var bi in new NegativeNaiiveFibonacciGenerator(sbyte.MinValue))
          {
@@ -227,7 +297,10 @@ namespace Jcd.Utilities.Test.Extensions
          }
       }
 
-      public static IEnumerable<object[]> NegativeFibonacciiInt16s()
+      /// <summary>
+      /// Provides a set of Int16s from the negative fibonacci sequence,
+      /// </summary>
+      public static IEnumerable<object[]> NegativeFibonacciInt16s()
       {
          foreach (var bi in new NegativeNaiiveFibonacciGenerator(short.MinValue))
          {
@@ -236,7 +309,10 @@ namespace Jcd.Utilities.Test.Extensions
          }
       }
 
-      public static IEnumerable<object[]> NegativeFibonacciiInt32s()
+      /// <summary>
+      /// Provides a set of Int32s from the negative fibonacci sequence,
+      /// </summary>
+      public static IEnumerable<object[]> NegativeFibonacciInt32s()
       {
          foreach (var bi in new NegativeNaiiveFibonacciGenerator(int.MinValue))
          {
@@ -245,7 +321,10 @@ namespace Jcd.Utilities.Test.Extensions
          }
       }
 
-      public static IEnumerable<object[]> NegativeFibonacciiInt64s()
+      /// <summary>
+      /// Provides a set of Int64s from the negative fibonacci sequence,
+      /// </summary>
+      public static IEnumerable<object[]> NegativeFibonacciInt64s()
       {
          foreach (var bi in new NegativeNaiiveFibonacciGenerator(long.MinValue))
          {
@@ -254,9 +333,12 @@ namespace Jcd.Utilities.Test.Extensions
          }
       }
 
-      public static IEnumerable<object[]> NegativeFibonacciiBigIntegers()
+      /// <summary>
+      /// Provides a set of BigIntegers from the negative fibonacci sequence,
+      /// </summary>
+      public static IEnumerable<object[]> NegativeFibonacciBigIntegers()
       {
-         foreach (var bi in new NegativeNaiiveFibonacciGenerator(long.MinValue*(BigInteger)15))
+         foreach (var bi in new NegativeNaiiveFibonacciGenerator(long.MinValue * (BigInteger)15))
          {
             yield return new[] { (object)bi };
          }

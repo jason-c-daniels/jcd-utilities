@@ -30,6 +30,9 @@ namespace Jcd.Utilities.Formatting
 
       #region Protected Fields
 
+      /// <summary>
+      /// Default type comparison
+      /// </summary>
       protected MyTypeComparer typeComparer = new MyTypeComparer();
 
       #endregion Protected Fields
@@ -77,10 +80,18 @@ namespace Jcd.Utilities.Formatting
 
       #region Protected Classes
 
+      /// <summary>
+      /// Compares types by name.
+      /// </summary>
       protected class MyTypeComparer : IComparer<Type>
       {
          #region Public Methods
-
+         /// <summary>
+         /// Performs a comparison between two types.
+         /// </summary>
+         /// <param name="x">the elft side of the comparison</param>
+         /// <param name="y">the right ride of the comparison</param>
+         /// <returns>-1 if x is less than y, 1 if x is greater than y, 0 if equal.</returns>
          public int Compare(Type x, Type y)
          {
             return x.ToString().CompareTo(y.ToString());

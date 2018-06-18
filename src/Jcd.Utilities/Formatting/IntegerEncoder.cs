@@ -15,9 +15,21 @@ namespace Jcd.Utilities
    {
       #region Public Fields
 
+      /// <summary>
+      /// The numeric base of the encoder
+      /// </summary>
       public readonly ushort Base;
+      /// <summary>
+      /// Indicates if the characters that are decoded/encoded are case sensitive.
+      /// </summary>
       public readonly bool CaseSensitive;
+      /// <summary>
+      /// The character set used for encoding and decoding (for simple decoders)
+      /// </summary>
       public readonly string CharacterSet;
+      /// <summary>
+      /// A flag that indicates if the values of the characterset are numerically increasing. Using this can allow for faster sorts of short numbers by NOT decoding first. (i.e. For positive numbers the text will sort the same as the number)
+      /// </summary>
       public readonly bool CharacterSetValuesAlwaysIncrease;
 
       #endregion Public Fields
@@ -124,11 +136,7 @@ namespace Jcd.Utilities
 
       #region Public Methods
 
-      /// <summary>
-      ///     Formats an unsigned int using the encoding character set.
-      /// </summary>
-      /// <param name="value">the value to encode</param>
-      /// <returns>The encoded value</returns>
+      /// <inheritdoc />
       public string Format(uint value)
       {
          var sb = new List<char>();
@@ -144,11 +152,7 @@ namespace Jcd.Utilities
          return FormatResult(sb);
       }
 
-      /// <summary>
-      ///     Formats an unsigned long using the encoding character set.
-      /// </summary>
-      /// <param name="value">the value to encode</param>
-      /// <returns>The encoded value</returns>
+      /// <inheritdoc />
       public string Format(ulong value)
       {
          var sb = new List<char>();
@@ -164,11 +168,7 @@ namespace Jcd.Utilities
          return FormatResult(sb);
       }
 
-      /// <summary>
-      ///     Formats an unsigned short using the encoding character set.
-      /// </summary>
-      /// <param name="value">the value to encode</param>
-      /// <returns>The encoded value</returns>
+      /// <inheritdoc />
       public string Format(ushort value)
       {
          var sb = new List<char>();
@@ -184,11 +184,7 @@ namespace Jcd.Utilities
          return FormatResult(sb);
       }
 
-      /// <summary>
-      ///     Formats a byte using the encoding character set.
-      /// </summary>
-      /// <param name="value">the value to encode</param>
-      /// <returns>The encoded value</returns>
+      /// <inheritdoc />
       public string Format(byte value)
       {
          var sb = new List<char>();
@@ -204,11 +200,7 @@ namespace Jcd.Utilities
          return FormatResult(sb);
       }
 
-      /// <summary>
-      ///     Formats an int using the encoding character set.
-      /// </summary>
-      /// <param name="value">the value to encode</param>
-      /// <returns>The encoded value</returns>
+      /// <inheritdoc />
       public string Format(int value)
       {
          var sb = new List<char>();
@@ -241,11 +233,7 @@ namespace Jcd.Utilities
          return FormatResult(sb);
       }
 
-      /// <summary>
-      ///     Formats a long using the encoding character set.
-      /// </summary>
-      /// <param name="value">the value to encode</param>
-      /// <returns>The encoded value</returns>
+      /// <inheritdoc />
       public string Format(long value)
       {
          var sb = new List<char>();
@@ -277,11 +265,7 @@ namespace Jcd.Utilities
          return FormatResult(sb);
       }
 
-      /// <summary>
-      ///     Formats a short using the encoding character set.
-      /// </summary>
-      /// <param name="value">the value to encode</param>
-      /// <returns>The encoded value</returns>
+      /// <inheritdoc />
       public string Format(short value)
       {
          var sb = new List<char>();
@@ -314,11 +298,7 @@ namespace Jcd.Utilities
          return FormatResult(sb);
       }
 
-      /// <summary>
-      ///     Formats a signed byte using the encoding character set.
-      /// </summary>
-      /// <param name="value">the value to encode</param>
-      /// <returns>The encoded value</returns>
+      /// <inheritdoc />
       public string Format(sbyte value)
       {
          var sb = new List<char>();
@@ -350,11 +330,7 @@ namespace Jcd.Utilities
          return FormatResult(sb);
       }
 
-      /// <summary>
-      ///     Formats a BigInteger using the encoding character set.
-      /// </summary>
-      /// <param name="value">the value to encode</param>
-      /// <returns>The encoded value</returns>
+      /// <inheritdoc />
       public string Format(BigInteger value)
       {
          var sb = new List<char>();
@@ -379,19 +355,7 @@ namespace Jcd.Utilities
          return FormatResult(sb);
       }
 
-      /// <summary>
-      ///     Parses a string as a BigInteger
-      /// </summary>
-      /// <param name="value">The text to decode</param>
-      /// <returns>the decoded value</returns>
-      /// <exception cref="ArgumentNullException">If the value parameter was null</exception>
-      /// <exception cref="ArgumentException">
-      ///     If the text cannot be parsed (i.e. includes non-decodable characters)
-      /// </exception>
-      /// <exception cref="OutOfMemoryException">
-      ///     If the text cannot be parse because the resultant value cause the application to exahaust
-      ///     its memory.
-      /// </exception>
+      /// <inheritdoc />
       public BigInteger ParseBigInteger(string value)
       {
          Argument.IsNotNullWhitespaceOrEmpty(value, nameof(value));
@@ -420,18 +384,7 @@ namespace Jcd.Utilities
          return isNeg ? -1 * result : result;
       }
 
-      /// <summary>
-      ///     Parses a string as a Byte
-      /// </summary>
-      /// <param name="value">The text to decode</param>
-      /// <returns>the decoded value</returns>
-      /// <exception cref="ArgumentNullException">If the value parameter was null</exception>
-      /// <exception cref="ArgumentException">
-      ///     If the text cannot be parsed (i.e. includes non-decodable characters)
-      /// </exception>
-      /// <exception cref="OverflowException">
-      ///     If the text cannot be parse because the resultant value can't be stored in a Byte
-      /// </exception>
+      /// <inheritdoc />
       public byte ParseByte(string value)
       {
          Argument.IsNotNullWhitespaceOrEmpty(value, nameof(value));
@@ -465,18 +418,7 @@ namespace Jcd.Utilities
          return result;
       }
 
-      /// <summary>
-      ///     Parses a string as an Int16
-      /// </summary>
-      /// <param name="value">The text to decode</param>
-      /// <returns>the decoded value</returns>
-      /// <exception cref="ArgumentNullException">If the value parameter was null</exception>
-      /// <exception cref="ArgumentException">
-      ///     If the text cannot be parsed (i.e. includes non-decodable characters)
-      /// </exception>
-      /// <exception cref="OverflowException">
-      ///     If the text cannot be parse because the resultant value can't be stored in an Int16
-      /// </exception>
+      /// <inheritdoc />
       public short ParseInt16(string value)
       {
          Argument.IsNotNullWhitespaceOrEmpty(value, nameof(value));
@@ -505,18 +447,7 @@ namespace Jcd.Utilities
          return result;
       }
 
-      /// <summary>
-      ///     Parses a string as an Int32
-      /// </summary>
-      /// <param name="value">The text to decode</param>
-      /// <returns>the decoded value</returns>
-      /// <exception cref="ArgumentNullException">If the value parameter was null</exception>
-      /// <exception cref="ArgumentException">
-      ///     If the text cannot be parsed (i.e. includes non-decodable characters)
-      /// </exception>
-      /// <exception cref="OverflowException">
-      ///     If the text cannot be parse because the resultant value can't be stored in an Int32
-      /// </exception>
+      /// <inheritdoc />
       public int ParseInt32(string value)
       {
          Argument.IsNotNullWhitespaceOrEmpty(value, nameof(value));
@@ -545,18 +476,7 @@ namespace Jcd.Utilities
          return result;
       }
 
-      /// <summary>
-      ///     Parses a string as an Int64
-      /// </summary>
-      /// <param name="value">The text to decode</param>
-      /// <returns>the decoded value</returns>
-      /// <exception cref="ArgumentNullException">If the value parameter was null</exception>
-      /// <exception cref="ArgumentException">
-      ///     If the text cannot be parsed (i.e. includes non-decodable characters)
-      /// </exception>
-      /// <exception cref="OverflowException">
-      ///     If the text cannot be parse because the resultant value can't be stored in an Int64
-      /// </exception>
+      /// <inheritdoc />
       public long ParseInt64(string value)
       {
          Argument.IsNotNullWhitespaceOrEmpty(value, nameof(value));
@@ -585,18 +505,7 @@ namespace Jcd.Utilities
          return result;
       }
 
-      /// <summary>
-      ///     Parses a string as an SByte
-      /// </summary>
-      /// <param name="value">The text to decode</param>
-      /// <returns>the decoded value</returns>
-      /// <exception cref="ArgumentNullException">If the value parameter was null</exception>
-      /// <exception cref="ArgumentException">
-      ///     If the text cannot be parsed (i.e. includes non-decodable characters)
-      /// </exception>
-      /// <exception cref="OverflowException">
-      ///     If the text cannot be parse because the resultant value can't be stored in an SByte
-      /// </exception>
+      /// <inheritdoc />
       public sbyte ParseSByte(string value)
       {
          Argument.IsNotNullWhitespaceOrEmpty(value, nameof(value));
@@ -625,18 +534,7 @@ namespace Jcd.Utilities
          return result;
       }
 
-      /// <summary>
-      ///     Parses a string as a UInt16
-      /// </summary>
-      /// <param name="value">The text to decode</param>
-      /// <returns>the decoded value</returns>
-      /// <exception cref="ArgumentNullException">If the value parameter was null</exception>
-      /// <exception cref="ArgumentException">
-      ///     If the text cannot be parsed (i.e. includes non-decodable characters)
-      /// </exception>
-      /// <exception cref="OverflowException">
-      ///     If the text cannot be parse because the resultant value can't be stored in a UInt16
-      /// </exception>
+      /// <inheritdoc />
       public ushort ParseUInt16(string value)
       {
          Argument.IsNotNullWhitespaceOrEmpty(value, nameof(value));
@@ -669,18 +567,7 @@ namespace Jcd.Utilities
          return result;
       }
 
-      /// <summary>
-      ///     Parses a string as a UInt32
-      /// </summary>
-      /// <param name="value">The text to decode</param>
-      /// <returns>the decoded value</returns>
-      /// <exception cref="ArgumentNullException">If the value parameter was null</exception>
-      /// <exception cref="ArgumentException">
-      ///     If the text cannot be parsed (i.e. includes non-decodable characters)
-      /// </exception>
-      /// <exception cref="OverflowException">
-      ///     If the text cannot be parse because the resultant value can't be stored in a UInt32
-      /// </exception>
+      /// <inheritdoc />
       public uint ParseUInt32(string value)
       {
          Argument.IsNotNullWhitespaceOrEmpty(value, nameof(value));
@@ -713,18 +600,7 @@ namespace Jcd.Utilities
          return result;
       }
 
-      /// <summary>
-      ///     Parses a string as a UInt64
-      /// </summary>
-      /// <param name="value">The text to decode</param>
-      /// <returns>the decoded value</returns>
-      /// <exception cref="ArgumentNullException">If the value parameter was null</exception>
-      /// <exception cref="ArgumentException">
-      ///     If the text cannot be parsed (i.e. includes non-decodable characters)
-      /// </exception>
-      /// <exception cref="OverflowException">
-      ///     If the text cannot be parse because the resultant value can't be stored in a UInt64
-      /// </exception>
+      /// <inheritdoc />
       public ulong ParseUInt64(string value)
       {
          Argument.IsNotNullWhitespaceOrEmpty(value, nameof(value));
@@ -757,12 +633,7 @@ namespace Jcd.Utilities
          return result;
       }
 
-      /// <summary>
-      ///     Tries to parse a BigInteger from the provided text.
-      /// </summary>
-      /// <param name="value">the text to parse</param>
-      /// <param name="result">the resultant value</param>
-      /// <returns>true if successfully parsed, false otherwise</returns>
+      /// <inheritdoc />
       public bool TryParseBigInteger(string value, ref BigInteger result)
       {
          try
@@ -776,12 +647,7 @@ namespace Jcd.Utilities
          }
       }
 
-      /// <summary>
-      ///     Tries to parse a Byte from the provided text.
-      /// </summary>
-      /// <param name="value">the text to parse</param>
-      /// <param name="result">the resultant value</param>
-      /// <returns>true if successfully parsed, false otherwise</returns>
+      /// <inheritdoc />
       public bool TryParseByte(string value, ref byte result)
       {
          try
@@ -795,12 +661,7 @@ namespace Jcd.Utilities
          }
       }
 
-      /// <summary>
-      ///     Tries to parse an Int16 from the provided text.
-      /// </summary>
-      /// <param name="value">the text to parse</param>
-      /// <param name="result">the resultant value</param>
-      /// <returns>true if successfully parsed, false otherwise</returns>
+      /// <inheritdoc />
       public bool TryParseInt16(string value, ref short result)
       {
          try
@@ -814,12 +675,7 @@ namespace Jcd.Utilities
          }
       }
 
-      /// <summary>
-      ///     Tries to parse an Int32 from the provided text.
-      /// </summary>
-      /// <param name="value">the text to parse</param>
-      /// <param name="result">the resultant value</param>
-      /// <returns>true if successfully parsed, false otherwise</returns>
+      /// <inheritdoc />
       public bool TryParseInt32(string value, ref int result)
       {
          try
@@ -833,12 +689,7 @@ namespace Jcd.Utilities
          }
       }
 
-      /// <summary>
-      ///     Tries to parse an Int64 from the provided text.
-      /// </summary>
-      /// <param name="value">the text to parse</param>
-      /// <param name="result">the resultant value</param>
-      /// <returns>true if successfully parsed, false otherwise</returns>
+      /// <inheritdoc />
       public bool TryParseInt64(string value, ref long result)
       {
          try
@@ -852,12 +703,7 @@ namespace Jcd.Utilities
          }
       }
 
-      /// <summary>
-      ///     Tries to parse an SByte from the provided text.
-      /// </summary>
-      /// <param name="value">the text to parse</param>
-      /// <param name="result">the resultant value</param>
-      /// <returns>true if successfully parsed, false otherwise</returns>
+      /// <inheritdoc />
       public bool TryParseSByte(string value, ref sbyte result)
       {
          try
@@ -871,12 +717,7 @@ namespace Jcd.Utilities
          }
       }
 
-      /// <summary>
-      ///     Tries to parse a UInt16 from the provided text.
-      /// </summary>
-      /// <param name="value">the text to parse</param>
-      /// <param name="result">the resultant value</param>
-      /// <returns>true if successfully parsed, false otherwise</returns>
+      /// <inheritdoc />
       public bool TryParseUInt16(string value, ref ushort result)
       {
          try
@@ -890,12 +731,7 @@ namespace Jcd.Utilities
          }
       }
 
-      /// <summary>
-      ///     Tries to parse a UInt32 from the provided text.
-      /// </summary>
-      /// <param name="value">the text to parse</param>
-      /// <param name="result">the resultant value</param>
-      /// <returns>true if successfully parsed, false otherwise</returns>
+      /// <inheritdoc />
       public bool TryParseUInt32(string value, ref uint result)
       {
          try
@@ -909,12 +745,7 @@ namespace Jcd.Utilities
          }
       }
 
-      /// <summary>
-      ///     Tries to parse a UInt64 from the provided text.
-      /// </summary>
-      /// <param name="value">the text to parse</param>
-      /// <param name="result">the resultant value</param>
-      /// <returns>true if successfully parsed, false otherwise</returns>
+      /// <inheritdoc />
       public bool TryParseUInt64(string value, ref ulong result)
       {
          try

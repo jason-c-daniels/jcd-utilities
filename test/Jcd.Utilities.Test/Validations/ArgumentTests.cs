@@ -1,4 +1,5 @@
-﻿using Jcd.Utilities.Validations;
+﻿using Jcd.Utilities.Test.TestHelpers;
+using Jcd.Utilities.Validations;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -39,6 +40,11 @@ namespace Jcd.Utilities.Test.Validations
 
       #region exception helpers
 
+      /// <summary>
+      /// Validate that RaiseArgumentException raises an ArgumentException with the provided param and message, or defaults if none provided.
+      /// </summary>
+      /// <param name="paramName">the name of the parameter at fault.</param>
+      /// <param name="message">the message for the exception.</param>
       [Theory]
       [InlineData("param", null)]
       [InlineData("param", "message")]
@@ -51,6 +57,11 @@ namespace Jcd.Utilities.Test.Validations
          ValidateArgumentExceptionMessageAndParam(ex, paramName, message, defaultArgumentExceptionMessage);
       }
 
+      /// <summary>
+      /// Validate that RaiseArgumentNullException raises an ArgumentNullException with the provided param and message, or defaults if none provided.
+      /// </summary>
+      /// <param name="paramName">the name of the parameter at fault.</param>
+      /// <param name="message">the message for the exception.</param>
       [Theory]
       [InlineData("param", null)]
       [InlineData("param", "message")]
@@ -63,6 +74,14 @@ namespace Jcd.Utilities.Test.Validations
          ValidateArgumentExceptionMessageAndParam(ex, paramName, message, defaultArgumentNullExceptionMessage);
       }
 
+      /// <summary>
+      /// Validate that RaiseArgumentOutOfRangeException raises an ArgumentOutOfRangeException with the provided param and message, or defaults if none provided.
+      /// </summary>
+      /// <param name="min">the minimum value for the range</param>
+      /// <param name="max">the maximum value for the range</param>
+      /// <param name="actual">The actual value encountered</param>
+      /// <param name="paramName">the name of the parameter at fault.</param>
+      /// <param name="message">the message for the exception.</param>
       [Theory]
       [InlineData(1, 2, 5, "param", null)]
       [InlineData(1, 2, 5, "param", "message")]
@@ -77,6 +96,13 @@ namespace Jcd.Utilities.Test.Validations
          ValidateArgumentExceptionMessageAndParam(ex, paramName, message, defaultArgumentOutOfRangeMessage);
       }
 
+      /// <summary>
+      /// Validates that when RaiseExpectationViolation is called it raises an ArgumentException with specific verbiage, or a custom message (if provided)
+      /// </summary>
+      /// <param name="expected">The expected value</param>
+      /// <param name="actual">The actual value</param>
+      /// <param name="paramName">The parameter name</param>
+      /// <param name="message">the message</param>
       [Theory]
       [InlineData(0, 1, null, null)]
       [InlineData(0, 1, null, "message")]
@@ -97,6 +123,9 @@ namespace Jcd.Utilities.Test.Validations
 
       #region Boolean and Null checks
 
+      /// <summary>
+      /// Validate that IsFalse does not throw an exception when it recieves a value of false.
+      /// </summary>
       [Fact]
       public void IsFalse_WhenGivenFalse_NoExceptionIsThrown()
       {
@@ -105,6 +134,11 @@ namespace Jcd.Utilities.Test.Validations
          Argument.IsFalse(false, "param", "message");
       }
 
+      /// <summary>
+      /// Validate that IsFalse does throw an exception when it recieves a value of true. Validate the verbiage and custom messaging as well.
+      /// </summary>
+      /// <param name="message">The custom message</param>
+      /// <param name="paramName">The parameter</param>
       [Theory]
       [InlineData("param", null)]
       [InlineData("param", "message")]
@@ -117,12 +151,20 @@ namespace Jcd.Utilities.Test.Validations
          ValidateArgumentExceptionMessageAndParam(ex, paramName, message, defaultExpectationViolationMessage);
       }
 
+      /// <summary>
+      /// Validate that IsNotNull does not throw an exception when it recieves a non-null value.
+      /// </summary>
       [Fact]
       public void IsNotNull_WhenGivenNonNull_NoExceptionIsThrown()
       {
          Argument.IsNotNull(nonNullObject, "none", "this error shouldn't have happened.");
       }
 
+      /// <summary>
+      /// Validate that IsNotNull throws an exception when it recieves a value of null. Validate the verbiage and custom messaging as well.
+      /// </summary>
+      /// <param name="message">The custom message</param>
+      /// <param name="paramName">The parameter</param>
       [Theory]
       [InlineData("param", null)]
       [InlineData("param", "message")]
@@ -135,12 +177,20 @@ namespace Jcd.Utilities.Test.Validations
          ValidateArgumentExceptionMessageAndParam(ex, paramName, message, defaultArgumentNullExceptionMessage);
       }
 
+      /// <summary>
+      /// Validate that IsNull does not throw an exception when it recieves a null value.
+      /// </summary>
       [Fact]
       public void IsNull_WhenGivenNull_NoExceptionIsThrown()
       {
          Argument.IsNull(nullObject, "none", "this error shouldn't have happened.");
       }
 
+      /// <summary>
+      /// Validate that IsNull throws an exception when it recieves a value of non-null. Validate the verbiage and custom messaging as well.
+      /// </summary>
+      /// <param name="message">The custom message</param>
+      /// <param name="paramName">The parameter</param>
       [Theory]
       [InlineData("param", null)]
       [InlineData("param", "message")]
@@ -153,6 +203,11 @@ namespace Jcd.Utilities.Test.Validations
          ValidateArgumentExceptionMessageAndParam(ex, paramName, message, defaultExpectationViolationMessage);
       }
 
+      /// <summary>
+      /// Validate that IsTrue throws an exception when it recieves a value offalse. Validate the verbiage and custom messaging as well.
+      /// </summary>
+      /// <param name="message">The custom message</param>
+      /// <param name="paramName">The parameter</param>
       [Theory]
       [InlineData("param", null)]
       [InlineData("param", "message")]
@@ -165,6 +220,9 @@ namespace Jcd.Utilities.Test.Validations
          ValidateArgumentExceptionMessageAndParam(ex, paramName, message, defaultExpectationViolationMessage);
       }
 
+      /// <summary>
+      /// Validate that IsTrue does not throw an exception when it recieves true.
+      /// </summary>
       [Fact]
       public void IsTrue_WhenGivenTrue_NoExceptionIsThrown()
       {
@@ -756,6 +814,54 @@ namespace Jcd.Utilities.Test.Validations
          ValidateArgumentExceptionMessageAndParam(ex2, paramName, message, "be whitespace or empty");
       }
 
+      /// <summary>
+      /// Validate that Contains (string) Throws ArgumentException When a character not found in the search string.
+      /// </summary>
+      [Theory]
+      [InlineData("param", null)]
+      [InlineData("param", "message")]
+      [InlineData(null, "message")]
+      [InlineData("", "message")]
+      [InlineData(" ", "message")]
+      public void Contains_StringChar_WhenCharacterNotFound_ThrowsArgumentException(string paramName, string message)
+      {
+         var ex=Assert.Throws<ArgumentException>(()=>Argument.Contains("string", 'c', paramName, message));
+         ValidateArgumentExceptionMessageAndParam(ex, paramName, message, defaultNotFoundInCollectionMessage);
+      }
+
+      /// <summary>
+      /// Validate that Contains does not throw any exception when the search string contains the target character.
+      /// </summary>
+      [Fact]
+      public void Contains_StringChar_WhenSearchStringContainsTarget_DoesNotThrowAnySception()
+      {
+         Argument.Contains("abc", 'c');
+      }
+
+      /// <summary>
+      /// Validate that Contains (string) Throws ArgumentException when a substring is not found in the search string.
+      /// </summary>
+      [Theory]
+      [InlineData("param", null)]
+      [InlineData("param", "message")]
+      [InlineData(null, "message")]
+      [InlineData("", "message")]
+      [InlineData(" ", "message")]
+      public void Contains_Substring_WhenCharacterNotFound_ThrowsArgumentException(string paramName, string message)
+      {
+         var ex = Assert.Throws<ArgumentException>(() => Argument.Contains("string", "c", paramName, message));
+         ValidateArgumentExceptionMessageAndParam(ex, paramName, message, defaultNotFoundInCollectionMessage);
+      }
+
+      /// <summary>
+      /// Validate that Contains does not throw any exception when the search string contains the target substring.
+      /// </summary>
+      [Fact]
+      public void Contains_Substring_WhenSearchStringContainsTarget_DoesNotThrowAnyException()
+      {
+         Argument.Contains("abc", "c");
+      }
+
       #endregion string operations
 
       #region range and relational operations
@@ -1275,18 +1381,32 @@ namespace Jcd.Utilities.Test.Validations
 
       #region Private Methods
 
+      /// <summary>
+      /// Validation helper that ensures a message contains the necessary text.
+      /// </summary>
+      /// <param name="ex">teh exception to validate</param>
+      /// <param name="paramName">the parameter name</param>
+      /// <param name="message">the custom message, if any.</param>
+      /// <param name="expectedDefaultMessage">the default message</param>
       private static void ValidateArgumentExceptionMessageAndParam(ArgumentException ex, string paramName, string message,
             string expectedDefaultMessage)
       {
          ValidateArgumentExceptionMessageAndParam(ex, paramName, message, new[] { expectedDefaultMessage });
       }
 
+      /// <summary>
+      /// Validation helper that ensures a message contains the necessary text.
+      /// </summary>
+      /// <param name="ex">teh exception to validate</param>
+      /// <param name="paramName">the parameter name</param>
+      /// <param name="message">the custom message, if any.</param>
+      /// <param name="expectedDefaultMessageFragments">the default message fragments to look for</param>
       private static void ValidateArgumentExceptionMessageAndParam(ArgumentException ex, string paramName, string message,
-            string[] expectedDefaultMessage)
+            string[] expectedDefaultMessageFragments)
       {
          if (message == null)
          {
-            foreach (var text in expectedDefaultMessage)
+            foreach (var text in expectedDefaultMessageFragments)
             {
                Assert.Contains(text, ex.Message);
             }

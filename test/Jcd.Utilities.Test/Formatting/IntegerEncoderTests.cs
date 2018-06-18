@@ -15,6 +15,10 @@ namespace Jcd.Utilities.Test.Formatting
 
       #region CrockFordEncoder and Hex Tests
 
+      /// <summary>
+      /// Performs a round trip (endcode, decode) using the CrockfordEncoder encoder on the provided sample data, as BigIntegers. The encoded and decoded values must match in order to pass.
+      /// </summary>
+      /// <param name="number">The number to encode, then decode</param>
       [Theory]
       [MemberData(nameof(NumericMemberDataProvider.Bytes), MemberType = typeof(NumericMemberDataProvider))]
       [MemberData(nameof(NumericMemberDataProvider.UInt16s), MemberType = typeof(NumericMemberDataProvider))]
@@ -25,7 +29,7 @@ namespace Jcd.Utilities.Test.Formatting
       [MemberData(nameof(NumericMemberDataProvider.Int32s), MemberType = typeof(NumericMemberDataProvider))]
       [MemberData(nameof(NumericMemberDataProvider.Int64s), MemberType = typeof(NumericMemberDataProvider))]
       [MemberData(nameof(NumericMemberDataProvider.BigIntegers), MemberType = typeof(NumericMemberDataProvider))]
-      public void CrockFordEncoder_BigIntegerRoundTrip_ExpectValuesMatch(object number)
+      public void CrockfordEncoder_BigIntegerRoundTrip_ExpectValuesMatch(object number)
       {
          var encoder = IntegerEncoders.Base32_Crockford;
 
@@ -51,6 +55,10 @@ namespace Jcd.Utilities.Test.Formatting
          }
       }
 
+      /// <summary>
+      /// Performs a round trip (endcode, decode) using the Hexadecimal encoder on the provided sample data, as BigIntegers. The encoded and decoded values must match in order to pass.
+      /// </summary>
+      /// <param name="number">The number to encode, then decode</param>
       [Theory]
       [MemberData(nameof(NumericMemberDataProvider.Bytes), MemberType = typeof(NumericMemberDataProvider))]
       [MemberData(nameof(NumericMemberDataProvider.UInt16s), MemberType = typeof(NumericMemberDataProvider))]
@@ -95,6 +103,10 @@ namespace Jcd.Utilities.Test.Formatting
          }
       }
 
+      /// <summary>
+      /// Performs a round trip (endcode, decode) using the Hexadecimal encoder on the provided sample data, as Int64. The encoded and decoded values must match in order to pass.
+      /// </summary>
+      /// <param name="number">The number to encode, then decode</param>
       [Theory]
       [MemberData(nameof(NumericMemberDataProvider.Bytes), MemberType = typeof(NumericMemberDataProvider))]
       [MemberData(nameof(NumericMemberDataProvider.UInt16s), MemberType = typeof(NumericMemberDataProvider))]
@@ -104,7 +116,7 @@ namespace Jcd.Utilities.Test.Formatting
       [MemberData(nameof(NumericMemberDataProvider.Int16s), MemberType = typeof(NumericMemberDataProvider))]
       [MemberData(nameof(NumericMemberDataProvider.Int32s), MemberType = typeof(NumericMemberDataProvider))]
       [MemberData(nameof(NumericMemberDataProvider.Int64s), MemberType = typeof(NumericMemberDataProvider))]
-      public void CrockFordEncoder_Int64RoundTrip_ExpectValuesMatch(object number)
+      public void CrockfordEncoder_Int64RoundTrip_ExpectValuesMatch(object number)
       {
          var encoder = IntegerEncoders.Base32_Crockford;
 
@@ -202,7 +214,7 @@ namespace Jcd.Utilities.Test.Formatting
       /// Validate that Format Returns correct hex string when given UInt64.
       /// </summary>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.FibonacciiBigIntegers), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.FibonacciBigIntegers), MemberType = typeof(NumericMemberDataProvider))]
       public void Format_WhenGivenBigInteger_ReturnsCorrectHexString(BigInteger data)
       {
          var expected = data.ToString("X").ToLowerInvariant();
@@ -216,7 +228,7 @@ namespace Jcd.Utilities.Test.Formatting
       /// Validate that Format Returns correct hex string when given UInt64.
       /// </summary>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.FibonacciiUInt64s), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.FibonacciUInt64s), MemberType = typeof(NumericMemberDataProvider))]
       public void Format_WhenGivenUInt64_ReturnsCorrectHexString(UInt64 data)
       {
          var expected = data.ToString("X").ToLowerInvariant();
@@ -229,7 +241,7 @@ namespace Jcd.Utilities.Test.Formatting
       /// Validate that Format Returns correct hex string when given Int64.
       /// </summary>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.FibonacciiInt64s), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.FibonacciInt64s), MemberType = typeof(NumericMemberDataProvider))]
       public void Format_WhenGivenInt64_ReturnsCorrectHexString(Int64 data)
       {
          var expected = data.ToString("X").ToLowerInvariant();
@@ -242,7 +254,7 @@ namespace Jcd.Utilities.Test.Formatting
       /// Validate that Format Returns correct hex string when given UInt32.
       /// </summary>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.FibonacciiUInt32s), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.FibonacciUInt32s), MemberType = typeof(NumericMemberDataProvider))]
       public void Format_WhenGivenUInt32_ReturnsCorrectHexString(UInt32 data)
       {
          var expected = data.ToString("X").ToLowerInvariant();
@@ -255,7 +267,7 @@ namespace Jcd.Utilities.Test.Formatting
       /// Validate that Format Returns correct hex string when given Int32.
       /// </summary>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.FibonacciiInt32s), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.FibonacciInt32s), MemberType = typeof(NumericMemberDataProvider))]
       public void Format_WhenGivenInt32_ReturnsCorrectHexString(Int32 data)
       {
          var expected = data.ToString("X").ToLowerInvariant();
@@ -268,7 +280,7 @@ namespace Jcd.Utilities.Test.Formatting
       /// Validate that Format Returns correct hex string when given UInt16.
       /// </summary>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.FibonacciiUInt16s), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.FibonacciUInt16s), MemberType = typeof(NumericMemberDataProvider))]
       public void Format_WhenGivenUInt16_ReturnsCorrectHexString(UInt16 data)
       {
          var expected = data.ToString("X").ToLowerInvariant();
@@ -281,7 +293,7 @@ namespace Jcd.Utilities.Test.Formatting
       /// Validate that Format Returns correct hex string when given Int16.
       /// </summary>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.FibonacciiInt16s), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.FibonacciInt16s), MemberType = typeof(NumericMemberDataProvider))]
       public void Format_WhenGivenInt16_ReturnsCorrectHexString(Int16 data)
       {
          var expected = data.ToString("X").ToLowerInvariant();
@@ -294,7 +306,7 @@ namespace Jcd.Utilities.Test.Formatting
       /// Validate that Format Returns correct hex string when given UInt16.
       /// </summary>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.FibonacciiBytes), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.FibonacciBytes), MemberType = typeof(NumericMemberDataProvider))]
       public void Format_WhenGivenByte_ReturnsCorrectHexString(Byte data)
       {
          var expected = data.ToString("X").ToLowerInvariant();
@@ -307,7 +319,7 @@ namespace Jcd.Utilities.Test.Formatting
       /// Validate that Format Returns correct hex string when given Int16. And validate round trip. (Parse)
       /// </summary>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.FibonacciiSBytes), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.FibonacciSBytes), MemberType = typeof(NumericMemberDataProvider))]
       public void Format_WhenGivenSByte_ReturnsCorrectHexString(SByte data)
       {
          var expected = data.ToString("X").ToLowerInvariant();
@@ -323,7 +335,7 @@ namespace Jcd.Utilities.Test.Formatting
       /// Validate that Format Returns correct hex string when given negative sbyte.
       /// </summary>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.NegativeFibonacciiSBytes), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.NegativeFibonacciSBytes), MemberType = typeof(NumericMemberDataProvider))]
       public void Format_WhenGivenNegativeSByte_ReturnsCorrectHexString(SByte data)
       {
          var abs = (byte)Math.Abs((short)data);
@@ -342,7 +354,7 @@ namespace Jcd.Utilities.Test.Formatting
       /// Validate that Format Returns correct hex string when given negative short.
       /// </summary>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.NegativeFibonacciiInt16s), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.NegativeFibonacciInt16s), MemberType = typeof(NumericMemberDataProvider))]
       public void Format_WhenGivenNegativeInt16_ReturnsCorrectHexString(short data)
       {
          var abs = (ushort)Math.Abs((int)data);
@@ -362,7 +374,7 @@ namespace Jcd.Utilities.Test.Formatting
       /// Validate that Format Returns correct hex string when given negative int.
       /// </summary>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.NegativeFibonacciiInt32s), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.NegativeFibonacciInt32s), MemberType = typeof(NumericMemberDataProvider))]
       public void Format_WhenGivenNegativeInt32_ReturnsCorrectHexString(int data)
       {
          var abs = (uint)Math.Abs((long)data);
@@ -382,7 +394,7 @@ namespace Jcd.Utilities.Test.Formatting
       /// Validate that Format Returns correct hex string when given negative int.
       /// </summary>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.NegativeFibonacciiInt64s), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.NegativeFibonacciInt64s), MemberType = typeof(NumericMemberDataProvider))]
       public void Format_WhenGivenNegativeInt64_ReturnsCorrectHexString(long data)
       {
          var abs = (ulong)((BigInteger)data * -1);
@@ -402,7 +414,7 @@ namespace Jcd.Utilities.Test.Formatting
       /// Validate that Format Returns correct hex string when given negative int.
       /// </summary>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.NegativeFibonacciiBigIntegers), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.NegativeFibonacciBigIntegers), MemberType = typeof(NumericMemberDataProvider))]
       public void Format_WhenGivenNegativebigInteger_ReturnsCorrectHexString(BigInteger data)
       {
          var abs = data * -1;

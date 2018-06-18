@@ -9,6 +9,9 @@ namespace Jcd.Utilities.Test.Generators
 {
    public class CaptureAndTransitionGeneratorTests
    {
+      /// <summary>
+      /// A helper class that counts from start to end by step.
+      /// </summary>
       public class CounterGenerator : CaptureAndTransitionGenerator<CounterGenerator.State, int>
       {
          public class State {
@@ -27,6 +30,9 @@ namespace Jcd.Utilities.Test.Generators
          {
          }
       }
+      /// <summary>
+      /// A fake generator class intended to trigger base constructor exceptions.
+      /// </summary>
       public class BadGenerator : CaptureAndTransitionGenerator<BadGenerator.State, int>
       {
          public class State
@@ -37,7 +43,6 @@ namespace Jcd.Utilities.Test.Generators
          {
          }
       }
-      //TODO: constructor tests (non-null transition function, null transition function)
 
       /// <summary>
       /// Validate that Constructor throws ArgumentNullException when given a null for the transition function.

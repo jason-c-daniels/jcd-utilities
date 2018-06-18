@@ -15,7 +15,7 @@
     <VersionSuffix Condition="'$(VersionSuffix)' == ''">alpha</VersionSuffix>
     <PackageTags>Validation, Parsing, Formatting, Generator</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageReleaseNotes>A pre-release version. While I will do my best not to upend the world, do not assume the features will remain stable.</PackageReleaseNotes>
     <SignAssembly>false</SignAssembly>
     <DelaySign>false</DelaySign>

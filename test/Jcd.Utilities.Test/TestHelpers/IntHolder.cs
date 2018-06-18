@@ -1,7 +1,10 @@
 ﻿using System;
 
-namespace Jcd.Utilities.Test.Validations
+namespace Jcd.Utilities.Test.TestHelpers
 {
+   /// <summary>
+   /// A helper class that implements IComparable
+   /// </summary>
    public class IntHolder : IComparable<IntHolder>
    {
       #region Public Fields

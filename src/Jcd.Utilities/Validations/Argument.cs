@@ -408,12 +408,28 @@ namespace Jcd.Utilities.Validations
       /// <exception cref="ArgumentException">
       /// If the value is null, or non-whitespace of 1 or more characters.
       /// </exception>
+      /// <exception cref="ArgumentNullException">When value is null</exception>
       public static void IsWhitespaceOrEmpty(string value, string name = null, string message = null)
       {
          IsNotNull(value, name, message);
          Check.PassesAny(new Check.Signature<string>[] { Check.IsWhitespace, Check.IsEmpty }, value,
                          onFailure: () =>
                          RaiseArgumentException(name, message ?? $"Expected {name} to be whitespace or empty."));
+      }
+
+      /// <summary>
+      /// Ensure that the search string (param) contains the target value somewhere within.
+      /// </summary>
+      /// <param name="searchString">The string to search within</param>
+      /// <param name="target">the substring to search for</param>
+      /// <param name="name">The argument name.</param>
+      /// <param name="message">The error message.</param>
+      public static void Contains(string searchString, string target, string name = null, string message = null)
+      {
+         IsNotNull(searchString, name, message);
+         IsNotNull(target, name, "Incorrect validation configuration. The value to check for must be non-null.");
+         Check.Passes(()=> searchString.Contains(target),
+                      onFailure: () => RaiseArgumentException(name, message ?? $"{target} was not found in {name}."));
       }
 
       #endregion string operations
@@ -434,8 +450,7 @@ namespace Jcd.Utilities.Validations
       {
          Check.AreEqual(value, comparison,
                         onFailure: () =>
-                        RaiseArgumentException(name,
-                                               message ?? $"Value for {name} ({value}) is not equal to {comparison}"));
+                        RaiseArgumentException(name, message ?? $"Value for {name} ({value}) is not equal to {comparison}"));
       }
 
       /// <summary>

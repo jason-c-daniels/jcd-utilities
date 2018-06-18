@@ -56,7 +56,6 @@ namespace Jcd.Utilities.Test.Formatting
          #endregion Public Methods
       }
 
-
       /// <summary>
       /// Validate that the Constructor throws an ArgumentException when passing an empty set of handled types.
       /// </summary>

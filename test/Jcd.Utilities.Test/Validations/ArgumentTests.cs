@@ -96,7 +96,6 @@ namespace Jcd.Utilities.Test.Validations
          ValidateArgumentExceptionMessageAndParam(ex, paramName, message, defaultArgumentOutOfRangeMessage);
       }
 
-
       /// <summary>
       /// Validates that when RaiseExpectationViolation is called it raises an ArgumentException with specific verbiage, or a custom message (if provided)
       /// </summary>
@@ -814,6 +813,55 @@ namespace Jcd.Utilities.Test.Validations
          var ex2 = Assert.Throws<ArgumentException>(() => Argument.IsWhitespaceOrEmpty(someWhitespaceString, paramName, message));
          ValidateArgumentExceptionMessageAndParam(ex2, paramName, message, "be whitespace or empty");
       }
+
+      /// <summary>
+      /// Validate that Contains (string) Throws ArgumentException When a character not found in the search string.
+      /// </summary>
+      [Theory]
+      [InlineData("param", null)]
+      [InlineData("param", "message")]
+      [InlineData(null, "message")]
+      [InlineData("", "message")]
+      [InlineData(" ", "message")]
+      public void Contains_StringChar_WhenCharacterNotFound_ThrowsArgumentException(string paramName, string message)
+      {
+         var ex=Assert.Throws<ArgumentException>(()=>Argument.Contains("string", 'c', paramName, message));
+         ValidateArgumentExceptionMessageAndParam(ex, paramName, message, defaultNotFoundInCollectionMessage);
+      }
+
+      /// <summary>
+      /// Validate that Contains does not throw any exception when the search string contains the target character.
+      /// </summary>
+      [Fact]
+      public void Contains_StringChar_WhenSearchStringContainsTarget_DoesNotThrowAnySception()
+      {
+         Argument.Contains("abc", 'c');
+      }
+
+      /// <summary>
+      /// Validate that Contains (string) Throws ArgumentException when a substring is not found in the search string.
+      /// </summary>
+      [Theory]
+      [InlineData("param", null)]
+      [InlineData("param", "message")]
+      [InlineData(null, "message")]
+      [InlineData("", "message")]
+      [InlineData(" ", "message")]
+      public void Contains_Substring_WhenCharacterNotFound_ThrowsArgumentException(string paramName, string message)
+      {
+         var ex = Assert.Throws<ArgumentException>(() => Argument.Contains("string", "c", paramName, message));
+         ValidateArgumentExceptionMessageAndParam(ex, paramName, message, defaultNotFoundInCollectionMessage);
+      }
+
+      /// <summary>
+      /// Validate that Contains does not throw any exception when the search string contains the target substring.
+      /// </summary>
+      [Fact]
+      public void Contains_Substring_WhenSearchStringContainsTarget_DoesNotThrowAnyException()
+      {
+         Argument.Contains("abc", "c");
+      }
+
 
       #endregion string operations
 

@@ -866,6 +866,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that IsNotEmpty returns false when given an empty string.
+      /// </summary>
       [Fact]
       public void IsNotEmpty_WhenGivenEmptyString_ReturnsFalse()
       {
@@ -876,8 +879,11 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that IsNotEmpty returns true when given a non-empty string.
+      /// </summary>
       [Fact]
-      public void IsNotEmpty_WhenGivenNonEmptyString_ReturnsFalse()
+      public void IsNotEmpty_WhenGivenNonEmptyString_ReturnsTrue()
       {
          var onFailureCalled = false;
          var onSuccessCalled = false;
@@ -886,6 +892,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that IsNotEmpty returns true when given a null string.
+      /// </summary>
       [Fact]
       public void IsNotEmpty_WhenGivenNullString_ReturnsTrue()
       {
@@ -896,6 +905,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that IsNotNUll returns true when given a non-null object.
+      /// </summary>
       [Fact]
       public void IsNotNull_WhenGivenAnObject_ReturnsTrue()
       {
@@ -913,6 +925,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that IsNotNull returns false when given a null.
+      /// </summary>
       [Fact]
       public void IsNotNull_WhenGivenNull_ReturnsFalse()
       {
@@ -930,6 +945,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that IsNull returns false when given an object.
+      /// </summary>
       [Fact]
       public void IsNull_WhenGivenAnObject_ReturnsFalse()
       {
@@ -947,6 +965,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that IsNull returns true when given a null.
+      /// </summary>
       [Fact]
       public void IsNull_WhenGivenNull_ReturnsTrue()
       {
@@ -964,8 +985,11 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that IsTrue returns false when given a false.
+      /// </summary>
       [Fact]
-      public void IsTrue_WhenGivenFalse_ReturnsFalseAndOnFailureCalled()
+      public void IsTrue_WhenGivenFalse_ReturnsFalse()
       {
          var onFailureCalled = false;
          var onSuccessCalled = false;
@@ -980,8 +1004,11 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that IsTrue returns true when given a true.
+      /// </summary>
       [Fact]
-      public void IsTrue_WhenGivenTrue_ReturnsTrueAndOnSuccessCalled()
+      public void IsTrue_WhenGivenTrue_ReturnsTrue()
       {
          var onFailureCalled = false;
          var onSuccessCalled = false;
@@ -996,6 +1023,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that NotInRange returns true when given a value greater than max or less than min.
+      /// </summary>
       [Fact]
       public void NotInRange_ValueIsNotInRange_ReturnsTrue()
       {
@@ -1011,6 +1041,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that NotInRange throws ArgumentNullException when any argument is null.
+      /// </summary>
       [Fact]
       public void NotInRange_WhenGivenNullArgs_ThrowsArgumentNullException()
       {
@@ -1033,8 +1066,11 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that NotInRange returns false when the argument is within the range
+      /// </summary>
       [Fact]
-      public void NotInRange_WhenValueIsNotInRange_ReturnsFalse()
+      public void NotInRange_WhenValueIsInRange_ReturnsFalse()
       {
          var onFailureCalled = false;
          var onSuccessCalled = false;
@@ -1042,6 +1078,7 @@ namespace Jcd.Utilities.Test.Validations
          Assert.True(onFailureCalled, "onFailure was not called when it was expected to be called.");
          Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
       }
+
 
       [Fact]
       public void Passes_T_WhenDelegateIsNull_ThrowsArgumentNullException()

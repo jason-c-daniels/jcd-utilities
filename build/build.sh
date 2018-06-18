@@ -1,5 +1,6 @@
 #!/bin/bash
 set -xe # fail on any error
+#echo "current branch: $(git rev-parse --abbrev-ref HEAD)"
 
 #TODO: Comment the heck out of this file!
 
@@ -113,7 +114,7 @@ main() {
         rm tools/git-ver*
     fi
     mkdir -p $TOOLS_DIR
-    curl https://codeload.github.com/jason-c-daniels/git-ver/zip/v0.0.2-beta > git-ver.zip
+    curl https://codeload.github.com/jason-c-daniels/git-ver/zip/v0.0.2-beta%2Br1 > git-ver.zip
     unzip -jo git-ver.zip "**/git-ver*" -d ./tools
     export PATH="$TOOLS_DIR":$PATH
     chmod u+x "./tools/git-ver"
@@ -122,7 +123,7 @@ main() {
 	# capture the version information for the build.    
     if [ -z ${Configuration+x} ]; then Configuration="Release"; fi
     if [ -z ${VersionPrefix+x} ]; then VersionPrefix=$(git-ver get-version); fi
-    if [ -z ${VersionSuffix+x} ]; then VersionSuffix=$(git-ver get-suffix -d); fi
+    if [ -z ${VersionSuffix+x} ]; then VersionSuffix=$(git-ver get-suffix); fi
     if [ -z ${Version+x} ]; then 
         # do nothing this is exactly what we want.
         echo "Version was not set"
@@ -130,7 +131,9 @@ main() {
         echo unsetting Version, using VersionPrefix and VersionSuffix instead
         unset -v Version
     fi
-    export SemanticVersion="$(git-ver get-semver -d)"
+    which git-ver
+    export SemanticVersion="$(git-ver get-semver)"
+    echo "$SemanticVersion"
     
     # set the default build configuration to Release, unless already set.
     export Configuration

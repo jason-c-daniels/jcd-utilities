@@ -10,11 +10,27 @@ namespace Jcd.Utilities.Test.Validations
    {
       private static readonly Check.Signature<int> NullDelegate = null;
 
+      /// <summary>
+      /// A helper delegate that always returns false.
+      /// </summary>
+      /// <typeparam name="T"></typeparam>
+      /// <param name="value"></param>
+      /// <param name="onSuccess"></param>
+      /// <param name="onFailure"></param>
+      /// <returns></returns>
       private static bool FalseDelegate<T>(T value, Action onSuccess = null, Action onFailure = null)
       {
          return false;
       }
 
+      /// <summary>
+      /// A helper delegate that always returns true
+      /// </summary>
+      /// <typeparam name="T"></typeparam>
+      /// <param name="value"></param>
+      /// <param name="onSuccess"></param>
+      /// <param name="onFailure"></param>
+      /// <returns></returns>
       private static bool TrueDelegate<T>(T value, Action onSuccess = null, Action onFailure = null)
       {
          return true;
@@ -1079,7 +1095,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
       }
 
-
+      /// <summary>
+      /// Validate that Passes&lt;T&gt; throws an ArgumentNullException when the delegate to execute is null.
+      /// </summary>
       [Fact]
       public void Passes_T_WhenDelegateIsNull_ThrowsArgumentNullException()
       {
@@ -1091,6 +1109,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been.");
       }
 
+      /// <summary>
+      /// Validate that Passes&lt;T&gt; returns false when the delegate returns false.
+      /// </summary>
       [Fact]
       public void Passes_T_WhenDelegateReturnsFalse_ReturnsFalse()
       {
@@ -1102,6 +1123,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that Passes&lt;T&gt; returns true when the delegate returns true
+      /// </summary>
       [Fact]
       public void Passes_T_WhenDelegateReturnsTrue_ReturnsTrue()
       {
@@ -1119,6 +1143,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that Passes throws an ArgumentNullException when the delegate to execute is null.
+      /// </summary>
       [Fact]
       public void Passes_WhenDelegateIsNull_ThrowsArgumentNullException()
       {
@@ -1130,6 +1157,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been.");
       }
 
+      /// <summary>
+      /// Validate that Passes returns false when the delegate returns false
+      /// </summary>
       [Fact]
       public void Passes_WhenDelegateReturnsFalse_ReturnsFalse()
       {
@@ -1140,6 +1170,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that Passes returns true when the delegate returns true
+      /// </summary>
       [Fact]
       public void Passes_WhenDelegateReturnsTrue_ReturnsTrue()
       {
@@ -1156,6 +1189,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that PassesAll returns true when the all delegates returns true
+      /// </summary>
       [Fact]
       public void PassesAll_WhenAllDelegatesReturnTrue_ReturnsTrue()
       {
@@ -1167,6 +1203,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that PassesAll throws an ArgumentNullException when the delegate list is null
+      /// </summary>
       [Fact]
       public void PassesAll_WhenDelegateListIsNull_ThrowsArgumentNullException()
       {
@@ -1178,8 +1217,11 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been.");
       }
 
+      /// <summary>
+      /// Validate that PassesAll throws an ArgumentNullException when a single delegate in the list of delegates is null
+      /// </summary>
       [Fact]
-      public void PassesAll_WhenFirstDelegateIsNull_ThrowsArgumentNullException()
+      public void PassesAll_WhenADelegateInTheListIsNull_ThrowsArgumentNullException()
       {
          var onFailureCalled = false;
          var onSuccessCalled = false;
@@ -1190,6 +1232,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been.");
       }
 
+      /// <summary>
+      /// Validate that PassesAll returns false when one delegate in the list returns false.
+      /// </summary>
       [Fact]
       public void PassesAll_WhenOneDelegateReturnsFalse_ReturnsFalse()
       {
@@ -1201,6 +1246,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that PassesAny returns false when all delegates in the list return false.
+      /// </summary>
       [Fact]
       public void PassesAny_WhenAllDelegatesReturnFalse_ReturnsFalse()
       {
@@ -1212,6 +1260,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that PassesAny returns true when any delegates in the list returns true.
+      /// </summary>
       [Fact]
       public void PassesAny_WhenAllDelegatesReturnTrue_ReturnsTrue()
       {
@@ -1223,6 +1274,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that PassesAny thros a NullArgumentException when the delegate list is null
+      /// </summary>
       [Fact]
       public void PassesAny_WhenDelegateListIsNull_ThrowsArgumentNullException()
       {
@@ -1234,6 +1288,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been.");
       }
 
+      /// <summary>
+      /// Validate that PassesAny throws a NullArgumentException when the a delegate in the list of delegates is null
+      /// </summary>
       [Fact]
       public void PassesAny_WhenFirstDelegateIsNull_ThrowsArgumentNullException()
       {
@@ -1247,6 +1304,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been.");
       }
 
+      /// <summary>
+      /// Validate that PassesAny returns true when one delegate in the list returns true.
+      /// </summary>
       [Fact]
       public void PassesAny_WhenOneDelegateReturnsTrue_ReturnsTrue()
       {
@@ -1258,6 +1318,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that IsWhitespace returns false when given non-whitespace.
+      /// </summary>
       [Theory]
       [InlineData("")]
       [InlineData(null)]
@@ -1277,6 +1340,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onSuccessCalled, "onSuccess was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that IsWhitespace returns true when given non-whitespace.
+      /// </summary>
       [Fact]
       public void IsWhitespace_WhenGivenWhitespace_ReturnsTrueAndOnSuccessCalled()
       {
@@ -1293,10 +1359,14 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that IsNotWhitespace returns true when given non-whitespace which includes null, empty string and non-zero text which contains non-whitespace characters).
+      /// </summary>
       [Theory]
       [InlineData("")]
       [InlineData(null)]
       [InlineData("abc")]
+      [InlineData(" abc\r\n\t")]
       public void IsNotWhitespace_WhenGivenNonWhitespace_ReturnsTrueAndOnSuccessCalled(string data)
       {
          var onFailureCalled = false;
@@ -1312,6 +1382,9 @@ namespace Jcd.Utilities.Test.Validations
          Assert.False(onFailureCalled, "onFailure was called when it shouldn't have been");
       }
 
+      /// <summary>
+      /// Validate that IsNotWhitespace returns false when given non-empty all whitespace.
+      /// </summary>
       [Fact]
       public void IsNotWhitespace_WhenGivenWhitespace_ReturnsFalseAndOnFailureCalled()
       {

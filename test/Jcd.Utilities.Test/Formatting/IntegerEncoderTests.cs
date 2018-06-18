@@ -15,6 +15,10 @@ namespace Jcd.Utilities.Test.Formatting
 
       #region CrockFordEncoder and Hex Tests
 
+      /// <summary>
+      /// Performs a round trip (endcode, decode) using the CrockfordEncoder encoder on the provided sample data, as BigIntegers. The encoded and decoded values must match in order to pass.
+      /// </summary>
+      /// <param name="number">The number to encode, then decode</param>
       [Theory]
       [MemberData(nameof(NumericMemberDataProvider.Bytes), MemberType = typeof(NumericMemberDataProvider))]
       [MemberData(nameof(NumericMemberDataProvider.UInt16s), MemberType = typeof(NumericMemberDataProvider))]
@@ -25,7 +29,7 @@ namespace Jcd.Utilities.Test.Formatting
       [MemberData(nameof(NumericMemberDataProvider.Int32s), MemberType = typeof(NumericMemberDataProvider))]
       [MemberData(nameof(NumericMemberDataProvider.Int64s), MemberType = typeof(NumericMemberDataProvider))]
       [MemberData(nameof(NumericMemberDataProvider.BigIntegers), MemberType = typeof(NumericMemberDataProvider))]
-      public void CrockFordEncoder_BigIntegerRoundTrip_ExpectValuesMatch(object number)
+      public void CrockfordEncoder_BigIntegerRoundTrip_ExpectValuesMatch(object number)
       {
          var encoder = IntegerEncoders.Base32_Crockford;
 
@@ -51,6 +55,10 @@ namespace Jcd.Utilities.Test.Formatting
          }
       }
 
+      /// <summary>
+      /// Performs a round trip (endcode, decode) using the Hexadecimal encoder on the provided sample data, as BigIntegers. The encoded and decoded values must match in order to pass.
+      /// </summary>
+      /// <param name="number">The number to encode, then decode</param>
       [Theory]
       [MemberData(nameof(NumericMemberDataProvider.Bytes), MemberType = typeof(NumericMemberDataProvider))]
       [MemberData(nameof(NumericMemberDataProvider.UInt16s), MemberType = typeof(NumericMemberDataProvider))]
@@ -95,6 +103,10 @@ namespace Jcd.Utilities.Test.Formatting
          }
       }
 
+      /// <summary>
+      /// Performs a round trip (endcode, decode) using the Hexadecimal encoder on the provided sample data, as Int64. The encoded and decoded values must match in order to pass.
+      /// </summary>
+      /// <param name="number">The number to encode, then decode</param>
       [Theory]
       [MemberData(nameof(NumericMemberDataProvider.Bytes), MemberType = typeof(NumericMemberDataProvider))]
       [MemberData(nameof(NumericMemberDataProvider.UInt16s), MemberType = typeof(NumericMemberDataProvider))]
@@ -104,7 +116,7 @@ namespace Jcd.Utilities.Test.Formatting
       [MemberData(nameof(NumericMemberDataProvider.Int16s), MemberType = typeof(NumericMemberDataProvider))]
       [MemberData(nameof(NumericMemberDataProvider.Int32s), MemberType = typeof(NumericMemberDataProvider))]
       [MemberData(nameof(NumericMemberDataProvider.Int64s), MemberType = typeof(NumericMemberDataProvider))]
-      public void CrockFordEncoder_Int64RoundTrip_ExpectValuesMatch(object number)
+      public void CrockfordEncoder_Int64RoundTrip_ExpectValuesMatch(object number)
       {
          var encoder = IntegerEncoders.Base32_Crockford;
 

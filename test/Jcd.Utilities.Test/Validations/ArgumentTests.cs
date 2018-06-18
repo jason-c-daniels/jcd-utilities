@@ -862,7 +862,6 @@ namespace Jcd.Utilities.Test.Validations
          Argument.Contains("abc", "c");
       }
 
-
       #endregion string operations
 
       #region range and relational operations

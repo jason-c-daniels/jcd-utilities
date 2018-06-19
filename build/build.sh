@@ -100,7 +100,6 @@ export BUILD_CLEAN
 main() {
     echo $BUILD_CLEAN "clean"
     echo $BUILD_SOURCE "source"
-    #TODO: nix GitVersion, it's only good on Windows. Find some other way to do it.
 
     # determine the location this script is running from.
     DIR=$(get_script_dir)

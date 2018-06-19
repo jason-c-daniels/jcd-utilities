@@ -156,7 +156,7 @@ namespace Jcd.Utilities
       ///     If the text is empty or whitespace.
       /// </exception>
       /// <exception cref="OverflowException">
-      ///     If the text cannot be parse because the resultant value can't be stored in an UInt32
+      ///     If the text cannot be parse because the resultant value can't be stored in an UInt64
       /// </exception>
       /// <exception cref="ArgumentOutOfRangeException">
       ///     If the provided characters cannot be decoded per the current encoding..

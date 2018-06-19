@@ -8,7 +8,7 @@ using Jcd.Utilities.Validations;
 namespace Jcd.Utilities
 {
    /// <summary>
-   ///     A class that will perform integer encoding to text in an arbitrary base, as well as parsing
+   ///     A class that performs integer encoding to text in an arbitrary base, as well as parsing
    ///     text encoded in the same manner.
    /// </summary>
    public class IntegerEncoder : CustomFormatterBase, IIntegerFormatter, IIntegerParser
@@ -364,7 +364,6 @@ namespace Jcd.Utilities
             value = value.ToLowerInvariant();
          }
 
-         //TODO: Check for over/underflow
          var result = (BigInteger) 0;
          var isNeg = value[0] == '-';
          var digits = ExtractCoreDigits(value);
@@ -393,7 +392,6 @@ namespace Jcd.Utilities
             value = value.ToLowerInvariant();
          }
 
-         //TODO: Check for over/underflow
          var result = (byte) 0;
 
          if (value[0] == '-')
@@ -404,6 +402,7 @@ namespace Jcd.Utilities
          var digits = ExtractCoreDigits(value);
 
          foreach (var digit in digits)
+            checked
          {
             result *= (byte) Base;
 
@@ -412,9 +411,8 @@ namespace Jcd.Utilities
                throw new ArgumentOutOfRangeException($"{digit} cannont be decoded.");
             }
 
-            result += (byte) charToValue[digit];
+            result += (byte)charToValue[digit];
          }
-
          return result;
       }
 
@@ -427,12 +425,12 @@ namespace Jcd.Utilities
             value = value.ToLowerInvariant();
          }
 
-         //TODO: Check for over/underflow
          var result = (short) 0;
          var isNeg = value[0] == '-' ? (short) -1 : (short) 1;
          var digits = ExtractCoreDigits(value);
 
          foreach (var digit in digits)
+            checked
          {
             result *= (short) Base;
 
@@ -443,7 +441,6 @@ namespace Jcd.Utilities
 
             result += (short)(charToValue[digit] * isNeg);
          }
-
          return result;
       }
 
@@ -456,12 +453,12 @@ namespace Jcd.Utilities
             value = value.ToLowerInvariant();
          }
 
-         //TODO: Check for over/underflow
          var result = 0;
          var isNeg = value[0] == '-' ? -1 : 1;
          var digits = ExtractCoreDigits(value);
 
          foreach (var digit in digits)
+            checked
          {
             result *= Base;
 
@@ -472,7 +469,6 @@ namespace Jcd.Utilities
 
             result += charToValue[digit] * isNeg;
          }
-
          return result;
       }
 
@@ -485,12 +481,12 @@ namespace Jcd.Utilities
             value = value.ToLowerInvariant();
          }
 
-         //TODO: Check for over/underflow
          var result = (long) 0;
          long isNeg = value[0] == '-' ? -1 : 1;
          var digits = ExtractCoreDigits(value);
 
          foreach (var digit in digits)
+            checked
          {
             result *= Base;
 
@@ -501,7 +497,6 @@ namespace Jcd.Utilities
 
             result += charToValue[digit] * isNeg;
          }
-
          return result;
       }
 
@@ -514,14 +509,14 @@ namespace Jcd.Utilities
             value = value.ToLowerInvariant();
          }
 
-         //TODO: Check for over/underflow
          var result = (sbyte) 0;
          var isNeg = (sbyte)(value[0] == '-' ? -1 : 1);
          var digits = ExtractCoreDigits(value);
 
          foreach (var digit in digits)
+            checked
          {
-            result *= (sbyte) Base;
+            result *= (sbyte)Base;
 
             if (!charToValue.ContainsKey(digit))
             {
@@ -530,7 +525,6 @@ namespace Jcd.Utilities
 
             result += (sbyte)(charToValue[digit] * isNeg);
          }
-
          return result;
       }
 
@@ -543,7 +537,6 @@ namespace Jcd.Utilities
             value = value.ToLowerInvariant();
          }
 
-         //TODO: Check for over/underflow
          var result = (ushort) 0;
 
          if (value[0] == '-') {
@@ -553,6 +546,7 @@ namespace Jcd.Utilities
          var digits = ExtractCoreDigits(value);
 
          foreach (var digit in digits)
+            checked
          {
             result *= Base;
 
@@ -561,9 +555,8 @@ namespace Jcd.Utilities
                throw new ArgumentOutOfRangeException($"{digit} cannont be decoded.");
             }
 
-            result += (ushort) charToValue[digit];
+            result += (ushort)charToValue[digit];
          }
-
          return result;
       }
 
@@ -576,7 +569,6 @@ namespace Jcd.Utilities
             value = value.ToLowerInvariant();
          }
 
-         //TODO: Check for over/underflow
          var result = (uint) 0;
 
          if (value[0] == '-') {
@@ -586,6 +578,7 @@ namespace Jcd.Utilities
          var digits = ExtractCoreDigits(value);
 
          foreach (var digit in digits)
+            checked
          {
             result *= Base;
 
@@ -596,7 +589,6 @@ namespace Jcd.Utilities
 
             result += (uint) charToValue[digit];
          }
-
          return result;
       }
 
@@ -609,7 +601,6 @@ namespace Jcd.Utilities
             value = value.ToLowerInvariant();
          }
 
-         //TODO: Check for over/underflow
          var result = (ulong) 0;
 
          if (value[0] == '-') {
@@ -619,6 +610,7 @@ namespace Jcd.Utilities
          var digits = ExtractCoreDigits(value);
 
          foreach (var digit in digits)
+            checked
          {
             result *= Base;
 
@@ -629,7 +621,6 @@ namespace Jcd.Utilities
 
             result += (ulong) charToValue[digit];
          }
-
          return result;
       }
 

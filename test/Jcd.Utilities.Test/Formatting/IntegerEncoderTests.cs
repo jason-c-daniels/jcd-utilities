@@ -550,6 +550,119 @@ namespace Jcd.Utilities.Test.Formatting
          Assert.Throws<ArgumentException>(() => IntegerEncoders.Decimal.ParseByte(NegativeDecimal));
       }
 
+      /// <summary>
+      /// Validate that ParseSByte throws an OverflowException when given too large or small of a value.
+      /// </summary>
+      [Fact]
+      public void ParseSByte_WhenGivenTooExtremeOfAValue_ThrowsOverflowException()
+      {
+         Assert.Throws<OverflowException>(() => IntegerEncoders.Hexadecimal.ParseSByte(IntegerEncoders.Hexadecimal.Format(
+                                             int.MinValue)));
+         Assert.Throws<OverflowException>(() => IntegerEncoders.Hexadecimal.ParseSByte(IntegerEncoders.Hexadecimal.Format(
+                                             int.MaxValue)));
+         Assert.Throws<OverflowException>(() => IntegerEncoders.Hexadecimal.ParseSByte(IntegerEncoders.Hexadecimal.Format(
+                                             sbyte.MinValue - (int)1)));
+         Assert.Throws<OverflowException>(() => IntegerEncoders.Hexadecimal.ParseSByte(IntegerEncoders.Hexadecimal.Format(
+                                             (int)sbyte.MaxValue + (int)1)));
+      }
+
+      /// <summary>
+      /// Validate that ParseByte throws an OverflowException when given too large or small of a value.
+      /// </summary>
+      [Fact]
+      public void ParseByte_WhenGivenTooLargeOfAValue_ThrowsOverflowException()
+      {
+         Assert.Throws<OverflowException>(() => IntegerEncoders.Hexadecimal.ParseByte(IntegerEncoders.Hexadecimal.Format(byte.MaxValue+
+                                          (int)1)));
+         Assert.Throws<OverflowException>(() => IntegerEncoders.Hexadecimal.ParseByte(IntegerEncoders.Hexadecimal.Format(int.MaxValue)));
+      }
+
+      /// <summary>
+      /// Validate that ParseInt16 throws an OverflowException when given too large or small of a value.
+      /// </summary>
+      [Fact]
+      public void ParseInt16_WhenGivenTooExtremeOfAValue_ThrowsOverflowException()
+      {
+         Assert.Throws<OverflowException>(() => IntegerEncoders.Hexadecimal.ParseInt16(IntegerEncoders.Hexadecimal.Format(
+                                             int.MinValue)));
+         Assert.Throws<OverflowException>(() => IntegerEncoders.Hexadecimal.ParseInt16(IntegerEncoders.Hexadecimal.Format(
+                                             int.MaxValue)));
+         Assert.Throws<OverflowException>(() => IntegerEncoders.Hexadecimal.ParseInt16(IntegerEncoders.Hexadecimal.Format(
+                                             Int16.MinValue - (int)1)));
+         Assert.Throws<OverflowException>(() => IntegerEncoders.Hexadecimal.ParseInt16(IntegerEncoders.Hexadecimal.Format(
+                                             Int16.MaxValue + (int)1)));
+      }
+
+      /// <summary>
+      /// Validate that ParseUInt16 throws an OverflowException when given too large or small of a value.
+      /// </summary>
+      [Fact]
+      public void ParseUInt16_WhenGivenTooLargeOfAValue_ThrowsOverflowException()
+      {
+         Assert.Throws<OverflowException>(() => IntegerEncoders.Hexadecimal.ParseUInt16(IntegerEncoders.Hexadecimal.Format(
+                                             UInt16.MaxValue+(int)1)));
+         Assert.Throws<OverflowException>(() => IntegerEncoders.Hexadecimal.ParseUInt16(IntegerEncoders.Hexadecimal.Format(
+                                             int.MaxValue)));
+      }
+
+      /// <summary>
+      /// Validate that ParseInt32 throws an OverflowException when given too large or small of a value.
+      /// </summary>
+      [Fact]
+      public void ParseInt32_WhenGivenTooExtremeOfAValue_ThrowsOverflowException()
+      {
+         Assert.Throws<OverflowException>(() => IntegerEncoders.Hexadecimal.ParseInt32(IntegerEncoders.Hexadecimal.Format(
+                                             long.MinValue)));
+         Assert.Throws<OverflowException>(() => IntegerEncoders.Hexadecimal.ParseInt32(IntegerEncoders.Hexadecimal.Format(
+                                             long.MaxValue)));
+         Assert.Throws<OverflowException>(() => IntegerEncoders.Hexadecimal.ParseInt16(IntegerEncoders.Hexadecimal.Format(
+                                             Int32.MinValue - (long)1)));
+         Assert.Throws<OverflowException>(() => IntegerEncoders.Hexadecimal.ParseInt16(IntegerEncoders.Hexadecimal.Format(
+                                             Int32.MaxValue + (long)1)));
+      }
+
+      /// <summary>
+      /// Validate that ParseUInt32 throws an OverflowException when given too large or small of a value.
+      /// </summary>
+      [Fact]
+      public void ParseUInt32_WhenGivenTooLargeOfAValue_ThrowsOverflowException()
+      {
+         Assert.Throws<OverflowException>(() => IntegerEncoders.Hexadecimal.ParseUInt16(IntegerEncoders.Hexadecimal.Format(
+                                             UInt32.MaxValue + (long)1)));
+         Assert.Throws<OverflowException>(() => IntegerEncoders.Hexadecimal.ParseUInt32(IntegerEncoders.Hexadecimal.Format(
+                                             ulong.MaxValue)));
+      }
+
+      /// <summary>
+      /// Validate that ParseInt64 throws an OverflowException when given too large or small of a value.
+      /// </summary>
+      [Fact]
+      public void ParseInt64_WhenGivenTooExtremeOfAValue_ThrowsOverflowException()
+      {
+         Assert.Throws<OverflowException>(() => IntegerEncoders.Hexadecimal.ParseInt64(IntegerEncoders.Hexadecimal.Format(
+                                             long.MinValue - (BigInteger)1)));
+         Assert.Throws<OverflowException>(() => IntegerEncoders.Hexadecimal.ParseInt64(IntegerEncoders.Hexadecimal.Format(
+                                             long.MaxValue + (BigInteger)1)));
+         Assert.Throws<OverflowException>(() => IntegerEncoders.Hexadecimal.ParseInt64(IntegerEncoders.Hexadecimal.Format(
+                                             long.MinValue * (BigInteger)2)));
+         Assert.Throws<OverflowException>(() => IntegerEncoders.Hexadecimal.ParseInt64(IntegerEncoders.Hexadecimal.Format(
+                                             long.MaxValue * (BigInteger)2)));
+      }
+
+      /// <summary>
+      /// Validate that ParseUInt64 throws an OverflowException when given too large or small of a value.
+      /// </summary>
+      [Fact]
+      public void ParseUInt64_WhenGivenTooLargeOfAValue_ThrowsOverflowException()
+      {
+         BigInteger overflow = ulong.MaxValue;
+         overflow *= 2;
+         var oft = IntegerEncoders.Hexadecimal.Format(overflow);
+         var oft2 = overflow.ToString("X");
+         Assert.Throws<OverflowException>(() => IntegerEncoders.Hexadecimal.ParseUInt64(oft));
+         Assert.Throws<OverflowException>(() => IntegerEncoders.Hexadecimal.ParseUInt64(IntegerEncoders.Hexadecimal.Format(
+                                             (BigInteger)ulong.MaxValue + (BigInteger)1)));
+      }
       #endregion
 
       #region TryParse tests

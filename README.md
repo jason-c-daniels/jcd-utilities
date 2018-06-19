@@ -7,7 +7,7 @@ just to humor myself.
 
 Source | Alpha | Beta | RC | Release
 --- |:---: | :---: | :---: | :---:
-MyGet| ![MyGet](https://img.shields.io/myget/jason-c-daniels-alpha/v/Jcd.Utilities.svg) | ![MyGet](https://img.shields.io/myget/jason-c-daniels-beta/v/Jcd.Utilities.svg) | ![MyGet](https://img.shields.io/myget/jason-c-daniels-rc/v/Jcd.Utilities.svg) | ![MyGet](https://img.shields.io/myget/jason-c-daniels/v/Jcd.Utilities.svg)
+MyGet| [![MyGet](https://img.shields.io/myget/jason-c-daniels-alpha/v/Jcd.Utilities.svg)](https://www.myget.org/feed/Details/jason-c-daniels-alpha) | [![MyGet](https://img.shields.io/myget/jason-c-daniels-beta/v/Jcd.Utilities.svg)](https://www.myget.org/feed/Details/jason-c-daniels-beta) | [![MyGet](https://img.shields.io/myget/jason-c-daniels-rc/v/Jcd.Utilities.svg)](https://www.myget.org/feed/Details/jason-c-daniels-rc) | [![MyGet](https://img.shields.io/myget/jason-c-daniels/v/Jcd.Utilities.svg)](https://www.myget.org/feed/Details/jason-c-daniels)
 NuGet | N/A | N/A | N/A | Coming Soon!
 
 

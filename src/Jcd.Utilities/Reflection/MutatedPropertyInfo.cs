@@ -21,26 +21,19 @@ namespace Jcd.Utilities.Reflection
 
       public Dictionary<string, object> Mutations { get; } = new Dictionary<string, object>();
 
-      public override PropertyAttributes Attributes => Original.Attributes;
+      public override PropertyAttributes Attributes => Mutation(nameof(Attributes), () => Original.Attributes);
 
       public override bool CanRead => Original.CanRead;
 
       public override bool CanWrite => Original.CanWrite;
 
-      public override Type PropertyType => Original.PropertyType;
+      public override Type PropertyType => Mutation(nameof(PropertyType), () => Original.PropertyType);
 
-      public override Type DeclaringType => Original.DeclaringType;
+      public override Type DeclaringType => Mutation(nameof(DeclaringType), () => Original.DeclaringType);
 
-      public override string Name
-      {
-         get
-         {
-            if (Mutations.ContainsKey("Name")) return (string)Mutations["Name"];
-            return Original.Name;
-         }
-      }
+      public override string Name => Mutation(nameof(Name), () => Original.Name);
 
-      public override Type ReflectedType => Original.ReflectedType;
+      public override Type ReflectedType => Mutation(nameof(ReflectedType), () => Original.ReflectedType);
 
       public override MethodInfo[] GetAccessors(bool nonPublic)
       {
@@ -85,6 +78,27 @@ namespace Jcd.Utilities.Reflection
       public override void SetValue(object obj, object value, BindingFlags invokeAttr, Binder binder, object[] index, CultureInfo culture)
       {
          Original.SetValue(obj, value, invokeAttr, binder, index, culture);
+      }
+
+      public void Mutate<T>(string propName, T val)
+      {
+         Argument.IsTrue(GetMutablePropertyType(propName) == typeof(T), nameof(propName), $"{propName} is not of type {typeof(T)}");
+         if (!Mutations.ContainsKey(propName))
+            Mutations.Add(propName, val);
+         else
+            Mutations[propName] = val;
+      }
+
+      private T Mutation<T>(string propName, Func<T> original = null)
+      {
+         if (Mutations.ContainsKey(propName)) return (T)Mutations[propName];
+         if (original != null) return original();
+         return default(T);
+      }
+
+      Type GetMutablePropertyType(string propName)
+      {
+         return typeof(MutatedPropertyInfo).GetProperty(propName).PropertyType;
       }
    }
 }

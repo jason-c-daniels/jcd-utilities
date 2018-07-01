@@ -114,12 +114,13 @@ main() {
         rm tools/git-ver*
     fi
     mkdir -p $TOOLS_DIR
-    curl https://codeload.github.com/jason-c-daniels/git-ver/zip/v0.0.2-beta%2Br1 > git-ver.zip
+    curl https://codeload.github.com/jason-c-daniels/git-ver/zip/v0.1.1-alpha > git-ver.zip
     unzip -jo git-ver.zip "**/git-ver*" -d ./tools
     export PATH="$TOOLS_DIR":$PATH
     chmod u+x "./tools/git-ver"
     rm ./git-ver.zip
 
+    which git-ver
 	# capture the version information for the build.    
     if [ -z ${Configuration+x} ]; then Configuration="Release"; fi
     if [ -z ${VersionPrefix+x} ]; then VersionPrefix=$(git-ver get-version); fi
@@ -131,7 +132,6 @@ main() {
         echo unsetting Version, using VersionPrefix and VersionSuffix instead
         unset -v Version
     fi
-    which git-ver
     export SemanticVersion="$(git-ver get-semver)"
     echo "$SemanticVersion"
     
@@ -252,17 +252,7 @@ get_prefix() {
 
 get_suffix() {
     # local system defaults. These are overridden by appveyor
-    local rev=$(git-ver get-rev)
-    local suffix="$(git rev-parse --symbolic --tags | sort -i | tail -1 | sed -e 's/\(.*\)\([-]\)\(.*\)/\3/').$rev"
-    local branch_type=$(git rev-parse --abbrev-ref HEAD | sed -e 's/\(develop\|master\|feature\)\(.*\)$/\1/')
-    if [[ "$APPVEYOR" == "true" ]]; then
-        rev=$APPVEYOR_PULL_REQUEST_NUMBER
-    fi
-
-    if [[ "$branch_type" == "master" ]]; then suffix=""; fi
-    if [[ "$branch_type" == "develop" ]]; then suffix="rc.$rev"; fi
-    if [[ "$branch_type" == "feature" ]]; then suffix="pre.$rev"; fi
-
+    local suffix="$(git-ver get-suffix -r)"
 
     echo $suffix
 }

@@ -1,11 +1,26 @@
 ﻿using Jcd.Utilities.Generators;
+using Jcd.Utilities.Reflection;
 using Jcd.Utilities.Samples.ConsoleApp.Generators;
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 
 namespace Jcd.Utilities.Samples.ConsoleApp
 {
+   public enum OpinionType
+   {
+      ILikeLlamas,
+      IDontMindLlamas,
+      DonkeysRule,
+      WhatTimeIsIt
+   }
+   public class Foo
+   {
+      public string Name { get; set; } = "A Name";
+      public string Address { get; set; } = "An Address";
+      public OpinionType Opinion { get; set; } = OpinionType.ILikeLlamas;
+   }
    internal class Program
    {
       private static void Main(string[] args)
@@ -33,6 +48,16 @@ namespace Jcd.Utilities.Samples.ConsoleApp
                         || (state.step > 0 && state.current <= state.stop); // handle counting up.
             return result;
          });
+
+         var aaa = new { Foo="a", Zoo=5, Blue=ConsoleColor.Green};
+         var props = aaa.GetType().EnumerateProperties().ToList();
+         var props1 = props.ToPropertyInfoValuePairs(aaa).ToList();
+         var props2 = props1.ToNameValuePairs().ToList();
+         var dt = IntegerEncoders.Base32_Crockford.ToDictionaryTree();
+         //aaa = new Foo { Opinion = OpinionType.IDontMindLlamas };
+         //dt = aaa.ToDictionaryTree();
+
+         int xx = 0;
 
          foreach (var k in numberGenerator)
          {
@@ -85,6 +110,7 @@ namespace Jcd.Utilities.Samples.ConsoleApp
          var iedp = sw.ElapsedMilliseconds;
          Console.WriteLine($"{snum} : int.Parse: {ip}   Decimal.ParseInt32: {iedp}");
          Console.ReadKey();
+
       }
    }
 }

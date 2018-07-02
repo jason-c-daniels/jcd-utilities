@@ -132,6 +132,16 @@ namespace Jcd.Utilities
          }
       }
 
+      public IntegerEncoder(ushort @base, bool caseSensitive, string characterSet, bool characterSetValuesAlwaysIncrease, Dictionary<char, int> charToValue)
+         : base(formattableTypes, Format)
+      {
+         Base = @base;
+         CaseSensitive = caseSensitive;
+         CharacterSet = characterSet ?? throw new ArgumentNullException(nameof(characterSet));
+         CharacterSetValuesAlwaysIncrease = characterSetValuesAlwaysIncrease;
+         this.charToValue = charToValue ?? throw new ArgumentNullException(nameof(charToValue));
+      }
+
       #endregion Public Constructors
 
       #region Public Methods

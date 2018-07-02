@@ -8,7 +8,7 @@
       static string Prop4 { get; set; } = "hello2";
       public static string Prop5 { get; set; } = "hello3";
       public int Field1 = 5;
-      public string Field2 = "hello";
+      public readonly string Field2 = "hello";
       protected string Field3 = "hello1";
       static string Field4 = "hello2";
       public static string Field5 = "hello3";

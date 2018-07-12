@@ -29,17 +29,15 @@ namespace Jcd.Utilities.Reflection
          }
       }
 
-      public static IEnumerable<KeyValuePair<PropertyInfo,object>> ToPropertyInfoValuePairs(this IEnumerable<PropertyInfo> items, object item, BindingFlags? flags =null, Func<PropertyInfo, bool> skip = null, Func<PropertyInfo, object, object> valueMutator = null, Func<PropertyInfo, PropertyInfo> propInfoMutator = null)
+      public static IEnumerable<KeyValuePair<PropertyInfo,object>> ToPropertyInfoValuePairs(this IEnumerable<PropertyInfo> items, object item, BindingFlags? flags =null, Func<PropertyInfo, bool> skip = null)
       {
          Argument.IsNotNull(item, nameof(item));
          Argument.IsNotNull(items, nameof(items));
          foreach (var pi in items)
          {
             var value = (object)null;
-            value = pi.GetValue(item);
-            var propInfo = propInfoMutator?.Invoke(pi) ?? pi;
-            value = valueMutator?.Invoke(pi, value) ?? value;
-            yield return new KeyValuePair<PropertyInfo, object>(propInfo, value);
+            try { value = pi.GetValue(item); } catch { /* ignore for now.*/ }
+            yield return new KeyValuePair<PropertyInfo, object>(pi, value);
          }
       }
 
@@ -66,7 +64,7 @@ namespace Jcd.Utilities.Reflection
             yield return fi;
          }
       }
-      public static IEnumerable<KeyValuePair<FieldInfo, object>> ToFieldInfoValuePairs(this IEnumerable<FieldInfo> items, object item, BindingFlags? flags = null, Func<FieldInfo, bool> skip = null, Func<FieldInfo, object, object> valueMutator = null, Func<FieldInfo, FieldInfo> propInfoMutator = null)
+      public static IEnumerable<KeyValuePair<FieldInfo, object>> ToFieldInfoValuePairs(this IEnumerable<FieldInfo> items, object item, BindingFlags? flags = null, Func<FieldInfo, bool> skip = null)
       {
          Argument.IsNotNull(item, nameof(item));
          Argument.IsNotNull(items, nameof(items));
@@ -74,9 +72,7 @@ namespace Jcd.Utilities.Reflection
          {
             var value = (object)null;
             value = fi.GetValue(item);
-            var propInfo = propInfoMutator?.Invoke(fi) ?? fi;
-            value = valueMutator?.Invoke(fi, value) ?? value;
-            yield return new KeyValuePair<FieldInfo, object>(propInfo, value);
+            yield return new KeyValuePair<FieldInfo, object>(fi, value);
          }
       }
 
@@ -88,7 +84,6 @@ namespace Jcd.Utilities.Reflection
             yield return new KeyValuePair<string, object>(kvp.Key.Name, kvp.Value);
          }
       }
-
 
       /*
       public static IEnumerable<KeyValuePair<FieldInfo, object>> EnumerateFieldInfosAndValues(this object item, BindingFlags? flags = null, Func<FieldInfo, bool> skip = null, Func<FieldInfo, object, object> valueMutator = null, Func<FieldInfo, FieldInfo> fieldInfoMutator = null)
@@ -126,22 +121,95 @@ namespace Jcd.Utilities.Reflection
          return type.Name.StartsWith("KeyValuePair");
       }
 
-      public static object Get(this object self, string name)
+      public static object GetPropertyOrFieldValue(this object self, string name)
       {
          var t = self.GetType();
          var value = t.GetProperty(name)?.GetValue(self);
          value = value ?? t.GetField(name)?.GetValue(self);
          return value;
       }
-      
-      public static object ToDictionaryTree(this object self, HashSet<object> visited=null)
+
+      public static IDictionary<string, object> ToDictionaryTree(this object self, HashSet<object> visited = null, Func<string, string> keyRenamingStrategy = null, Func<string, object, bool> valueRetentionStrategy = null)
       {
-         Dictionary<string, object> expando = null;
+         return (IDictionary<string, object>)self.ToDictionaryTree<Dictionary<string, object>>(keyRenamingStrategy:keyRenamingStrategy, valueRetentionStrategy:valueRetentionStrategy);
+      }
+
+      public static ExpandoObject ToExpandoObject(this object self, HashSet<object> visited = null, Func<string,string> keyRenamingStrategy=null, Func<string, object, bool> valueRetentionStrategy = null)
+      {
+         Func<string, string> myKeyRenamingStrategy = (key) =>
+         {
+            return DefaultExpandoKeyRenamingStrategy(keyRenamingStrategy!=null ? keyRenamingStrategy(key) :key);
+         };
+         Func<string, object, bool> myValueRetentionStrategy = (key, value) =>
+         {
+            return (valueRetentionStrategy == null || valueRetentionStrategy(key, value)) && DefaultExpandoValueRetentionStrategy(value);
+         };
+         return (ExpandoObject)self.ToDictionaryTree<ExpandoObject>(keyRenamingStrategy: myKeyRenamingStrategy, valueRetentionStrategy: myValueRetentionStrategy);
+      }
+
+      public static string DefaultExpandoKeyRenamingStrategy(string k)
+      {
+         var sb = new StringBuilder();
+         char pc = '_';
+         pc = BuildName(k, sb, pc);
+         if (sb.Length == 0)
+         {
+            BuildName($"__MungedField{k}", sb, pc);
+         }
+         return sb.ToString();
+      }
+
+      public static bool DefaultExpandoValueRetentionStrategy(object value)
+      {
+         var retain = false;
+         if (value != null)
+         {
+            retain = true;
+            if (value is IDictionary dictionary)
+            {
+               retain = dictionary.Count > 0;
+            }
+            else if (value is IEnumerable collection)
+            {
+               var enumerator = collection.GetEnumerator();
+               retain = enumerator.MoveNext();
+               if (enumerator is IDisposable disp) disp.Dispose();
+            }
+         }
+
+         return retain;
+      }
+
+      private static char BuildName(string k, StringBuilder sb, char pc)
+      {
+         foreach (var c in k)
+         {
+
+            if ((sb.Length > 0 && (Char.IsLetterOrDigit(c) || c == '_')) || // valid member name char.
+                (sb.Length == 0 && (Char.IsLetter(c) || c == '_' || c == '@'))) // valid member name starting char
+            {
+               if ((Char.IsLetterOrDigit(pc) && sb.Length > 0) || c == '_' || c == '@')
+                  sb.Append(c);
+               else if (sb.Length > 0 || Char.IsLetter(c))
+                  sb.Append(Char.ToUpperInvariant(c));
+            }
+            pc = c;
+         }
+
+         return pc;
+      }
+
+      private static dynamic ToDictionaryTree<TNode>(this object self, HashSet<object> visited=null, Func<string, string> keyRenamingStrategy = null, Func<string, object, bool> valueRetentionStrategy=null)
+         where TNode : IDictionary<string, object>, new()
+      {
+         TNode root = default(TNode);
          if (visited == null) visited = new HashSet<object>();
+         if (keyRenamingStrategy == null) keyRenamingStrategy = (k) => k;
+         if (valueRetentionStrategy == null) valueRetentionStrategy = (name,value) => true;
          if (!visited.Contains(self))
          {
             visited.Add(self);
-            expando = new Dictionary<string, object>();
+            root = new TNode();
             if (self.IsScalar()) return self;
             try
             {
@@ -149,7 +217,7 @@ namespace Jcd.Utilities.Reflection
                {
                   foreach (var key in dictionary.Keys)
                   {
-                     expando.Append(key.ToString(), dictionary[key], visited);
+                     root.Append<TNode>(key.ToString(), dictionary[key], visited, keyRenamingStrategy, valueRetentionStrategy);
                   }
                }
                else if (self is IEnumerable coll)
@@ -164,33 +232,31 @@ namespace Jcd.Utilities.Reflection
                      var value = (object)null;
                      if (isKeyValuePair.HasValue && isKeyValuePair.Value)
                      {
-                        key = item.Get("Key").ToString();
-                        value = item.Get("Value");
-                        expando.Append(key, value, visited);
+                        key = item.GetPropertyOrFieldValue("Key").ToString();
+                        value = item.GetPropertyOrFieldValue("Value");
+                        root.Append<TNode>(key, value, visited, keyRenamingStrategy, valueRetentionStrategy);
                      }
                      else
                      {
-                        //value = item.ToDictionaryTree(visited);
-                        if (item.IsScalar())
-                           list.Add(item);
-                        else
-                           list.Add(item.ToDictionaryTree(visited));
+                        var val = item.IsScalar() ? item : item.ToDictionaryTree<TNode>(visited, keyRenamingStrategy, valueRetentionStrategy);
+                        if (valueRetentionStrategy($"{key}:{index}",val))
+                           list.Add(val);
                      }
                      index++;
                   }
                   if (isKeyValuePair.HasValue && !isKeyValuePair.Value) return list.ToArray();
-                  if (!isKeyValuePair.HasValue) return list.ToArray();
+                  else if (!isKeyValuePair.HasValue) return list.ToArray();
                }
                else
                {
                   var type = self.GetType();
                   foreach (var kvp in type.EnumerateProperties().ToPropertyInfoValuePairs(self).ToNameValuePairs())
                   {
-                     expando.Append(kvp.Key, kvp.Value, visited);
+                     root.Append<TNode>(kvp.Key, kvp.Value, visited, keyRenamingStrategy, valueRetentionStrategy);
                   }
                   foreach (var kvp in type.EnumerateFields().ToFieldInfoValuePairs(self).ToNameValuePairs())
                   {
-                     expando.Append(kvp.Key, kvp.Value, visited);
+                     root.Append<TNode>(kvp.Key, kvp.Value, visited, keyRenamingStrategy, valueRetentionStrategy);
                   }
                }
             }
@@ -199,19 +265,24 @@ namespace Jcd.Utilities.Reflection
                visited.Remove(self);
             }
          }
-         return expando;
+         return root;
       }
 
-      private static void Append(this Dictionary<string, object> expando, string key, object val, HashSet<object> visited)
+      private static void Append<TNode>(this IDictionary<string, object> dictionary, string key, object val, HashSet<object> visited, Func<string, string> keyRenamingStrategy, Func<string,object,bool> valueRetentionStrategy)
+         where TNode: IDictionary<string, object>, new()
       {
+         Argument.IsNotNull(keyRenamingStrategy,nameof(keyRenamingStrategy));
+         Argument.IsNotNull(valueRetentionStrategy, nameof(valueRetentionStrategy));
          if (!visited.Contains(val))
          {
-            var value = val.IsScalar() ? val : val.ToDictionaryTree(visited);
-            if (!expando.ContainsKey(key))
+            key = keyRenamingStrategy(key);
+            var value = val.IsScalar() ? val : val.ToDictionaryTree<TNode>(visited, keyRenamingStrategy,valueRetentionStrategy);
+            if (!dictionary.ContainsKey(key) && valueRetentionStrategy(key,value))
             {
-               expando.Add(key, value);
+               dictionary.Add(key, value);
             }
          }
       }
+
    }
 }

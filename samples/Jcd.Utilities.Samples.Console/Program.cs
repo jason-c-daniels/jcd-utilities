@@ -3,6 +3,7 @@ using Jcd.Utilities.Reflection;
 using Jcd.Utilities.Samples.ConsoleApp.Generators;
 using System;
 using System.Diagnostics;
+using System.Dynamic;
 using System.Linq;
 using System.Threading;
 
@@ -49,11 +50,18 @@ namespace Jcd.Utilities.Samples.ConsoleApp
             return result;
          });
 
-         var aaa = new { Foo="a", Zoo=5, Blue=ConsoleColor.Green};
+         var aaa = new { Foo = "a", Zoo = 5, Blue = ConsoleColor.Green };
          var props = aaa.GetType().EnumerateProperties().ToList();
          var props1 = props.ToPropertyInfoValuePairs(aaa).ToList();
          var props2 = props1.ToNameValuePairs().ToList();
-         var dt = IntegerEncoders.Base32_Crockford.ToDictionaryTree();
+         var dt = IntegerEncoders.Base32_Crockford.ToExpandoObject();
+         object a=null, 
+                b = null,
+                c = null, 
+                d1 = null,
+                e1 = null;
+         var dt2 = new { a, b, c= new { d1, e1 }}.ToExpandoObject();
+         dt = aaa.ToExpandoObject();
          //aaa = new Foo { Opinion = OpinionType.IDontMindLlamas };
          //dt = aaa.ToDictionaryTree();
 

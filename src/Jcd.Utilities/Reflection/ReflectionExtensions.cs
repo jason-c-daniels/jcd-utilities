@@ -64,6 +64,7 @@ namespace Jcd.Utilities.Reflection
             yield return fi;
          }
       }
+
       public static IEnumerable<KeyValuePair<FieldInfo, object>> ToFieldInfoValuePairs(this IEnumerable<FieldInfo> items, object item,  Func<FieldInfo, bool> skip = null)
       {
          Argument.IsNotNull(item, nameof(item));
@@ -85,28 +86,6 @@ namespace Jcd.Utilities.Reflection
          }
       }
 
-      /*
-      public static IEnumerable<KeyValuePair<FieldInfo, object>> EnumerateFieldInfosAndValues(this object item, BindingFlags? flags = null, Func<FieldInfo, bool> skip = null, Func<FieldInfo, object, object> valueMutator = null, Func<FieldInfo, FieldInfo> fieldInfoMutator = null)
-      {
-         Argument.IsNotNull(item, nameof(item));
-         foreach (var fi in item.GetType().EnumerateFields(flags, skip))
-         {
-            var value = (object)null;
-            value = fi.GetValue(item);
-            var fieldInfo = fieldInfoMutator?.Invoke(fi) ?? fi;
-            value = valueMutator?.Invoke(fi, value) ?? value;
-            yield return new KeyValuePair<FieldInfo, object>(fieldInfo, value);
-         }
-      }
-      public static IEnumerable<KeyValuePair<string, object>> EnumerateFieldNamesAndValues(this object item, BindingFlags? flags = null, Func<FieldInfo, bool> skip = null, Func<FieldInfo, object, object> valueMutator = null, Func<FieldInfo, FieldInfo> fieldInfoMutator = null)
-      {
-         Argument.IsNotNull(item, nameof(item));
-         foreach (var kvp in item.GetType().EnumerateFieldInfosAndValues(flags, skip, valueMutator, fieldInfoMutator))
-         {
-            yield return new KeyValuePair<string, object>(kvp.Key.Name, kvp.Value);
-         }
-      }
-      */
       public static bool IsScalar(this object self, HashSet<Type> nonPrimitiveScalars=null)
       {
          if (self == null) return true;
@@ -121,11 +100,11 @@ namespace Jcd.Utilities.Reflection
          return type.Name.StartsWith("KeyValuePair");
       }
 
-      public static object GetPropertyOrFieldValue(this object self, string name)
+      public static object GetPropertyOrFieldValue(this object self, string fieldOrPropertyName)
       {
          var t = self.GetType();
-         var value = t.GetProperty(name)?.GetValue(self);
-         value = value ?? t.GetField(name)?.GetValue(self);
+         var value = t.GetProperty(fieldOrPropertyName)?.GetValue(self);
+         value = value ?? t.GetField(fieldOrPropertyName)?.GetValue(self);
          return value;
       }
 

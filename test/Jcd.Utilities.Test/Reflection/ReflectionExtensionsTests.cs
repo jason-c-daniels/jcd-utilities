@@ -40,6 +40,7 @@ namespace Jcd.Utilities.Test.Reflection
          var props = typeof(TestClassB).EnumerateProperties(BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy).ToList();
          Assert.Equal(7, props.Count);
       }
+
       /// <summary>
       /// Validate that EnumerateFields enumerates public instance properties, inherited, when called with default parameters.
       /// </summary>
@@ -147,6 +148,41 @@ namespace Jcd.Utilities.Test.Reflection
          var a = new TestClassA();
          Assert.Throws<ArgumentNullException>(() => ReflectionExtensions.ToFieldInfoValuePairs(null, a).ToList());
          Assert.Throws<ArgumentNullException>(() => ReflectionExtensions.ToFieldInfoValuePairs(null, null).ToList());
+      }
+
+      /// <summary>
+      /// Validate that ToNameValuePairs Throws ArgumentNullException When items is null. 
+      /// </summary>
+      [Fact]
+      public void ToNameValuePairs_WhenItemsIsNull_ThrowsArgumentNullException()
+      {
+         Assert.Throws<ArgumentNullException>(() => ReflectionExtensions.ToNameValuePairs((IEnumerable<KeyValuePair<FieldInfo, object>>)null).ToList());
+         Assert.Throws<ArgumentNullException>(() => ReflectionExtensions.ToNameValuePairs((IEnumerable<KeyValuePair<PropertyInfo, object>>)null).ToList());
+      }
+
+      /// <summary>
+      /// Validate that ToNameValuePairs returns IEnumerable of KeyValuePair of string and object when items is populated. 
+      /// </summary>
+      [Fact]
+      public void ToNameValuePairs_WhenItemsIsPopulatedWithFields_ReturnsPopulatedKVPEnumeration()
+      {
+         var a = new TestClassB();
+         var fields=typeof(TestClassB).EnumerateFields().ToFieldInfoValuePairs(a).ToNameValuePairs().ToDictionary(k=>k.Key,v=>v.Value);
+         Assert.Equal(a.Field1, fields["Field1"]);
+         Assert.Equal(a.Field2, fields["Field2"]);
+         Assert.Equal(a.Field6, fields["Field6"]);
+      }
+
+      /// <summary>
+      /// Validate that ToNameValuePairs returns IEnumerable of KeyValuePair of string and object when items is populated. 
+      /// </summary>
+      [Fact]
+      public void ToNameValuePairs_WhenItemsIsPopulatedWithProperties_ReturnsPopulatedKVPEnumeration()
+      {
+         var a = new TestClassB();
+         var props = typeof(TestClassB).EnumerateProperties().ToPropertyInfoValuePairs(a).ToNameValuePairs().ToDictionary(k => k.Key, v => v.Value);
+         Assert.Equal(a.Field1, props["Prop1"]);
+         Assert.Equal(a.Field2, props["Prop2"]);
       }
 
    }

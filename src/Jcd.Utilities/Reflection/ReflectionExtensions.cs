@@ -29,7 +29,7 @@ namespace Jcd.Utilities.Reflection
          }
       }
 
-      public static IEnumerable<KeyValuePair<PropertyInfo,object>> ToPropertyInfoValuePairs(this IEnumerable<PropertyInfo> items, object item, BindingFlags? flags =null, Func<PropertyInfo, bool> skip = null)
+      public static IEnumerable<KeyValuePair<PropertyInfo,object>> ToPropertyInfoValuePairs(this IEnumerable<PropertyInfo> items, object item, Func<PropertyInfo, bool> skip = null)
       {
          Argument.IsNotNull(item, nameof(item));
          Argument.IsNotNull(items, nameof(items));
@@ -64,7 +64,7 @@ namespace Jcd.Utilities.Reflection
             yield return fi;
          }
       }
-      public static IEnumerable<KeyValuePair<FieldInfo, object>> ToFieldInfoValuePairs(this IEnumerable<FieldInfo> items, object item, BindingFlags? flags = null, Func<FieldInfo, bool> skip = null)
+      public static IEnumerable<KeyValuePair<FieldInfo, object>> ToFieldInfoValuePairs(this IEnumerable<FieldInfo> items, object item,  Func<FieldInfo, bool> skip = null)
       {
          Argument.IsNotNull(item, nameof(item));
          Argument.IsNotNull(items, nameof(items));

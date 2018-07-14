@@ -4,6 +4,7 @@ using Xunit;
 using Jcd.Utilities.Reflection;
 using System.Linq;
 using System.Reflection;
+using System;
 
 namespace Jcd.Utilities.Test.Reflection
 {
@@ -69,6 +70,7 @@ namespace Jcd.Utilities.Test.Reflection
          // 7 inheritable fields, plus 3 inheritable backing fields.
          Assert.Equal(10, fields.Count);
       }
+
       /// <summary>
       /// Validate that EnumerateFields Enumerates AllFields When BindingsSetToReturnAll, except private base class, skip backign fields.
       /// </summary>
@@ -78,5 +80,74 @@ namespace Jcd.Utilities.Test.Reflection
          var fields = typeof(TestClassB).EnumerateFields(BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy, skip: (fi) => fi.Name[0] == '<').ToList();
          Assert.Equal(7, fields.Count);
       }
+
+      /// <summary>
+      /// Validate that ToPropertyInfoEnumeration returns PropertyInfo enumeration when given an object with public properties. 
+      /// </summary>
+      [Fact]
+      public void ToPropertyInfoValuePairs_WhenGivenAnObjectWithPublicProperties_ReturnsPropertyInfoAndValueEnumeration()
+      {
+         var a = new TestClassA();
+         var d=a.GetType().EnumerateProperties().ToPropertyInfoValuePairs(a).ToDictionary(k => k.Key.Name, v => v.Value);
+
+         Assert.Equal(a.Prop1, d["Prop1"]);
+         Assert.Equal(a.Prop2, d["Prop2"]);
+      }
+
+      /// <summary>
+      /// Validate that ToPropertyInfoValuePairs Throws ArgumentNullException When item is null. 
+      /// </summary>
+      [Fact]
+      public void ToPropertyInfoValuePairs_WhenItemIsNull_ThrowsArgumentNullException()
+      {
+         var a = new TestClassA();
+         Assert.Throws<ArgumentNullException>(() => a.GetType().EnumerateProperties().ToPropertyInfoValuePairs(null).ToList());
+      }
+
+      /// <summary>
+      /// Validate that ToPropertyInfoValuePairs Throws ArgumentNullException When items is null. 
+      /// </summary>
+      [Fact]
+      public void ToPropertyInfoValuePairs_WhenItemsIsNull_ThrowsArgumentNullException()
+      {
+         var a = new TestClassA();
+         Assert.Throws<ArgumentNullException>(() => ReflectionExtensions.ToPropertyInfoValuePairs(null, a).ToList());
+         Assert.Throws<ArgumentNullException>(() => ReflectionExtensions.ToPropertyInfoValuePairs(null, null).ToList());
+      }
+
+      /// <summary>
+      /// Validate that ToFieldInfoEnumeration returns FieldInfo enumeration when given an object with public properties. 
+      /// </summary>
+      [Fact]
+      public void ToFieldInfoValuePairs_WhenGivenAnObjectWithPublicFields_ReturnsFieldInfoAndValueEnumeration()
+      {
+         var a = new TestClassA();
+         var d = a.GetType().EnumerateFields().ToFieldInfoValuePairs(a).ToDictionary(k => k.Key.Name, v => v.Value);
+
+         Assert.Equal(a.Field1, d["Field1"]);
+         Assert.Equal(a.Field2, d["Field2"]);
+      }
+
+      /// <summary>
+      /// Validate that ToFieldInfoValuePairs Throws ArgumentNullException When item is null. 
+      /// </summary>
+      [Fact]
+      public void ToFieldInfoValuePairs_WhenItemIsNull_ThrowsArgumentNullException()
+      {
+         var a = new TestClassA();
+         Assert.Throws<ArgumentNullException>(() => a.GetType().EnumerateFields().ToFieldInfoValuePairs(null).ToList());
+      }
+
+      /// <summary>
+      /// Validate that ToFieldInfoValuePairs Throws ArgumentNullException When items is null. 
+      /// </summary>
+      [Fact]
+      public void ToFieldInfoValuePairs_WhenItemsIsNull_ThrowsArgumentNullException()
+      {
+         var a = new TestClassA();
+         Assert.Throws<ArgumentNullException>(() => ReflectionExtensions.ToFieldInfoValuePairs(null, a).ToList());
+         Assert.Throws<ArgumentNullException>(() => ReflectionExtensions.ToFieldInfoValuePairs(null, null).ToList());
+      }
+
    }
 }

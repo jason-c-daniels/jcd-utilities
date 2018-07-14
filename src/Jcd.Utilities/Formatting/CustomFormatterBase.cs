@@ -28,15 +28,6 @@ namespace Jcd.Utilities.Formatting
 
       #endregion Public Delegates
 
-      #region Protected Fields
-
-      /// <summary>
-      /// Default type comparison
-      /// </summary>
-      protected MyTypeComparer typeComparer = new MyTypeComparer();
-
-      #endregion Protected Fields
-
       #region Protected Constructors
 
       /// <summary>
@@ -54,9 +45,7 @@ namespace Jcd.Utilities.Formatting
          Argument.HasItems(handledTypes, nameof(handledTypes));
          Argument.IsNotNull(formatFunction, nameof(formatFunction));
          this.formatFunction = formatFunction;
-         var ht = handledTypes.ToList();
-         ht.Sort(typeComparer);
-         this.handledTypes = ht.ToArray();
+         this.handledTypes = new HashSet<Type>(handledTypes);
       }
 
       #endregion Protected Constructors
@@ -78,35 +67,11 @@ namespace Jcd.Utilities.Formatting
 
       #endregion Private Methods
 
-      #region Protected Classes
-
-      /// <summary>
-      /// Compares types by name.
-      /// </summary>
-      protected class MyTypeComparer : IComparer<Type>
-      {
-         #region Public Methods
-         /// <summary>
-         /// Performs a comparison between two types.
-         /// </summary>
-         /// <param name="x">the elft side of the comparison</param>
-         /// <param name="y">the right ride of the comparison</param>
-         /// <returns>-1 if x is less than y, 1 if x is greater than y, 0 if equal.</returns>
-         public int Compare(Type x, Type y)
-         {
-            return x.ToString().CompareTo(y.ToString());
-         }
-
-         #endregion Public Methods
-      }
-
-      #endregion Protected Classes
-
       #region Private Fields
 
       private readonly Func<ICustomFormatter, string, object, IFormatProvider, string> formatFunction;
 
-      private readonly Type[] handledTypes;
+      private readonly HashSet<Type> handledTypes;
 
       #endregion Private Fields
 
@@ -121,14 +86,13 @@ namespace Jcd.Utilities.Formatting
       public virtual string Format(string fmt, object arg, IFormatProvider formatProvider)
       {
          Argument.IsNotNull(formatProvider, nameof(formatProvider));
-         //Argument.IsNotNull(arg, nameof(arg));
          Argument.IsNotNull(fmt, nameof(fmt));
 
          if (!ReferenceEquals(this, formatProvider)) {
             return null;
          }
 
-         if (Array.BinarySearch(handledTypes, arg==null? typeof(object) : arg.GetType(), typeComparer) >= 0) {
+         if (handledTypes.Contains(arg == null? typeof(object) : arg.GetType())) {
             return formatFunction(this, fmt, arg, formatProvider);
          }
 

@@ -562,12 +562,12 @@ namespace Jcd.Utilities.Test.Formatting
       public void TryParseBigInteger_WhenGivenText_ReturnsTrueWhenDecodedFalseWhenNot(string text, bool parsed)
       {
          BigInteger result = 0;
-         BigInteger decoded = 11; // BigInteger can't be const. Have to use this hack.
+         BigInteger expectedParsedResult = 11; // BigInteger can't be const. Have to use this hack.
          Assert.Equal(parsed, IntegerEncoders.Binary.TryParseBigInteger(text, ref result));
 
          if (parsed)
          {
-            Assert.Equal(decoded, result);
+            Assert.Equal(expectedParsedResult, result);
          }
       }
 

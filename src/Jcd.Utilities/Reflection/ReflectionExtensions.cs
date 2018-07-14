@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Dynamic;
 using System.Linq;
+using System.Numerics;
 using System.Reflection;
 using System.Text;
 
@@ -12,7 +13,7 @@ namespace Jcd.Utilities.Reflection
 {
    public static class ReflectionExtensions
    {
-      public static readonly HashSet<Type> BuiltInNonPrimitiveScalars = new HashSet<Type>(new[] { typeof(DateTime), typeof(DateTimeOffset), typeof(TimeSpan), typeof(Uri), typeof(Guid), typeof(Type), typeof(string) });
+      public static readonly HashSet<Type> BuiltInNonPrimitiveScalars = new HashSet<Type>(new[] { typeof(DateTime), typeof(DateTimeOffset), typeof(TimeSpan), typeof(Uri), typeof(Guid), typeof(string), typeof(BigInteger) });
 
       public static IEnumerable<PropertyInfo> EnumerateProperties(this Type type, BindingFlags? flags=null, Func<PropertyInfo, bool> skip = null)
       {
@@ -88,8 +89,15 @@ namespace Jcd.Utilities.Reflection
 
       public static bool IsScalar(this object self, HashSet<Type> nonPrimitiveScalars=null)
       {
-         if (self == null) return true;
-         if (nonPrimitiveScalars == null) nonPrimitiveScalars = BuiltInNonPrimitiveScalars;
+         if (self == null || self is Type) return true;
+         if (nonPrimitiveScalars == null)
+         {
+            nonPrimitiveScalars = BuiltInNonPrimitiveScalars;
+         }
+         else
+         {
+            nonPrimitiveScalars = new HashSet<Type>(nonPrimitiveScalars.Union(BuiltInNonPrimitiveScalars));
+         }
          var t = self.GetType();
          var ti = t.GetTypeInfo();
          return ti.IsEnum || ti.IsPrimitive || nonPrimitiveScalars.Contains(t);
@@ -97,7 +105,9 @@ namespace Jcd.Utilities.Reflection
 
       public static bool IsKeyValuePair(this Type type)
       {
-         return type.Name.StartsWith("KeyValuePair");
+         var hasKey = type.GetTypeInfo().GetField("Key") != null || type.GetTypeInfo().GetProperty("Key") != null;
+         var hasValue = type.GetTypeInfo().GetField("Value") != null || type.GetTypeInfo().GetProperty("Value") != null;
+         return hasKey && hasValue;
       }
 
       public static object GetPropertyOrFieldValue(this object self, string fieldOrPropertyName)
@@ -159,32 +169,13 @@ namespace Jcd.Utilities.Reflection
          return retain;
       }
 
-      private static char BuildName(string k, StringBuilder sb, char pc)
-      {
-         foreach (var c in k)
-         {
-
-            if ((sb.Length > 0 && (Char.IsLetterOrDigit(c) || c == '_')) || // valid member name char.
-                (sb.Length == 0 && (Char.IsLetter(c) || c == '_' || c == '@'))) // valid member name starting char
-            {
-               if ((Char.IsLetterOrDigit(pc) && sb.Length > 0) || c == '_' || c == '@')
-                  sb.Append(c);
-               else if (sb.Length > 0 || Char.IsLetter(c))
-                  sb.Append(Char.ToUpperInvariant(c));
-            }
-            pc = c;
-         }
-
-         return pc;
-      }
-
-      private static dynamic ToDictionaryTree<TNode>(this object self, HashSet<object> visited=null, Func<string, string> keyRenamingStrategy = null, Func<string, object, bool> valueRetentionStrategy=null)
+      public static dynamic ToDictionaryTree<TNode>(this object self, HashSet<object> visited = null, Func<string, string> keyRenamingStrategy = null, Func<string, object, bool> valueRetentionStrategy = null)
          where TNode : IDictionary<string, object>, new()
       {
          TNode root = default(TNode);
          if (visited == null) visited = new HashSet<object>();
          if (keyRenamingStrategy == null) keyRenamingStrategy = (k) => k;
-         if (valueRetentionStrategy == null) valueRetentionStrategy = (name,value) => true;
+         if (valueRetentionStrategy == null) valueRetentionStrategy = (name, value) => true;
          if (!visited.Contains(self))
          {
             visited.Add(self);
@@ -218,7 +209,7 @@ namespace Jcd.Utilities.Reflection
                      else
                      {
                         var val = item.IsScalar() ? item : item.ToDictionaryTree<TNode>(visited, keyRenamingStrategy, valueRetentionStrategy);
-                        if (valueRetentionStrategy($"{key}:{index}",val))
+                        if (valueRetentionStrategy($"{key}:{index}", val))
                            list.Add(val);
                      }
                      index++;
@@ -245,6 +236,25 @@ namespace Jcd.Utilities.Reflection
             }
          }
          return root;
+      }
+
+      private static char BuildName(string k, StringBuilder sb, char pc)
+      {
+         foreach (var c in k)
+         {
+
+            if ((sb.Length > 0 && (Char.IsLetterOrDigit(c) || c == '_')) || // valid member name char.
+                (sb.Length == 0 && (Char.IsLetter(c) || c == '_' || c == '@'))) // valid member name starting char
+            {
+               if ((Char.IsLetterOrDigit(pc) && sb.Length > 0) || c == '_' || c == '@')
+                  sb.Append(c);
+               else if (sb.Length > 0 || Char.IsLetter(c))
+                  sb.Append(Char.ToUpperInvariant(c));
+            }
+            pc = c;
+         }
+
+         return pc;
       }
 
       private static void Append<TNode>(this IDictionary<string, object> dictionary, string key, object val, HashSet<object> visited, Func<string, string> keyRenamingStrategy, Func<string,object,bool> valueRetentionStrategy)

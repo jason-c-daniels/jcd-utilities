@@ -5,6 +5,7 @@ using Jcd.Utilities.Reflection;
 using System.Linq;
 using System.Reflection;
 using System;
+using Jcd.Utilities.Test.TestHelpers;
 
 namespace Jcd.Utilities.Test.Reflection
 {
@@ -185,5 +186,79 @@ namespace Jcd.Utilities.Test.Reflection
          Assert.Equal(a.Field2, props["Prop2"]);
       }
 
+      /// <summary>
+      /// Validate that IsScalar returns true when type is scalar.
+      /// </summary>
+      [Theory]
+      [MemberData(nameof(ScalarDataProvider.AllScalars), MemberType = typeof(ScalarDataProvider))]
+      public void IsScalar_WhenTypeIsScalar_ReturnsTrue(object value)
+      {
+         Assert.True(value.IsScalar());
+      }
+
+      /// <summary>
+      /// Validate that IsScalar returns false when type is not scalar.
+      /// </summary>
+      [Fact]
+      public void IsScalar_WhenTypeIsNotScalar_ReturnsFalse()
+      {
+         Assert.False(new TestClassA().IsScalar());
+      }
+
+      /// <summary>
+      /// Validate that IsScalar returns true when type is not scalar but exists in a custom hashset claiming its scalar.
+      /// </summary>
+      [Fact]
+      public void IsScalar_WhenTypeNotIsScalarButExistsAsCustomScalar_ReturnsTrue()
+      {
+         Assert.True(new TestClassA().IsScalar(new HashSet<Type>(new[] { typeof(TestClassA) })));
+         // Idiot testing to ensure we dibn't nuke the other scalar objects. Which might have been the case earlier. Okay it was the case.
+         Assert.True(DateTime.Now.IsScalar(new HashSet<Type>(new[] { typeof(TestClassA) })));
+      }
+
+      /// <summary>
+      /// Validate that IsKeyValuePair Returns False When object is not a KeyValuePair. 
+      /// </summary>
+      [Fact]
+      public void IsKeyValuePair_WhenObjectIsNotAKeyValuePair_ReturnsFalse()
+      {
+         object kvp = new object();
+         Assert.False(kvp.GetType().IsKeyValuePair());
+      }
+
+      /// <summary>
+      /// Validate that IsKeyValuePair Returns False When object is not a KeyValuePair. 
+      /// </summary>
+      [Fact]
+      public void IsKeyValuePair_WhenObjectIsAKeyValuePair_ReturnsTrue()
+      {
+         var kvp = new KeyValuePair<string, string>();
+         var kvp2 = new { Key = "key", Value = "value", Pair = "Pear" };
+         Assert.True(kvp.GetType().IsKeyValuePair());
+         Assert.True(kvp2.GetType().IsKeyValuePair());
+      }
+
+      /// <summary>
+      /// Validate that GetPropertyOrFieldValue Returns the value When object has property or field with the name. 
+      /// </summary>
+      [Fact]
+      public void GetPropertyOrFieldValue_WhenObjectDoesntHavePropertyOrFieldWithTheName_ReturnsNull()
+      {
+         var kvp = new KeyValuePair<string, string>();
+         var kvp2 = new { Key = "key", Value = "value", Pair = "Pear" };
+         Assert.Null(kvp.GetPropertyOrFieldValue("Nada"));
+      }
+
+      /// <summary>
+      /// Validate that GetPropertyOrFieldValue Returns the value When object has property or field with the name. 
+      /// </summary>
+      [Fact]
+      public void GetPropertyOrFieldValue_WhenObjectHasPropertyOrFieldWithTheName_ReturnsValue()
+      {
+         var kvp = new { Key = "key", Value = "value", Pair = "Pear" };
+         var val = kvp.GetPropertyOrFieldValue("Key");
+         Assert.NotNull(val);
+         Assert.Equal(kvp.Key,val);
+      }
    }
 }

@@ -13,6 +13,7 @@ namespace Jcd.Utilities.Reflection
 {
    public static class ReflectionExtensions
    {
+      
       public static readonly HashSet<Type> BuiltInNonPrimitiveScalars = new HashSet<Type>(new[] { typeof(DateTime), typeof(DateTimeOffset), typeof(TimeSpan), typeof(Uri), typeof(Guid), typeof(string), typeof(BigInteger) });
 
       public static IEnumerable<PropertyInfo> EnumerateProperties(this Type type, BindingFlags? flags=null, Func<PropertyInfo, bool> skip = null)
@@ -28,6 +29,12 @@ namespace Jcd.Utilities.Reflection
             if (skipped.HasValue && skipped.Value) continue;
             yield return pi;
          }
+      }
+
+      public static IEnumerable<PropertyInfo> EnumerateProperties(this object self, BindingFlags? flags = null, Func<PropertyInfo, bool> skip = null)
+      {
+         if (self.IsScalar()) return null;
+         return self.GetType().EnumerateProperties(flags, skip);
       }
 
       public static IEnumerable<KeyValuePair<PropertyInfo,object>> ToPropertyInfoValuePairs(this IEnumerable<PropertyInfo> items, object item, Func<PropertyInfo, bool> skip = null)
@@ -53,17 +60,22 @@ namespace Jcd.Utilities.Reflection
 
       public static IEnumerable<FieldInfo> EnumerateFields(this Type type, BindingFlags? flags = null, Func<FieldInfo, bool> skip = null)
       {
-         IEnumerable<FieldInfo> fields = null;
-         if (flags.HasValue) fields = type.GetFields(flags.Value);
-         else fields = type.GetFields();
-
-         foreach (var fi in fields)
+         IEnumerable<FieldInfo> props = null;
+         if (flags.HasValue) props = type.GetFields(flags.Value);
+         else props = type.GetFields();
+         foreach (var fi in props)
          {
-            if (fi.DeclaringType.Namespace.StartsWith("System")) continue;
+            if (fi.DeclaringType.Namespace != null && fi.DeclaringType.Namespace.StartsWith("System")) continue;
             var skipped = skip?.Invoke(fi);
             if (skipped.HasValue && skipped.Value) continue;
             yield return fi;
          }
+      }
+
+      public static IEnumerable<FieldInfo> EnumerateFields(this object self, BindingFlags? flags = null, Func<FieldInfo, bool> skip = null)
+      {
+         if (self.IsScalar()) return null;
+         return self.GetType().EnumerateFields(flags, skip);
       }
 
       public static IEnumerable<KeyValuePair<FieldInfo, object>> ToFieldInfoValuePairs(this IEnumerable<FieldInfo> items, object item,  Func<FieldInfo, bool> skip = null)
@@ -90,6 +102,12 @@ namespace Jcd.Utilities.Reflection
       public static bool IsScalar(this object self, HashSet<Type> nonPrimitiveScalars=null)
       {
          if (self == null || self is Type) return true;
+         return self.GetType().IsScalar(nonPrimitiveScalars);
+      }
+
+      public static bool IsScalar(this Type type, HashSet<Type> nonPrimitiveScalars=null)
+      {
+         if (type == typeof(Type)) return true;
          if (nonPrimitiveScalars == null)
          {
             nonPrimitiveScalars = BuiltInNonPrimitiveScalars;
@@ -98,9 +116,8 @@ namespace Jcd.Utilities.Reflection
          {
             nonPrimitiveScalars = new HashSet<Type>(nonPrimitiveScalars.Union(BuiltInNonPrimitiveScalars));
          }
-         var t = self.GetType();
-         var ti = t.GetTypeInfo();
-         return ti.IsEnum || ti.IsPrimitive || nonPrimitiveScalars.Contains(t);
+         var ti = type.GetTypeInfo();
+         return ti.IsEnum || ti.IsPrimitive || nonPrimitiveScalars.Contains(type);
       }
 
       public static bool IsKeyValuePair(this Type type)

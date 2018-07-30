@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Jcd.Utilities.Validations
 {
@@ -18,6 +19,7 @@ namespace Jcd.Utilities.Validations
    /// It's highly recommended, that for consistency you use the existing Passes.. or Fails... methods. Or alternately you can use the underlying "Check." class.
    /// Craft your calls based on uses within this implementation.
    /// </remarks>
+   // ReSharper disable once PartialTypeWithSinglePart
    public static partial class Argument
    {
       #region exception helpers
@@ -166,8 +168,9 @@ namespace Jcd.Utilities.Validations
       /// <exception cref="ArgumentException">When <paramref name="target"/> can't be found.</exception>
       public static void Contains<T>(IEnumerable<T> list, T target, string name = null, string message = null)
       {
-         IsNotNull(list, name, message);
-         Check.Contains(list, target,
+         var enumerable = list as T[] ?? list?.ToArray();
+         IsNotNull(enumerable, name, message);
+         Check.Contains(enumerable, target,
                         onFailure: () => RaiseArgumentException(name, message ?? $"{target} was not found in {name}."));
       }
 

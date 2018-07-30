@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 namespace Jcd.Utilities.Generators
 {
+   /// <inheritdoc />
    /// <summary>
    /// A base class to help with implementing state-transition based enumeration.
    /// </summary>

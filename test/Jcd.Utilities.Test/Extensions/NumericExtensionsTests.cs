@@ -15,15 +15,15 @@ namespace Jcd.Utilities.Test.Extensions
       /// </summary>
       /// <param name="self">The data item to test.</param>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.SBytes), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.Bytes), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.Int16s), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.Int32s), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.Int64s), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.UInt16s), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.UInt32s), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.UInt64s), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.BigIntegers), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.SByteList), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.ByteList), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.Int16List), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.Int32List), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.Int64List), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.UInt16List), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.UInt32List), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.UInt64List), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.BigIntegerList), MemberType = typeof(NumericMemberDataProvider))]
       public static void IsIntegerType_WhenGivenIntegerData_ReturnsTrue(object self)
       {
          Assert.True(self.IsIntegerType());
@@ -34,9 +34,9 @@ namespace Jcd.Utilities.Test.Extensions
       /// </summary>
       /// <param name="self">The data item to test.</param>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.Singles), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.Doubles), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.Decimals), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.SinglePrecisionFloatList), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.DoublePrecisionFloatList), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.DecimalList), MemberType = typeof(NumericMemberDataProvider))]
       public static void IsIntegerType_WhenGivenNonIntegerData_ReturnsFalse(object self)
       {
          Assert.False(self.IsIntegerType());
@@ -47,7 +47,7 @@ namespace Jcd.Utilities.Test.Extensions
       /// </summary>
       /// <param name="self">The data item to test.</param>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.Decimals), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.DecimalList), MemberType = typeof(NumericMemberDataProvider))]
       public void IsDecimalType_WhenGivenDecimalData_ReturnsTrue(object self)
       {
          Assert.True(self.IsDecimalType());
@@ -58,17 +58,17 @@ namespace Jcd.Utilities.Test.Extensions
       /// </summary>
       /// <param name="self">that data to test</param>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.Bytes), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.UInt16s), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.UInt32s), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.UInt64s), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.SBytes), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.Int16s), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.Int32s), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.Int64s), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.BigIntegers), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.Doubles), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.Singles), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.ByteList), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.UInt16List), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.UInt32List), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.UInt64List), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.SByteList), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.Int16List), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.Int32List), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.Int64List), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.BigIntegerList), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.DoublePrecisionFloatList), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.SinglePrecisionFloatList), MemberType = typeof(NumericMemberDataProvider))]
       public void IsDecimalType_WhenGivenNonDecimalData_ReturnsFalse(object self)
       {
          Assert.False(self.IsDecimalType());
@@ -79,8 +79,8 @@ namespace Jcd.Utilities.Test.Extensions
       /// </summary>
       /// <param name="self">that data to test</param>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.Singles), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.Doubles), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.SinglePrecisionFloatList), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.DoublePrecisionFloatList), MemberType = typeof(NumericMemberDataProvider))]
       public void IsFloatType_WhenGivenFloatData_ReturnsTrue(object self)
       {
          Assert.True(self.IsFloatType());
@@ -91,16 +91,16 @@ namespace Jcd.Utilities.Test.Extensions
       /// </summary>
       /// <param name="self">that data to test</param>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.Bytes), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.UInt16s), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.UInt32s), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.UInt64s), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.SBytes), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.Int16s), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.Int32s), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.Int64s), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.BigIntegers), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.Decimals), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.ByteList), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.UInt16List), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.UInt32List), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.UInt64List), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.SByteList), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.Int16List), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.Int32List), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.Int64List), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.BigIntegerList), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.DecimalList), MemberType = typeof(NumericMemberDataProvider))]
       public void IsFloatType_WhenGivenNonFloatData_ReturnsFalse(object self)
       {
          Assert.False(self.IsFloatType());
@@ -122,18 +122,18 @@ namespace Jcd.Utilities.Test.Extensions
       /// </summary>
       /// <param name="self">that data to test</param>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.Bytes), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.UInt16s), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.UInt32s), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.UInt64s), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.SBytes), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.Int16s), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.Int32s), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.Int64s), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.BigIntegers), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.Decimals), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.Doubles), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.Singles), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.ByteList), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.UInt16List), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.UInt32List), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.UInt64List), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.SByteList), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.Int16List), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.Int32List), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.Int64List), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.BigIntegerList), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.DecimalList), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.DoublePrecisionFloatList), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.SinglePrecisionFloatList), MemberType = typeof(NumericMemberDataProvider))]
       public void IsNumericType_WhenGivenNumericData_ReturnsTrue(object self)
       {
          Assert.True(self.IsNumericType());
@@ -144,14 +144,14 @@ namespace Jcd.Utilities.Test.Extensions
       /// </summary>
       /// <param name="self">that data to test</param>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.SBytes), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.Int16s), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.Int32s), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.Int64s), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.BigIntegers), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.Decimals), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.Doubles), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.Singles), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.SByteList), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.Int16List), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.Int32List), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.Int64List), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.BigIntegerList), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.DecimalList), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.DoublePrecisionFloatList), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.SinglePrecisionFloatList), MemberType = typeof(NumericMemberDataProvider))]
       public void IsSignedType_WhenGivenSignedData_ReturnsTrue(object self)
       {
          Assert.True(self.IsSignedType());
@@ -162,10 +162,10 @@ namespace Jcd.Utilities.Test.Extensions
       /// </summary>
       /// <param name="self">that data to test</param>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.Bytes), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.UInt16s), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.UInt32s), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.UInt64s), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.ByteList), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.UInt16List), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.UInt32List), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.UInt64List), MemberType = typeof(NumericMemberDataProvider))]
       public void IsSignedType_WhenGivenUnsignedData_ReturnsFalse(object self)
       {
          Assert.False(self.IsSignedType());
@@ -176,14 +176,14 @@ namespace Jcd.Utilities.Test.Extensions
       /// </summary>
       /// <param name="self">that data to test</param>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.SBytes), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.Int16s), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.Int32s), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.Int64s), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.BigIntegers), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.Decimals), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.Doubles), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.Singles), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.SByteList), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.Int16List), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.Int32List), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.Int64List), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.BigIntegerList), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.DecimalList), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.DoublePrecisionFloatList), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.SinglePrecisionFloatList), MemberType = typeof(NumericMemberDataProvider))]
       public void IsUnsignedType_WhenGivenSignedData_ReturnsFalse(object self)
       {
          Assert.False(self.IsUnsignedType());
@@ -194,10 +194,10 @@ namespace Jcd.Utilities.Test.Extensions
       /// </summary>
       /// <param name="self">that data to test</param>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.Bytes), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.UInt16s), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.UInt32s), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.UInt64s), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.ByteList), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.UInt16List), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.UInt32List), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.UInt64List), MemberType = typeof(NumericMemberDataProvider))]
       public void IsUnsignedType_WhenGivenUnsignedData_ReturnsTrue(object self)
       {
          Assert.True(self.IsUnsignedType());

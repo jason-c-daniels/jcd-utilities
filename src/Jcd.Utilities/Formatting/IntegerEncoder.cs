@@ -36,7 +36,7 @@ namespace Jcd.Utilities
 
       #region Private Fields
 
-      private static readonly Type[] formattableTypes =
+      private static readonly Type[] FormattableTypes =
       {
          typeof(byte), typeof(sbyte), typeof(ushort), typeof(short), typeof(int), typeof(uint), typeof(long),
          typeof(ulong)
@@ -60,7 +60,7 @@ namespace Jcd.Utilities
       ///     base value.)
       /// </param>
       public IntegerEncoder(string encodeCharacterSet, string[] decodeCharacterSet)
-      : base(formattableTypes, Format)
+      : base(FormattableTypes, Format)
       {
          Argument.IsNotNullWhitespaceOrEmpty(encodeCharacterSet, nameof(encodeCharacterSet));
          Argument.IsNotNull(decodeCharacterSet, nameof(decodeCharacterSet));
@@ -108,7 +108,7 @@ namespace Jcd.Utilities
       /// </param>
       /// <param name="caseSensitive">indicates if the characters are case sensitive for encoding/decoding.</param>
       public IntegerEncoder(string characterSet, bool caseSensitive = false)
-      : base(formattableTypes, Format)
+      : base(FormattableTypes, Format)
       {
          Argument.IsNotNullWhitespaceOrEmpty(characterSet, nameof(characterSet));
          Argument.IsGreaterThan(characterSet.Length, 0, "characterSet.Length");

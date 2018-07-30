@@ -41,7 +41,7 @@ namespace Jcd.Utilities.Samples.ConsoleApp
 
          Console.WriteLine();
          Console.WriteLine();
-         var enc = IntegerEncoders.Base32_Crockford;
+         var enc = IntegerEncoders.Base32Crockford;
          Console.WriteLine("Go!");
 
          foreach (var l in new NaiiveFibonacciSequence(1, 15000))

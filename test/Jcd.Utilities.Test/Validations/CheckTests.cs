@@ -3,6 +3,8 @@ using Jcd.Utilities.Validations;
 using System;
 using System.Collections.Generic;
 using Xunit;
+// ReSharper disable CollectionNeverUpdated.Local
+// ReSharper disable ExpressionIsAlwaysNull
 
 namespace Jcd.Utilities.Test.Validations
 {

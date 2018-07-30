@@ -17,7 +17,7 @@ namespace Jcd.Utilities.Extensions
       /// <returns>true if the object is of an integer data type</returns>
       public static bool IsBigIntegerType(this object self)
       {
-         return self.GetType() == typeof(BigInteger);
+         return self is BigInteger;
       }
 
       /// <summary>
@@ -69,7 +69,7 @@ namespace Jcd.Utilities.Extensions
 
          default:
          {
-            return self.GetType() == typeof(BigInteger);
+            return self is BigInteger;
          }
          }
       }
@@ -97,7 +97,7 @@ namespace Jcd.Utilities.Extensions
             return true;
 
          default:
-            return self.GetType() == typeof(BigInteger);
+            return self is BigInteger;
          }
       }
 
@@ -108,19 +108,33 @@ namespace Jcd.Utilities.Extensions
       /// <returns>true if the object is of a signed data type</returns>
       public static bool IsSignedType(this object self)
       {
-         switch (Type.GetTypeCode(self.GetType()))
+         var type = self.GetType();
+         var tc = Type.GetTypeCode(type);
+         switch (tc)
          {
-         case TypeCode.SByte:
-         case TypeCode.Int16:
-         case TypeCode.Int32:
-         case TypeCode.Int64:
-         case TypeCode.Decimal:
-         case TypeCode.Single:
-         case TypeCode.Double:
-            return true;
+            case TypeCode.SByte:
+            case TypeCode.Int16:
+            case TypeCode.Int32:
+            case TypeCode.Int64:
+            case TypeCode.Decimal:
+            case TypeCode.Single:
+            case TypeCode.Double:
+               return true;
 
-         default:
-            return self.GetType() == typeof(BigInteger);
+            case TypeCode.Boolean:
+            case TypeCode.Byte:
+            case TypeCode.Char:
+            case TypeCode.DateTime:
+            case TypeCode.DBNull:
+            case TypeCode.Empty:
+            case TypeCode.String:
+            case TypeCode.UInt16:
+            case TypeCode.UInt32:
+            case TypeCode.UInt64:
+               return false;
+            
+            default:
+               return self is BigInteger;
          }
       }
 

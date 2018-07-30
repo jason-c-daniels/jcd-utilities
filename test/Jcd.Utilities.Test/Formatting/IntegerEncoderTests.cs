@@ -20,18 +20,18 @@ namespace Jcd.Utilities.Test.Formatting
       /// </summary>
       /// <param name="number">The number to encode, then decode</param>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.Bytes), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.UInt16s), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.UInt32s), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.UInt64s), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.SBytes), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.Int16s), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.Int32s), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.Int64s), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.BigIntegers), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.ByteList), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.UInt16List), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.UInt32List), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.UInt64List), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.SByteList), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.Int16List), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.Int32List), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.Int64List), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.BigIntegerList), MemberType = typeof(NumericMemberDataProvider))]
       public void CrockfordEncoder_BigIntegerRoundTrip_ExpectValuesMatch(object number)
       {
-         var encoder = IntegerEncoders.Base32_Crockford;
+         var encoder = IntegerEncoders.Base32Crockford;
 
          if (number.IsBigIntegerType())
          {
@@ -60,15 +60,15 @@ namespace Jcd.Utilities.Test.Formatting
       /// </summary>
       /// <param name="number">The number to encode, then decode</param>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.Bytes), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.UInt16s), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.UInt32s), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.UInt64s), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.SBytes), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.Int16s), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.Int32s), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.Int64s), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.BigIntegers), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.ByteList), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.UInt16List), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.UInt32List), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.UInt64List), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.SByteList), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.Int16List), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.Int32List), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.Int64List), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.BigIntegerList), MemberType = typeof(NumericMemberDataProvider))]
       public void HexadecimalEncoder_BigIntegerRoundTrip_ExpectValuesMatch(object number)
       {
          try
@@ -108,17 +108,17 @@ namespace Jcd.Utilities.Test.Formatting
       /// </summary>
       /// <param name="number">The number to encode, then decode</param>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.Bytes), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.UInt16s), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.UInt32s), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.UInt64s), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.SBytes), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.Int16s), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.Int32s), MemberType = typeof(NumericMemberDataProvider))]
-      [MemberData(nameof(NumericMemberDataProvider.Int64s), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.ByteList), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.UInt16List), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.UInt32List), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.UInt64List), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.SByteList), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.Int16List), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.Int32List), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.Int64List), MemberType = typeof(NumericMemberDataProvider))]
       public void CrockfordEncoder_Int64RoundTrip_ExpectValuesMatch(object number)
       {
-         var encoder = IntegerEncoders.Base32_Crockford;
+         var encoder = IntegerEncoders.Base32Crockford;
 
          if (number.IsSignedType())
          {
@@ -214,7 +214,7 @@ namespace Jcd.Utilities.Test.Formatting
       /// Validate that Format Returns correct hex string when given UInt64.
       /// </summary>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.FibonacciBigIntegers), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.FibonacciBigIntegerList), MemberType = typeof(NumericMemberDataProvider))]
       public void Format_WhenGivenBigInteger_ReturnsCorrectHexString(BigInteger data)
       {
          var expected = data.ToString("X").ToLowerInvariant();
@@ -228,7 +228,7 @@ namespace Jcd.Utilities.Test.Formatting
       /// Validate that Format Returns correct hex string when given UInt64.
       /// </summary>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.FibonacciUInt64s), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.FibonacciUInt64List), MemberType = typeof(NumericMemberDataProvider))]
       public void Format_WhenGivenUInt64_ReturnsCorrectHexString(UInt64 data)
       {
          var expected = data.ToString("X").ToLowerInvariant();
@@ -241,7 +241,7 @@ namespace Jcd.Utilities.Test.Formatting
       /// Validate that Format Returns correct hex string when given Int64.
       /// </summary>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.FibonacciInt64s), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.FibonacciInt64List), MemberType = typeof(NumericMemberDataProvider))]
       public void Format_WhenGivenInt64_ReturnsCorrectHexString(Int64 data)
       {
          var expected = data.ToString("X").ToLowerInvariant();
@@ -254,7 +254,7 @@ namespace Jcd.Utilities.Test.Formatting
       /// Validate that Format Returns correct hex string when given UInt32.
       /// </summary>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.FibonacciUInt32s), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.FibonacciUInt32List), MemberType = typeof(NumericMemberDataProvider))]
       public void Format_WhenGivenUInt32_ReturnsCorrectHexString(UInt32 data)
       {
          var expected = data.ToString("X").ToLowerInvariant();
@@ -267,7 +267,7 @@ namespace Jcd.Utilities.Test.Formatting
       /// Validate that Format Returns correct hex string when given Int32.
       /// </summary>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.FibonacciInt32s), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.FibonacciInt32List), MemberType = typeof(NumericMemberDataProvider))]
       public void Format_WhenGivenInt32_ReturnsCorrectHexString(Int32 data)
       {
          var expected = data.ToString("X").ToLowerInvariant();
@@ -280,7 +280,7 @@ namespace Jcd.Utilities.Test.Formatting
       /// Validate that Format Returns correct hex string when given UInt16.
       /// </summary>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.FibonacciUInt16s), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.FibonacciUInt16List), MemberType = typeof(NumericMemberDataProvider))]
       public void Format_WhenGivenUInt16_ReturnsCorrectHexString(UInt16 data)
       {
          var expected = data.ToString("X").ToLowerInvariant();
@@ -293,7 +293,7 @@ namespace Jcd.Utilities.Test.Formatting
       /// Validate that Format Returns correct hex string when given Int16.
       /// </summary>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.FibonacciInt16s), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.FibonacciInt16List), MemberType = typeof(NumericMemberDataProvider))]
       public void Format_WhenGivenInt16_ReturnsCorrectHexString(Int16 data)
       {
          var expected = data.ToString("X").ToLowerInvariant();
@@ -306,7 +306,7 @@ namespace Jcd.Utilities.Test.Formatting
       /// Validate that Format Returns correct hex string when given UInt16.
       /// </summary>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.FibonacciBytes), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.FibonacciByteList), MemberType = typeof(NumericMemberDataProvider))]
       public void Format_WhenGivenByte_ReturnsCorrectHexString(Byte data)
       {
          var expected = data.ToString("X").ToLowerInvariant();
@@ -319,7 +319,7 @@ namespace Jcd.Utilities.Test.Formatting
       /// Validate that Format Returns correct hex string when given Int16. And validate round trip. (Parse)
       /// </summary>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.FibonacciSBytes), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.FibonacciSByteList), MemberType = typeof(NumericMemberDataProvider))]
       public void Format_WhenGivenSByte_ReturnsCorrectHexString(SByte data)
       {
          var expected = data.ToString("X").ToLowerInvariant();
@@ -335,7 +335,7 @@ namespace Jcd.Utilities.Test.Formatting
       /// Validate that Format Returns correct hex string when given negative sbyte.
       /// </summary>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.NegativeFibonacciSBytes), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.NegativeFibonacciSByteList), MemberType = typeof(NumericMemberDataProvider))]
       public void Format_WhenGivenNegativeSByte_ReturnsCorrectHexString(SByte data)
       {
          var abs = (byte)Math.Abs((short)data);
@@ -354,7 +354,7 @@ namespace Jcd.Utilities.Test.Formatting
       /// Validate that Format Returns correct hex string when given negative short.
       /// </summary>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.NegativeFibonacciInt16s), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.NegativeFibonacciInt16List), MemberType = typeof(NumericMemberDataProvider))]
       public void Format_WhenGivenNegativeInt16_ReturnsCorrectHexString(short data)
       {
          var abs = (ushort)Math.Abs((int)data);
@@ -374,7 +374,7 @@ namespace Jcd.Utilities.Test.Formatting
       /// Validate that Format Returns correct hex string when given negative int.
       /// </summary>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.NegativeFibonacciInt32s), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.NegativeFibonacciInt32List), MemberType = typeof(NumericMemberDataProvider))]
       public void Format_WhenGivenNegativeInt32_ReturnsCorrectHexString(int data)
       {
          var abs = (uint)Math.Abs((long)data);
@@ -394,7 +394,7 @@ namespace Jcd.Utilities.Test.Formatting
       /// Validate that Format Returns correct hex string when given negative int.
       /// </summary>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.NegativeFibonacciInt64s), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.NegativeFibonacciInt64List), MemberType = typeof(NumericMemberDataProvider))]
       public void Format_WhenGivenNegativeInt64_ReturnsCorrectHexString(long data)
       {
          var abs = (ulong)((BigInteger)data * -1);
@@ -414,7 +414,7 @@ namespace Jcd.Utilities.Test.Formatting
       /// Validate that Format Returns correct hex string when given negative int.
       /// </summary>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.NegativeFibonacciBigIntegers), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.NegativeFibonacciBigIntegerList), MemberType = typeof(NumericMemberDataProvider))]
       public void Format_WhenGivenNegativebigInteger_ReturnsCorrectHexString(BigInteger data)
       {
          var abs = data * -1;
@@ -828,7 +828,7 @@ namespace Jcd.Utilities.Test.Formatting
       /// Validate that Format Returns a formatted value when given a BigInteger.
       /// </summary>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.BigIntegers), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.BigIntegerList), MemberType = typeof(NumericMemberDataProvider))]
       public void Format_WhenGivenABigInteger_ReturnsFormattedValue(BigInteger data)
       {
          Assert.Equal(data.ToString(), IntegerEncoders.Decimal.Format(data));
@@ -837,7 +837,7 @@ namespace Jcd.Utilities.Test.Formatting
       /// Validate that Format Returns a formatted value when given an UInt64.
       /// </summary>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.UInt64s), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.UInt64List), MemberType = typeof(NumericMemberDataProvider))]
       public void Format_WhenGivenAUInt64_ReturnsFormattedValue(UInt64 data)
       {
          Assert.Equal(data.ToString(), IntegerEncoders.Decimal.Format(data));
@@ -847,7 +847,7 @@ namespace Jcd.Utilities.Test.Formatting
       /// Validate that Format returns a formatted value when given an Int16.
       /// </summary>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.Int64s), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.Int64List), MemberType = typeof(NumericMemberDataProvider))]
       public void Format_WhenGivenAnInt64_ReturnsFormattedValue(Int64 data)
       {
          Assert.Equal(data.ToString(), IntegerEncoders.Decimal.Format(data));
@@ -856,7 +856,7 @@ namespace Jcd.Utilities.Test.Formatting
       /// Validate that Format Returns a formatted value when given an UInt32.
       /// </summary>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.UInt32s), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.UInt32List), MemberType = typeof(NumericMemberDataProvider))]
       public void Format_WhenGivenAUInt32_ReturnsFormattedValue(UInt32 data)
       {
          Assert.Equal(data.ToString(), IntegerEncoders.Decimal.Format(data));
@@ -866,7 +866,7 @@ namespace Jcd.Utilities.Test.Formatting
       /// Validate that Format returns a formatted value when given an Int16.
       /// </summary>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.Int32s), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.Int32List), MemberType = typeof(NumericMemberDataProvider))]
       public void Format_WhenGivenAnInt32_ReturnsFormattedValue(Int32 data)
       {
          Assert.Equal(data.ToString(), IntegerEncoders.Decimal.Format(data));
@@ -876,7 +876,7 @@ namespace Jcd.Utilities.Test.Formatting
       /// Validate that Format Returns a formatted value when given an UInt16.
       /// </summary>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.UInt16s), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.UInt16List), MemberType = typeof(NumericMemberDataProvider))]
       public void Format_WhenGivenAUInt16_ReturnsFormattedValue(UInt16 data)
       {
          Assert.Equal(data.ToString(), IntegerEncoders.Decimal.Format(data));
@@ -886,7 +886,7 @@ namespace Jcd.Utilities.Test.Formatting
       /// Validate that Format returns a formatted value when given an Int16.
       /// </summary>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.Int16s), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.Int16List), MemberType = typeof(NumericMemberDataProvider))]
       public void Format_WhenGivenAnInt16_ReturnsFormattedValue(short data)
       {
          Assert.Equal(data.ToString(), IntegerEncoders.Decimal.Format(data));
@@ -896,7 +896,7 @@ namespace Jcd.Utilities.Test.Formatting
       /// Validate that Format Returns a formatted value when given a byte.
       /// </summary>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.Bytes), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.ByteList), MemberType = typeof(NumericMemberDataProvider))]
       public void Format_WhenGivenAByte_ReturnsFormattedValue(byte data)
       {
          Assert.Equal(data.ToString(), IntegerEncoders.Decimal.Format(data));
@@ -906,7 +906,7 @@ namespace Jcd.Utilities.Test.Formatting
       /// Validate that Format returns a formatted value when given an sbyte.
       /// </summary>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.SBytes), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.SByteList), MemberType = typeof(NumericMemberDataProvider))]
       public void Format_WhenGivenAnSByte_ReturnsFormattedValue(sbyte data)
       {
          Assert.Equal(data.ToString(), IntegerEncoders.Decimal.Format(data));
@@ -919,7 +919,7 @@ namespace Jcd.Utilities.Test.Formatting
       /// Validate that Format Returns a formatted value when given a BigInteger.
       /// </summary>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.BigIntegers), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.BigIntegerList), MemberType = typeof(NumericMemberDataProvider))]
       public void ICustomFormatter_Format_WhenGivenABigInteger_ReturnsFormattedValue(BigInteger data)
       {
          Assert.Equal(data.ToString(), IntegerEncoders.Decimal.Format("", data, IntegerEncoders.Decimal));
@@ -928,7 +928,7 @@ namespace Jcd.Utilities.Test.Formatting
       /// Validate that Format Returns a formatted value when given an UInt64.
       /// </summary>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.UInt64s), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.UInt64List), MemberType = typeof(NumericMemberDataProvider))]
       public void ICustomFormatter_Format_WhenGivenAUInt64_ReturnsFormattedValue(UInt64 data)
       {
          Assert.Equal(data.ToString(), IntegerEncoders.Decimal.Format("", data, IntegerEncoders.Decimal));
@@ -938,7 +938,7 @@ namespace Jcd.Utilities.Test.Formatting
       /// Validate that Format returns a formatted value when given an Int16.
       /// </summary>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.Int64s), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.Int64List), MemberType = typeof(NumericMemberDataProvider))]
       public void ICustomFormatter_Format_WhenGivenAnInt64_ReturnsFormattedValue(Int64 data)
       {
          Assert.Equal(data.ToString(), IntegerEncoders.Decimal.Format("", data, IntegerEncoders.Decimal));
@@ -947,7 +947,7 @@ namespace Jcd.Utilities.Test.Formatting
       /// Validate that Format Returns a formatted value when given an UInt32.
       /// </summary>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.UInt32s), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.UInt32List), MemberType = typeof(NumericMemberDataProvider))]
       public void ICustomFormatter_Format_WhenGivenAUInt32_ReturnsFormattedValue(UInt32 data)
       {
          Assert.Equal(data.ToString(), IntegerEncoders.Decimal.Format("", data, IntegerEncoders.Decimal));
@@ -957,7 +957,7 @@ namespace Jcd.Utilities.Test.Formatting
       /// Validate that Format returns a formatted value when given an Int16.
       /// </summary>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.Int32s), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.Int32List), MemberType = typeof(NumericMemberDataProvider))]
       public void ICustomFormatter_Format_WhenGivenAnInt32_ReturnsFormattedValue(Int32 data)
       {
          Assert.Equal(data.ToString(), IntegerEncoders.Decimal.Format("", data, IntegerEncoders.Decimal));
@@ -967,7 +967,7 @@ namespace Jcd.Utilities.Test.Formatting
       /// Validate that Format Returns a formatted value when given an UInt16.
       /// </summary>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.UInt16s), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.UInt16List), MemberType = typeof(NumericMemberDataProvider))]
       public void ICustomFormatter_Format_WhenGivenAUInt16_ReturnsFormattedValue(UInt16 data)
       {
          Assert.Equal(data.ToString(), IntegerEncoders.Decimal.Format("", data, IntegerEncoders.Decimal));
@@ -977,7 +977,7 @@ namespace Jcd.Utilities.Test.Formatting
       /// Validate that Format returns a formatted value when given an Int16.
       /// </summary>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.Int16s), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.Int16List), MemberType = typeof(NumericMemberDataProvider))]
       public void ICustomFormatter_Format_WhenGivenAnInt16_ReturnsFormattedValue(short data)
       {
          Assert.Equal(data.ToString(), IntegerEncoders.Decimal.Format("", data, IntegerEncoders.Decimal));
@@ -987,7 +987,7 @@ namespace Jcd.Utilities.Test.Formatting
       /// Validate that Format Returns a formatted value when given a byte.
       /// </summary>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.Bytes), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.ByteList), MemberType = typeof(NumericMemberDataProvider))]
       public void ICustomFormatter_Format_WhenGivenAByte_ReturnsFormattedValue(byte data)
       {
          Assert.Equal(data.ToString(), IntegerEncoders.Decimal.Format("", data, IntegerEncoders.Decimal));
@@ -997,7 +997,7 @@ namespace Jcd.Utilities.Test.Formatting
       /// Validate that Format returns a formatted value when given an sbyte.
       /// </summary>
       [Theory]
-      [MemberData(nameof(NumericMemberDataProvider.SBytes), MemberType = typeof(NumericMemberDataProvider))]
+      [MemberData(nameof(NumericMemberDataProvider.SByteList), MemberType = typeof(NumericMemberDataProvider))]
       public void ICustomFormatter_Format_WhenGivenAnSByte_ReturnsFormattedValue(sbyte data)
       {
          Assert.Equal(data.ToString(), IntegerEncoders.Decimal.Format("", data, IntegerEncoders.Decimal));

@@ -7,11 +7,12 @@ namespace Jcd.Utilities.Test.Formatting
 {
    public class CustomFormatterBaseTests
    {
-      const string fake_formatted_result = "result";
+      const string FakeFormattedResult = "result";
       private static FakeCustomFormatter CreateSut()
       {
-         return new FakeCustomFormatter(fake_formatted_result, FakeCustomFormatter.handledTypes, FakeCustomFormatter.Format);
+         return new FakeCustomFormatter(FakeFormattedResult, FakeCustomFormatter.HandledTypes, FakeCustomFormatter.Format);
       }
+      /// <inheritdoc />
       /// <summary>
       /// A helper class that yields a fixed result for any calls to format
       /// </summary>
@@ -21,13 +22,13 @@ namespace Jcd.Utilities.Test.Formatting
          /// <summary>
          /// The types of data this fake formatter will handle
          /// </summary>
-         public static Type[] handledTypes = {typeof(int), typeof(float)};
+         public static readonly Type[] HandledTypes = {typeof(int), typeof(float)};
 
          #endregion Public Fields
 
          #region Protected Fields
 
-         protected string formatResult;
+         protected readonly string FormatResult;
 
          #endregion Protected Fields
 
@@ -37,7 +38,7 @@ namespace Jcd.Utilities.Test.Formatting
                                     Func<ICustomFormatter, string, object, IFormatProvider, string> formatFunction = null) : base(
                                        handledTypes, formatFunction)
          {
-            this.formatResult = formatResult;
+            FormatResult = formatResult;
          }
 
          #endregion Public Constructors
@@ -47,7 +48,7 @@ namespace Jcd.Utilities.Test.Formatting
          public static string Format(ICustomFormatter formatter, string fmt, object arg, IFormatProvider fmtProvider)
          {
             if (formatter is FakeCustomFormatter self) {
-               return self.formatResult;
+               return self.FormatResult;
             }
 
             return null;
@@ -60,9 +61,9 @@ namespace Jcd.Utilities.Test.Formatting
       /// Validate that the Constructor throws an ArgumentException when passing an empty set of handled types.
       /// </summary>
       [Fact]
-      public void Constructor_WhenGivenEmptyHandledTypes_ThrowsArgumentException()
+      public void Constructor_WhenGivenEmptyHandledTypes_ThrowsArgumentNullException()
       {
-         Assert.Throws<ArgumentException>(() => new FakeCustomFormatter(null, new Type[] { }, null));
+         Assert.Throws<ArgumentNullException>(() => new FakeCustomFormatter(null, new Type[] { }, null));
       }
 
       /// <summary>
@@ -131,7 +132,7 @@ namespace Jcd.Utilities.Test.Formatting
          // act
          var result = sut.Format("", arg, sut);
          // assert
-         Assert.Equal(fake_formatted_result, result);
+         Assert.Equal(FakeFormattedResult, result);
       }
 
       /// <summary>

@@ -3,7 +3,7 @@
 namespace Jcd.Utilities.Test.TestHelpers
 {
    /// <summary>
-   /// A helper class that implements IComparable
+   ///    A helper class that implements IComparable
    /// </summary>
    public class IntHolder : IComparable<IntHolder>
    {
@@ -15,23 +15,15 @@ namespace Jcd.Utilities.Test.TestHelpers
 
       #region Public Methods
 
-      public int CompareTo(IntHolder other)
-      {
-         return Value.CompareTo(other.Value);
-      }
+      public int CompareTo(IntHolder other) { return Value.CompareTo(other.Value); }
 
       #endregion Public Methods
 
       #region Public Constructors
 
-      public IntHolder()
-      {
-      }
+      public IntHolder() { }
 
-      public IntHolder(int v)
-      {
-         Value = v;
-      }
+      public IntHolder(int v) { Value = v; }
 
       #endregion Public Constructors
    }

@@ -7,34 +7,34 @@ using Jcd.Utilities.Validations;
 
 namespace Jcd.Utilities.Formatting
 {
-    /// <summary>
-    ///    A class that performs integer encoding to text in an arbitrary base, as well as parsing
-    ///    text encoded in the same manner.
-    /// </summary>
-    public class IntegerEncoder : CustomFormatterBase, IIntegerFormatter, IIntegerParser
+   /// <summary>
+   ///    A class that performs integer encoding to text in an arbitrary base, as well as parsing
+   ///    text encoded in the same manner.
+   /// </summary>
+   public class IntegerEncoder : CustomFormatterBase, IIntegerFormatter, IIntegerParser
    {
       #region Public Fields
 
-       /// <summary>
-       ///    The numeric base of the encoder
-       /// </summary>
-       public readonly ushort Base;
+      /// <summary>
+      ///    The numeric base of the encoder
+      /// </summary>
+      public readonly ushort Base;
 
-       /// <summary>
-       ///    Indicates if the characters that are decoded/encoded are case sensitive.
-       /// </summary>
-       public readonly bool CaseSensitive;
+      /// <summary>
+      ///    Indicates if the characters that are decoded/encoded are case sensitive.
+      /// </summary>
+      public readonly bool CaseSensitive;
 
-       /// <summary>
-       ///    The character set used for encoding and decoding (for simple decoders)
-       /// </summary>
-       public readonly string CharacterSet;
+      /// <summary>
+      ///    The character set used for encoding and decoding (for simple decoders)
+      /// </summary>
+      public readonly string CharacterSet;
 
-       /// <summary>
-       ///    A flag that indicates if the values of the characterset are numerically increasing. Using this can allow for faster
-       ///    sorts of short numbers by NOT decoding first. (i.e. For positive numbers the text will sort the same as the number)
-       /// </summary>
-       public readonly bool CharacterSetValuesAlwaysIncrease;
+      /// <summary>
+      ///    A flag that indicates if the values of the characterset are numerically increasing. Using this can allow for faster
+      ///    sorts of short numbers by NOT decoding first. (i.e. For positive numbers the text will sort the same as the number)
+      /// </summary>
+      public readonly bool CharacterSetValuesAlwaysIncrease;
 
       #endregion Public Fields
 
@@ -58,18 +58,18 @@ namespace Jcd.Utilities.Formatting
 
       #region Public Constructors
 
-       /// <summary>
-       ///    Constructs an encoder when given a character set to encode to, and an array of decode
-       ///    mappings. (This is to support Crockford encoding/decoding)
-       /// </summary>
-       /// <param name="encodeCharacterSet">
-       ///    The set of characters to use when encoding a number to text.
-       /// </param>
-       /// <param name="decodeCharacterSet">
-       ///    The set of decode character mappings (i.e. which sets of characters map to which numeric
-       ///    base value.)
-       /// </param>
-       public IntegerEncoder(string encodeCharacterSet, string[] decodeCharacterSet)
+      /// <summary>
+      ///    Constructs an encoder when given a character set to encode to, and an array of decode
+      ///    mappings. (This is to support Crockford encoding/decoding)
+      /// </summary>
+      /// <param name="encodeCharacterSet">
+      ///    The set of characters to use when encoding a number to text.
+      /// </param>
+      /// <param name="decodeCharacterSet">
+      ///    The set of decode character mappings (i.e. which sets of characters map to which numeric
+      ///    base value.)
+      /// </param>
+      public IntegerEncoder(string encodeCharacterSet, string[] decodeCharacterSet)
          : base(FormattableTypes, Format)
       {
          Argument.IsNotNullWhitespaceOrEmpty(encodeCharacterSet, nameof(encodeCharacterSet));
@@ -86,7 +86,10 @@ namespace Jcd.Utilities.Formatting
 
          for (var i = 0; i < decodeCharacterSet.Length; i++)
          {
-            foreach (var c in decodeCharacterSet[i]) { _charToValue.Add(c, i); }
+            foreach (var c in decodeCharacterSet[i])
+            {
+               _charToValue.Add(c, i);
+            }
          }
 
          // now validate that there is the ability to decode that which we encode.
@@ -111,15 +114,15 @@ namespace Jcd.Utilities.Formatting
          }
       }
 
-       /// <summary>
-       ///    Constructs an encoder when given an alphabet with exact encoding to decoding matching.
-       /// </summary>
-       /// <param name="characterSet">
-       ///    The character set to use for encoding and decoding. (where length = n, char at index 0=0,
-       ///    char at n-1=n-1)
-       /// </param>
-       /// <param name="caseSensitive">indicates if the characters are case sensitive for encoding/decoding.</param>
-       public IntegerEncoder(string characterSet, bool caseSensitive = false)
+      /// <summary>
+      ///    Constructs an encoder when given an alphabet with exact encoding to decoding matching.
+      /// </summary>
+      /// <param name="characterSet">
+      ///    The character set to use for encoding and decoding. (where length = n, char at index 0=0,
+      ///    char at n-1=n-1)
+      /// </param>
+      /// <param name="caseSensitive">indicates if the characters are case sensitive for encoding/decoding.</param>
+      public IntegerEncoder(string characterSet, bool caseSensitive = false)
          : base(FormattableTypes, Format)
       {
          Argument.IsNotNullWhitespaceOrEmpty(characterSet, nameof(characterSet));
@@ -638,7 +641,10 @@ namespace Jcd.Utilities.Formatting
 
             return true;
          }
-         catch { return false; }
+         catch
+         {
+            return false;
+         }
       }
 
       /// <inheritdoc />
@@ -650,7 +656,10 @@ namespace Jcd.Utilities.Formatting
 
             return true;
          }
-         catch { return false; }
+         catch
+         {
+            return false;
+         }
       }
 
       /// <inheritdoc />
@@ -662,7 +671,10 @@ namespace Jcd.Utilities.Formatting
 
             return true;
          }
-         catch { return false; }
+         catch
+         {
+            return false;
+         }
       }
 
       /// <inheritdoc />
@@ -674,7 +686,10 @@ namespace Jcd.Utilities.Formatting
 
             return true;
          }
-         catch { return false; }
+         catch
+         {
+            return false;
+         }
       }
 
       /// <inheritdoc />
@@ -686,7 +701,10 @@ namespace Jcd.Utilities.Formatting
 
             return true;
          }
-         catch { return false; }
+         catch
+         {
+            return false;
+         }
       }
 
       /// <inheritdoc />
@@ -698,7 +716,10 @@ namespace Jcd.Utilities.Formatting
 
             return true;
          }
-         catch { return false; }
+         catch
+         {
+            return false;
+         }
       }
 
       /// <inheritdoc />
@@ -710,7 +731,10 @@ namespace Jcd.Utilities.Formatting
 
             return true;
          }
-         catch { return false; }
+         catch
+         {
+            return false;
+         }
       }
 
       /// <inheritdoc />
@@ -722,7 +746,10 @@ namespace Jcd.Utilities.Formatting
 
             return true;
          }
-         catch { return false; }
+         catch
+         {
+            return false;
+         }
       }
 
       /// <inheritdoc />
@@ -734,7 +761,10 @@ namespace Jcd.Utilities.Formatting
 
             return true;
          }
-         catch { return false; }
+         catch
+         {
+            return false;
+         }
       }
 
       #endregion Public Methods

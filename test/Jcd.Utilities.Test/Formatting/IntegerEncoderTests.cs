@@ -16,12 +16,12 @@ namespace Jcd.Utilities.Test.Formatting
       private const string ElevenAsBinary = "1011";
       private const string NonBinaryNegativeTestData = "nonbinary-pass to binary decoder, this should make it sad.";
 
-       /// <summary>
-       ///    Performs a round trip (encode, decode) using the CrockfordEncoder encoder on the provided sample data, as
-       ///    BigIntegers. The encoded and decoded values must match in order to pass.
-       /// </summary>
-       /// <param name="number">The number to encode, then decode</param>
-       [Theory]
+      /// <summary>
+      ///    Performs a round trip (encode, decode) using the CrockfordEncoder encoder on the provided sample data, as
+      ///    BigIntegers. The encoded and decoded values must match in order to pass.
+      /// </summary>
+      /// <param name="number">The number to encode, then decode</param>
+      [Theory]
       [MemberData(nameof(NumericMemberDataProvider.ByteList), MemberType = typeof(NumericMemberDataProvider))]
       [MemberData(nameof(NumericMemberDataProvider.UInt16List), MemberType = typeof(NumericMemberDataProvider))]
       [MemberData(nameof(NumericMemberDataProvider.UInt32List), MemberType = typeof(NumericMemberDataProvider))]
@@ -57,12 +57,12 @@ namespace Jcd.Utilities.Test.Formatting
          }
       }
 
-       /// <summary>
-       ///    Performs a round trip (encode, decode) using the Hexadecimal encoder on the provided sample data, as BigIntegers.
-       ///    The encoded and decoded values must match in order to pass.
-       /// </summary>
-       /// <param name="number">The number to encode, then decode</param>
-       [Theory]
+      /// <summary>
+      ///    Performs a round trip (encode, decode) using the Hexadecimal encoder on the provided sample data, as BigIntegers.
+      ///    The encoded and decoded values must match in order to pass.
+      /// </summary>
+      /// <param name="number">The number to encode, then decode</param>
+      [Theory]
       [MemberData(nameof(NumericMemberDataProvider.ByteList), MemberType = typeof(NumericMemberDataProvider))]
       [MemberData(nameof(NumericMemberDataProvider.UInt16List), MemberType = typeof(NumericMemberDataProvider))]
       [MemberData(nameof(NumericMemberDataProvider.UInt32List), MemberType = typeof(NumericMemberDataProvider))]
@@ -107,12 +107,12 @@ namespace Jcd.Utilities.Test.Formatting
          }
       }
 
-       /// <summary>
-       ///    Performs a round trip (encode, decode) using the Hexadecimal encoder on the provided sample data, as Int64. The
-       ///    encoded and decoded values must match in order to pass.
-       /// </summary>
-       /// <param name="number">The number to encode, then decode</param>
-       [Theory]
+      /// <summary>
+      ///    Performs a round trip (encode, decode) using the Hexadecimal encoder on the provided sample data, as Int64. The
+      ///    encoded and decoded values must match in order to pass.
+      /// </summary>
+      /// <param name="number">The number to encode, then decode</param>
+      [Theory]
       [MemberData(nameof(NumericMemberDataProvider.ByteList), MemberType = typeof(NumericMemberDataProvider))]
       [MemberData(nameof(NumericMemberDataProvider.UInt16List), MemberType = typeof(NumericMemberDataProvider))]
       [MemberData(nameof(NumericMemberDataProvider.UInt32List), MemberType = typeof(NumericMemberDataProvider))]
@@ -141,10 +141,10 @@ namespace Jcd.Utilities.Test.Formatting
          }
       }
 
-       /// <summary>
-       ///    Validate that Constructor Returns ValidMonotonic When MonotonicAlphabetUsed.
-       /// </summary>
-       [Theory]
+      /// <summary>
+      ///    Validate that Constructor Returns ValidMonotonic When MonotonicAlphabetUsed.
+      /// </summary>
+      [Theory]
       [InlineData("0123456789", true)]
       [InlineData("0246789", true)]
       [InlineData("1234567890", false)]
@@ -156,10 +156,10 @@ namespace Jcd.Utilities.Test.Formatting
          Assert.Equal(isAlwaysIncreasing, encoder.CharacterSetValuesAlwaysIncrease);
       }
 
-       /// <summary>
-       ///    Validate that Format Returns correct hex string when given UInt64.
-       /// </summary>
-       [Theory]
+      /// <summary>
+      ///    Validate that Format Returns correct hex string when given UInt64.
+      /// </summary>
+      [Theory]
       [MemberData(nameof(NumericMemberDataProvider.FibonacciBigIntegerList),
          MemberType =
             typeof(NumericMemberDataProvider))]
@@ -173,10 +173,10 @@ namespace Jcd.Utilities.Test.Formatting
          Assert.Equal(data, IntegerEncoders.Hexadecimal.ParseBigInteger(actual));
       }
 
-       /// <summary>
-       ///    Validate that Format Returns correct hex string when given UInt64.
-       /// </summary>
-       [Theory]
+      /// <summary>
+      ///    Validate that Format Returns correct hex string when given UInt64.
+      /// </summary>
+      [Theory]
       [MemberData(nameof(NumericMemberDataProvider.FibonacciUInt64List),
          MemberType =
             typeof(NumericMemberDataProvider))]
@@ -188,10 +188,10 @@ namespace Jcd.Utilities.Test.Formatting
          Assert.Equal(data, IntegerEncoders.Hexadecimal.ParseUInt64(actual));
       }
 
-       /// <summary>
-       ///    Validate that Format Returns correct hex string when given Int64.
-       /// </summary>
-       [Theory]
+      /// <summary>
+      ///    Validate that Format Returns correct hex string when given Int64.
+      /// </summary>
+      [Theory]
       [MemberData(nameof(NumericMemberDataProvider.FibonacciInt64List),
          MemberType =
             typeof(NumericMemberDataProvider))]
@@ -203,10 +203,10 @@ namespace Jcd.Utilities.Test.Formatting
          Assert.Equal(data, IntegerEncoders.Hexadecimal.ParseInt64(actual));
       }
 
-       /// <summary>
-       ///    Validate that Format Returns correct hex string when given UInt32.
-       /// </summary>
-       [Theory]
+      /// <summary>
+      ///    Validate that Format Returns correct hex string when given UInt32.
+      /// </summary>
+      [Theory]
       [MemberData(nameof(NumericMemberDataProvider.FibonacciUInt32List),
          MemberType =
             typeof(NumericMemberDataProvider))]
@@ -218,10 +218,10 @@ namespace Jcd.Utilities.Test.Formatting
          Assert.Equal(data, IntegerEncoders.Hexadecimal.ParseUInt32(actual));
       }
 
-       /// <summary>
-       ///    Validate that Format Returns correct hex string when given Int32.
-       /// </summary>
-       [Theory]
+      /// <summary>
+      ///    Validate that Format Returns correct hex string when given Int32.
+      /// </summary>
+      [Theory]
       [MemberData(nameof(NumericMemberDataProvider.FibonacciInt32List),
          MemberType =
             typeof(NumericMemberDataProvider))]
@@ -233,10 +233,10 @@ namespace Jcd.Utilities.Test.Formatting
          Assert.Equal(data, IntegerEncoders.Hexadecimal.ParseInt32(actual));
       }
 
-       /// <summary>
-       ///    Validate that Format Returns correct hex string when given UInt16.
-       /// </summary>
-       [Theory]
+      /// <summary>
+      ///    Validate that Format Returns correct hex string when given UInt16.
+      /// </summary>
+      [Theory]
       [MemberData(nameof(NumericMemberDataProvider.FibonacciUInt16List),
          MemberType =
             typeof(NumericMemberDataProvider))]
@@ -248,10 +248,10 @@ namespace Jcd.Utilities.Test.Formatting
          Assert.Equal(data, IntegerEncoders.Hexadecimal.ParseUInt16(actual));
       }
 
-       /// <summary>
-       ///    Validate that Format Returns correct hex string when given Int16.
-       /// </summary>
-       [Theory]
+      /// <summary>
+      ///    Validate that Format Returns correct hex string when given Int16.
+      /// </summary>
+      [Theory]
       [MemberData(nameof(NumericMemberDataProvider.FibonacciInt16List),
          MemberType =
             typeof(NumericMemberDataProvider))]
@@ -263,10 +263,10 @@ namespace Jcd.Utilities.Test.Formatting
          Assert.Equal(data, IntegerEncoders.Hexadecimal.ParseInt16(actual));
       }
 
-       /// <summary>
-       ///    Validate that Format Returns correct hex string when given UInt16.
-       /// </summary>
-       [Theory]
+      /// <summary>
+      ///    Validate that Format Returns correct hex string when given UInt16.
+      /// </summary>
+      [Theory]
       [MemberData(nameof(NumericMemberDataProvider.FibonacciByteList),
          MemberType =
             typeof(NumericMemberDataProvider))]
@@ -278,10 +278,10 @@ namespace Jcd.Utilities.Test.Formatting
          Assert.Equal(data, IntegerEncoders.Hexadecimal.ParseByte(actual));
       }
 
-       /// <summary>
-       ///    Validate that Format Returns correct hex string when given Int16. And validate round trip. (Parse)
-       /// </summary>
-       [Theory]
+      /// <summary>
+      ///    Validate that Format Returns correct hex string when given Int16. And validate round trip. (Parse)
+      /// </summary>
+      [Theory]
       [MemberData(nameof(NumericMemberDataProvider.FibonacciSByteList),
          MemberType =
             typeof(NumericMemberDataProvider))]
@@ -293,10 +293,10 @@ namespace Jcd.Utilities.Test.Formatting
          Assert.Equal(data, IntegerEncoders.Hexadecimal.ParseSByte(actual));
       }
 
-       /// <summary>
-       ///    Validate that Format Returns correct hex string when given negative sbyte.
-       /// </summary>
-       [Theory]
+      /// <summary>
+      ///    Validate that Format Returns correct hex string when given negative sbyte.
+      /// </summary>
+      [Theory]
       [MemberData(nameof(NumericMemberDataProvider.NegativeFibonacciSByteList),
          MemberType =
             typeof(NumericMemberDataProvider))]
@@ -312,10 +312,10 @@ namespace Jcd.Utilities.Test.Formatting
          Assert.Equal(data, IntegerEncoders.Hexadecimal.ParseSByte(actual));
       }
 
-       /// <summary>
-       ///    Validate that Format Returns correct hex string when given negative short.
-       /// </summary>
-       [Theory]
+      /// <summary>
+      ///    Validate that Format Returns correct hex string when given negative short.
+      /// </summary>
+      [Theory]
       [MemberData(nameof(NumericMemberDataProvider.NegativeFibonacciInt16List),
          MemberType =
             typeof(NumericMemberDataProvider))]
@@ -331,10 +331,10 @@ namespace Jcd.Utilities.Test.Formatting
          Assert.Equal(data, IntegerEncoders.Hexadecimal.ParseInt16(actual));
       }
 
-       /// <summary>
-       ///    Validate that Format Returns correct hex string when given negative int.
-       /// </summary>
-       [Theory]
+      /// <summary>
+      ///    Validate that Format Returns correct hex string when given negative int.
+      /// </summary>
+      [Theory]
       [MemberData(nameof(NumericMemberDataProvider.NegativeFibonacciInt32List),
          MemberType =
             typeof(NumericMemberDataProvider))]
@@ -350,10 +350,10 @@ namespace Jcd.Utilities.Test.Formatting
          Assert.Equal(data, IntegerEncoders.Hexadecimal.ParseInt32(actual));
       }
 
-       /// <summary>
-       ///    Validate that Format Returns correct hex string when given negative int.
-       /// </summary>
-       [Theory]
+      /// <summary>
+      ///    Validate that Format Returns correct hex string when given negative int.
+      /// </summary>
+      [Theory]
       [MemberData(nameof(NumericMemberDataProvider.NegativeFibonacciInt64List),
          MemberType =
             typeof(NumericMemberDataProvider))]
@@ -369,10 +369,10 @@ namespace Jcd.Utilities.Test.Formatting
          Assert.Equal(data, IntegerEncoders.Hexadecimal.ParseInt64(actual));
       }
 
-       /// <summary>
-       ///    Validate that Format Returns correct hex string when given negative int.
-       /// </summary>
-       [Theory]
+      /// <summary>
+      ///    Validate that Format Returns correct hex string when given negative int.
+      /// </summary>
+      [Theory]
       [MemberData(nameof(NumericMemberDataProvider.NegativeFibonacciBigIntegerList),
          MemberType =
             typeof(NumericMemberDataProvider))]
@@ -388,10 +388,10 @@ namespace Jcd.Utilities.Test.Formatting
          Assert.Equal(data, IntegerEncoders.Hexadecimal.ParseBigInteger(actual));
       }
 
-       /// <summary>
-       ///    Validate that ParseByte throws ArgumentException when given characters not in the encoding scheme.
-       /// </summary>
-       [Theory]
+      /// <summary>
+      ///    Validate that ParseByte throws ArgumentException when given characters not in the encoding scheme.
+      /// </summary>
+      [Theory]
       [InlineData(ElevenAsBinary, true)]
       [InlineData(NonBinaryNegativeTestData, false)]
       public void TryParseBigInteger_WhenGivenText_ReturnsTrueWhenDecodedFalseWhenNot(string text, bool parsed)
@@ -403,10 +403,10 @@ namespace Jcd.Utilities.Test.Formatting
          if (parsed) Assert.Equal(decoded, result);
       }
 
-       /// <summary>
-       ///    Validate that ParseByte throws ArgumentException when given characters not in the encoding scheme.
-       /// </summary>
-       [Theory]
+      /// <summary>
+      ///    Validate that ParseByte throws ArgumentException when given characters not in the encoding scheme.
+      /// </summary>
+      [Theory]
       [InlineData(ElevenAsBinary, true, 11)]
       [InlineData(NonBinaryNegativeTestData, false, 0)]
       public void TryParseUInt64_WhenGivenText_ReturnsTrueWhenDecodedFalseWhenNot(string text,
@@ -419,10 +419,10 @@ namespace Jcd.Utilities.Test.Formatting
          if (parsed) Assert.Equal(decoded, result);
       }
 
-       /// <summary>
-       ///    Validate that ParseSByte throws ArgumentException when given characters not in the encoding scheme.
-       /// </summary>
-       [Theory]
+      /// <summary>
+      ///    Validate that ParseSByte throws ArgumentException when given characters not in the encoding scheme.
+      /// </summary>
+      [Theory]
       [InlineData(ElevenAsBinary, true, 11)]
       [InlineData(NonBinaryNegativeTestData, false, 0)]
       public void TryParseInt64_WhenGivenText_ReturnsTrueWhenDecodedFalseWhenNot(string text,
@@ -435,10 +435,10 @@ namespace Jcd.Utilities.Test.Formatting
          if (parsed) Assert.Equal(decoded, result);
       }
 
-       /// <summary>
-       ///    Validate that ParseByte throws ArgumentException when given characters not in the encoding scheme.
-       /// </summary>
-       [Theory]
+      /// <summary>
+      ///    Validate that ParseByte throws ArgumentException when given characters not in the encoding scheme.
+      /// </summary>
+      [Theory]
       [InlineData(ElevenAsBinary, true, 11)]
       [InlineData(NonBinaryNegativeTestData, false, 0)]
       public void TryParseUInt32_WhenGivenText_ReturnsTrueWhenDecodedFalseWhenNot(string text,
@@ -451,10 +451,10 @@ namespace Jcd.Utilities.Test.Formatting
          if (parsed) Assert.Equal(decoded, result);
       }
 
-       /// <summary>
-       ///    Validate that ParseSByte throws ArgumentException when given characters not in the encoding scheme.
-       /// </summary>
-       [Theory]
+      /// <summary>
+      ///    Validate that ParseSByte throws ArgumentException when given characters not in the encoding scheme.
+      /// </summary>
+      [Theory]
       [InlineData(ElevenAsBinary, true, 11)]
       [InlineData(NonBinaryNegativeTestData, false, 0)]
       public void TryParseInt32_WhenGivenText_ReturnsTrueWhenDecodedFalseWhenNot(string text,
@@ -467,10 +467,10 @@ namespace Jcd.Utilities.Test.Formatting
          if (parsed) Assert.Equal(decoded, result);
       }
 
-       /// <summary>
-       ///    Validate that ParseByte throws ArgumentException when given characters not in the encoding scheme.
-       /// </summary>
-       [Theory]
+      /// <summary>
+      ///    Validate that ParseByte throws ArgumentException when given characters not in the encoding scheme.
+      /// </summary>
+      [Theory]
       [InlineData(ElevenAsBinary, true, 11)]
       [InlineData(NonBinaryNegativeTestData, false, 0)]
       public void TryParseUInt16_WhenGivenText_ReturnsTrueWhenDecodedFalseWhenNot(string text,
@@ -483,10 +483,10 @@ namespace Jcd.Utilities.Test.Formatting
          if (parsed) Assert.Equal(decoded, result);
       }
 
-       /// <summary>
-       ///    Validate that ParseSByte throws ArgumentException when given characters not in the encoding scheme.
-       /// </summary>
-       [Theory]
+      /// <summary>
+      ///    Validate that ParseSByte throws ArgumentException when given characters not in the encoding scheme.
+      /// </summary>
+      [Theory]
       [InlineData(ElevenAsBinary, true, 11)]
       [InlineData(NonBinaryNegativeTestData, false, 0)]
       public void TryParseInt16_WhenGivenText_ReturnsTrueWhenDecodedFalseWhenNot(string text,
@@ -499,10 +499,10 @@ namespace Jcd.Utilities.Test.Formatting
          if (parsed) Assert.Equal(decoded, result);
       }
 
-       /// <summary>
-       ///    Validate that ParseByte throws ArgumentException when given characters not in the encoding scheme.
-       /// </summary>
-       [Theory]
+      /// <summary>
+      ///    Validate that ParseByte throws ArgumentException when given characters not in the encoding scheme.
+      /// </summary>
+      [Theory]
       [InlineData(ElevenAsBinary, true, 11)]
       [InlineData(NonBinaryNegativeTestData, false, 0)]
       public void TryParseByte_WhenGivenText_ReturnsTrueWhenDecodedFalseWhenNot(string text,
@@ -515,10 +515,10 @@ namespace Jcd.Utilities.Test.Formatting
          if (parsed) Assert.Equal(decoded, result);
       }
 
-       /// <summary>
-       ///    Validate that ParseSByte throws ArgumentException when given characters not in the encoding scheme.
-       /// </summary>
-       [Theory]
+      /// <summary>
+      ///    Validate that ParseSByte throws ArgumentException when given characters not in the encoding scheme.
+      /// </summary>
+      [Theory]
       [InlineData(ElevenAsBinary, true, 11)]
       [InlineData(NonBinaryNegativeTestData, false, 0)]
       public void TryParseSByte_WhenGivenText_ReturnsTrueWhenDecodedFalseWhenNot(string text,
@@ -531,190 +531,190 @@ namespace Jcd.Utilities.Test.Formatting
          if (parsed) Assert.Equal(decoded, result);
       }
 
-       /// <summary>
-       ///    Validate that Format Returns a formatted value when given a BigInteger.
-       /// </summary>
-       [Theory]
+      /// <summary>
+      ///    Validate that Format Returns a formatted value when given a BigInteger.
+      /// </summary>
+      [Theory]
       [MemberData(nameof(NumericMemberDataProvider.BigIntegerList), MemberType = typeof(NumericMemberDataProvider))]
       public void Format_WhenGivenABigInteger_ReturnsFormattedValue(BigInteger data)
       {
          Assert.Equal(data.ToString(), IntegerEncoders.Decimal.Format(data));
       }
 
-       /// <summary>
-       ///    Validate that Format Returns a formatted value when given an UInt64.
-       /// </summary>
-       [Theory]
+      /// <summary>
+      ///    Validate that Format Returns a formatted value when given an UInt64.
+      /// </summary>
+      [Theory]
       [MemberData(nameof(NumericMemberDataProvider.UInt64List), MemberType = typeof(NumericMemberDataProvider))]
       public void Format_WhenGivenAUInt64_ReturnsFormattedValue(ulong data)
       {
          Assert.Equal(data.ToString(), IntegerEncoders.Decimal.Format(data));
       }
 
-       /// <summary>
-       ///    Validate that Format returns a formatted value when given an Int16.
-       /// </summary>
-       [Theory]
+      /// <summary>
+      ///    Validate that Format returns a formatted value when given an Int16.
+      /// </summary>
+      [Theory]
       [MemberData(nameof(NumericMemberDataProvider.Int64List), MemberType = typeof(NumericMemberDataProvider))]
       public void Format_WhenGivenAnInt64_ReturnsFormattedValue(long data)
       {
          Assert.Equal(data.ToString(), IntegerEncoders.Decimal.Format(data));
       }
 
-       /// <summary>
-       ///    Validate that Format Returns a formatted value when given an UInt32.
-       /// </summary>
-       [Theory]
+      /// <summary>
+      ///    Validate that Format Returns a formatted value when given an UInt32.
+      /// </summary>
+      [Theory]
       [MemberData(nameof(NumericMemberDataProvider.UInt32List), MemberType = typeof(NumericMemberDataProvider))]
       public void Format_WhenGivenAUInt32_ReturnsFormattedValue(uint data)
       {
          Assert.Equal(data.ToString(), IntegerEncoders.Decimal.Format(data));
       }
 
-       /// <summary>
-       ///    Validate that Format returns a formatted value when given an Int16.
-       /// </summary>
-       [Theory]
+      /// <summary>
+      ///    Validate that Format returns a formatted value when given an Int16.
+      /// </summary>
+      [Theory]
       [MemberData(nameof(NumericMemberDataProvider.Int32List), MemberType = typeof(NumericMemberDataProvider))]
       public void Format_WhenGivenAnInt32_ReturnsFormattedValue(int data)
       {
          Assert.Equal(data.ToString(), IntegerEncoders.Decimal.Format(data));
       }
 
-       /// <summary>
-       ///    Validate that Format Returns a formatted value when given an UInt16.
-       /// </summary>
-       [Theory]
+      /// <summary>
+      ///    Validate that Format Returns a formatted value when given an UInt16.
+      /// </summary>
+      [Theory]
       [MemberData(nameof(NumericMemberDataProvider.UInt16List), MemberType = typeof(NumericMemberDataProvider))]
       public void Format_WhenGivenAUInt16_ReturnsFormattedValue(ushort data)
       {
          Assert.Equal(data.ToString(), IntegerEncoders.Decimal.Format(data));
       }
 
-       /// <summary>
-       ///    Validate that Format returns a formatted value when given an Int16.
-       /// </summary>
-       [Theory]
+      /// <summary>
+      ///    Validate that Format returns a formatted value when given an Int16.
+      /// </summary>
+      [Theory]
       [MemberData(nameof(NumericMemberDataProvider.Int16List), MemberType = typeof(NumericMemberDataProvider))]
       public void Format_WhenGivenAnInt16_ReturnsFormattedValue(short data)
       {
          Assert.Equal(data.ToString(), IntegerEncoders.Decimal.Format(data));
       }
 
-       /// <summary>
-       ///    Validate that Format Returns a formatted value when given a byte.
-       /// </summary>
-       [Theory]
+      /// <summary>
+      ///    Validate that Format Returns a formatted value when given a byte.
+      /// </summary>
+      [Theory]
       [MemberData(nameof(NumericMemberDataProvider.ByteList), MemberType = typeof(NumericMemberDataProvider))]
       public void Format_WhenGivenAByte_ReturnsFormattedValue(byte data)
       {
          Assert.Equal(data.ToString(), IntegerEncoders.Decimal.Format(data));
       }
 
-       /// <summary>
-       ///    Validate that Format returns a formatted value when given an sbyte.
-       /// </summary>
-       [Theory]
+      /// <summary>
+      ///    Validate that Format returns a formatted value when given an sbyte.
+      /// </summary>
+      [Theory]
       [MemberData(nameof(NumericMemberDataProvider.SByteList), MemberType = typeof(NumericMemberDataProvider))]
       public void Format_WhenGivenAnSByte_ReturnsFormattedValue(sbyte data)
       {
          Assert.Equal(data.ToString(), IntegerEncoders.Decimal.Format(data));
       }
 
-       /// <summary>
-       ///    Validate that Format Returns a formatted value when given a BigInteger.
-       /// </summary>
-       [Theory]
+      /// <summary>
+      ///    Validate that Format Returns a formatted value when given a BigInteger.
+      /// </summary>
+      [Theory]
       [MemberData(nameof(NumericMemberDataProvider.BigIntegerList), MemberType = typeof(NumericMemberDataProvider))]
       public void ICustomFormatter_Format_WhenGivenABigInteger_ReturnsFormattedValue(BigInteger data)
       {
          Assert.Equal(data.ToString(), IntegerEncoders.Decimal.Format("", data, IntegerEncoders.Decimal));
       }
 
-       /// <summary>
-       ///    Validate that Format Returns a formatted value when given an UInt64.
-       /// </summary>
-       [Theory]
+      /// <summary>
+      ///    Validate that Format Returns a formatted value when given an UInt64.
+      /// </summary>
+      [Theory]
       [MemberData(nameof(NumericMemberDataProvider.UInt64List), MemberType = typeof(NumericMemberDataProvider))]
       public void ICustomFormatter_Format_WhenGivenAUInt64_ReturnsFormattedValue(ulong data)
       {
          Assert.Equal(data.ToString(), IntegerEncoders.Decimal.Format("", data, IntegerEncoders.Decimal));
       }
 
-       /// <summary>
-       ///    Validate that Format returns a formatted value when given an Int16.
-       /// </summary>
-       [Theory]
+      /// <summary>
+      ///    Validate that Format returns a formatted value when given an Int16.
+      /// </summary>
+      [Theory]
       [MemberData(nameof(NumericMemberDataProvider.Int64List), MemberType = typeof(NumericMemberDataProvider))]
       public void ICustomFormatter_Format_WhenGivenAnInt64_ReturnsFormattedValue(long data)
       {
          Assert.Equal(data.ToString(), IntegerEncoders.Decimal.Format("", data, IntegerEncoders.Decimal));
       }
 
-       /// <summary>
-       ///    Validate that Format Returns a formatted value when given an UInt32.
-       /// </summary>
-       [Theory]
+      /// <summary>
+      ///    Validate that Format Returns a formatted value when given an UInt32.
+      /// </summary>
+      [Theory]
       [MemberData(nameof(NumericMemberDataProvider.UInt32List), MemberType = typeof(NumericMemberDataProvider))]
       public void ICustomFormatter_Format_WhenGivenAUInt32_ReturnsFormattedValue(uint data)
       {
          Assert.Equal(data.ToString(), IntegerEncoders.Decimal.Format("", data, IntegerEncoders.Decimal));
       }
 
-       /// <summary>
-       ///    Validate that Format returns a formatted value when given an Int16.
-       /// </summary>
-       [Theory]
+      /// <summary>
+      ///    Validate that Format returns a formatted value when given an Int16.
+      /// </summary>
+      [Theory]
       [MemberData(nameof(NumericMemberDataProvider.Int32List), MemberType = typeof(NumericMemberDataProvider))]
       public void ICustomFormatter_Format_WhenGivenAnInt32_ReturnsFormattedValue(int data)
       {
          Assert.Equal(data.ToString(), IntegerEncoders.Decimal.Format("", data, IntegerEncoders.Decimal));
       }
 
-       /// <summary>
-       ///    Validate that Format Returns a formatted value when given an UInt16.
-       /// </summary>
-       [Theory]
+      /// <summary>
+      ///    Validate that Format Returns a formatted value when given an UInt16.
+      /// </summary>
+      [Theory]
       [MemberData(nameof(NumericMemberDataProvider.UInt16List), MemberType = typeof(NumericMemberDataProvider))]
       public void ICustomFormatter_Format_WhenGivenAUInt16_ReturnsFormattedValue(ushort data)
       {
          Assert.Equal(data.ToString(), IntegerEncoders.Decimal.Format("", data, IntegerEncoders.Decimal));
       }
 
-       /// <summary>
-       ///    Validate that Format returns a formatted value when given an Int16.
-       /// </summary>
-       [Theory]
+      /// <summary>
+      ///    Validate that Format returns a formatted value when given an Int16.
+      /// </summary>
+      [Theory]
       [MemberData(nameof(NumericMemberDataProvider.Int16List), MemberType = typeof(NumericMemberDataProvider))]
       public void ICustomFormatter_Format_WhenGivenAnInt16_ReturnsFormattedValue(short data)
       {
          Assert.Equal(data.ToString(), IntegerEncoders.Decimal.Format("", data, IntegerEncoders.Decimal));
       }
 
-       /// <summary>
-       ///    Validate that Format Returns a formatted value when given a byte.
-       /// </summary>
-       [Theory]
+      /// <summary>
+      ///    Validate that Format Returns a formatted value when given a byte.
+      /// </summary>
+      [Theory]
       [MemberData(nameof(NumericMemberDataProvider.ByteList), MemberType = typeof(NumericMemberDataProvider))]
       public void ICustomFormatter_Format_WhenGivenAByte_ReturnsFormattedValue(byte data)
       {
          Assert.Equal(data.ToString(), IntegerEncoders.Decimal.Format("", data, IntegerEncoders.Decimal));
       }
 
-       /// <summary>
-       ///    Validate that Format returns a formatted value when given an sbyte.
-       /// </summary>
-       [Theory]
+      /// <summary>
+      ///    Validate that Format returns a formatted value when given an sbyte.
+      /// </summary>
+      [Theory]
       [MemberData(nameof(NumericMemberDataProvider.SByteList), MemberType = typeof(NumericMemberDataProvider))]
       public void ICustomFormatter_Format_WhenGivenAnSByte_ReturnsFormattedValue(sbyte data)
       {
          Assert.Equal(data.ToString(), IntegerEncoders.Decimal.Format("", data, IntegerEncoders.Decimal));
       }
 
-       /// <summary>
-       ///    Validate that Constructor throws ArgumentException when encode character set has extra characters.
-       /// </summary>
-       [Fact]
+      /// <summary>
+      ///    Validate that Constructor throws ArgumentException when encode character set has extra characters.
+      /// </summary>
+      [Fact]
       public void Constructor_WhenEncodeCharacterAndDecodeCharacterMapMismatchInCount_ThrowsArgumentException()
       {
          var decodeSet = new[]
@@ -739,11 +739,11 @@ namespace Jcd.Utilities.Test.Formatting
                                           });
       }
 
-       /// <summary>
-       ///    Validate that Constructor throws ArgumentException when encode character set encodes to different value than decode
-       ///    character set.
-       /// </summary>
-       [Fact]
+      /// <summary>
+      ///    Validate that Constructor throws ArgumentException when encode character set encodes to different value than decode
+      ///    character set.
+      /// </summary>
+      [Fact]
       public void
          Constructor_WhenEncodeCharacterSetEncodesToDifferentValueThanDecodeCharacterSet_ThrowsArgumentException()
       {
@@ -762,10 +762,10 @@ namespace Jcd.Utilities.Test.Formatting
                                           });
       }
 
-       /// <summary>
-       ///    Validate that Constructor throws ArgumentException when encode character set has extra characters.
-       /// </summary>
-       [Fact]
+      /// <summary>
+      ///    Validate that Constructor throws ArgumentException when encode character set has extra characters.
+      /// </summary>
+      [Fact]
       public void Constructor_WhenEncodeCharacterSetHasExtraCharacters_ThrowsArgumentException()
       {
          var decodeSet = new[]
@@ -783,10 +783,10 @@ namespace Jcd.Utilities.Test.Formatting
                                           });
       }
 
-       /// <summary>
-       ///    Validate that ParseBigInteger throws ArgumentException when given characters not in the encoding scheme.
-       /// </summary>
-       [Fact]
+      /// <summary>
+      ///    Validate that ParseBigInteger throws ArgumentException when given characters not in the encoding scheme.
+      /// </summary>
+      [Fact]
       public void ParseBigInteger_WhenGivenCharactersNotInTheEncodingScheme_ThrowsArgumentOutOfRangeException()
       {
          Assert.Throws<ArgumentOutOfRangeException>(() =>
@@ -794,29 +794,29 @@ namespace Jcd.Utilities.Test.Formatting
                                                          .Binary.ParseBigInteger(NonBinaryNegativeTestData));
       }
 
-       /// <summary>
-       ///    Validate that ParseByte throws ArgumentException when given characters not in the encoding scheme.
-       /// </summary>
-       [Fact]
+      /// <summary>
+      ///    Validate that ParseByte throws ArgumentException when given characters not in the encoding scheme.
+      /// </summary>
+      [Fact]
       public void ParseByte_WhenGivenCharactersNotInTheEncodingScheme_ThrowsArgumentOutOfRangeException()
       {
          Assert.Throws<ArgumentOutOfRangeException>(
                                                     () => IntegerEncoders.Binary.ParseByte(NonBinaryNegativeTestData));
       }
 
-       /// <summary>
-       ///    Validate that ParseByte throws ArgumentException when given characters not in the encoding scheme.
-       /// </summary>
-       [Fact]
+      /// <summary>
+      ///    Validate that ParseByte throws ArgumentException when given characters not in the encoding scheme.
+      /// </summary>
+      [Fact]
       public void ParseByte_WhenGivenNegativeNumber_ThrowsArgumentException()
       {
          Assert.Throws<ArgumentException>(() => IntegerEncoders.Decimal.ParseByte(NegativeDecimal));
       }
 
-       /// <summary>
-       ///    Validate that ParseByte throws an OverflowException when given too large or small of a value.
-       /// </summary>
-       [Fact]
+      /// <summary>
+      ///    Validate that ParseByte throws an OverflowException when given too large or small of a value.
+      /// </summary>
+      [Fact]
       public void ParseByte_WhenGivenTooLargeOfAValue_ThrowsOverflowException()
       {
          Assert.Throws<OverflowException>(() => IntegerEncoders.Hexadecimal.ParseByte(
@@ -831,20 +831,20 @@ namespace Jcd.Utilities.Test.Formatting
                                                                      .Hexadecimal.Format(int.MaxValue)));
       }
 
-       /// <summary>
-       ///    Validate that ParseInt16 throws ArgumentException when given characters not in the encoding scheme.
-       /// </summary>
-       [Fact]
+      /// <summary>
+      ///    Validate that ParseInt16 throws ArgumentException when given characters not in the encoding scheme.
+      /// </summary>
+      [Fact]
       public void ParseInt16_WhenGivenCharactersNotInTheEncodingScheme_ThrowsArgumentOutOfRangeException()
       {
          Assert.Throws<ArgumentOutOfRangeException>(() =>
                                                        IntegerEncoders.Binary.ParseInt16(NonBinaryNegativeTestData));
       }
 
-       /// <summary>
-       ///    Validate that ParseInt16 throws an OverflowException when given too large or small of a value.
-       /// </summary>
-       [Fact]
+      /// <summary>
+      ///    Validate that ParseInt16 throws an OverflowException when given too large or small of a value.
+      /// </summary>
+      [Fact]
       public void ParseInt16_WhenGivenTooExtremeOfAValue_ThrowsOverflowException()
       {
          Assert.Throws<OverflowException>(() => IntegerEncoders.Hexadecimal.ParseInt16(
@@ -874,20 +874,20 @@ namespace Jcd.Utilities.Test.Formatting
                                                                                                              1)));
       }
 
-       /// <summary>
-       ///    Validate that ParseInt32 throws ArgumentException when given characters not in the encoding scheme.
-       /// </summary>
-       [Fact]
+      /// <summary>
+      ///    Validate that ParseInt32 throws ArgumentException when given characters not in the encoding scheme.
+      /// </summary>
+      [Fact]
       public void ParseInt32_WhenGivenCharactersNotInTheEncodingScheme_ThrowsArgumentOutOfRangeException()
       {
          Assert.Throws<ArgumentOutOfRangeException>(() =>
                                                        IntegerEncoders.Binary.ParseInt32(NonBinaryNegativeTestData));
       }
 
-       /// <summary>
-       ///    Validate that ParseInt32 throws an OverflowException when given too large or small of a value.
-       /// </summary>
-       [Fact]
+      /// <summary>
+      ///    Validate that ParseInt32 throws an OverflowException when given too large or small of a value.
+      /// </summary>
+      [Fact]
       public void ParseInt32_WhenGivenTooExtremeOfAValue_ThrowsOverflowException()
       {
          Assert.Throws<OverflowException>(() => IntegerEncoders.Hexadecimal.ParseInt32(
@@ -919,20 +919,20 @@ namespace Jcd.Utilities.Test.Formatting
                                                                                                              1)));
       }
 
-       /// <summary>
-       ///    Validate that ParseInt64 throws ArgumentException when given characters not in the encoding scheme.
-       /// </summary>
-       [Fact]
+      /// <summary>
+      ///    Validate that ParseInt64 throws ArgumentException when given characters not in the encoding scheme.
+      /// </summary>
+      [Fact]
       public void ParseInt64_WhenGivenCharactersNotInTheEncodingScheme_ThrowsArgumentOutOfRangeException()
       {
          Assert.Throws<ArgumentOutOfRangeException>(() =>
                                                        IntegerEncoders.Binary.ParseInt64(NonBinaryNegativeTestData));
       }
 
-       /// <summary>
-       ///    Validate that ParseInt64 throws an OverflowException when given too large or small of a value.
-       /// </summary>
-       [Fact]
+      /// <summary>
+      ///    Validate that ParseInt64 throws an OverflowException when given too large or small of a value.
+      /// </summary>
+      [Fact]
       public void ParseInt64_WhenGivenTooExtremeOfAValue_ThrowsOverflowException()
       {
          Assert.Throws<OverflowException>(() => IntegerEncoders.Hexadecimal.ParseInt64(
@@ -968,20 +968,20 @@ namespace Jcd.Utilities.Test.Formatting
                                                                                                              ) 2)));
       }
 
-       /// <summary>
-       ///    Validate that ParseSByte throws ArgumentException when given characters not in the encoding scheme.
-       /// </summary>
-       [Fact]
+      /// <summary>
+      ///    Validate that ParseSByte throws ArgumentException when given characters not in the encoding scheme.
+      /// </summary>
+      [Fact]
       public void ParseSByte_WhenGivenCharactersNotInTheEncodingScheme_ThrowsArgumentOutOfRangeException()
       {
          Assert.Throws<ArgumentOutOfRangeException>(() =>
                                                        IntegerEncoders.Binary.ParseSByte(NonBinaryNegativeTestData));
       }
 
-       /// <summary>
-       ///    Validate that ParseSByte throws an OverflowException when given too large or small of a value.
-       /// </summary>
-       [Fact]
+      /// <summary>
+      ///    Validate that ParseSByte throws an OverflowException when given too large or small of a value.
+      /// </summary>
+      [Fact]
       public void ParseSByte_WhenGivenTooExtremeOfAValue_ThrowsOverflowException()
       {
          Assert.Throws<OverflowException>(() => IntegerEncoders.Hexadecimal.ParseSByte(
@@ -1011,29 +1011,29 @@ namespace Jcd.Utilities.Test.Formatting
                                                                                                              1)));
       }
 
-       /// <summary>
-       ///    Validate that ParseUInt16 throws ArgumentException when given characters not in the encoding scheme.
-       /// </summary>
-       [Fact]
+      /// <summary>
+      ///    Validate that ParseUInt16 throws ArgumentException when given characters not in the encoding scheme.
+      /// </summary>
+      [Fact]
       public void ParseUInt16_WhenGivenCharactersNotInTheEncodingScheme_ThrowsArgumentOutOfRangeException()
       {
          Assert.Throws<ArgumentOutOfRangeException>(() =>
                                                        IntegerEncoders.Binary.ParseUInt16(NonBinaryNegativeTestData));
       }
 
-       /// <summary>
-       ///    Validate that ParseUInt16 throws ArgumentException when given characters not in the encoding scheme.
-       /// </summary>
-       [Fact]
+      /// <summary>
+      ///    Validate that ParseUInt16 throws ArgumentException when given characters not in the encoding scheme.
+      /// </summary>
+      [Fact]
       public void ParseUInt16_WhenGivenNegativeNumber_ThrowsArgumentException()
       {
          Assert.Throws<ArgumentException>(() => IntegerEncoders.Decimal.ParseUInt16(NegativeDecimal));
       }
 
-       /// <summary>
-       ///    Validate that ParseUInt16 throws an OverflowException when given too large or small of a value.
-       /// </summary>
-       [Fact]
+      /// <summary>
+      ///    Validate that ParseUInt16 throws an OverflowException when given too large or small of a value.
+      /// </summary>
+      [Fact]
       public void ParseUInt16_WhenGivenTooLargeOfAValue_ThrowsOverflowException()
       {
          Assert.Throws<OverflowException>(() => IntegerEncoders.Hexadecimal.ParseUInt16(
@@ -1050,29 +1050,29 @@ namespace Jcd.Utilities.Test.Formatting
                                                                                                                 .MaxValue)));
       }
 
-       /// <summary>
-       ///    Validate that ParseUInt32 throws ArgumentException when given characters not in the encoding scheme.
-       /// </summary>
-       [Fact]
+      /// <summary>
+      ///    Validate that ParseUInt32 throws ArgumentException when given characters not in the encoding scheme.
+      /// </summary>
+      [Fact]
       public void ParseUInt32_WhenGivenCharactersNotInTheEncodingScheme_ThrowsArgumentOutOfRangeException()
       {
          Assert.Throws<ArgumentOutOfRangeException>(() =>
                                                        IntegerEncoders.Binary.ParseUInt32(NonBinaryNegativeTestData));
       }
 
-       /// <summary>
-       ///    Validate that ParseUInt32 throws ArgumentException when given characters not in the encoding scheme.
-       /// </summary>
-       [Fact]
+      /// <summary>
+      ///    Validate that ParseUInt32 throws ArgumentException when given characters not in the encoding scheme.
+      /// </summary>
+      [Fact]
       public void ParseUInt32_WhenGivenNegativeNumber_ThrowsArgumentException()
       {
          Assert.Throws<ArgumentException>(() => IntegerEncoders.Decimal.ParseUInt32(NegativeDecimal));
       }
 
-       /// <summary>
-       ///    Validate that ParseUInt32 throws an OverflowException when given too large or small of a value.
-       /// </summary>
-       [Fact]
+      /// <summary>
+      ///    Validate that ParseUInt32 throws an OverflowException when given too large or small of a value.
+      /// </summary>
+      [Fact]
       public void ParseUInt32_WhenGivenTooLargeOfAValue_ThrowsOverflowException()
       {
          Assert.Throws<OverflowException>(() => IntegerEncoders.Hexadecimal.ParseUInt16(
@@ -1090,29 +1090,29 @@ namespace Jcd.Utilities.Test.Formatting
                                                                                                                 .MaxValue)));
       }
 
-       /// <summary>
-       ///    Validate that ParseUInt64 throws ArgumentException when given characters not in the encoding scheme.
-       /// </summary>
-       [Fact]
+      /// <summary>
+      ///    Validate that ParseUInt64 throws ArgumentException when given characters not in the encoding scheme.
+      /// </summary>
+      [Fact]
       public void ParseUInt64_WhenGivenCharactersNotInTheEncodingScheme_ThrowsArgumentOutOfRangeException()
       {
          Assert.Throws<ArgumentOutOfRangeException>(() =>
                                                        IntegerEncoders.Binary.ParseUInt64(NonBinaryNegativeTestData));
       }
 
-       /// <summary>
-       ///    Validate that ParseUInt64 throws ArgumentException when given characters not in the encoding scheme.
-       /// </summary>
-       [Fact]
+      /// <summary>
+      ///    Validate that ParseUInt64 throws ArgumentException when given characters not in the encoding scheme.
+      /// </summary>
+      [Fact]
       public void ParseUInt64_WhenGivenNegativeNumber_ThrowsArgumentException()
       {
          Assert.Throws<ArgumentException>(() => IntegerEncoders.Decimal.ParseUInt64(NegativeDecimal));
       }
 
-       /// <summary>
-       ///    Validate that ParseUInt64 throws an OverflowException when given too large or small of a value.
-       /// </summary>
-       [Fact]
+      /// <summary>
+      ///    Validate that ParseUInt64 throws an OverflowException when given too large or small of a value.
+      /// </summary>
+      [Fact]
       public void ParseUInt64_WhenGivenTooLargeOfAValue_ThrowsOverflowException()
       {
          BigInteger overflow = ulong.MaxValue;

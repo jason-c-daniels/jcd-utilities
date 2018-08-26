@@ -20,7 +20,10 @@ namespace Jcd.Utilities.Samples.ConsoleApp.Generators
                 })
       {
          // silently enumerate to the start.
-         for (var i = 0; i < (start - 1); i++) { TransitionFunction(CurrentState, out var ignore); }
+         for (var i = 0; i < (start - 1); i++)
+         {
+            TransitionFunction(CurrentState, out var ignore);
+         }
 
          // reset nth to 0 so we can keep simple logic in the state transition function
          CurrentState.nth = 0;

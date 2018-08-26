@@ -74,7 +74,10 @@ namespace Jcd.Utilities.Generators
       {
          bool @continue;
 
-         do { yield return TransitionFunction(CurrentState, out @continue); } while (@continue);
+         do
+         {
+            yield return TransitionFunction(CurrentState, out @continue);
+         } while (@continue);
       }
 
       /// <summary>

@@ -9,11 +9,11 @@ namespace Jcd.Utilities.Test.Generators
 {
    public class CaptureAndTransitionGeneratorTests
    {
-       /// <inheritdoc />
-       /// <summary>
-       ///    A helper class that counts from start to end by step.
-       /// </summary>
-       public class CounterGenerator : CaptureAndTransitionGenerator<CounterGenerator.State, int>
+      /// <inheritdoc />
+      /// <summary>
+      ///    A helper class that counts from start to end by step.
+      /// </summary>
+      public class CounterGenerator : CaptureAndTransitionGenerator<CounterGenerator.State, int>
       {
          public CounterGenerator(int start, int end, int step)
             : base(new State {Current = start},
@@ -40,14 +40,15 @@ namespace Jcd.Utilities.Test.Generators
          }
       }
 
-       /// <inheritdoc />
-       /// <summary>
-       ///    A fake generator class intended to trigger base constructor exceptions.
-       /// </summary>
-       public class BadGenerator : CaptureAndTransitionGenerator<BadGenerator.State, int>
+      /// <inheritdoc />
+      /// <summary>
+      ///    A fake generator class intended to trigger base constructor exceptions.
+      /// </summary>
+      public class BadGenerator : CaptureAndTransitionGenerator<BadGenerator.State, int>
       {
          // ReSharper disable once NotAccessedField.Local
          private readonly int _end;
+
          // ReSharper disable once NotAccessedField.Local
          private readonly int _step;
 
@@ -64,10 +65,10 @@ namespace Jcd.Utilities.Test.Generators
          }
       }
 
-       /// <summary>
-       ///    Validate that we enumerate all generated elements successfully when given valid data and casting to IEnumerable.
-       /// </summary>
-       [Fact]
+      /// <summary>
+      ///    Validate that we enumerate all generated elements successfully when given valid data and casting to IEnumerable.
+      /// </summary>
+      [Fact]
       public void BaseEnumerable_Enumerate_WhenGivenValidData_AllGeneratedElementsSuccessfully()
       {
          var i = 0;
@@ -83,10 +84,10 @@ namespace Jcd.Utilities.Test.Generators
          Assert.Equal(i, lastJ);
       }
 
-       /// <summary>
-       ///    Validate that GetEnumerator returns an enumerator for a valid generator.
-       /// </summary>
-       [Fact]
+      /// <summary>
+      ///    Validate that GetEnumerator returns an enumerator for a valid generator.
+      /// </summary>
+      [Fact]
       public void BaseInterfaceGetEnumerator_ForValidGenerator_ReturnsAnEnumerator()
       {
          var good = new CounterGenerator(1, 5, 1);
@@ -94,10 +95,10 @@ namespace Jcd.Utilities.Test.Generators
          Assert.NotNull(baseEnumerable.GetEnumerator());
       }
 
-       /// <summary>
-       ///    Validate that Constructor throws ArgumentNullException when given a null for the transition function.
-       /// </summary>
-       [Fact]
+      /// <summary>
+      ///    Validate that Constructor throws ArgumentNullException when given a null for the transition function.
+      /// </summary>
+      [Fact]
       public void Constructor_WhenGivenNullForTransitionFunction_ThrowsArgumentNullException()
       {
          Assert.Throws<ArgumentNullException>(() =>
@@ -106,19 +107,19 @@ namespace Jcd.Utilities.Test.Generators
                                               });
       }
 
-       /// <summary>
-       ///    Validate that Constructor throws no exception when given a valid transition function.
-       /// </summary>
-       [Fact]
+      /// <summary>
+      ///    Validate that Constructor throws no exception when given a valid transition function.
+      /// </summary>
+      [Fact]
       public void Constructor_WhenGivenValidTransitionFunction_ThrowsNoException()
       {
          var unused = new CounterGenerator(1, 5, 1);
       }
 
-       /// <summary>
-       ///    Validate that we enumerate all generated elements successfully when given valid data.
-       /// </summary>
-       [Fact]
+      /// <summary>
+      ///    Validate that we enumerate all generated elements successfully when given valid data.
+      /// </summary>
+      [Fact]
       public void Enumerate_WhenGivenValidData_AllGeneratedElementsSuccessfully()
       {
          var i = 0;
@@ -133,10 +134,10 @@ namespace Jcd.Utilities.Test.Generators
          Assert.Equal(i, lastJ);
       }
 
-       /// <summary>
-       ///    Validate that GetEnumerator returns an enumerator for valid generator.
-       /// </summary>
-       [Fact]
+      /// <summary>
+      ///    Validate that GetEnumerator returns an enumerator for valid generator.
+      /// </summary>
+      [Fact]
       public void GetEnumerator_ForValidGenerator_ReturnsAnEnumerator()
       {
          var good = new CounterGenerator(1, 5, 1);

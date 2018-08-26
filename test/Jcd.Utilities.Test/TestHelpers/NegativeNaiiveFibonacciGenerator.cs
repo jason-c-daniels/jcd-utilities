@@ -4,10 +4,10 @@ using Jcd.Utilities.Generators;
 
 namespace Jcd.Utilities.Test.TestHelpers
 {
-    /// <summary>
-    ///    Generates all Fibonacci numbers equal to or greater than the minValue
-    /// </summary>
-    public class NegativeNaiiveFibonacciGenerator :
+   /// <summary>
+   ///    Generates all Fibonacci numbers equal to or greater than the minValue
+   /// </summary>
+   public class NegativeNaiiveFibonacciGenerator :
       CaptureAndTransitionGenerator<NegativeNaiiveFibonacciGenerator.State, BigInteger>
    {
       public NegativeNaiiveFibonacciGenerator(BigInteger minValue)

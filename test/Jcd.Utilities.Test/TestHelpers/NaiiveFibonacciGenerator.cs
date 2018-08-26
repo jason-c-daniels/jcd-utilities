@@ -4,10 +4,10 @@ using Jcd.Utilities.Generators;
 
 namespace Jcd.Utilities.Test.TestHelpers
 {
-    /// <summary>
-    ///    Generates all Fibonacci numbers equal to or less than the maxValue
-    /// </summary>
-    public class NaiiveFibonacciGenerator : CaptureAndTransitionGenerator<NaiiveFibonacciGenerator.State, BigInteger>
+   /// <summary>
+   ///    Generates all Fibonacci numbers equal to or less than the maxValue
+   /// </summary>
+   public class NaiiveFibonacciGenerator : CaptureAndTransitionGenerator<NaiiveFibonacciGenerator.State, BigInteger>
    {
       public NaiiveFibonacciGenerator(BigInteger maxValue)
          : base(new State {n0 = 0, n1 = 1, nth = 0},
@@ -29,8 +29,10 @@ namespace Jcd.Utilities.Test.TestHelpers
       {
          // ReSharper disable once InconsistentNaming
          public BigInteger n0;
+
          // ReSharper disable once InconsistentNaming
          public BigInteger n1;
+
          // ReSharper disable once InconsistentNaming
          // ReSharper disable once NotAccessedField.Global
          public int nth;

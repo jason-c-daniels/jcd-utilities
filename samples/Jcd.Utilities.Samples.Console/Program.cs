@@ -19,7 +19,10 @@ namespace Jcd.Utilities.Samples.ConsoleApp
          var parsed = encoder.ParseInt64(encoder.Format(i));
          Console.WriteLine($"{encoder.Format(i)} == {Convert.ToString(parsed, encoder.Base)}");
 
-         foreach (var j in new Int32SequenceGenerator(10, -20, -1)) { Console.Write($"{j},"); }
+         foreach (var j in new Int32SequenceGenerator(10, -20, -1))
+         {
+            Console.Write($"{j},");
+         }
 
          Console.WriteLine();
 
@@ -48,7 +51,10 @@ namespace Jcd.Utilities.Samples.ConsoleApp
                                                                         return result;
                                                                      });
 
-         foreach (var k in numberGenerator) { Console.Write($"{k} "); }
+         foreach (var k in numberGenerator)
+         {
+            Console.Write($"{k} ");
+         }
 
          Console.WriteLine();
          Console.WriteLine();
@@ -74,7 +80,7 @@ namespace Jcd.Utilities.Samples.ConsoleApp
          for (var q = 0; q < iterations; q++)
          {
             sw.Start();
-            parsed=int.Parse(signedNum);
+            parsed = int.Parse(signedNum);
             sw.Stop();
             Thread.Sleep(0);
             var ix = parsed;

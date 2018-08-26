@@ -13,10 +13,13 @@ namespace Jcd.Utilities.Formatting
       static IntegerEncoders()
       {
          Base32CrockfordDecodeCharacterSet = new[]
-         {
-            "0oO", "1iIlL", "2", "3", "4", "5", "6", "7", "8", "9", "aA", "bB", "cC", "dD", "eE", "fF", "gG", "hH",
-            "jJ", "kK", "mM", "nN", "pP", "qQ", "rR", "sS", "tT", "vV", "wW", "xX", "yY", "zZ"
-         };
+                                             {
+                                                "0oO", "1iIlL", "2", "3", "4", "5", "6", "7", "8", "9", "aA", "bB",
+                                                "cC", "dD", "eE", "fF", "gG", "hH",
+                                                "jJ", "kK", "mM", "nN", "pP", "qQ", "rR", "sS", "tT", "vV", "wW", "xX",
+                                                "yY", "zZ"
+                                             };
+
          Base32Crockford =
             new IntegerEncoder("0123456789ABCDEFGHJKMNPQRSTVWXYZ", Base32CrockfordDecodeCharacterSet);
       }
@@ -29,26 +32,36 @@ namespace Jcd.Utilities.Formatting
       ///     ASCII 85 formatter, possibly under patent protection, need to check.
       /// </summary>
       public static readonly IntegerEncoder Ascii85 = new
-      IntegerEncoder("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.-:+=^!/*?&<>()[]{}@%$#",
-                     true);
+         IntegerEncoder("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.-:+=^!/*?&<>()[]{}@%$#",
+                        true);
 
       /// <summary>
       ///     Base 128 formatting, first 128 characters from the ISO8859_15_EncodingCharacters alphabet, starting at "0"
       /// </summary>
       public static readonly IntegerEncoder Base1280MonotonicIso885915 = new IntegerEncoder(
-         Iso885915EncodingCharacters.Substring(Iso885915EncodingCharacters.IndexOf('0'), 128), true);
+                                                                                            Iso885915EncodingCharacters
+                                                                                              .Substring(Iso885915EncodingCharacters
+                                                                                                           .IndexOf('0'),
+                                                                                                         128),
+                                                                                            true);
 
       /// <summary>
       ///     Base 128 formatting, first 128 characters from the ISO8859_15_EncodingCharacters alphabet, starting at "A"
       /// </summary>
       public static readonly IntegerEncoder Base128AMonotonicIso885915 = new IntegerEncoder(
-         Iso885915EncodingCharacters.Substring(Iso885915EncodingCharacters.IndexOf('A'), 128), true);
+                                                                                            Iso885915EncodingCharacters
+                                                                                              .Substring(Iso885915EncodingCharacters
+                                                                                                           .IndexOf('A'),
+                                                                                                         128),
+                                                                                            true);
 
       /// <summary>
       ///     Base 128 formatting, first 128 characters from the ISO8859_15_EncodingCharacters alphabet.
       /// </summary>
       public static readonly IntegerEncoder Base128MonotonicIso885915 = new IntegerEncoder(
-         Iso885915EncodingCharacters.Substring(0, 128), true);
+                                                                                           Iso885915EncodingCharacters
+                                                                                             .Substring(0, 128),
+                                                                                           true);
 
       /// <summary>
       ///     A base 32 formatter for Crockford numnbers, special parsing rules.
@@ -60,13 +73,13 @@ namespace Jcd.Utilities.Formatting
       ///     A base 32 formatter for RFC4648 numnbers, case sensitive
       /// </summary>
       public static readonly IntegerEncoder Base32Rfc4648 = new IntegerEncoder("ABCDEFGHIJKLMNOPQRSTUVXYZ234567",
-            true);
+                                                                               true);
 
       /// <summary>
       ///     A base 32 formatter for ZRTP encoded numbers, case sensitive
       /// </summary>
       public static readonly IntegerEncoder
-      Base32Zrtp = new IntegerEncoder("ybndrfg8ejkmcpqxot1uwisza345h769", true);
+         Base32Zrtp = new IntegerEncoder("ybndrfg8ejkmcpqxot1uwisza345h769", true);
 
       /// <summary>
       ///     A base 32 formatter using 0-9A-V, case insensitive
@@ -83,91 +96,105 @@ namespace Jcd.Utilities.Formatting
       ///     123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz
       /// </summary>
       public static readonly IntegerEncoder Base58Ipfs = new
-      IntegerEncoder("123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz", true);
+         IntegerEncoder("123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz", true);
 
       /// <summary>
       ///     Base 62 formatter using: 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
       /// </summary>
       public static readonly IntegerEncoder Base62 = new
-      IntegerEncoder("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz", true);
+         IntegerEncoder("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz", true);
 
       /// <summary>
       ///     Base 63 formatter using: 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+
       /// </summary>
       public static readonly IntegerEncoder Base63 = new
-      IntegerEncoder("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+", true);
+         IntegerEncoder("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+", true);
 
       /// <summary>
       ///     Base 64 formatter using the standard: 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+/
       /// </summary>
       public static readonly IntegerEncoder Base64 = new
-      IntegerEncoder("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+/", true);
+         IntegerEncoder("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+/", true);
 
       /// <summary>
       ///     Base 64 formatter: Bcrypt compliant
       /// </summary>
       public static readonly IntegerEncoder Base64Bcrypt = new
-      IntegerEncoder("./ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789", true);
+         IntegerEncoder("./ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789", true);
 
       /// <summary>
       ///     Base 64 formatter: BinHex4 compliant
       /// </summary>
       public static readonly IntegerEncoder Base64BinHex4 = new
-      IntegerEncoder("!\"#$%&'()*+,-012345689@ABCDEFGHIJKLMNPQRSTUVXYZ[`abcdefhijklmpqr", true);
+         IntegerEncoder("!\"#$%&'()*+,-012345689@ABCDEFGHIJKLMNPQRSTUVXYZ[`abcdefhijklmpqr", true);
 
       /// <summary>
       ///     Base 64 formatter: Radix64 compliant
       /// </summary>
       public static readonly IntegerEncoder Base64Radix64 = new
-      IntegerEncoder(" !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_", true);
+         IntegerEncoder(" !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_", true);
 
       /// <summary>
       ///     Base 64 formatter: Unix B64 compliant
       /// </summary>
       public static readonly IntegerEncoder Base64UnixB64 = new
-      IntegerEncoder("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+/", true);
+         IntegerEncoder("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+/", true);
 
       /// <summary>
       ///     Base 64 formatter: Uuencoding compliant
       /// </summary>
       public static readonly IntegerEncoder Base64Uuencoding = new
-      IntegerEncoder("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/", true);
+         IntegerEncoder("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/", true);
 
       /// <summary>
       ///     Base 64 formatter: Xxencoding compliant
       /// </summary>
       public static readonly IntegerEncoder Base64Xxencoding = new
-      IntegerEncoder("+-0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz", true);
+         IntegerEncoder("+-0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz", true);
 
       /// <summary>
       ///     Base 91 formatter, basE91 compliant (see http://base91.sourceforge.net/)
       /// </summary>
       public static readonly IntegerEncoder Base91 = new
-      IntegerEncoder("ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz!#$%&()*+,./:;<=>?@[]^_`{|}~\"", true);
+         IntegerEncoder("ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz!#$%&()*+,./:;<=>?@[]^_`{|}~\"", true);
 
       /// <summary>
       ///     Base 93 formatting, first 93 characters from the ISO8859_15_EncodingCharacters alphabet, starting at "0"
       /// </summary>
       public static readonly IntegerEncoder Base930MonotonicIso885915 = new IntegerEncoder(
-         Iso885915EncodingCharacters.Substring(Iso885915EncodingCharacters.IndexOf('0'), 93), true);
+                                                                                           Iso885915EncodingCharacters
+                                                                                             .Substring(Iso885915EncodingCharacters
+                                                                                                          .IndexOf('0'),
+                                                                                                        93),
+                                                                                           true);
 
       /// <summary>
       ///     Base 93 formatting, first 93 characters from the ISO8859_15_EncodingCharacters alphabet, starting at "a"
       /// </summary>
       public static readonly IntegerEncoder Base93A1MonotonicIso885915 = new IntegerEncoder(
-         Iso885915EncodingCharacters.Substring(Iso885915EncodingCharacters.IndexOf('a'), 93), true);
+                                                                                            Iso885915EncodingCharacters
+                                                                                              .Substring(Iso885915EncodingCharacters
+                                                                                                           .IndexOf('a'),
+                                                                                                         93),
+                                                                                            true);
 
       /// <summary>
       ///     Base 93 formatting, first 93 characters from the ISO8859_15_EncodingCharacters alphabet, starting at "A"
       /// </summary>
       public static readonly IntegerEncoder Base93A2MonotonicIso885915 = new IntegerEncoder(
-         Iso885915EncodingCharacters.Substring(Iso885915EncodingCharacters.IndexOf('A'), 93), true);
+                                                                                            Iso885915EncodingCharacters
+                                                                                              .Substring(Iso885915EncodingCharacters
+                                                                                                           .IndexOf('A'),
+                                                                                                         93),
+                                                                                            true);
 
       /// <summary>
       ///     Base 93 formatting, first 93 characters from the ISO8859_15_EncodingCharacters alphabet"
       /// </summary>
       public static readonly IntegerEncoder Base93MonotonicIso885915 = new IntegerEncoder(
-         Iso885915EncodingCharacters.Substring(0, 93), true);
+                                                                                          Iso885915EncodingCharacters
+                                                                                            .Substring(0, 93),
+                                                                                          true);
 
       /// <summary>
       ///     A base 2 formatter using 01
@@ -189,7 +216,7 @@ namespace Jcd.Utilities.Formatting
       ///     123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ
       /// </summary>
       public static readonly IntegerEncoder FlickrBase58 = new
-      IntegerEncoder("123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ", true);
+         IntegerEncoder("123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ", true);
 
       /// <summary>
       ///     A base 17 formatter using 0-9A-G, case insensitive
@@ -240,7 +267,7 @@ namespace Jcd.Utilities.Formatting
       ///     Base 60 formatter using this alphabet: 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwx
       /// </summary>
       public static readonly IntegerEncoder Sexagesimal = new
-      IntegerEncoder("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwx", true);
+         IntegerEncoder("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwx", true);
 
       /// <summary>
       ///     A base 3 formatter 012

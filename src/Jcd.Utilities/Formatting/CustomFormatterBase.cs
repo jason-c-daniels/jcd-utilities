@@ -7,26 +7,26 @@ using Jcd.Utilities.Validations;
 
 namespace Jcd.Utilities.Formatting
 {
-    /// <inheritdoc cref="IFormatProvider" />
-    /// <inheritdoc cref="ICustomFormatter" />
-    /// <summary>
-    ///    A base class to simplify custom formatter implementation by requiring the implementer to only
-    ///    provide an array of handled types, and a formatting function.
-    /// </summary>
-    public abstract class CustomFormatterBase : IFormatProvider, ICustomFormatter
+   /// <inheritdoc cref="IFormatProvider" />
+   /// <inheritdoc cref="ICustomFormatter" />
+   /// <summary>
+   ///    A base class to simplify custom formatter implementation by requiring the implementer to only
+   ///    provide an array of handled types, and a formatting function.
+   /// </summary>
+   public abstract class CustomFormatterBase : IFormatProvider, ICustomFormatter
    {
       #region Public Delegates
 
-       /// <summary>
-       ///    This is the signature which custom formatting functions must abide by.
-       /// </summary>
-       /// <param name="customFormatter">The custom formatter object.</param>
-       /// <param name="formatString">the format string.</param>
-       /// <param name="argToFormat">The item to format.</param>
-       /// <param name="formatProvider">The format provider.</param>
-       /// <returns></returns>
+      /// <summary>
+      ///    This is the signature which custom formatting functions must abide by.
+      /// </summary>
+      /// <param name="customFormatter">The custom formatter object.</param>
+      /// <param name="formatString">the format string.</param>
+      /// <param name="argToFormat">The item to format.</param>
+      /// <param name="formatProvider">The format provider.</param>
+      /// <returns></returns>
 
-       // ReSharper disable once UnusedMember.Global
+      // ReSharper disable once UnusedMember.Global
       public delegate string CustomFormattingFunction(ICustomFormatter customFormatter,
                                                       string formatString,
                                                       object argToFormat,
@@ -36,24 +36,24 @@ namespace Jcd.Utilities.Formatting
 
       #region Protected Fields
 
-       /// <summary>
-       ///    Default type comparison
-       /// </summary>
-       protected readonly MyTypeComparer TypeComparer = new MyTypeComparer();
+      /// <summary>
+      ///    Default type comparison
+      /// </summary>
+      protected readonly MyTypeComparer TypeComparer = new MyTypeComparer();
 
       #endregion Protected Fields
 
       #region Protected Constructors
 
-       /// <summary>
-       ///    Constructs a custom formatter, and enforces some common rules.
-       /// </summary>
-       /// <param name="handledTypes">The data types the derived type will handle.</param>
-       /// <param name="formatFunction">
-       ///    The formatting function, provided by the derived type, abiding by the
-       ///    CustomFormattingFunction signature
-       /// </param>
-       protected CustomFormatterBase(IEnumerable<Type> handledTypes,
+      /// <summary>
+      ///    Constructs a custom formatter, and enforces some common rules.
+      /// </summary>
+      /// <param name="handledTypes">The data types the derived type will handle.</param>
+      /// <param name="formatFunction">
+      ///    The formatting function, provided by the derived type, abiding by the
+      ///    CustomFormattingFunction signature
+      /// </param>
+      protected CustomFormatterBase(IEnumerable<Type> handledTypes,
                                     Func<ICustomFormatter, string, object, IFormatProvider, string> formatFunction)
       {
          var handledTypesList = handledTypes?.ToList();
@@ -82,21 +82,21 @@ namespace Jcd.Utilities.Formatting
 
       #region Protected Classes
 
-       /// <inheritdoc />
-       /// <summary>
-       ///    Compares types by name.
-       /// </summary>
-       protected class MyTypeComparer : IComparer<Type>
+      /// <inheritdoc />
+      /// <summary>
+      ///    Compares types by name.
+      /// </summary>
+      protected class MyTypeComparer : IComparer<Type>
       {
          #region Public Methods
 
-          /// <summary>
-          ///    Performs a comparison between two types.
-          /// </summary>
-          /// <param name="x">the elft side of the comparison</param>
-          /// <param name="y">the right ride of the comparison</param>
-          /// <returns>-1 if x is less than y, 1 if x is greater than y, 0 if equal.</returns>
-          public int Compare(Type x, Type y)
+         /// <summary>
+         ///    Performs a comparison between two types.
+         /// </summary>
+         /// <param name="x">the elft side of the comparison</param>
+         /// <param name="y">the right ride of the comparison</param>
+         /// <returns>-1 if x is less than y, 1 if x is greater than y, 0 if equal.</returns>
+         public int Compare(Type x, Type y)
          {
             return string.Compare(x?.ToString(), y?.ToString(), StringComparison.InvariantCulture);
          }
@@ -137,13 +137,13 @@ namespace Jcd.Utilities.Formatting
                    : HandleOtherFormats(fmt, arg);
       }
 
-       /// <inheritdoc />
-       /// <summary>
-       ///    Gets the format object. (this)
-       /// </summary>
-       /// <param name="formatType">The data type for the format type</param>
-       /// <returns>this if custom formatting requested.</returns>
-       public virtual object GetFormat(Type formatType)
+      /// <inheritdoc />
+      /// <summary>
+      ///    Gets the format object. (this)
+      /// </summary>
+      /// <param name="formatType">The data type for the format type</param>
+      /// <returns>this if custom formatting requested.</returns>
+      public virtual object GetFormat(Type formatType)
       {
          Argument.IsNotNull(formatType);
 

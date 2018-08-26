@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace Jcd.Utilities
+namespace Jcd.Utilities.Formatting
 {
    /// <summary>
    ///     A class with a set of predefined integer encoders.

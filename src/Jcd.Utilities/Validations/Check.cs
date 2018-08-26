@@ -149,6 +149,7 @@ namespace Jcd.Utilities.Validations
       {
          var array = list as T[] ?? list?.ToArray();
          EnforceNonNull(array);
+         // ReSharper disable once AssignNullToNotNullAttribute
          return Passes(() => array.Any(), onSuccess, onFailure);
       }
 
@@ -554,6 +555,7 @@ namespace Jcd.Utilities.Validations
          EnforceAllEntriesNonNull(conditionsArray);
          var result = true;
 
+         // ReSharper disable once PossibleNullReferenceException
          foreach (var c in conditionsArray)
          {
             result = (c?.Invoke(value) ?? true);

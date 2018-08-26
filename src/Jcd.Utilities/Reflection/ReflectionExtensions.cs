@@ -2,7 +2,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Dynamic;
 using System.Linq;
 using System.Numerics;
@@ -18,13 +17,13 @@ namespace Jcd.Utilities.Reflection
 
       public static IEnumerable<PropertyInfo> EnumerateProperties(this Type type, BindingFlags? flags=null, Func<PropertyInfo, bool> skip = null)
       {
-         IEnumerable<PropertyInfo> props = null;
+         IEnumerable<PropertyInfo> props;
          if (flags.HasValue) props = type.GetProperties(flags.Value);
          else props = type.GetProperties();
          foreach (var pi in props)
          {
             if (!pi.CanRead) continue;
-            if (pi.DeclaringType.Namespace !=null && pi.DeclaringType.Namespace.StartsWith("System")) continue;
+            if (pi.DeclaringType?.Namespace !=null && pi.DeclaringType.Namespace.StartsWith("System")) continue;
             var skipped = skip?.Invoke(pi);
             if (skipped.HasValue && skipped.Value) continue;
             yield return pi;
@@ -40,7 +39,9 @@ namespace Jcd.Utilities.Reflection
       public static IEnumerable<KeyValuePair<PropertyInfo,object>> ToPropertyInfoValuePairs(this IEnumerable<PropertyInfo> items, object item, Func<PropertyInfo, bool> skip = null)
       {
          Argument.IsNotNull(item, nameof(item));
+         // ReSharper disable once PossibleMultipleEnumeration
          Argument.IsNotNull(items, nameof(items));
+         // ReSharper disable once PossibleMultipleEnumeration
          foreach (var pi in items)
          {
             var value = (object)null;
@@ -51,7 +52,9 @@ namespace Jcd.Utilities.Reflection
 
       public static IEnumerable<KeyValuePair<string, object>> ToNameValuePairs(this IEnumerable<KeyValuePair<PropertyInfo, object>> items)
       {
+         // ReSharper disable once PossibleMultipleEnumeration
          Argument.IsNotNull(items, nameof(items));
+         // ReSharper disable once PossibleMultipleEnumeration
          foreach (var kvp in items)
          {
             yield return new KeyValuePair<string, object>(kvp.Key.Name, kvp.Value);
@@ -60,12 +63,12 @@ namespace Jcd.Utilities.Reflection
 
       public static IEnumerable<FieldInfo> EnumerateFields(this Type type, BindingFlags? flags = null, Func<FieldInfo, bool> skip = null)
       {
-         IEnumerable<FieldInfo> props = null;
+         IEnumerable<FieldInfo> props;
          if (flags.HasValue) props = type.GetFields(flags.Value);
          else props = type.GetFields();
          foreach (var fi in props)
          {
-            if (fi.DeclaringType.Namespace != null && fi.DeclaringType.Namespace.StartsWith("System")) continue;
+            if (fi.DeclaringType?.Namespace != null && fi.DeclaringType.Namespace.StartsWith("System")) continue;
             var skipped = skip?.Invoke(fi);
             if (skipped.HasValue && skipped.Value) continue;
             yield return fi;
@@ -81,18 +84,22 @@ namespace Jcd.Utilities.Reflection
       public static IEnumerable<KeyValuePair<FieldInfo, object>> ToFieldInfoValuePairs(this IEnumerable<FieldInfo> items, object item,  Func<FieldInfo, bool> skip = null)
       {
          Argument.IsNotNull(item, nameof(item));
+         // ReSharper disable once PossibleMultipleEnumeration
          Argument.IsNotNull(items, nameof(items));
+         // ReSharper disable once PossibleMultipleEnumeration
          foreach (var fi in items)
          {
-            var value = (object)null;
-            value = fi.GetValue(item);
+            var value = fi.GetValue(item);
+
             yield return new KeyValuePair<FieldInfo, object>(fi, value);
          }
       }
 
       public static IEnumerable<KeyValuePair<string, object>> ToNameValuePairs(this IEnumerable<KeyValuePair<FieldInfo, object>> items)
       {
+         // ReSharper disable once PossibleMultipleEnumeration
          Argument.IsNotNull(items, nameof(items));
+         // ReSharper disable once PossibleMultipleEnumeration
          foreach (var kvp in items)
          {
             yield return new KeyValuePair<string, object>(kvp.Key.Name, kvp.Value);
@@ -142,15 +149,11 @@ namespace Jcd.Utilities.Reflection
 
       public static ExpandoObject ToExpandoObject(this object self, HashSet<object> visited = null, Func<string,string> keyRenamingStrategy=null, Func<string, object, bool> valueRetentionStrategy = null)
       {
-         Func<string, string> myKeyRenamingStrategy = (key) =>
-         {
-            return DefaultExpandoKeyRenamingStrategy(keyRenamingStrategy!=null ? keyRenamingStrategy(key) :key);
-         };
-         Func<string, object, bool> myValueRetentionStrategy = (key, value) =>
-         {
-            return (valueRetentionStrategy == null || valueRetentionStrategy(key, value)) && DefaultExpandoValueRetentionStrategy(value);
-         };
-         return (ExpandoObject)self.ToDictionaryTree<ExpandoObject>(keyRenamingStrategy: myKeyRenamingStrategy, valueRetentionStrategy: myValueRetentionStrategy);
+         string MyKeyRenamingStrategy(string key) { return DefaultExpandoKeyRenamingStrategy(keyRenamingStrategy != null ? keyRenamingStrategy(key) : key); }
+
+         bool MyValueRetentionStrategy(string key, object value) { return (valueRetentionStrategy == null || valueRetentionStrategy(key, value)) && DefaultExpandoValueRetentionStrategy(value); }
+
+         return (ExpandoObject)self.ToDictionaryTree<ExpandoObject>(keyRenamingStrategy: MyKeyRenamingStrategy, valueRetentionStrategy: MyValueRetentionStrategy);
       }
 
       public static string DefaultExpandoKeyRenamingStrategy(string k)
@@ -216,11 +219,11 @@ namespace Jcd.Utilities.Reflection
                   {
                      if (!isKeyValuePair.HasValue) isKeyValuePair = item?.GetType().IsKeyValuePair();
                      var key = index.ToString();
-                     var value = (object)null;
+
                      if (isKeyValuePair.HasValue && isKeyValuePair.Value)
                      {
                         key = item.GetPropertyOrFieldValue("Key").ToString();
-                        value = item.GetPropertyOrFieldValue("Value");
+                        var value = item.GetPropertyOrFieldValue("Value");
                         root.Append<TNode>(key, value, visited, keyRenamingStrategy, valueRetentionStrategy);
                      }
                      else

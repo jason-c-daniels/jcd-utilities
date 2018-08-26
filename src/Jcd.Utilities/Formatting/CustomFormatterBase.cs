@@ -60,6 +60,7 @@ namespace Jcd.Utilities.Formatting
          Argument.IsNotNull(handledTypesList, nameof(handledTypes));
          Argument.IsNotNull(formatFunction, nameof(formatFunction));
          _formatFunction = formatFunction;
+         // ReSharper disable once AssignNullToNotNullAttribute
          _handledTypes = new HashSet<Type>(handledTypesList);
       }
 

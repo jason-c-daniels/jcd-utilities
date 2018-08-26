@@ -3,10 +3,11 @@ using System.Numerics;
 
 using Jcd.Utilities.Extensions;
 using Jcd.Utilities.Formatting;
-using Jcd.Utilities.Test.Extensions;
 using Jcd.Utilities.Test.TestHelpers;
 
 using Xunit;
+
+using NumericMemberDataProvider = Jcd.Utilities.Test.Extensions.NumericMemberDataProvider;
 
 namespace Jcd.Utilities.Test.Formatting
 {
@@ -400,7 +401,7 @@ namespace Jcd.Utilities.Test.Formatting
          BigInteger expectedParsedResult = 11; // BigInteger can't be const. Have to use this hack.
          Assert.Equal(parsed, IntegerEncoders.Binary.TryParseBigInteger(text, ref result));
 
-         if (parsed) Assert.Equal(decoded, result);
+         if (parsed) Assert.Equal(expectedParsedResult, result);
       }
 
       /// <summary>

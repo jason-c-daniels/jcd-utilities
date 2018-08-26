@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Text;
 
 namespace Jcd.Utilities.Reflection
 {
@@ -14,7 +13,7 @@ namespace Jcd.Utilities.Reflection
          public Func<MemberInfo, bool> Skip;
       }
 
-      public static Func<MemberInfo, bool> SkipSystemMembers = (mi) => mi.DeclaringType.Namespace != null && mi.DeclaringType.Namespace.StartsWith("System");
+      public static Func<MemberInfo, bool> SkipSystemMembers = (mi) => mi.DeclaringType?.Namespace != null && mi.DeclaringType.Namespace.StartsWith("System");
       public static Func<MemberInfo, bool> SkipSystemAndNonDataMembers = (mi) => SkipSystemMembers(mi) || (mi.MemberType != MemberTypes.Field && mi.MemberType != MemberTypes.Property);
 
       public Settings EnumerationSettings { get; set; }
@@ -30,7 +29,7 @@ namespace Jcd.Utilities.Reflection
       public IEnumerator<MemberInfo> GetEnumerator()
       {
          if (Type == null) yield break;
-         IEnumerable<MemberInfo> member = null;
+         IEnumerable<MemberInfo> member;
          if (EnumerationSettings.Flags.HasValue) member = Type.GetMembers(EnumerationSettings.Flags.Value);
          else member = Type.GetMembers();
          foreach (var mi in member)

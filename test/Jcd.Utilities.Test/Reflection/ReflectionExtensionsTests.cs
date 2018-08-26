@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Text;
+
 using Xunit;
 using Jcd.Utilities.Reflection;
 using System.Linq;
@@ -9,7 +9,7 @@ using Jcd.Utilities.Test.TestHelpers;
 
 namespace Jcd.Utilities.Test.Reflection
 {
-   public partial class ReflectionExtensionsTests
+   public class ReflectionExtensionsTests
    {
 
       /// <summary>
@@ -316,7 +316,7 @@ namespace Jcd.Utilities.Test.Reflection
       public void GetPropertyOrFieldValue_WhenObjectDoesntHavePropertyOrFieldWithTheName_ReturnsNull()
       {
          var kvp = new KeyValuePair<string, string>();
-         var kvp2 = new { Key = "key", Value = "value", Pair = "Pear" };
+         var _ = new { Key = "key", Value = "value", Pair = "Pear" };
          Assert.Null(kvp.GetPropertyOrFieldValue("Nada"));
       }
 

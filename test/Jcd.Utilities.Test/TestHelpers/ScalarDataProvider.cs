@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Numerics;
 using System.Reflection;
-using System.Text;
 
 namespace Jcd.Utilities.Test.TestHelpers
 {

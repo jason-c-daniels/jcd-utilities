@@ -1,7 +1,7 @@
-﻿using Jcd.Utilities.Test.TestHelpers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Numerics;
+// ReSharper disable UnusedMember.Global
 
 namespace Jcd.Utilities.Test.TestHelpers
 {
@@ -67,7 +67,7 @@ namespace Jcd.Utilities.Test.TestHelpers
       /// <summary>
       /// Provides a set of Int16s
       /// </summary>
-      public static IEnumerable<object[]> Int16s()
+      public static IEnumerable<object[]> Int16List()
       {
          short two = 2;
          short one = 1;
@@ -80,7 +80,7 @@ namespace Jcd.Utilities.Test.TestHelpers
       /// <summary>
       /// Provides a set of Int32s
       /// </summary>
-      public static IEnumerable<object[]> Int32s()
+      public static IEnumerable<object[]> Int32List()
       {
          var two = 2;
          var one = 1;
@@ -93,7 +93,7 @@ namespace Jcd.Utilities.Test.TestHelpers
       /// <summary>
       /// Provides a set of Int64s
       /// </summary>
-      public static IEnumerable<object[]> Int64s()
+      public static IEnumerable<object[]> Int64List()
       {
          long two = 2;
          long one = 1;
@@ -110,7 +110,7 @@ namespace Jcd.Utilities.Test.TestHelpers
       {
          yield return new[] { new object() };
          yield return new[] { (object)new[] { 1, 2, 3 } };
-         yield return new[] { new Exception() };
+         yield return new[] { (object)new Exception() };
       }
 
       /// <summary>
@@ -142,7 +142,7 @@ namespace Jcd.Utilities.Test.TestHelpers
       /// <summary>
       /// Provides a set of UInt16s
       /// </summary>
-      public static IEnumerable<object[]> UInt16s()
+      public static IEnumerable<object[]> UInt16List()
       {
          ushort two = 2;
          ushort one = 1;
@@ -155,7 +155,7 @@ namespace Jcd.Utilities.Test.TestHelpers
       /// <summary>
       /// Provides a set of UInt32s
       /// </summary>
-      public static IEnumerable<object[]> UInt32s()
+      public static IEnumerable<object[]> UInt32List()
       {
          uint two = 2;
          uint one = 1;
@@ -168,7 +168,7 @@ namespace Jcd.Utilities.Test.TestHelpers
       /// <summary>
       /// Provides a set of UInt64s
       /// </summary>
-      public static IEnumerable<object[]> UInt64s()
+      public static IEnumerable<object[]> UInt64List()
       {
          ulong two = 2;
          ulong one = 1;
@@ -192,7 +192,7 @@ namespace Jcd.Utilities.Test.TestHelpers
       /// <summary>
       /// Provides a set of UInt64s from the fibonacci sequence,
       /// </summary>
-      public static IEnumerable<object[]> FibonacciUInt64s()
+      public static IEnumerable<object[]> FibonacciUInt64List()
       {
          foreach (var bi in new NaiiveFibonacciGenerator(ulong.MaxValue))
          {
@@ -204,7 +204,7 @@ namespace Jcd.Utilities.Test.TestHelpers
       /// <summary>
       /// Provides a set of Int64s from the fibonacci sequence,
       /// </summary>
-      public static IEnumerable<object[]> FibonacciInt64s()
+      public static IEnumerable<object[]> FibonacciInt64List()
       {
          foreach (var bi in new NaiiveFibonacciGenerator(long.MaxValue))
          {
@@ -216,7 +216,7 @@ namespace Jcd.Utilities.Test.TestHelpers
       /// <summary>
       /// Provides a set of UInt32s from the fibonacci sequence,
       /// </summary>
-      public static IEnumerable<object[]> FibonacciUInt32s()
+      public static IEnumerable<object[]> FibonacciUInt32List()
       {
          foreach (var bi in new NaiiveFibonacciGenerator(uint.MaxValue))
          {
@@ -228,7 +228,7 @@ namespace Jcd.Utilities.Test.TestHelpers
       /// <summary>
       /// Provides a set of Int32s from the fibonacci sequence,
       /// </summary>
-      public static IEnumerable<object[]> FibonacciInt32s()
+      public static IEnumerable<object[]> FibonacciInt32List()
       {
          foreach (var bi in new NaiiveFibonacciGenerator(int.MaxValue))
          {
@@ -240,7 +240,7 @@ namespace Jcd.Utilities.Test.TestHelpers
       /// <summary>
       /// Provides a set of UInt16s from the fibonacci sequence,
       /// </summary>
-      public static IEnumerable<object[]> FibonacciUInt16s()
+      public static IEnumerable<object[]> FibonacciUInt16List()
       {
          foreach (var bi in new NaiiveFibonacciGenerator(ushort.MaxValue))
          {
@@ -252,7 +252,7 @@ namespace Jcd.Utilities.Test.TestHelpers
       /// <summary>
       /// Provides a set of Int16s from the fibonacci sequence,
       /// </summary>
-      public static IEnumerable<object[]> FibonacciInt16s()
+      public static IEnumerable<object[]> FibonacciInt16List()
       {
          foreach (var bi in new NaiiveFibonacciGenerator(short.MaxValue))
          {
@@ -300,7 +300,7 @@ namespace Jcd.Utilities.Test.TestHelpers
       /// <summary>
       /// Provides a set of Int16s from the negative fibonacci sequence,
       /// </summary>
-      public static IEnumerable<object[]> NegativeFibonacciInt16s()
+      public static IEnumerable<object[]> NegativeFibonacciInt16List()
       {
          foreach (var bi in new NegativeNaiiveFibonacciGenerator(short.MinValue))
          {
@@ -312,7 +312,7 @@ namespace Jcd.Utilities.Test.TestHelpers
       /// <summary>
       /// Provides a set of Int32s from the negative fibonacci sequence,
       /// </summary>
-      public static IEnumerable<object[]> NegativeFibonacciInt32s()
+      public static IEnumerable<object[]> NegativeFibonacciInt32List()
       {
          foreach (var bi in new NegativeNaiiveFibonacciGenerator(int.MinValue))
          {
@@ -324,7 +324,7 @@ namespace Jcd.Utilities.Test.TestHelpers
       /// <summary>
       /// Provides a set of Int64s from the negative fibonacci sequence,
       /// </summary>
-      public static IEnumerable<object[]> NegativeFibonacciInt64s()
+      public static IEnumerable<object[]> NegativeFibonacciInt64List()
       {
          foreach (var bi in new NegativeNaiiveFibonacciGenerator(long.MinValue))
          {

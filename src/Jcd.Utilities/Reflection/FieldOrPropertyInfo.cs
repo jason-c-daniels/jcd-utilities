@@ -1,15 +1,13 @@
 ﻿using Jcd.Utilities.Validations;
 using System;
-using System.Collections.Generic;
 using System.Reflection;
-using System.Text;
 
 namespace Jcd.Utilities.Reflection
 {
    public class FieldOrPropertyInfo : MemberInfo
    {
-      MemberInfo _memberInfo;
-      BindingFlags _flags;
+      private readonly MemberInfo _memberInfo;
+      private readonly BindingFlags _flags;
       public FieldOrPropertyInfo(MemberInfo memberInfo, BindingFlags flags)
       {
          Argument.IsNotNull(memberInfo, nameof(memberInfo));
@@ -34,8 +32,8 @@ namespace Jcd.Utilities.Reflection
 
       public object GetValue(object obj)
       {
-         if (MemberType == MemberTypes.Property) return DeclaringType.GetProperty(Name, _flags).GetValue(obj);
-         return DeclaringType.GetField(Name, _flags).GetValue(obj);
+         if (MemberType == MemberTypes.Property) return DeclaringType?.GetProperty(Name, _flags)?.GetValue(obj);
+         return DeclaringType?.GetField(Name, _flags)?.GetValue(obj);
       }
    }
 }

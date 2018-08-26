@@ -181,7 +181,7 @@ namespace Jcd.Utilities.Validations
       }
 
       /// <summary>
-      ///    Ensure a value doen't exist within an enumerable.
+      ///    Ensure a value doesn't exist within an enumerable.
       /// </summary>
       /// <typeparam name="T">The type of the target value.</typeparam>
       /// <param name="list">The enumerable</param>
@@ -502,7 +502,7 @@ namespace Jcd.Utilities.Validations
       #region range and relational operations
 
       /// <summary>
-      ///    Ensure two IComparables are equivalent, or both are null.
+      ///    Ensure two IComparable instances are equivalent, or both are null.
       /// </summary>
       /// <typeparam name="T">The type of the compared values.</typeparam>
       /// <param name="value">The value being tested.</param>

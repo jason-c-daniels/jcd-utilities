@@ -1629,7 +1629,7 @@ namespace Jcd.Utilities.Test.Validations
       {
          Argument.Passes(Check.IsTrue, true, "none", "this should never fail.");
       }
-
+       
       /// <summary>
       ///    Validate that PassesAll does not throw an exception when all conditions fail.
       /// </summary>

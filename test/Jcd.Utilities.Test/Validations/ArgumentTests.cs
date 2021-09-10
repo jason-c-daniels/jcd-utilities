@@ -1,7 +1,7 @@
-﻿using Jcd.Utilities.Test.TestHelpers;
-using Jcd.Utilities.Validations;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Jcd.Utilities.Test.TestHelpers;
+using Jcd.Utilities.Validations;
 using Xunit;
 
 namespace Jcd.Utilities.Test.Validations
@@ -18,7 +18,7 @@ namespace Jcd.Utilities.Test.Validations
       private static readonly object nullObject = null;
       private static readonly object nonNullObject = new object();
       private static readonly object nonNullObject2 = new object();
-      private static readonly object[] emptyObjectCollection = new object[] { };
+      private static readonly object[] emptyObjectCollection = { };
       private static readonly object[] nullObjectCollection = null;
       private static readonly List<int> populatedIntCollection = new List<int>(new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 0 });
       private const int valueNotInList = 400;
@@ -91,7 +91,7 @@ namespace Jcd.Utilities.Test.Validations
       public void RaiseArgumentOutOfRangeException_WhenCalled_ThrowsArgumentOutOfRangeException(int actual, int min, int max,
             string paramName, string message)
       {
-         var ex = Assert.Throws<ArgumentOutOfRangeException>(() => Argument.RaiseArgumentOutOfRangeException<int>(actual, min, max,
+         var ex = Assert.Throws<ArgumentOutOfRangeException>(() => Argument.RaiseArgumentOutOfRangeException(actual, min, max,
                   paramName, message));
          ValidateArgumentExceptionMessageAndParam(ex, paramName, message, defaultArgumentOutOfRangeMessage);
       }
@@ -115,7 +115,7 @@ namespace Jcd.Utilities.Test.Validations
       public void RaiseExpectationViolation_WhenCalled_ThrowsArgumentExceptionWithSpecialMessage(int expected, int actual,
             string paramName, string message)
       {
-         var ex = Assert.Throws<ArgumentException>(() => Argument.RaiseExpectationViolation<int>(expected, actual, paramName, message));
+         var ex = Assert.Throws<ArgumentException>(() => Argument.RaiseExpectationViolation(expected, actual, paramName, message));
          ValidateArgumentExceptionMessageAndParam(ex, paramName, message, defaultExpectationViolationMessage);
       }
 

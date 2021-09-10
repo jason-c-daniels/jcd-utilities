@@ -1,15 +1,13 @@
-﻿using Jcd.Utilities.Validations;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Reflection;
-using System.Text;
+using Jcd.Utilities.Validations;
 
 namespace Jcd.Utilities.Reflection
 {
    public class FieldOrPropertyInfo : MemberInfo
    {
-      MemberInfo _memberInfo;
-      BindingFlags _flags;
+      private readonly MemberInfo _memberInfo;
+      private readonly BindingFlags _flags;
       public FieldOrPropertyInfo(MemberInfo memberInfo, BindingFlags flags)
       {
          Argument.IsNotNull(memberInfo, nameof(memberInfo));
@@ -34,8 +32,30 @@ namespace Jcd.Utilities.Reflection
 
       public object GetValue(object obj)
       {
-         if (MemberType == MemberTypes.Property) return DeclaringType.GetProperty(Name, _flags).GetValue(obj);
-         return DeclaringType.GetField(Name, _flags).GetValue(obj);
+         try
+         {
+            if (MemberType == MemberTypes.Property) return DeclaringType?.GetProperty(Name, _flags)?.GetValue(obj);
+            return DeclaringType?.GetField(Name, _flags)?.GetValue(obj);
+         }
+         catch
+         {
+            return null; // throwing exceptions from a property is a bad practice. Perhaps I'll ad the ability to bypass the catch block. But i'm not feeling that generous right now.
+         }
+      }
+
+      public object GetValue(object obj, out bool errored)
+      {
+         try
+         {
+            var result = MemberType == MemberTypes.Property ? DeclaringType?.GetProperty(Name, _flags)?.GetValue(obj) : DeclaringType?.GetField(Name, _flags)?.GetValue(obj);
+            errored = false;
+            return result;
+         }
+         catch
+         {
+            errored = true;
+            return null; // throwing exceptions from a property is a bad practice. Perhaps I'll ad the ability to bypass the catch block. But i'm not feeling that generous right now.
+         }
       }
    }
 }

@@ -97,7 +97,7 @@ namespace Jcd.Utilities.Test.Formatting
       {
          // setup
          var sut = CreateSut();
-         long arg = (long)9;
+         long arg = 9;
          // act
          var result=sut.Format("", arg, sut);
          // assert
@@ -113,7 +113,7 @@ namespace Jcd.Utilities.Test.Formatting
          // setup
          var sut = CreateSut();
          var otherCustomFormatter = IntegerEncoders.Decimal;
-         long arg = (long)9;
+         long arg = 9;
          // act
          // assert
          Assert.Null(sut.Format("", arg, otherCustomFormatter));

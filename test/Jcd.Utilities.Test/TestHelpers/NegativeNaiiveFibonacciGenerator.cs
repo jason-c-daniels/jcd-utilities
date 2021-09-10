@@ -1,5 +1,5 @@
-﻿using Jcd.Utilities.Generators;
-using System.Numerics;
+﻿using System.Numerics;
+using Jcd.Utilities.Generators;
 
 namespace Jcd.Utilities.Test.TestHelpers
 {

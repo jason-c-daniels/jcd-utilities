@@ -18,7 +18,7 @@ namespace Jcd.Utilities.Validations
    /// It's highly recommended, that for consistency you use the existing Passes.. or Fails... methods. Or alternately you can use the underlying "Check." class.
    /// Craft your calls based on uses within this implementation.
    /// </remarks>
-   public static partial class Argument
+   public static class Argument
    {
       #region exception helpers
 

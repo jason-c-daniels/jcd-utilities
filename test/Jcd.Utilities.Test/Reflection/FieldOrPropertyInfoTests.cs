@@ -1,9 +1,7 @@
-﻿using Jcd.Utilities.Reflection;
-using Moq;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Reflection;
-using System.Text;
+using Jcd.Utilities.Reflection;
+using Moq;
 using Xunit;
 
 namespace Jcd.Utilities.Test.Reflection
@@ -17,7 +15,7 @@ namespace Jcd.Utilities.Test.Reflection
       [Fact]
       public void Constructor_WhenMemberInfoIsNull_ThrowsArgumentNullException()
       {
-         Assert.Throws<ArgumentNullException>(() => new FieldOrPropertyInfo(null, System.Reflection.BindingFlags.Public|System.Reflection.BindingFlags.Instance));
+         Assert.Throws<ArgumentNullException>(() => new FieldOrPropertyInfo(null, BindingFlags.Public|BindingFlags.Instance));
       }
 
       /// <summary>
@@ -165,8 +163,8 @@ namespace Jcd.Utilities.Test.Reflection
       [Fact]
       public void GetValueForField_WhenCalled_DelegatesToMemberInfoImplementation()
       {
-         var obj = new object { };
-         var result = new object { };
+         var obj = new object();
+         var result = new object();
          var mi = new Mock<MemberInfo>();
          var dt = new Mock<Type>();
          var fi = new Mock<FieldInfo>();

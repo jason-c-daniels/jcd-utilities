@@ -1,15 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Text;
-using Xunit;
-using Jcd.Utilities.Reflection;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System;
+using Jcd.Utilities.Reflection;
 using Jcd.Utilities.Test.TestHelpers;
+using Xunit;
 
 namespace Jcd.Utilities.Test.Reflection
 {
-   public partial class ReflectionExtensionsTests
+   public class ReflectionExtensionsTests
    {
 
       /// <summary>
@@ -109,7 +108,7 @@ namespace Jcd.Utilities.Test.Reflection
       [Fact]
       public void EnumerateFieldsOnType_WhenBindingsSetToReturnAll_EnumeratesAllFieldsExceptBacking()
       {
-         var fields = typeof(TestClassB).EnumerateFields(BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy, skip: (fi) => fi.Name[0] == '<').ToList();
+         var fields = typeof(TestClassB).EnumerateFields(BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy, skip: fi => fi.Name[0] == '<').ToList();
          Assert.Equal(7, fields.Count);
       }
 
@@ -150,7 +149,7 @@ namespace Jcd.Utilities.Test.Reflection
       [Fact]
       public void EnumerateFieldsOnObject_WhenBindingsSetToReturnAll_EnumeratesAllFieldsExceptBacking()
       {
-         var fields = new TestClassB().EnumerateFields(BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy, skip: (fi) => fi.Name[0] == '<').ToList();
+         var fields = new TestClassB().EnumerateFields(BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy, skip: fi => fi.Name[0] == '<').ToList();
          Assert.Equal(7, fields.Count);
       }
 
@@ -228,8 +227,8 @@ namespace Jcd.Utilities.Test.Reflection
       [Fact]
       public void ToNameValuePairs_WhenItemsIsNull_ThrowsArgumentNullException()
       {
-         Assert.Throws<ArgumentNullException>(() => ReflectionExtensions.ToNameValuePairs((IEnumerable<KeyValuePair<FieldInfo, object>>)null).ToList());
-         Assert.Throws<ArgumentNullException>(() => ReflectionExtensions.ToNameValuePairs((IEnumerable<KeyValuePair<PropertyInfo, object>>)null).ToList());
+         Assert.Throws<ArgumentNullException>(() => ((IEnumerable<KeyValuePair<FieldInfo, object>>)null).ToNameValuePairs().ToList());
+         Assert.Throws<ArgumentNullException>(() => ((IEnumerable<KeyValuePair<PropertyInfo, object>>)null).ToNameValuePairs().ToList());
       }
 
       /// <summary>

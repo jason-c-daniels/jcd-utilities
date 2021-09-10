@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 
-namespace Jcd.Utilities
+namespace Jcd.Utilities.Formatting
 {
    /// <summary>
    ///     An interface for formatting integers as text.

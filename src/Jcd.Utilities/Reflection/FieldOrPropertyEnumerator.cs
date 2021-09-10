@@ -2,14 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Text;
 
 namespace Jcd.Utilities.Reflection
 {
    public class FieldOrPropertyEnumerator : IEnumerable<FieldOrPropertyInfo>
    {
-
-      MemberInfoEnumerator innerEnumerator;
+      private readonly MemberInfoEnumerator _innerEnumerator;
       public struct Settings
       {
          public BindingFlags? Flags;
@@ -24,7 +22,7 @@ namespace Jcd.Utilities.Reflection
       {
          Type = type;
          EnumerationSettings = settings;
-         innerEnumerator = new MemberInfoEnumerator(Type, new MemberInfoEnumerator.Settings { Flags = settings.Flags, Skip = MemberInfoEnumerator.SkipSystemAndNonDataMembers });
+         _innerEnumerator = new MemberInfoEnumerator(Type, new MemberInfoEnumerator.Settings { Flags = settings.Flags, Skip = MemberInfoEnumerator.SkipSystemAndNonDataMembers });
       }
 
       public FieldOrPropertyEnumerator(object item, Settings settings = default(Settings)) 
@@ -35,9 +33,9 @@ namespace Jcd.Utilities.Reflection
 
       public IEnumerator<FieldOrPropertyInfo> GetEnumerator()
       {
-         foreach (var mi in innerEnumerator)
+         foreach (var mi in _innerEnumerator)
          {
-            var fpi=new FieldOrPropertyInfo(mi, EnumerationSettings.Flags.HasValue ? EnumerationSettings.Flags.Value : BindingFlags.Public | BindingFlags.Instance);
+            var fpi=new FieldOrPropertyInfo(mi, EnumerationSettings.Flags ?? BindingFlags.Public | BindingFlags.Instance);
             var skipped = EnumerationSettings.Skip?.Invoke(fpi);
             if (skipped.HasValue && skipped.Value) continue;
             yield return fpi;

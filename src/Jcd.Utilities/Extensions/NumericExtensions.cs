@@ -17,7 +17,7 @@ namespace Jcd.Utilities.Extensions
       /// <returns>true if the object is of an integer data type</returns>
       public static bool IsBigIntegerType(this object self)
       {
-         return self.GetType() == typeof(BigInteger);
+         return self is BigInteger;
       }
 
       /// <summary>
@@ -69,7 +69,7 @@ namespace Jcd.Utilities.Extensions
 
          default:
          {
-            return self.GetType() == typeof(BigInteger);
+            return self is BigInteger;
          }
          }
       }
@@ -97,7 +97,7 @@ namespace Jcd.Utilities.Extensions
             return true;
 
          default:
-            return self.GetType() == typeof(BigInteger);
+            return self is BigInteger;
          }
       }
 
@@ -120,7 +120,7 @@ namespace Jcd.Utilities.Extensions
             return true;
 
          default:
-            return self.GetType() == typeof(BigInteger);
+            return self is BigInteger;
          }
       }
 

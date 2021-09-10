@@ -1,8 +1,6 @@
-﻿using Jcd.Utilities.Generators;
-using System;
+﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Text;
+using Jcd.Utilities.Generators;
 using Xunit;
 
 namespace Jcd.Utilities.Test.Generators

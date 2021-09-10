@@ -1,6 +1,7 @@
-﻿using System.Numerics;
+﻿using System;
+using System.Numerics;
 
-namespace Jcd.Utilities
+namespace Jcd.Utilities.Formatting
 {
    /// <summary>
    ///     An interface specification for parsing integers.
@@ -14,14 +15,14 @@ namespace Jcd.Utilities
       /// </summary>
       /// <param name="value">The text to decode</param>
       /// <returns>the decoded value</returns>
-      /// <exception cref="ArgumentNullException">If the value parameter was null</exception>
-      /// <exception cref="ArgumentException">
+      /// <exception cref="ArgumentException">If the value parameter was null</exception>
+      /// <exception cref="ArgumentOutOfRangeException">
       ///     If the text is empty or whitespace.
       /// </exception>
-      /// <exception cref="ArgumentOutOfRangeException">
+      /// <exception cref="OutOfMemoryException">
       ///     If the provided characters cannot be decoded per the current encoding..
       /// </exception>
-      /// <exception cref="OutOfMemoryException">
+      /// <exception cref="ArgumentNullException">
       ///     If the text cannot be parse because the resultant value cause the application to exahaust
       ///     its memory.
       /// </exception>

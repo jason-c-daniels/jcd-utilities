@@ -41,11 +41,13 @@ namespace Jcd.Utilities.Formatting
       protected CustomFormatterBase(IEnumerable<Type> handledTypes,
                                     Func<ICustomFormatter, string, object, IFormatProvider, string> formatFunction)
       {
-         Argument.IsNotNull(handledTypes, nameof(handledTypes));
-         Argument.HasItems(handledTypes, nameof(handledTypes));
+         var items = handledTypes as Type[] ?? handledTypes?.ToArray();
+         Argument.IsNotNull(items, nameof(handledTypes));
+         Argument.HasItems(items, nameof(handledTypes));
          Argument.IsNotNull(formatFunction, nameof(formatFunction));
-         this.formatFunction = formatFunction;
-         this.handledTypes = new HashSet<Type>(handledTypes);
+         _formatFunction = formatFunction;
+         // ReSharper disable once AssignNullToNotNullAttribute
+         _handledTypes = new HashSet<Type>(items);
       }
 
       #endregion Protected Constructors
@@ -69,9 +71,9 @@ namespace Jcd.Utilities.Formatting
 
       #region Private Fields
 
-      private readonly Func<ICustomFormatter, string, object, IFormatProvider, string> formatFunction;
+      private readonly Func<ICustomFormatter, string, object, IFormatProvider, string> _formatFunction;
 
-      private readonly HashSet<Type> handledTypes;
+      private readonly HashSet<Type> _handledTypes;
 
       #endregion Private Fields
 
@@ -92,8 +94,8 @@ namespace Jcd.Utilities.Formatting
             return null;
          }
 
-         if (handledTypes.Contains(arg == null? typeof(object) : arg.GetType())) {
-            return formatFunction(this, fmt, arg, formatProvider);
+         if (_handledTypes.Contains(arg == null? typeof(object) : arg.GetType())) {
+            return _formatFunction(this, fmt, arg, formatProvider);
          }
 
          return HandleOtherFormats(fmt, arg);

@@ -39,9 +39,10 @@ namespace Jcd.Utilities.Reflection
       public static IEnumerable<KeyValuePair<PropertyInfo,object>> ToPropertyInfoValuePairs(this IEnumerable<PropertyInfo> items, object item, Func<PropertyInfo, bool> skip = null)
       {
          Argument.IsNotNull(item, nameof(item));
+         // ReSharper disable once PossibleMultipleEnumeration
          Argument.IsNotNull(items, nameof(items));
-         var propertyInfos = items as PropertyInfo[] ?? items.ToArray();
-         foreach (var pi in propertyInfos)
+         // ReSharper disable once PossibleMultipleEnumeration
+         foreach (var pi in items)
          {
             var value = (object)null;
             try { value = pi.GetValue(item); } catch { /* ignore for now.*/ }
@@ -52,7 +53,9 @@ namespace Jcd.Utilities.Reflection
       [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
       public static IEnumerable<KeyValuePair<string, object>> ToNameValuePairs(this IEnumerable<KeyValuePair<PropertyInfo, object>> items)
       {
+         // ReSharper disable once PossibleMultipleEnumeration
          Argument.IsNotNull(items, nameof(items));
+         // ReSharper disable once PossibleMultipleEnumeration
          foreach (var kvp in items)
          {
             yield return new KeyValuePair<string, object>(kvp.Key.Name, kvp.Value);
@@ -82,7 +85,9 @@ namespace Jcd.Utilities.Reflection
       public static IEnumerable<KeyValuePair<FieldInfo, object>> ToFieldInfoValuePairs(this IEnumerable<FieldInfo> items, object item,  Func<FieldInfo, bool> skip = null)
       {
          Argument.IsNotNull(item, nameof(item));
+         // ReSharper disable once PossibleMultipleEnumeration
          Argument.IsNotNull(items, nameof(items));
+         // ReSharper disable once PossibleMultipleEnumeration
          foreach (var fi in items)
          {
             var value = fi.GetValue(item);
@@ -94,7 +99,9 @@ namespace Jcd.Utilities.Reflection
       public static IEnumerable<KeyValuePair<string, object>> ToNameValuePairs(
          this IEnumerable<KeyValuePair<FieldInfo, object>> items)
       {
+         // ReSharper disable once PossibleMultipleEnumeration
          Argument.IsNotNull(items, nameof(items));
+         // ReSharper disable once PossibleMultipleEnumeration
          foreach (var kvp in items)
          {
             yield return new KeyValuePair<string, object>(kvp.Key.Name, kvp.Value);

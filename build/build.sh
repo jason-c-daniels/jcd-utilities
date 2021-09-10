@@ -11,9 +11,9 @@ RUN_TESTS=0
 BUILD_DOCS=0
 BUILD_CLEAN=0
 
-optspec=":cahbsdt-:"
-while getopts "$optspec" optchar; do
-    case "${optchar}" in
+options_spec=":cahbsdt-:"
+while getopts "$options_spec" option_char; do
+    case "${option_char}" in
         -)
             case "${OPTARG}" in
                 all)
@@ -43,7 +43,7 @@ while getopts "$optspec" optchar; do
                     exit 0;
                     ;;
                 *)
-                    if [ "$OPTERR" != 1 ] || [ "${optspec:0:1}" = ":" ]; then
+                    if [ "$OPTERR" != 1 ] || [ "${options_spec:0:1}" = ":" ]; then
                         echo "unrecognized option/arg: '--${OPTARG}'" >&2
                         usage
                         exit 1
@@ -77,7 +77,7 @@ while getopts "$optspec" optchar; do
             RUN_TESTS=1
             ;;
         *)
-            if [ "$OPTERR" != 1 ] || [ "${optspec:0:1}" = ":" ]; then
+            if [ "$OPTERR" != 1 ] || [ "${options_spec:0:1}" = ":" ]; then
                 echo "unrecognized option/arg: '-${OPTARG}'" >&2
                 usage
                 exit 1
@@ -100,7 +100,6 @@ export BUILD_CLEAN
 main() {
     echo $BUILD_CLEAN "clean"
     echo $BUILD_SOURCE "source"
-    #TODO: nix GitVersion, it's only good on Windows. Find some other way to do it.
 
     # determine the location this script is running from.
     DIR=$(get_script_dir)
@@ -113,14 +112,13 @@ main() {
     if [[ -f tools/git-ver ]]; then
         rm tools/git-ver*
     fi
-    mkdir -p $TOOLS_DIR
-    curl https://codeload.github.com/jason-c-daniels/git-ver/zip/v0.1.1-alpha > git-ver.zip
+    mkdir -p ${TOOLS_DIR}
+    curl https://codeload.github.com/jason-c-daniels/git-ver/zip/v0.0.2-beta%2Br1 > git-ver.zip
     unzip -jo git-ver.zip "**/git-ver*" -d ./tools
     export PATH="$TOOLS_DIR":$PATH
     chmod u+x "./tools/git-ver"
     rm ./git-ver.zip
 
-    which git-ver
 	# capture the version information for the build.    
     if [ -z ${Configuration+x} ]; then Configuration="Release"; fi
     if [ -z ${VersionPrefix+x} ]; then VersionPrefix=$(git-ver get-version); fi
@@ -132,6 +130,7 @@ main() {
         echo unsetting Version, using VersionPrefix and VersionSuffix instead
         unset -v Version
     fi
+    which git-ver
     export SemanticVersion="$(git-ver get-semver)"
     echo "$SemanticVersion"
     
@@ -187,20 +186,20 @@ usage() {
 
 execute_tests() {
     folder=$1
-    for project in $folder/**/*.csproj; do dotnet test --no-build -p:CollectCoverage=true -p:CoverletOutputFormat=opencover $project; done
+    for project in ${folder}/**/*.csproj; do dotnet test --no-build -p:CollectCoverage=true -p:CoverletOutputFormat=opencover $project; done
 }
 
 build_folder() {
     folder=$1
     echo "building $folder"
-    for project in $folder/**/*.csproj; do dotnet build $project; done
+    for project in ${folder}/**/*.csproj; do dotnet build $project; done
 }
 
 pack_folder() {
     folder=$1
     pkg_folder=$2
     echo "building $folder"
-    for project in $folder/**/*.csproj; do dotnet pack --no-build -o $pkg_folder $project; done
+    for project in ${folder}/**/*.csproj; do dotnet pack --no-build -o $pkg_folder $project; done
 }
 
 clean_packages() {
@@ -228,7 +227,7 @@ get_script_dir () {
           DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
           SOURCE="$( readlink "$SOURCE" )"
           # If $SOURCE was a relative symlink (so no "/" as prefix, need to resolve it relative to the symlink base directory
-          [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE"
+          [[ ${SOURCE} != /* ]] && SOURCE="$DIR/$SOURCE"
      done
      DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
      echo "$DIR"
@@ -243,18 +242,28 @@ get_prefix() {
     local prefix="$(git rev-parse --symbolic --tags | sort -i | tail -1 | sed -e 's/\(.*\)\([-].*\)/\1/')"
 
     if [[ "$APPVEYOR" == "true" ]]; then
-        prefix=$APPVEYOR_BUILD_VERSION
+        prefix=${APPVEYOR_BUILD_VERSION}
     fi
 
     if [[ "$prefix" == "" ]]; then prefix="0.0.$(git_rev)"; fi
-    echo $prefix
+    echo ${prefix}
 }
 
 get_suffix() {
     # local system defaults. These are overridden by appveyor
-    local suffix="$(git-ver get-suffix -r)"
+    local rev=$(git-ver get-rev)
+    local suffix="$(git rev-parse --symbolic --tags | sort -i | tail -1 | sed -e 's/\(.*\)\([-]\)\(.*\)/\3/').$rev"
+    local branch_type=$(git rev-parse --abbrev-ref HEAD | sed -e 's/\(develop\|master\|feature\)\(.*\)$/\1/')
+    if [[ "$APPVEYOR" == "true" ]]; then
+        rev=${APPVEYOR_PULL_REQUEST_NUMBER}
+    fi
 
-    echo $suffix
+    if [[ "$branch_type" == "master" ]]; then suffix=""; fi
+    if [[ "$branch_type" == "develop" ]]; then suffix="rc.$rev"; fi
+    if [[ "$branch_type" == "feature" ]]; then suffix="pre.$rev"; fi
+
+
+    echo ${suffix}
 }
 
 # now do the work!

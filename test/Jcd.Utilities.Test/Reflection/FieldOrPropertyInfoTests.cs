@@ -44,7 +44,7 @@ namespace Jcd.Utilities.Test.Reflection
       {
          var mi = new Mock<MemberInfo>();
          mi.SetupGet(s => s.MemberType).Returns(type);
-         var a=new FieldOrPropertyInfo(mi.Object, BindingFlags.Public | BindingFlags.Instance);
+         var _=new FieldOrPropertyInfo(mi.Object, BindingFlags.Public | BindingFlags.Instance);
       }
 
       /// <summary>

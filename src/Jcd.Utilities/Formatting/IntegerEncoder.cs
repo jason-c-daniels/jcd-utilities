@@ -1,33 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Numerics;
+
 using Jcd.Utilities.Extensions;
 using Jcd.Utilities.Validations;
 
 namespace Jcd.Utilities.Formatting
 {
    /// <summary>
-   ///     A class that will perform integer encoding to text in an arbitrary base, as well as parsing
-   ///     text encoded in the same manner.
+   ///    A class that performs integer encoding to text in an arbitrary base, as well as parsing
+   ///    text encoded in the same manner.
    /// </summary>
    public class IntegerEncoder : CustomFormatterBase, IIntegerFormatter, IIntegerParser
    {
       #region Public Fields
 
       /// <summary>
-      /// The numeric base of the encoder
+      ///    The numeric base of the encoder
       /// </summary>
       public readonly ushort Base;
+
       /// <summary>
-      /// Indicates if the characters that are decoded/encoded are case sensitive.
+      ///    Indicates if the characters that are decoded/encoded are case sensitive.
       /// </summary>
       public readonly bool CaseSensitive;
+
       /// <summary>
-      /// The character set used for encoding and decoding (for simple decoders)
+      ///    The character set used for encoding and decoding (for simple decoders)
       /// </summary>
       public readonly string CharacterSet;
+
       /// <summary>
-      /// A flag that indicates if the values of the characterset are numerically increasing. Using this can allow for faster sorts of short numbers by NOT decoding first. (i.e. For positive numbers the text will sort the same as the number)
+      ///    A flag that indicates if the values of the characterset are numerically increasing. Using this can allow for faster
+      ///    sorts of short numbers by NOT decoding first. (i.e. For positive numbers the text will sort the same as the number)
       /// </summary>
       public readonly bool CharacterSetValuesAlwaysIncrease;
 
@@ -37,7 +42,13 @@ namespace Jcd.Utilities.Formatting
 
       private static readonly Type[] FormattableTypes =
       {
-         typeof(byte), typeof(sbyte), typeof(ushort), typeof(short), typeof(int), typeof(uint), typeof(long),
+         typeof(byte),
+         typeof(sbyte),
+         typeof(ushort),
+         typeof(short),
+         typeof(int),
+         typeof(uint),
+         typeof(long),
          typeof(ulong)
       };
 
@@ -48,24 +59,27 @@ namespace Jcd.Utilities.Formatting
       #region Public Constructors
 
       /// <summary>
-      ///     Constructs an encoder when given a character set to encode to, and an array of decode
-      ///     mappings. (This is to support Crockford encoding/decoding)
+      ///    Constructs an encoder when given a character set to encode to, and an array of decode
+      ///    mappings. (This is to support Crockford encoding/decoding)
       /// </summary>
       /// <param name="encodeCharacterSet">
-      ///     The set of characters to use when encoding a number to text.
+      ///    The set of characters to use when encoding a number to text.
       /// </param>
       /// <param name="decodeCharacterSet">
-      ///     The set of decode character mappings (i.e. which sets of characters map to which numeric
-      ///     base value.)
+      ///    The set of decode character mappings (i.e. which sets of characters map to which numeric
+      ///    base value.)
       /// </param>
       public IntegerEncoder(string encodeCharacterSet, string[] decodeCharacterSet)
-      : base(FormattableTypes, Format)
+         : base(FormattableTypes, Format)
       {
          Argument.IsNotNullWhitespaceOrEmpty(encodeCharacterSet, nameof(encodeCharacterSet));
          Argument.IsNotNull(decodeCharacterSet, nameof(decodeCharacterSet));
          Argument.HasItems(decodeCharacterSet, nameof(decodeCharacterSet));
-         Argument.AreEqual(decodeCharacterSet.Length, encodeCharacterSet.Length,
+
+         Argument.AreEqual(decodeCharacterSet.Length,
+                           encodeCharacterSet.Length,
                            message: "decodeCharacterSet and encodeCharacterSet must be the same length.");
+
          CaseSensitive = true;
          CharacterSet = encodeCharacterSet;
          Base = (ushort) CharacterSet.Length;
@@ -79,35 +93,37 @@ namespace Jcd.Utilities.Formatting
          }
 
          // now validate that there is the ability to decode that which we encode.
-         for (var i = 0; i< encodeCharacterSet.Length; i++)
+         for (var i = 0; i < encodeCharacterSet.Length; i++)
          {
             var ec = encodeCharacterSet[i];
 
             if (!_charToValue.ContainsKey(ec))
             {
-               throw new ArgumentException($"Encoding char: {ec} was not found in the decode set.", nameof(encodeCharacterSet));
+               throw new ArgumentException($"Encoding char: {ec} was not found in the decode set.",
+                                           nameof(encodeCharacterSet));
             }
 
             var dv = _charToValue[ec];
 
-            if (dv!=i)
+            if (dv != i)
             {
-               throw new ArgumentException($"Encoding char: {ec} was expected to decode to {i} but decoded to {dv}.",
+               throw new ArgumentException(
+                                           $"Encoding char: {ec} was expected to decode to {i} but decoded to {dv}.",
                                            nameof(decodeCharacterSet));
             }
          }
       }
 
       /// <summary>
-      ///     Constructs an encoder when given an alphabet with exact encoding to decoding matching.
+      ///    Constructs an encoder when given an alphabet with exact encoding to decoding matching.
       /// </summary>
       /// <param name="characterSet">
-      ///     The character set to use for encoding and decoding. (where length = n, char at index 0=0,
-      ///     char at n-1=n-1)
+      ///    The character set to use for encoding and decoding. (where length = n, char at index 0=0,
+      ///    char at n-1=n-1)
       /// </param>
       /// <param name="caseSensitive">indicates if the characters are case sensitive for encoding/decoding.</param>
       public IntegerEncoder(string characterSet, bool caseSensitive = false)
-      : base(FormattableTypes, Format)
+         : base(FormattableTypes, Format)
       {
          Argument.IsNotNullWhitespaceOrEmpty(characterSet, nameof(characterSet));
          Argument.IsGreaterThan(characterSet.Length, 0, "characterSet.Length");
@@ -122,9 +138,7 @@ namespace Jcd.Utilities.Formatting
          {
             _charToValue.Add(c, i);
 
-            if (CharacterSetValuesAlwaysIncrease && pc > c) {
-               CharacterSetValuesAlwaysIncrease = false;
-            }
+            if (CharacterSetValuesAlwaysIncrease && (pc > c)) CharacterSetValuesAlwaysIncrease = false;
 
             pc = c;
             i++;
@@ -153,7 +167,7 @@ namespace Jcd.Utilities.Formatting
 
          while (cv > 0)
          {
-            var r = (int)(cv % Base);
+            var r = (int) (cv % Base);
             sb.Add(CharacterSet[r]);
             cv = cv / Base;
          }
@@ -169,7 +183,7 @@ namespace Jcd.Utilities.Formatting
 
          while (cv > 0)
          {
-            var r = (int)(cv % Base);
+            var r = (int) (cv % Base);
             sb.Add(CharacterSet[r]);
             cv = cv / Base;
          }
@@ -187,7 +201,7 @@ namespace Jcd.Utilities.Formatting
          {
             var r = cv % Base;
             sb.Add(CharacterSet[r]);
-            cv = (ushort)(cv / Base);
+            cv = (ushort) (cv / Base);
          }
 
          return FormatResult(sb);
@@ -203,7 +217,7 @@ namespace Jcd.Utilities.Formatting
          {
             var r = cv % Base;
             sb.Add(CharacterSet[r]);
-            cv = (byte)(cv / Base);
+            cv = (byte) (cv / Base);
          }
 
          return FormatResult(sb);
@@ -234,10 +248,7 @@ namespace Jcd.Utilities.Formatting
             }
          }
 
-         if (value < 0)
-         {
-            sb.Add('-');
-         }
+         if (value < 0) sb.Add('-');
 
          return FormatResult(sb);
       }
@@ -252,7 +263,7 @@ namespace Jcd.Utilities.Formatting
          {
             while (cv < 0)
             {
-               var r = (int)(cv % Base);
+               var r = (int) (cv % Base);
                sb.Add(CharacterSet[Math.Abs(r)]);
                cv = cv / Base;
             }
@@ -261,15 +272,13 @@ namespace Jcd.Utilities.Formatting
          {
             while (cv > 0)
             {
-               var r = (int)(cv % Base);
+               var r = (int) (cv % Base);
                sb.Add(CharacterSet[r]);
                cv = cv / Base;
             }
          }
 
-         if (value < 0) {
-            sb.Add('-');
-         }
+         if (value < 0) sb.Add('-');
 
          return FormatResult(sb);
       }
@@ -286,7 +295,7 @@ namespace Jcd.Utilities.Formatting
             {
                var r = cv % Base;
                sb.Add(CharacterSet[Math.Abs(r)]);
-               cv = (short)(cv / Base);
+               cv = (short) (cv / Base);
             }
          }
          else
@@ -295,14 +304,11 @@ namespace Jcd.Utilities.Formatting
             {
                var r = cv % Base;
                sb.Add(CharacterSet[r]);
-               cv = (short)(cv / Base);
+               cv = (short) (cv / Base);
             }
          }
 
-         if (value < 0)
-         {
-            sb.Add('-');
-         }
+         if (value < 0) sb.Add('-');
 
          return FormatResult(sb);
       }
@@ -319,7 +325,7 @@ namespace Jcd.Utilities.Formatting
             {
                var r = cv % Base;
                sb.Add(CharacterSet[Math.Abs(r)]);
-               cv = (sbyte)(cv / Base);
+               cv = (sbyte) (cv / Base);
             }
          }
          else
@@ -328,13 +334,11 @@ namespace Jcd.Utilities.Formatting
             {
                var r = cv % Base;
                sb.Add(CharacterSet[r]);
-               cv = (sbyte)(cv / Base);
+               cv = (sbyte) (cv / Base);
             }
          }
 
-         if (value < 0) {
-            sb.Add('-');
-         }
+         if (value < 0) sb.Add('-');
 
          return FormatResult(sb);
       }
@@ -345,9 +349,7 @@ namespace Jcd.Utilities.Formatting
          var sb = new List<char>();
          var cv = value;
 
-         if (cv < 1) {
-            cv *= -1;
-         }
+         if (cv < 1) cv *= -1;
 
          while (cv > 0)
          {
@@ -357,9 +359,7 @@ namespace Jcd.Utilities.Formatting
             cv = cv / Base;
          }
 
-         if (value < 0) {
-            sb.Add('-');
-         }
+         if (value < 0) sb.Add('-');
 
          return FormatResult(sb);
       }
@@ -369,11 +369,8 @@ namespace Jcd.Utilities.Formatting
       {
          Argument.IsNotNullWhitespaceOrEmpty(value, nameof(value));
 
-         if (!CaseSensitive) {
-            value = value.ToLowerInvariant();
-         }
+         if (!CaseSensitive) value = value.ToLowerInvariant();
 
-         //TODO: Check for over/underflow
          var result = (BigInteger) 0;
          var isNeg = value[0] == '-';
          var digits = ExtractCoreDigits(value);
@@ -398,11 +395,8 @@ namespace Jcd.Utilities.Formatting
       {
          Argument.IsNotNullWhitespaceOrEmpty(value, nameof(value));
 
-         if (!CaseSensitive) {
-            value = value.ToLowerInvariant();
-         }
+         if (!CaseSensitive) value = value.ToLowerInvariant();
 
-         //TODO: Check for over/underflow
          var result = (byte) 0;
 
          if (value[0] == '-')
@@ -414,14 +408,17 @@ namespace Jcd.Utilities.Formatting
 
          foreach (var digit in digits)
          {
-            result *= (byte) Base;
-
-            if (!_charToValue.ContainsKey(digit))
+            checked
             {
-               throw new ArgumentOutOfRangeException($"{digit} cannont be decoded.");
-            }
+               result *= (byte) Base;
 
-            result += (byte) _charToValue[digit];
+               if (!_charToValue.ContainsKey(digit))
+               {
+                  throw new ArgumentOutOfRangeException($"{digit} cannont be decoded.");
+               }
+
+               result += (byte) _charToValue[digit];
+            }
          }
 
          return result;
@@ -432,25 +429,25 @@ namespace Jcd.Utilities.Formatting
       {
          Argument.IsNotNullWhitespaceOrEmpty(value, nameof(value));
 
-         if (!CaseSensitive) {
-            value = value.ToLowerInvariant();
-         }
+         if (!CaseSensitive) value = value.ToLowerInvariant();
 
-         //TODO: Check for over/underflow
          var result = (short) 0;
          var isNeg = value[0] == '-' ? (short) -1 : (short) 1;
          var digits = ExtractCoreDigits(value);
 
          foreach (var digit in digits)
          {
-            result *= (short) Base;
-
-            if (!_charToValue.ContainsKey(digit))
+            checked
             {
-               throw new ArgumentOutOfRangeException($"{digit} cannont be decoded.");
-            }
+               result *= (short) Base;
 
-            result += (short)(_charToValue[digit] * isNeg);
+               if (!_charToValue.ContainsKey(digit))
+               {
+                  throw new ArgumentOutOfRangeException($"{digit} cannont be decoded.");
+               }
+
+               result += (short) (_charToValue[digit] * isNeg);
+            }
          }
 
          return result;
@@ -461,25 +458,25 @@ namespace Jcd.Utilities.Formatting
       {
          Argument.IsNotNullWhitespaceOrEmpty(value, nameof(value));
 
-         if (!CaseSensitive) {
-            value = value.ToLowerInvariant();
-         }
+         if (!CaseSensitive) value = value.ToLowerInvariant();
 
-         //TODO: Check for over/underflow
          var result = 0;
          var isNeg = value[0] == '-' ? -1 : 1;
          var digits = ExtractCoreDigits(value);
 
          foreach (var digit in digits)
          {
-            result *= Base;
-
-            if (!_charToValue.ContainsKey(digit))
+            checked
             {
-               throw new ArgumentOutOfRangeException($"{digit} cannont be decoded.");
-            }
+               result *= Base;
 
-            result += _charToValue[digit] * isNeg;
+               if (!_charToValue.ContainsKey(digit))
+               {
+                  throw new ArgumentOutOfRangeException($"{digit} cannont be decoded.");
+               }
+
+               result += _charToValue[digit] * isNeg;
+            }
          }
 
          return result;
@@ -490,30 +487,25 @@ namespace Jcd.Utilities.Formatting
       {
          Argument.IsNotNullWhitespaceOrEmpty(value, nameof(value));
 
-         if (!CaseSensitive) {
-            value = value.ToLowerInvariant();
-         }
+         if (!CaseSensitive) value = value.ToLowerInvariant();
 
-         //TODO: Check for over/underflow
          var result = (long) 0;
          var isNeg = value[0] == '-';// ? -1 : 1;
          var digits = ExtractCoreDigits(value);
 
          foreach (var digit in digits)
          {
-            result *= Base;
-
-            if (!_charToValue.ContainsKey(digit))
+            checked
             {
-               throw new ArgumentOutOfRangeException($"{digit} cannont be decoded.");
-            }
+               result *= Base;
 
-            var d = _charToValue[digit];
-               result += d;
-         }
-         if (isNeg)
-         {
-            result = 0-result;
+               if (!_charToValue.ContainsKey(digit))
+               {
+                  throw new ArgumentOutOfRangeException($"{digit} cannont be decoded.");
+               }
+
+               result += _charToValue[digit] * (isNeg ? -1 : 1);
+            }
          }
 
          return result;
@@ -524,25 +516,25 @@ namespace Jcd.Utilities.Formatting
       {
          Argument.IsNotNullWhitespaceOrEmpty(value, nameof(value));
 
-         if (!CaseSensitive) {
-            value = value.ToLowerInvariant();
-         }
+         if (!CaseSensitive) value = value.ToLowerInvariant();
 
-         //TODO: Check for over/underflow
          var result = (sbyte) 0;
-         var isNeg = (sbyte)(value[0] == '-' ? -1 : 1);
+         var isNeg = (sbyte) (value[0] == '-' ? -1 : 1);
          var digits = ExtractCoreDigits(value);
 
          foreach (var digit in digits)
          {
-            result *= (sbyte) Base;
-
-            if (!_charToValue.ContainsKey(digit))
+            checked
             {
-               throw new ArgumentOutOfRangeException($"{digit} cannont be decoded.");
-            }
+               result *= (sbyte) Base;
 
-            result += (sbyte)(_charToValue[digit] * isNeg);
+               if (!_charToValue.ContainsKey(digit))
+               {
+                  throw new ArgumentOutOfRangeException($"{digit} cannont be decoded.");
+               }
+
+               result += (sbyte) (_charToValue[digit] * isNeg);
+            }
          }
 
          return result;
@@ -553,14 +545,12 @@ namespace Jcd.Utilities.Formatting
       {
          Argument.IsNotNullWhitespaceOrEmpty(value, nameof(value));
 
-         if (!CaseSensitive) {
-            value = value.ToLowerInvariant();
-         }
+         if (!CaseSensitive) value = value.ToLowerInvariant();
 
-         //TODO: Check for over/underflow
          var result = (ushort) 0;
 
-         if (value[0] == '-') {
+         if (value[0] == '-')
+         {
             throw new ArgumentException("A negative number cannot be converted into unsigned.", nameof(value));
          }
 
@@ -568,14 +558,17 @@ namespace Jcd.Utilities.Formatting
 
          foreach (var digit in digits)
          {
-            result *= Base;
-
-            if (!_charToValue.ContainsKey(digit))
+            checked
             {
-               throw new ArgumentOutOfRangeException($"{digit} cannont be decoded.");
-            }
+               result *= Base;
 
-            result += (ushort) _charToValue[digit];
+               if (!_charToValue.ContainsKey(digit))
+               {
+                  throw new ArgumentOutOfRangeException($"{digit} cannont be decoded.");
+               }
+
+               result += (ushort) _charToValue[digit];
+            }
          }
 
          return result;
@@ -586,14 +579,12 @@ namespace Jcd.Utilities.Formatting
       {
          Argument.IsNotNullWhitespaceOrEmpty(value, nameof(value));
 
-         if (!CaseSensitive) {
-            value = value.ToLowerInvariant();
-         }
+         if (!CaseSensitive) value = value.ToLowerInvariant();
 
-         //TODO: Check for over/underflow
          var result = (uint) 0;
 
-         if (value[0] == '-') {
+         if (value[0] == '-')
+         {
             throw new ArgumentException("A negative number cannot be converted into unsigned.", nameof(value));
          }
 
@@ -601,14 +592,17 @@ namespace Jcd.Utilities.Formatting
 
          foreach (var digit in digits)
          {
-            result *= Base;
-
-            if (!_charToValue.ContainsKey(digit))
+            checked
             {
-               throw new ArgumentOutOfRangeException($"{digit} cannont be decoded.");
-            }
+               result *= Base;
 
-            result += (uint) _charToValue[digit];
+               if (!_charToValue.ContainsKey(digit))
+               {
+                  throw new ArgumentOutOfRangeException($"{digit} cannont be decoded.");
+               }
+
+               result += (uint) _charToValue[digit];
+            }
          }
 
          return result;
@@ -619,14 +613,12 @@ namespace Jcd.Utilities.Formatting
       {
          Argument.IsNotNullWhitespaceOrEmpty(value, nameof(value));
 
-         if (!CaseSensitive) {
-            value = value.ToLowerInvariant();
-         }
+         if (!CaseSensitive) value = value.ToLowerInvariant();
 
-         //TODO: Check for over/underflow
          var result = (ulong) 0;
 
-         if (value[0] == '-') {
+         if (value[0] == '-')
+         {
             throw new ArgumentException("A negative number cannot be converted into unsigned.", nameof(value));
          }
 
@@ -634,14 +626,17 @@ namespace Jcd.Utilities.Formatting
 
          foreach (var digit in digits)
          {
-            result *= Base;
-
-            if (!_charToValue.ContainsKey(digit))
+            checked
             {
-               throw new ArgumentOutOfRangeException($"{digit} cannont be decoded.");
-            }
+               result *= Base;
 
-            result += (ulong) _charToValue[digit];
+               if (!_charToValue.ContainsKey(digit))
+               {
+                  throw new ArgumentOutOfRangeException($"{digit} cannont be decoded.");
+               }
+
+               result += (ulong) _charToValue[digit];
+            }
          }
 
          return result;
@@ -653,6 +648,7 @@ namespace Jcd.Utilities.Formatting
          try
          {
             result = ParseBigInteger(value);
+
             return true;
          }
          catch
@@ -667,6 +663,7 @@ namespace Jcd.Utilities.Formatting
          try
          {
             result = ParseByte(value);
+
             return true;
          }
          catch
@@ -681,6 +678,7 @@ namespace Jcd.Utilities.Formatting
          try
          {
             result = ParseInt16(value);
+
             return true;
          }
          catch
@@ -695,6 +693,7 @@ namespace Jcd.Utilities.Formatting
          try
          {
             result = ParseInt32(value);
+
             return true;
          }
          catch
@@ -709,6 +708,7 @@ namespace Jcd.Utilities.Formatting
          try
          {
             result = ParseInt64(value);
+
             return true;
          }
          catch
@@ -723,6 +723,7 @@ namespace Jcd.Utilities.Formatting
          try
          {
             result = ParseSByte(value);
+
             return true;
          }
          catch
@@ -737,6 +738,7 @@ namespace Jcd.Utilities.Formatting
          try
          {
             result = ParseUInt16(value);
+
             return true;
          }
          catch
@@ -751,6 +753,7 @@ namespace Jcd.Utilities.Formatting
          try
          {
             result = ParseUInt32(value);
+
             return true;
          }
          catch
@@ -765,6 +768,7 @@ namespace Jcd.Utilities.Formatting
          try
          {
             result = ParseUInt64(value);
+
             return true;
          }
          catch
@@ -777,12 +781,12 @@ namespace Jcd.Utilities.Formatting
 
       #region Private Methods
 
-      private static string Format(ICustomFormatter formatter, string fmt, object value,
+      private static string Format(ICustomFormatter formatter,
+                                   string fmt,
+                                   object value,
                                    IFormatProvider formatProvider)
       {
-         if (formatter is IntegerEncoder intFormatter) {
-            return intFormatter.FormatObject(value);
-         }
+         if (formatter is IntegerEncoder intFormatter) return intFormatter.FormatObject(value);
 
          return formatter.Format(fmt, value, formatProvider);
       }
@@ -793,6 +797,7 @@ namespace Jcd.Utilities.Formatting
          var s = isNeg ? 1 : 0;
          var l = value.Length - s;
          value = value.Substring(s, l);
+
          return value;
       }
 
@@ -800,45 +805,50 @@ namespace Jcd.Utilities.Formatting
       {
          switch (Type.GetTypeCode(value.GetType()))
          {
-         case TypeCode.Byte:
-            return Format((byte) value);
+            case TypeCode.Byte:
 
-         case TypeCode.SByte:
-            return Format((sbyte) value);
+               return Format((byte) value);
 
-         case TypeCode.UInt16:
-            return Format((ushort) value);
+            case TypeCode.SByte:
 
-         case TypeCode.UInt32:
-            return Format((uint) value);
+               return Format((sbyte) value);
 
-         case TypeCode.UInt64:
-            return Format((ulong) value);
+            case TypeCode.UInt16:
 
-         case TypeCode.Int16:
-            return Format((short) value);
+               return Format((ushort) value);
 
-         case TypeCode.Int32:
-            return Format((int) value);
+            case TypeCode.UInt32:
 
-         case TypeCode.Int64:
-            return Format((long) value);
+               return Format((uint) value);
+
+            case TypeCode.UInt64:
+
+               return Format((ulong) value);
+
+            case TypeCode.Int16:
+
+               return Format((short) value);
+
+            case TypeCode.Int32:
+
+               return Format((int) value);
+
+            case TypeCode.Int64:
+
+               return Format((long) value);
          }
 
-         if (value.IsIntegerType()) {
-            return Format((BigInteger) value);
-         }
+         if (value.IsIntegerType()) return Format((BigInteger) value);
 
          return value.ToString();
       }
 
       private string FormatResult(List<char> sb)
       {
-         if (sb.Count == 0) {
-            sb.Add(CharacterSet[0]);
-         }
+         if (sb.Count == 0) sb.Add(CharacterSet[0]);
 
          sb.Reverse();
+
          return string.Join("", sb);
       }
 

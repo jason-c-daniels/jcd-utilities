@@ -33,7 +33,7 @@ namespace Jcd.Utilities.Validations
       /// The action to take, if any, when the delegate detects a "failure" condition.
       /// </param>
       /// <returns>true if successful, false otherwise.</returns>
-      public delegate bool Signature<T>(T value, Action onSuccess = null, Action onFailure = null);
+      public delegate bool Signature<in T>(T value, Action onSuccess = null, Action onFailure = null);
 
       #endregion Public Delegates
 
@@ -64,7 +64,7 @@ namespace Jcd.Utilities.Validations
       /// <param name="onFailure">The action to take, if any, when value != null.</param>
       /// <returns>true if value is null, false otherwise</returns>
       public static bool IsNotNull<T>(T value, Action onSuccess = null, Action onFailure = null)
-      where T : class
+         where T : class
       {
          return Passes(() => value != null, onSuccess, onFailure);
       }
@@ -78,7 +78,7 @@ namespace Jcd.Utilities.Validations
       /// <param name="onFailure">The action to take, if any, when value == null.</param>
       /// <returns>true if value is null, false otherwise</returns>
       public static bool IsNull<T>(T value, Action onSuccess = null, Action onFailure = null)
-      where T : class
+         where T : class
       {
          return Passes(() => value == null, onSuccess, onFailure);
       }
@@ -114,8 +114,11 @@ namespace Jcd.Utilities.Validations
       /// <returns>True if the item is found, false otherwise.</returns>
       public static bool Contains<T>(IEnumerable<T> list, T target, Action onSuccess = null, Action onFailure = null)
       {
-         EnforceNonNull(list);
-         return Passes(() => list.Contains(target), onSuccess, onFailure);
+         var array = list as T[] ?? list?.ToArray();
+         EnforceNonNull(array);
+
+         // ReSharper disable once AssignNullToNotNullAttribute
+         return Passes(() => array.Contains(target), onSuccess, onFailure);
       }
 
       /// <summary>
@@ -127,11 +130,15 @@ namespace Jcd.Utilities.Validations
       /// <param name="onSuccess">The action to take, if any, when the item is found.</param>
       /// <param name="onFailure">The action to take, if any, when the item is not found.</param>
       /// <returns>True if the item is not found, false otherwise.</returns>
-      public static bool DoesNotContain<T>(IEnumerable<T> list, T target, Action onSuccess = null,
+      public static bool DoesNotContain<T>(IEnumerable<T> list,
+                                           T target,
+                                           Action onSuccess = null,
                                            Action onFailure = null)
       {
-         EnforceNonNull(list);
-         return Passes(() => !Contains(list, target), onSuccess, onFailure);
+         var array = list as T[] ?? list?.ToArray();
+         EnforceNonNull(array);
+
+         return Passes(() => !Contains(array, target), onSuccess, onFailure);
       }
 
       /// <summary>
@@ -144,8 +151,11 @@ namespace Jcd.Utilities.Validations
       /// <returns>False if list is empty, true otherwise</returns>
       public static bool HasItems<T>(IEnumerable<T> list, Action onSuccess = null, Action onFailure = null)
       {
-         EnforceNonNull(list);
-         return Passes(() => list.Any(), onSuccess, onFailure);
+         var array = list as T[] ?? list?.ToArray();
+         EnforceNonNull(array);
+
+         // ReSharper disable once AssignNullToNotNullAttribute
+         return Passes(() => array.Any(), onSuccess, onFailure);
       }
 
       /// <summary>
@@ -158,8 +168,10 @@ namespace Jcd.Utilities.Validations
       /// <returns>True if list is empty, false otherwise</returns>
       public static bool IsEmpty<T>(IEnumerable<T> list, Action onSuccess = null, Action onFailure = null)
       {
-         EnforceNonNull(list);
-         return Passes(() => !HasItems(list), onSuccess, onFailure);
+         var array = list as T[] ?? list?.ToArray();
+         EnforceNonNull(array);
+
+         return Passes(() => !HasItems(array), onSuccess, onFailure);
       }
 
       #endregion collection operations
@@ -239,9 +251,10 @@ namespace Jcd.Utilities.Validations
       /// If <paramref name="left"/> or <paramref name="right"/> are null.
       /// </exception>
       public static bool AreEqual<T>(T left, T right, Action onSuccess = null, Action onFailure = null)
-      where T : IComparable<T>
+         where T : IComparable<T>
       {
-         if (left != null && right != null)
+         if (left != null &&
+             right != null)
          {
             return Passes(() => left.CompareTo(right) == 0, onSuccess, onFailure);
          }
@@ -291,9 +304,10 @@ namespace Jcd.Utilities.Validations
       /// If <paramref name="value"/>, <paramref name="min"/>, or <paramref name="max"/> are null.
       /// </exception>
       public static bool InRange<T>(T value, T min, T max, Action onSuccess = null, Action onFailure = null)
-      where T : IComparable<T>
+         where T : IComparable<T>
       {
          EnforceNonNull(value, min, max);
+
          return Passes(() => min.CompareTo(value) <= 0 && max.CompareTo(value) >= 0, onSuccess, onFailure);
       }
 
@@ -314,9 +328,10 @@ namespace Jcd.Utilities.Validations
       /// If <paramref name="left"/> or <paramref name="right"/> are null.
       /// </exception>
       public static bool IsGreaterThan<T>(T left, T right, Action onSuccess = null, Action onFailure = null)
-      where T : IComparable<T>
+         where T : IComparable<T>
       {
          EnforceNonNull(left, right);
+
          return Passes(() => left.CompareTo(right) > 0, onSuccess, onFailure);
       }
 
@@ -337,9 +352,10 @@ namespace Jcd.Utilities.Validations
       /// If <paramref name="left"/> or <paramref name="right"/> are null.
       /// </exception>
       public static bool IsLessThan<T>(T left, T right, Action onSuccess = null, Action onFailure = null)
-      where T : IComparable<T>
+         where T : IComparable<T>
       {
          EnforceNonNull(left, right);
+
          return Passes(() => left.CompareTo(right) < 0, onSuccess, onFailure);
       }
 
@@ -369,9 +385,10 @@ namespace Jcd.Utilities.Validations
       /// If <paramref name="value"/>, <paramref name="min"/>, or <paramref name="max"/> are null.
       /// </exception>
       public static bool NotInRange<T>(T value, T min, T max, Action onSuccess = null, Action onFailure = null)
-      where T : IComparable<T>
+         where T : IComparable<T>
       {
          EnforceNonNull(value, min, max);
+
          return Passes(() => value.CompareTo(min) < 0 || value.CompareTo(max) > 0, onSuccess, onFailure);
       }
 
@@ -400,6 +417,7 @@ namespace Jcd.Utilities.Validations
       public static bool Fails<T>(Signature<T> condition, T value, Action onSuccess = null, Action onFailure = null)
       {
          EnforceNonNull(condition);
+
          return Passes(() => !condition(value), onSuccess, onFailure);
       }
 
@@ -419,6 +437,7 @@ namespace Jcd.Utilities.Validations
       public static bool Fails(Func<bool> condition, Action onSuccess = null, Action onFailure = null)
       {
          EnforceNonNull(condition);
+
          return Passes(() => !condition(), onSuccess, onFailure);
       }
 
@@ -435,18 +454,19 @@ namespace Jcd.Utilities.Validations
       /// <exception cref="ArgumentNullException">
       /// If <paramref name="conditions"/> is null or any individual entry is null.
       /// </exception>
-      public static bool FailsAll<T>(IEnumerable<Signature<T>> conditions, T value, Action onSuccess = null,
+      public static bool FailsAll<T>(IEnumerable<Signature<T>> conditions,
+                                     T value,
+                                     Action onSuccess = null,
                                      Action onFailure = null)
       {
-         EnforceNonNull(conditions);
-         EnforceAllEntriesNonNull(conditions);
+         var conditionsArray = conditions as Signature<T>[] ?? conditions?.ToArray();
+         EnforceAllEntriesNonNull(conditionsArray);
          var result = false;
-         var i = 0;
 
-         foreach (var c in conditions)
+         // ReSharper disable once PossibleNullReferenceException
+         foreach (var c in conditionsArray)
          {
-            result = result || (c == null ? result : c(value));
-            i++;
+            result = (c?.Invoke(value) ?? false);
 
             if (result)
             {
@@ -470,11 +490,12 @@ namespace Jcd.Utilities.Validations
       /// <exception cref="ArgumentNullException">
       /// If <paramref name="conditions"/> is null or any individual entry is null.
       /// </exception>
-      public static bool FailsAny<T>(IEnumerable<Signature<T>> conditions, T value, Action onSuccess = null,
+      public static bool FailsAny<T>(IEnumerable<Signature<T>> conditions,
+                                     T value,
+                                     Action onSuccess = null,
                                      Action onFailure = null)
       {
-         EnforceNonNull(conditions);
-         EnforceAllEntriesNonNull(conditions);
+         //EnforceNonNull(conditions, nameof(conditions));
          return !PassesAll(conditions, value, onFailure, onSuccess);
       }
 
@@ -497,7 +518,8 @@ namespace Jcd.Utilities.Validations
       /// <exception cref="ArgumentNullException">If <paramref name="condition"/> is null.</exception>
       public static bool Passes<T>(Signature<T> condition, T value, Action onSuccess = null, Action onFailure = null)
       {
-         EnforceNonNull(condition);
+         EnforceNonNull(condition, nameof(condition));
+
          return Passes(() => condition(value), onSuccess, onFailure);
       }
 
@@ -516,7 +538,7 @@ namespace Jcd.Utilities.Validations
       /// <exception cref="ArgumentNullException">If <paramref name="condition"/> is null.</exception>
       public static bool Passes(Func<bool> condition, Action onSuccess = null, Action onFailure = null)
       {
-         EnforceNonNull(condition);
+         EnforceNonNull(condition, nameof(condition));
          var result = condition();
 
          if (result)
@@ -544,18 +566,19 @@ namespace Jcd.Utilities.Validations
       /// <exception cref="ArgumentNullException">
       /// If <paramref name="conditions"/> is null or any individual entry is null.
       /// </exception>
-      public static bool PassesAll<T>(IEnumerable<Signature<T>> conditions, T value, Action onSuccess = null,
+      public static bool PassesAll<T>(IEnumerable<Signature<T>> conditions,
+                                      T value,
+                                      Action onSuccess = null,
                                       Action onFailure = null)
       {
-         EnforceNonNull(conditions);
-         EnforceAllEntriesNonNull(conditions);
+         var conditionsArray = conditions as Signature<T>[] ?? conditions?.ToArray();
+         EnforceAllEntriesNonNull(conditionsArray);
          var result = true;
-         var i = 0;
 
-         foreach (var c in conditions)
+         // ReSharper disable once PossibleNullReferenceException
+         foreach (var c in conditionsArray)
          {
-            result = result && (c == null ? result : c(value));
-            i++;
+            result = (c?.Invoke(value) ?? true);
 
             if (!result)
             {
@@ -579,12 +602,15 @@ namespace Jcd.Utilities.Validations
       /// <exception cref="ArgumentNullException">
       /// If <paramref name="conditions"/> is null or any individual entry is null.
       /// </exception>
-      public static bool PassesAny<T>(IEnumerable<Signature<T>> conditions, T value, Action onSuccess = null,
+      public static bool PassesAny<T>(IEnumerable<Signature<T>> conditions,
+                                      T value,
+                                      Action onSuccess = null,
                                       Action onFailure = null)
       {
-         EnforceNonNull(conditions);
-         EnforceAllEntriesNonNull(conditions);
-         return !FailsAll(conditions, value, onFailure, onSuccess);
+         var signatures = conditions as Signature<T>[] ?? conditions?.ToArray();
+         EnforceAllEntriesNonNull(signatures);
+
+         return !FailsAll(signatures, value, onFailure, onSuccess);
       }
 
       #endregion custom and multi-condition T
@@ -595,12 +621,16 @@ namespace Jcd.Utilities.Validations
       /// A helper to ensure we have a valid set of checks.
       /// </summary>
       /// <typeparam name="T">The type of the data the check will evaluate</typeparam>
-      /// <param name="conditions">the set of checks</param>
-      private static void EnforceAllEntriesNonNull<T>(IEnumerable<Signature<T>> conditions)
+      /// <param name="values">the set of values to evaluate</param>
+      /// <param name="argumentName"></param>
+      private static void EnforceAllEntriesNonNull<T>(IEnumerable<T> values, string argumentName = null)
       {
-         if (conditions.Any(c => c == null))
+         values = values ?? throw new ArgumentNullException(nameof(values));
+         argumentName = argumentName ?? nameof(values);
+
+         if (values.Any(c => c == null))
          {
-            throw new ArgumentNullException(nameof(conditions), "All entries must be non-null");
+            throw new ArgumentNullException(argumentName, "All entries must be non-null");
          }
       }
 
@@ -611,15 +641,23 @@ namespace Jcd.Utilities.Validations
       /// <param name="values">the values to evaluate.</param>
       private static void EnforceNonNull<T>(params T[] values)
       {
-         foreach (var val in values)
-         {
-            var v = val as object;
+         EnforceAllEntriesNonNull(values);
 
-            if (v is null)
-            {
-               throw new ArgumentNullException();
-            }
+         if (values.Any(v => v == null))
+         {
+            throw new ArgumentNullException($"{nameof(values)} contains at least one null condition.");
          }
+      }
+
+      /// <summary>
+      /// Enforces that all values are non-null.
+      /// </summary>
+      /// <typeparam name="T">The type of data to evaluate</typeparam>
+      /// <param name="value">the values to evaluate.</param>
+      /// <param name="argumentName"></param>
+      private static void EnforceNonNull<T>(T value, string argumentName)
+      {
+         if (value == null) throw new ArgumentNullException(argumentName ?? nameof(value));
       }
 
       #endregion Private Methods

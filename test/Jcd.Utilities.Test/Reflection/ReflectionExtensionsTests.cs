@@ -315,7 +315,7 @@ namespace Jcd.Utilities.Test.Reflection
       public void GetPropertyOrFieldValue_WhenObjectDoesntHavePropertyOrFieldWithTheName_ReturnsNull()
       {
          var kvp = new KeyValuePair<string, string>();
-         var kvp2 = new { Key = "key", Value = "value", Pair = "Pear" };
+         var _ = new { Key = "key", Value = "value", Pair = "Pear" };
          Assert.Null(kvp.GetPropertyOrFieldValue("Nada"));
       }
 

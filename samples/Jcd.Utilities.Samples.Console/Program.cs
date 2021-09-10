@@ -14,8 +14,13 @@ using Jcd.Utilities.Reflection;
 using Jcd.Utilities.Samples.ConsoleApp.Generators;
 using Newtonsoft.Json;
 
+using Jcd.Utilities.Formatting;
+using Jcd.Utilities.Generators;
+using Jcd.Utilities.Samples.ConsoleApp.Generators;
+
 namespace Jcd.Utilities.Samples.ConsoleApp
 {
+   // ReSharper disable once ClassNeverInstantiated.Global
    internal class Node
    {
       public int V;
@@ -87,7 +92,7 @@ namespace Jcd.Utilities.Samples.ConsoleApp
    }
    internal class Program
    {
-      private static void Main(string[] args)
+      private static void Main()
       {
          Console.WriteLine("Hello World!");
          var i = long.MinValue;
@@ -101,17 +106,31 @@ namespace Jcd.Utilities.Samples.ConsoleApp
          }
 
          Console.WriteLine();
-         CaptureAndTransitionGenerator<Int16SequenceState, short> numberGenerator = new
-         CaptureAndTransitionGenerator<Int16SequenceState, short>(
-            new Int16SequenceState { current = 100, stop = 0, step = -1 },
-            (Int16SequenceState state, out bool @continue) =>
-         {
-            var result = state.current;
-            state.current += state.step;
-            @continue = (state.step < 0 && state.current >= state.stop) // handle counting down.
-                        || (state.step > 0 && state.current <= state.stop); // handle counting up.
-            return result;
-         });
+
+         var numberGenerator = new
+            CaptureAndTransitionGenerator<Int16SequenceState, short>(
+                                                                     new Int16SequenceState
+                                                                     {
+                                                                        current = 100,
+                                                                        stop = 0,
+                                                                        step = -1
+                                                                     },
+                                                                     (Int16SequenceState state, out bool @continue) =>
+                                                                     {
+                                                                        var result = state.current;
+                                                                        state.current += state.step;
+
+                                                                        @continue =
+                                                                           ((state.step < 0) &&
+                                                                            (state.current >= state.stop)
+                                                                           ) // handle counting down.
+                                                                         ||
+                                                                           ((state.step > 0) &&
+                                                                            (state.current <=
+                                                                             state.stop)); // handle counting up.
+
+                                                                        return result;
+                                                                     });
 
          /*         var aaa = new { Aoo = "a", Zoo = 5, ConsoleColor.DarkBlue};
                   var bbb = new { Boo = "1", Yoo = 5, ConsoleColor.Cyan, R=new object(), B=new object() };
@@ -170,42 +189,39 @@ namespace Jcd.Utilities.Samples.ConsoleApp
             var e = enc.Format(l);
             var d = enc.ParseBigInteger(e);
 
-            if (l != d)
-            {
-               Console.WriteLine($"ERROR: {l} -> {e} -> {d}");
-            }
+            if (l != d) Console.WriteLine($"ERROR: {l} -> {e} -> {d}");
          }
 
          Console.WriteLine();
          Console.WriteLine("Go! Go! Go!");
-         var snum = int.MaxValue.ToString();
+         var signedNum = int.MaxValue.ToString();
          var sw = new Stopwatch();
          sw.Reset();
-         const int iter = 10000;
+         const int iterations = 10000;
 
-         for (var q = 0; q < iter; q++)
+         for (var q = 0; q < iterations; q++)
          {
             sw.Start();
-            var z = int.Parse(snum);
+            parsed = int.Parse(signedNum);
             sw.Stop();
             Thread.Sleep(0);
+            var ix = parsed;
          }
 
          var ip = sw.ElapsedMilliseconds;
          sw.Reset();
 
-         for (var q = 0; q < iter; q++)
+         for (var q = 0; q < iterations; q++)
          {
             sw.Start();
-            var z = IntegerEncoders.Decimal.ParseInt32(snum);
+            IntegerEncoders.Decimal.ParseInt32(signedNum);
             sw.Stop();
             Thread.Sleep(0);
          }
 
-         var iedp = sw.ElapsedMilliseconds;
-         Console.WriteLine($"{snum} : int.Parse: {ip}   Decimal.ParseInt32: {iedp}");
+         var elapsedDecimalParse = sw.ElapsedMilliseconds;
+         Console.WriteLine($"{signedNum} : int.Parse: {ip}   Decimal.ParseInt32: {elapsedDecimalParse}");
          Console.ReadKey();
-
       }
    }
 }

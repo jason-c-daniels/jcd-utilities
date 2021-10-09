@@ -1,8 +1,6 @@
-using Jcd.Utilities.Validations;
-
 using System.Collections;
 using System.Collections.Generic;
-using Jcd.Utilities.Validations;
+using Jcd.Validations;
 
 namespace Jcd.Utilities.Generators
 {

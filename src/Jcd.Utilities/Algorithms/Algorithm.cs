@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Jcd.Utilities
+namespace Jcd.Utilities.Algorithms
 {
    public static class Algorithm
    {

@@ -1,9 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Dynamic;
-using System.Linq;
 
-namespace Jcd.Utilities.Reflection
+using Jcd.Reflection;
+
+namespace Jcd.Utilities.Algorithms
 {
    public static class DictionaryFactoryExtensions
    {
@@ -32,7 +32,7 @@ namespace Jcd.Utilities.Reflection
                visited[o] = result;
                return result;
             }
-            case object obj:
+            case { } obj:
             {
                var result = new T();
                var dict = (IDictionary<string, object>) result;

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <Product Condition="'$(Product)' == ''">JCD Utilities</Product>
     <Title Condition="'$(Title)' == ''">JCD Utilities</Title>
     <Company Condition="'$(Company)' == ''">N/A</Company>
@@ -22,7 +22,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
+    <PackageReference Include="Jcd.Reflection" Version="1.0.1" />
+    <PackageReference Include="Jcd.Validations" Version="1.0.0" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
   </ItemGroup>
 
 </Project>

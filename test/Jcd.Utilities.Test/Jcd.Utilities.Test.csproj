@@ -1,22 +1,28 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
 
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
-      <PackageReference Include="coverlet.msbuild" Version="2.2.1"/>
-      <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0"/>
-      <PackageReference Include="Moq" Version="4.9.0"/>
-      <PackageReference Include="xunit" Version="2.4.0"/>
-      <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0"/>
-      <PackageReference Include="xunit.analyzers" Version="0.10.0"/>
+      <PackageReference Include="coverlet.msbuild" Version="2.2.1" />
+      <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0" />
+      <PackageReference Include="Moq" Version="4.9.0" />
+      <PackageReference Include="xunit" Version="2.4.0" />
+      <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
+      <PackageReference Include="xunit.analyzers" Version="0.10.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Jcd.Utilities\Jcd.Utilities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Extensions" />
+    <Folder Include="Formatting" />
+    <Folder Include="Reflection" />
   </ItemGroup>
 
 </Project>

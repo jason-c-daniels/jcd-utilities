@@ -8,13 +8,13 @@ using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading;
 using System.Xml;
-using Jcd.Utilities.Formatting;
+using Jcd.Formatting;
 using Jcd.Utilities.Generators;
-using Jcd.Utilities.Reflection;
+using Jcd.Reflection;
+using Jcd.Utilities.Algorithms;
 using Jcd.Utilities.Samples.ConsoleApp.Generators;
 using Newtonsoft.Json;
 
-using Jcd.Utilities.Formatting;
 using Jcd.Utilities.Generators;
 using Jcd.Utilities.Samples.ConsoleApp.Generators;
 
@@ -151,7 +151,7 @@ namespace Jcd.Utilities.Samples.ConsoleApp
                   */
 
 
-         // generate a graph with cycles. (parent and parent...)
+         // generate a graph with cycles. 
          var web = Node.MakeRandomCyclicGraph(20000);
          var dt = web.DfsD<ExpandoObject>();
          var webstr2 = JsonConvert.SerializeObject(dt, new JsonSerializerSettings

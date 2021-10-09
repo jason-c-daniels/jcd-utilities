@@ -4,8 +4,8 @@ environment:
   Configuration: Release
 install:
 - sh: sudo apt-get install -y doxygen
-nuget:
-  account_feed: true
+#nuget:
+#  account_feed: true
 build_script:
 - sh: bash ./build/build.sh -bcd
 test_script:
